@@ -1,0 +1,23 @@
+img.nav-avatar {
+    background-size: cover;
+    height: 100px;
+    vertical-align: middle;
+    width: 100px;
+    position: inherit;
+    margin:10px auto;
+    display:block;
+}
+.sidebar {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding: 0;
+    color: #fff;
+    background: #3c4b64 !important;
+}
+.sidebar .nav-item.active {
+    color: #fff;
+    background: #1c549a !important;
+}
+
