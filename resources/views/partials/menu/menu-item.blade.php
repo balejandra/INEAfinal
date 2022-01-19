@@ -14,8 +14,8 @@
             @foreach ($item['submenu'] as $submenu)
                 @if ($submenu['submenu'] == [])
                     <li class="w-100">
-                        <a class="nav-link" href="{{route($item['url'])}}">
-                            <i class="nav-icon {{$item['icono']}}"></i>
+                        <a class="nav-link" href="{{url($submenu['url'])}}">
+                            <i class="nav-icon {{$submenu['icono']}}"></i>
                             <span class="d-none d-sm-inline">{{ $submenu['name'] }}</span>
                         </a>
                     </li>

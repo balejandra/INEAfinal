@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Menu;
+use App\Models\Publico\Menu;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
