@@ -36,7 +36,7 @@
                             
 
                              
-                                <table class="table table-responsive-sm table-bordered table-striped " id="menus-table">
+                                <table class="table table-responsive-sm table-bordered table-striped " id="TablePermissions">
                                     <thead>
                                         <tr>
                                             <th>ID</th>

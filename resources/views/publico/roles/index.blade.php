@@ -106,18 +106,20 @@
                                         </div>
                                     </div>
                                     </div>
-
-  
                                  
                             </td>
                         </tr>
+                       
                         @empty
                         <tr>
                             <td colspan="5" class="text-center"> No existen registros para mostrar </td>
                         
                         </tr>
                     @endforelse
+
+                     
                 </tbody>
+                
             </table>
 
 
