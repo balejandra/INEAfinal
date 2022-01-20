@@ -19,7 +19,7 @@
                              <strong>Menus</strong>
                              <div class="card-header-actions">
                                  <a class="btn btn-primary btm-sm"  href="{{ route('menus.create') }}">Nuevo</a>
-                                 <a class="btn btn-primary btm-sm"  href="{{ route('menuRols.index') }}">Listado de Roles y Menus</a>
+                                 <!-- <a class="btn btn-primary btm-sm"  href="{{ route('menuRols.index') }}">Listado de Roles y Menus</a> -->
                              </div>
                          </div>
                          <div class="card-body">
