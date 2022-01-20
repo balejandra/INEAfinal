@@ -1,8 +1,8 @@
 <!-- Enabled Field -->
-<div class="form-group col-sm-6">
+<div class="form-group row">
     {!! Form::label('name', 'Roles:') !!}
     @foreach ($roles as $key => $item)
-        <div class="form-check form-switch">
+        <div class="form-check form-switch col-sm-3 ">
 
             <input class="form-check-input" type="checkbox" name="role" id='role' value="{{$key}}" style="margin-left: auto;">
             <label class="form-check-label" for="flexSwitchCheckDefault" style="margin-inline-start: 30px;">{{$item}}</label>

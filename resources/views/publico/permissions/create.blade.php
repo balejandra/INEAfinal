@@ -26,11 +26,16 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{route('permissions.store')}} " method="post" class="needs-validation"
+
+                            <div class="row justify-content-center">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8 border rounded">
+                                   
+                                <form action="{{route('permissions.store')}} " method="post" class="needs-validation "
                                   novalidate>
                                 @csrf
                                 <div class="form-row">
-                                    <div class="col-md-10">
+                                    <div class="col-md-10 ">
                                         <div class="form-group">
                                             <label for="nombre">Nombre:</label>
                                             <input type="text" class="form-control" id="name"
@@ -48,6 +53,12 @@
                                     </div>
                                 </div>
                             </form>
+
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+
+                            
                         </div>
                     </div>
                 </div>

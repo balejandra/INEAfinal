@@ -7,7 +7,7 @@
         <li class="breadcrumb-item">
             <a href="{!! route('roles') !!}">Roles</a>
         </li>
-        <li class="breadcrumb-item active">Crear</li>
+        <li class="breadcrumb-item">Crear</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
@@ -27,6 +27,9 @@
                         </div>
                         <div class="card-body">
 
+                        <div class="row justify-content-center">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 border rounded py-3">
 
                             <form action="{{route('roles.store')}} " method="post" class="needs-validation" novalidate>
                                 @csrf
@@ -50,7 +53,7 @@
                                         <div class="container">
                                             <div class="row">
                                                 @foreach($permissions as $id => $permission)
-                                                    <div class="col-3">
+                                                <!--<div class="col-3">
                                                         <div class="form-check form-check-inline mt-sm-2"
                                                              style="float:left">
                                                             <input class="form-check-input form-field-acceptconditions"
@@ -60,16 +63,28 @@
                                                             <p class="form-check-label"
                                                                for="inlineCheckbox1 texto-recortado">{{ $permission}}</p>
                                                         </div>
+                                                    </div>-->
+
+                                                    <div class="form-check form-switch col-sm-4 ">
+
+                                                        <input class="form-check-input" type="checkbox" name="role" id='role' value="{{$id}}" style="margin-left: auto;">
+                                                        <label class="form-check-label" for="flexSwitchCheckDefault" style="margin-inline-start: 30px;">{{$permission}}</label>
+
                                                     </div>
                                                 @endforeach
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 text-center mt-4">
+                                    <div class="col-md-12 text-center mt-4">
                                         <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
                                     </div>
                                 </div>
                             </form>
+
+                            </div>
+                                <div class="col-md-2"></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

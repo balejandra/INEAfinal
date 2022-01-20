@@ -7,7 +7,7 @@
       <li class="breadcrumb-item">
          <a href="{!! route('menus.index') !!}">Menu</a>
       </li>
-      <li class="breadcrumb-item active">Crear</li>
+      <li class="breadcrumb-item">Crear</li>
     </ol>
      <div class="container-fluid">
           <div class="animated fadeIn">

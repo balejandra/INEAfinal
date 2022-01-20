@@ -21,6 +21,10 @@
                         </div>
                         <div class="card-body">
 
+                        <div class="row justify-content-center">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 border rounded">
+
                             <form action="{{route('permissions.update', $permission->id)}} " method="post"
                                   class="needs-validation" novalidate>
                                 @csrf
@@ -44,7 +48,9 @@
                                     </div>
                                 </div>
                             </form>
-
+                            </div>
+                                <div class="col-md-2"></div>
+                            </div>
 
                         </div>
                     </div>

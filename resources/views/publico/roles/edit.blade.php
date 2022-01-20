@@ -49,7 +49,7 @@
                                             <div class="row">
                                                 @foreach($permissions as $id => $permission)
                                                     <div class="col-3">
-                                                        <div class="form-check form-check-inline mt-sm-2"
+                                                        <div class="form-check form-switch form-check-inline mt-sm-2"
                                                              style="float:left">
                                                             <input class="form-check-input form-field-acceptconditions"
                                                                    type="checkbox" name="permissions[]" id="{{$id}}"
@@ -60,6 +60,8 @@
                                                                for="inlineCheckbox1 texto-recortado">{{ $permission}}</p>
                                                         </div>
                                                     </div>
+
+                            
                                                 @endforeach
                                             </div>
                                         </div>
