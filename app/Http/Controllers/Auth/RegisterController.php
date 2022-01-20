@@ -71,7 +71,7 @@ class RegisterController extends Controller
      */
     protected function create(array $input)
     {
-        return User::create([
+         $user= User::create([
             'nombres' => $input['nombres'],
             'apellidos' => $input['apellidos'],
             'tipo_documento' => $input['tipo_documento'],
@@ -83,5 +83,9 @@ class RegisterController extends Controller
             'password' => Hash::make($input['password']),
             'tipo_usuario' =>$input['tipo_usuario']
         ]);
+
+        $roles='2';
+        $user->roles()->sync($roles);
+        return $user;
     }
 }
