@@ -30,6 +30,6 @@ class UserExtSeeder extends Seeder
             'tipo_usuario' => 'externo'
 
         ]);
-        $user->assignRole('UserExt');
+        $user->assignRole('Web');
     }
 }

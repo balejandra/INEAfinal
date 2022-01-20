@@ -133,21 +133,6 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                <i class="icon-user"></i>
-                              </span>
-                                </div>
-                                <input type="text" class="form-control {{ $errors->has('tipo_usuario')?'is-invalid':'' }}"
-                                       name="tipo_usuario" value="{{ old('tipo_usuario') }}"
-                                       placeholder="tipo_usuario">
-                                @if ($errors->has('tipo_usuario'))
-                                    <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('tipo_usuario') }}</strong>
-                                </span>
-                                @endif
-                            </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">

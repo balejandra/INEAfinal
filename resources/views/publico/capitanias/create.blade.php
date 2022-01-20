@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section("titulo")
-    Menus
+    Capitanias
 @endsection
 @section('content')
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-         <a href="{!! route('menus.index') !!}">Menu</a>
+         <a href="{!! route('capitanias.index') !!}">Capitania</a>
       </li>
       <li class="breadcrumb-item active">Crear</li>
     </ol>
@@ -17,17 +17,15 @@
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-plus-square-o fa-lg"></i>
-                                <strong>Crear Menu</strong>
-
+                                <strong>Crear Capitania</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
+                                    <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Listado de Capitanias</a>
                                 </div>
-
                             </div>
                             <div class="card-body">
-                                {!! Form::open(['route' => 'menus.store']) !!}
+                                {!! Form::open(['route' => 'capitanias.store']) !!}
 
-                                   @include('publico.menus.fields')
+                                   @include('publico.capitanias.fields')
 
                                 {!! Form::close() !!}
                             </div>

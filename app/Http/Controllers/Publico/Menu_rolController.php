@@ -31,7 +31,7 @@ class Menu_rolController extends AppBaseController
     {
         $menuRols = $this->menuRolRepository->all();
 
-        return view('menu_rols.index')
+        return view('publico.menus.tableroles')
             ->with('menuRols', $menuRols);
     }
 

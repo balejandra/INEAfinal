@@ -23,11 +23,12 @@ Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
-Route::resource('menus', \App\Http\Controllers\Publico\MenuController::class)->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::resource('menus', \App\Http\Controllers\Publico\MenuController::class)->middleware('auth');
 
-Route::resource('menuRols', \App\Http\Controllers\Publico\Menu_rolController::class);
+    Route::resource('menuRols', \App\Http\Controllers\Publico\Menu_rolController::class);
 
-
+    Route::resource('users', \App\Http\Controllers\Publico\UserController::class);
 
 Route::get('/permissions', [App\Http\Controllers\Publico\PermissionController::class, 'index'])->name('permissions')->middleware('auth');
 Route::get('/permissions/create', [App\Http\Controllers\Publico\PermissionController::class, 'create' ])->name('permissions.create');
@@ -47,4 +48,9 @@ Route::get('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class,
 Route::get('/roles/{role}/edit', [App\Http\Controllers\Publico\RoleController::class, 'edit' ])->name('roles.edit');
 Route::put('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'update' ])->name('roles.update');
 Route::delete('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'destroy' ])->name('roles.destroy');
+
+Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
+});
+
+
 

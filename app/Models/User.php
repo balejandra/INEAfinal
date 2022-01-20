@@ -55,4 +55,14 @@ class User extends Authenticatable implements Auditable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'email' => 'required',
+        'nombres' => 'required',
+        'password' => 'required'
+    ];
 }

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section("titulo")
-    Menus
+    Capitania
 @endsection
 @section('content')
      <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{{ route('menus.index') }}">Menu</a>
+                <a href="{{ route('capitanias.index') }}">Capitania</a>
             </li>
             <li class="breadcrumb-item active">Consulta</li>
      </ol>
@@ -16,15 +16,15 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Consultar Menu {{$menu->name}}</strong>
+                                 <strong>Consultar Capitania</strong>
                                  <div class="card-header-actions">
-                                     <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
+                                     <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Listado de Capitanias</a>
                                  </div>
                              </div>
                              <div class="card-body">
                                  <div class="my-2">
                                      <div class="container">
-                                 @include('publico.menus.show_fields')
+                                 @include('publico.capitanias.show_fields')
                                      </div>
                                  </div>
                              </div>
