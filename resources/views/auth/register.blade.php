@@ -175,7 +175,6 @@
                                </span>
                                 @endif
                             </div>
-                            <input type="text" name="tipo_usuario" value="Web" hidden>
                         <button type="submit" class="btn btn-primary btn-block btn-flat">{{ __('Register') }}</button>
                         <a href="{{ url('/login') }}" class="text-center">{{ __('I already have a membership')}}</a>
                     </form>

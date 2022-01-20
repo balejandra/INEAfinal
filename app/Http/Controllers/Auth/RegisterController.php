@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'direccion' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'tipo_usuario'=>['required', 'string', 'max:20'],
+            'tipo_usuario'=>['string', 'max:20'],
         ]);
     }
 
@@ -81,7 +81,7 @@ class RegisterController extends Controller
             'direccion' => $input['direccion'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'tipo_usuario' =>$input['tipo_usuario']
+            'tipo_usuario' =>'Web'
         ]);
 
         $roles='2';

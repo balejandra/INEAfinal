@@ -49,7 +49,8 @@ Route::get('/roles/{role}/edit', [App\Http\Controllers\Publico\RoleController::c
 Route::put('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'update' ])->name('roles.update');
 Route::delete('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'destroy' ])->name('roles.destroy');
 
+Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
 });
 
 
-Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
+
