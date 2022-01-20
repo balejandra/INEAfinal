@@ -3,7 +3,7 @@
 @section('content')
     <ol class="breadcrumb">
           <li class="breadcrumb-item">
-             <a href="{!! route('menus.index') !!}">Menu</a>
+             <a href="{!! route('users.index') !!}">Usuarios</a>
           </li>
           <li class="breadcrumb-item active">Editar</li>
         </ol>
@@ -15,18 +15,15 @@
                       <div class="card">
                           <div class="card-header">
                               <i class="fa fa-edit fa-lg"></i>
-                              <strong>Editar Menu</strong>
-
+                              <strong>Editar Usuario</strong>
                               <div class="card-header-actions">
-                                  <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
+                                  <a href= "{{route('users.index')}} " class="btn btn-primary btn-sm">Listado de Usuarios</a>
                               </div>
                           </div>
                           <div class="card-body">
-                          </div>
-                          <div class="card-body">
-                              {!! Form::model($menu, ['route' => ['menus.update', $menu->id], 'method' => 'patch']) !!}
+                              {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'patch']) !!}
 
-                              @include('publico.menus.fields')
+                              @include('publico.users.fields')
 
                               {!! Form::close() !!}
                             </div>

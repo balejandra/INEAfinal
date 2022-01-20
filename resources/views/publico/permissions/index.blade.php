@@ -8,76 +8,72 @@
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-             @include('flash::message')
+            @include('flash::message')
 
-             
-              @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" id="msj" role="success">
-                <button type="button" class="close success-op" data-dismiss="alert" aria-label="close">
-                    &times;
-                </button>
-                {{session('success')}}
-            </div>
-        @endif
 
-             <div class="row">
-                 <div class="col-lg-12">
-                     <div class="card">
-                          
-                         <div class="card-header">
-                                    <i class="fa fa-plus-square-o fa-lg"></i>
-                                    <strong>Permisos</strong>
-                                  <div class="card-header-actions">
-                                     <a class="btn btn-primary btm-sm"  href="{{ route('permissions.create') }}">Nuevo</a>
-                                  </div>
- 
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" id="msj" role="success">
+                    <button type="button" class="close success-op" data-dismiss="alert" aria-label="close">
+                        &times;
+                    </button>
+                    {{session('success')}}
+                </div>
+            @endif
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i>
+                            <strong>Permisos</strong>
+                            <div class="card-header-actions">
+                                <a class="btn btn-primary btm-sm" href="{{ route('permissions.create') }}">Nuevo</a>
                             </div>
-                         <div class="card-body">
-                            
 
-                             
-                                <table class="table table-responsive-sm table-bordered table-striped " id="menus-table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nombre</th>
-                                            <th>Guard</th>
-                                            <th>Created_at</th>
-                                            <th>Acciones</th>   
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    @forelse($permissions as $permission)
-                                        <tr>
-                                            <td> {{$permission->id}} </td>
-                                            <td>{{$permission->name}} </td>
-                                            <td>{{$permission->guard_name}} </td>
-                                            <td>{{$permission->created_at}} </td>
-                                            <td>
-                                                {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete']) !!}
-                                                <div class='btn-group'>
-                                                   <!-- <a href="{{ route('permissions.show', [$permission->id]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a> -->
-                                                    <a href="{{ route('permissions.edit', [$permission->id]) }}" class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Realmente desera eliminar este permiso?')"]) !!}
-                                                </div>
-                                                {!! Form::close() !!}
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center"> No existen registros para mostrar </td>
-                                        </tr>
-                                    @endforelse
-                                    </tbody>
-                                </table> 
-                             
+                        </div>
+                        <div class="card-body">
 
 
-
-                         </div>
-                     </div>
-                  </div>
-             </div>
-         </div>
+                            <table class="table table-responsive-sm table-bordered table-striped " id="menus-table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Guard</th>
+                                    <th>Created_at</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($permissions as $permission)
+                                    <tr>
+                                        <td> {{$permission->id}} </td>
+                                        <td>{{$permission->name}} </td>
+                                        <td>{{$permission->guard_name}} </td>
+                                        <td>{{$permission->created_at}} </td>
+                                        <td>
+                                            {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete']) !!}
+                                            <div class='btn-group'>
+                                            <!-- <a href="{{ route('permissions.show', [$permission->id]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a> -->
+                                                <a href="{{ route('permissions.edit', [$permission->id]) }}"
+                                                   class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
+                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Realmente desera eliminar este permiso?')"]) !!}
+                                            </div>
+                                            {!! Form::close() !!}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center"> No existen registros para mostrar</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

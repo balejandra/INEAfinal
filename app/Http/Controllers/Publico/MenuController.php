@@ -67,16 +67,17 @@ class MenuController extends AppBaseController
      */
     public function store(CreateMenuRequest $request)
     {
+
         $input = $request->all();
 
         $menu = $this->menuRepository->create($input);
         $roles = Menu_rol::create([
             'menu_id' => $menu['id'],
-            'role_id' =>$request['roles']
+            'role_id' =>$request['role']
         ]);
 
 
-        Flash::success('Menu saved successfully.');
+        Flash::success('Menú guardado con éxito.');
 
         return redirect(route('menus.index'));
     }
@@ -93,7 +94,7 @@ class MenuController extends AppBaseController
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
-            Flash::error('Menu not found');
+            Flash::error('Menú no encontrado');
 
             return redirect(route('menus.index'));
         }
@@ -121,7 +122,7 @@ class MenuController extends AppBaseController
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
-            Flash::error('Menu not found');
+            Flash::error('Menú no encontrado');
 
             return redirect(route('menus.index'));
         }
@@ -145,7 +146,7 @@ class MenuController extends AppBaseController
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
-            Flash::error('Menu not found');
+            Flash::error('Menú no encontrado');
 
             return redirect(route('menus.index'));
         }
@@ -155,7 +156,7 @@ class MenuController extends AppBaseController
         $roles1=$request['roles'];
         $roles = $role->roles()->sync([$roles1,$id]);
 
-        Flash::success('Menu updated successfully.');
+        Flash::success('Menú actualizado correctamente.');
 
         return redirect(route('menus.index'));
     }
@@ -174,7 +175,7 @@ class MenuController extends AppBaseController
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
-            Flash::error('Menu not found');
+            Flash::error('Menú no encontrado');
 
             return redirect(route('menus.index'));
         }
@@ -182,7 +183,7 @@ class MenuController extends AppBaseController
         $this->menuRepository->delete($id);
         $parents= Menu_rol::where('menu_id',$id)->delete();
 
-        Flash::success('Menu deleted successfully.');
+        Flash::success('Menú eliminado con éxito.');
 
         return redirect(route('menus.index'));
     }

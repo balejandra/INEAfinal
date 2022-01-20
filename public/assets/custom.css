@@ -21,3 +21,6 @@ img.nav-avatar {
     background: #1c549a !important;
 }
 
+.active {
+    background-color: #1c549a;
+}

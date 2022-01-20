@@ -1,12 +1,12 @@
 <!-- Name Field -->
 <div class="form-group">
-    {!! Form::label('name', 'Name:') !!}
+    {!! Form::label('name', 'Nombre:') !!}
     <p>{{ $menu->name }}</p>
 </div>
 
 <!-- Description Field -->
 <div class="form-group">
-    {!! Form::label('description', 'Description:') !!}
+    {!! Form::label('description', 'Descripcion:') !!}
     <p>{{ $menu->description }}</p>
 </div>
 
@@ -18,13 +18,13 @@
 
 <!-- Parent Field -->
 <div class="form-group">
-    {!! Form::label('parent', 'Parent:') !!}
+    {!! Form::label('parent', 'Menu Padre:') !!}
     <p>{{ $menu->parent }}</p>
 </div>
 
 <!-- Order Field -->
 <div class="form-group">
-    {!! Form::label('order', 'Order:') !!}
+    {!! Form::label('order', 'Orden:') !!}
     <p>{{ $menu->order }}</p>
 </div>
 
@@ -36,7 +36,7 @@
 
 <!-- Enabled Field -->
 <div class="form-group">
-    {!! Form::label('enabled', 'Enabled:') !!}
+    {!! Form::label('enabled', 'Habilitado:') !!}
     <p>{{ $menu->enabled }}</p>
 </div>
 

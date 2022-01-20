@@ -1,9 +1,11 @@
 @extends('layouts.app')
-
+@section("titulo")
+    Capitanias
+@endsection
 @section('content')
     <ol class="breadcrumb">
           <li class="breadcrumb-item">
-             <a href="{!! route('menus.index') !!}">Menu</a>
+             <a href="{!! route('capitanias.index') !!}">Capitania</a>
           </li>
           <li class="breadcrumb-item active">Editar</li>
         </ol>
@@ -15,18 +17,15 @@
                       <div class="card">
                           <div class="card-header">
                               <i class="fa fa-edit fa-lg"></i>
-                              <strong>Editar Menu</strong>
-
+                              <strong>Editar Capitania {{$capitania->nombre}}</strong>
                               <div class="card-header-actions">
-                                  <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
+                                  <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Listado de Capitanias</a>
                               </div>
                           </div>
                           <div class="card-body">
-                          </div>
-                          <div class="card-body">
-                              {!! Form::model($menu, ['route' => ['menus.update', $menu->id], 'method' => 'patch']) !!}
+                              {!! Form::model($capitania, ['route' => ['capitanias.update', $capitania->id], 'method' => 'patch']) !!}
 
-                              @include('publico.menus.fields')
+                              @include('publico.capitanias.fieldsedit')
 
                               {!! Form::close() !!}
                             </div>
