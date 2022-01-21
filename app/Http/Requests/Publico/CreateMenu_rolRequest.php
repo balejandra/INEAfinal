@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Publico;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Publico\Menu_rol;
+use Illuminate\Foundation\Http\FormRequest;
+
 
 class CreateMenu_rolRequest extends FormRequest
 {

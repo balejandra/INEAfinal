@@ -8,8 +8,8 @@ use App\Repositories\Publico\Menu_rolRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\DB;
 use Response;
-
 class Menu_rolController extends AppBaseController
 {
     /** @var  Menu_rolRepository */
@@ -29,7 +29,14 @@ class Menu_rolController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $menuRols = $this->menuRolRepository->all();
+
+
+        $menuRols = DB::table('menus_roles')
+            ->select('menus_roles.id','menus.name as name_menu', 'roles.name as name_role')
+            ->Join('menus', 'menus.id', '=', 'menus_roles.menu_id')
+            ->Join('roles', 'roles.id', '=', 'menus_roles.role_id')
+            ->get();
+
 
         return view('publico.menus.tableroles')
             ->with('menuRols', $menuRols);
@@ -42,7 +49,7 @@ class Menu_rolController extends AppBaseController
      */
     public function create()
     {
-        return view('menu_rols.create');
+
     }
 
     /**
@@ -54,13 +61,7 @@ class Menu_rolController extends AppBaseController
      */
     public function store(CreateMenu_rolRequest $request)
     {
-        $input = $request->all();
 
-        $menuRol = $this->menuRolRepository->create($input);
-
-        Flash::success('Menu Rol saved successfully.');
-
-        return redirect(route('menuRols.index'));
     }
 
     /**
@@ -72,15 +73,7 @@ class Menu_rolController extends AppBaseController
      */
     public function show($id)
     {
-        $menuRol = $this->menuRolRepository->find($id);
 
-        if (empty($menuRol)) {
-            Flash::error('Menu Rol not found');
-
-            return redirect(route('menuRols.index'));
-        }
-
-        return view('menu_rols.show')->with('menuRol', $menuRol);
     }
 
     /**
@@ -92,15 +85,7 @@ class Menu_rolController extends AppBaseController
      */
     public function edit($id)
     {
-        $menuRol = $this->menuRolRepository->find($id);
 
-        if (empty($menuRol)) {
-            Flash::error('Menu Rol not found');
-
-            return redirect(route('menuRols.index'));
-        }
-
-        return view('menu_rols.edit')->with('menuRol', $menuRol);
     }
 
     /**
@@ -113,19 +98,7 @@ class Menu_rolController extends AppBaseController
      */
     public function update($id, UpdateMenu_rolRequest $request)
     {
-        $menuRol = $this->menuRolRepository->find($id);
 
-        if (empty($menuRol)) {
-            Flash::error('Menu Rol not found');
-
-            return redirect(route('menuRols.index'));
-        }
-
-        $menuRol = $this->menuRolRepository->update($request->all(), $id);
-
-        Flash::success('Menu Rol updated successfully.');
-
-        return redirect(route('menuRols.index'));
     }
 
     /**
@@ -139,18 +112,6 @@ class Menu_rolController extends AppBaseController
      */
     public function destroy($id)
     {
-        $menuRol = $this->menuRolRepository->find($id);
 
-        if (empty($menuRol)) {
-            Flash::error('Menu Rol not found');
-
-            return redirect(route('menuRols.index'));
-        }
-
-        $this->menuRolRepository->delete($id);
-
-        Flash::success('Menu Rol deleted successfully.');
-
-        return redirect(route('menuRols.index'));
     }
 }

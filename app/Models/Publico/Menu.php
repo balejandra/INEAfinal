@@ -75,9 +75,9 @@ class Menu extends Model implements Auditable
         'enabled' => 'required'
     ];
 
-    public function rolesMenu()
+    public function menus_roles()
     {
-        return $this->belongsToMany(Menu_rol::class,'menus_roles','menu_id','role_id');
+        return $this->belongsToMany(Menu_rol::class,'menus_roles','menu_id');
     }
 
     public function roles()
