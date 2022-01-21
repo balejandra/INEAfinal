@@ -21,6 +21,12 @@ class MenuController extends AppBaseController
     public function __construct(MenuRepository $menuRepo)
     {
         $this->menuRepository = $menuRepo;
+
+        $this->middleware('permission:listar-menu', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-menu', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-menu', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-menu', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-menu', ['only'=>['destroy'] ]);
     }
 
     /**

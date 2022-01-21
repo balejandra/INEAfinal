@@ -16,12 +16,17 @@
             <td>{{ $user->nombres }}</td>
             <td>{{ $user->iniciales }}</td>
                 <td>
+                    @can('consultar-usuario')
                     <a class="btn btn-sm btn-success" href="  {{ route('users.show', [$user->id]) }}">
                         <i class="fa fa-search"></i>
                     </a>
+                    @endcan
+                    @can('editar-usuario')
                     <a class="btn btn-sm btn-info" href=" {{ route('users.edit', [$user->id]) }}">
                         <i class="fa fa-edit"></i>
                     </a>
+                    @endcan
+                    @can('eliminar-usuario')
                     <div class='btn-group'>
                         {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
 
@@ -29,6 +34,7 @@
 
                         {!! Form::close() !!}
                     </div>
+                    @endcan
                     <!-- Modal -->
                     <div class="modal fade" id="deletemodal{{$user->id}}" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

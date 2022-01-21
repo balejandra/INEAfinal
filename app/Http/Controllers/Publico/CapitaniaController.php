@@ -20,6 +20,12 @@ class CapitaniaController extends AppBaseController
     public function __construct(CapitaniaRepository $capitaniaRepo)
     {
         $this->capitaniaRepository = $capitaniaRepo;
+
+        $this->middleware('permission:listar-capitania', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-capitania', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-capitania', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-capitania', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-capitania', ['only'=>['destroy'] ]);
     }
 
     /**

@@ -18,7 +18,9 @@
                              <i class="fa fa-align-justify"></i>
                              <strong>Menus</strong>
                              <div class="card-header-actions">
+                                 @can('crear-menu')
                                  <a class="btn btn-primary btm-sm"  href="{{ route('menus.create') }}">Nuevo</a>
+                                 @endcan
                                  <!-- <a class="btn btn-primary btm-sm"  href="{{ route('menuRols.index') }}">Listado de Roles y Menus</a> -->
                              </div>
                          </div>

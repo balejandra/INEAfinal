@@ -26,10 +26,12 @@
                          <div class="card-header">
                              <i class="fa fa-align-justify"></i>
                             <strong>Roles</strong>
+                                 @can('crear-rol')
                                 <div class="card-header-actions">
                                     <a class="btn btn-primary btm-sm"  href="{{ route('roles.create') }}">Nuevo</a>
                                 </div>
-
+                                @endcan
+                                
                             </div>
                          <div class="card-body">
 
@@ -61,14 +63,17 @@
                                 @endforelse
                             </td>
                             <td class="text-center">
-                            <a class="btn btn-sm btn-success" href=" {{route('roles.show',$role->id)}}" >
-                                <i class="fa fa-search"></i>
-                            </a>
+                                @can('consultar-rol')
+                                <a class="btn btn-sm btn-success" href=" {{route('roles.show',$role->id)}}" >
+                                    <i class="fa fa-search"></i>
+                                </a>
+                                @endcan
+                                 @can('editar-rol')
                                 <a class="btn btn-sm btn-info" href=" {{route('roles.edit',$role->id)}}" >
                                     <i class="fa fa-edit"></i>
                                  </a>
-
-
+                                 @endcan
+                                 @can('eliminar-rol')
 
                                 <div class='btn-group'>
                                     {!! Form::open(['route' => ['roles.destroy', $role->id], 'method' => 'delete']) !!}
@@ -77,7 +82,7 @@
 
                                     {!! Form::close() !!}
                                 </div>
-
+                                @endcan
 
                                                                     <!-- Modal -->
                                     <div class="modal fade" id="deletemodal{{$role->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

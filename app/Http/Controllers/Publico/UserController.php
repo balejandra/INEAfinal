@@ -21,6 +21,13 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepo)
     {
         $this->userRepository = $userRepo;
+         
+ 
+        $this->middleware('permission:listar-usuario', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-usuario', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-usuario', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-usuario', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-usuario', ['only'=>['destroy'] ]);  
     }
 
     /**
@@ -66,7 +73,7 @@ class UserController extends Controller
         $data->save();
         $input = $request->all();
 
-        $roles=$input['roles'] ;
+        $roles=$request->input('roles', []);
         $data->roles()->sync($roles);
         Flash::success('Usuario guardado exitosamente.');
 

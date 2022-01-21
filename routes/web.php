@@ -50,7 +50,7 @@ Route::put('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class,
 Route::delete('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'destroy' ])->name('roles.destroy');
 
 Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
+
+
 });
-
-
 

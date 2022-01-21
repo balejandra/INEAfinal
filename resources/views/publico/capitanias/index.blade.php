@@ -15,9 +15,11 @@
                          <div class="card-header">
                              <i class="fa fa-align-justify"></i>
                              <strong>Capitanias</strong>
+                              @can('consultar-capitania')
                              <div class="card-header-actions">
                                  <a class="btn btn-primary btm-sm"  href="{{ route('capitanias.create') }}">Nuevo</a>
                              </div>
+                              @endcan
                          </div>
                          <div class="card-body">
                              @include('publico.capitanias.table')

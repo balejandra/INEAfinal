@@ -24,12 +24,17 @@
             <td>{{ $menu->icono }}</td>
             <td>{{ $menu->enabled }}</td>
             <td>
+                @can('consultar-menu')
                 <a class="btn btn-sm btn-success" href="  {{ route('menus.show', [$menu->id]) }}">
                     <i class="fa fa-search"></i>
                 </a>
+                @endcan
+                @can('editar-menu')
                 <a class="btn btn-sm btn-info" href=" {{ route('menus.edit', [$menu->id]) }}">
                     <i class="fa fa-edit"></i>
                 </a>
+                @endcan
+                 @can('eliminar-menu')
                 <div class='btn-group'>
                     {!! Form::open(['route' => ['menus.destroy', $menu->id], 'method' => 'delete']) !!}
 
@@ -37,6 +42,7 @@
 
                     {!! Form::close() !!}
                 </div>
+                @endcan
                 <!-- Modal -->
                 <div class="modal fade" id="deletemodal{{$menu->id}}" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

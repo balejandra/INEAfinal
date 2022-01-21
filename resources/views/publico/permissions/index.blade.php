@@ -26,9 +26,11 @@
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>
                             <strong>Permisos</strong>
+                            @can('crear-permiso')
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btm-sm" href="{{ route('permissions.create') }}">Nuevo</a>
                             </div>
+                            @endcan
                         </div>
                         <div class="card-body">
 
@@ -53,10 +55,15 @@
                                                 {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete']) !!}
                                                 <div class='btn-group'>
                                                    <!-- <a href="{{ route('permissions.show', [$permission->id]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a> -->
+                                                   @can('editar-permiso')
                                                     <a href="{{ route('permissions.edit', [$permission->id]) }}" class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
+                                                    @endcan
+                                                    @can('eliminar-permiso')
                                                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Realmente desera eliminar este permiso?')"]) !!}
+                                                     {!! Form::close() !!}
+                                                    @endcan
                                                 </div>
-                                                {!! Form::close() !!}
+                                               
                                             </td>
                                         </tr>
                                     @empty
