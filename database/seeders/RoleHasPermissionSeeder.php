@@ -29,15 +29,20 @@ class RoleHasPermissionSeeder extends Seeder
         
          //Admin
         $admin_permissions=$superadmin_permissions->filter(function($permission){
-            return substr($permission->name, -10) != '-usuario';
-            return substr($permission->name, -10) != '-capitania';
-            });
+            $name=explode('-', $permission->name);
+            if($name[1] == 'usuario' ||  $name[1] == 'capitania'){
+                return $permission->name;
+            }
+        });
         Role::findOrFail(3)->permissions()->sync($admin_permissions->pluck('id'));
 
         //Capitan
         $capitan_permissions=$superadmin_permissions->filter(function($permission){
-            return substr($permission->name, -10) != '-capitania';
-            });
+            $name=explode('-', $permission->name);
+            if($name[1] == 'capitania'){
+                return $permission->name;
+            }
+        });
         Role::findOrFail(4)->permissions()->sync($capitan_permissions->pluck('id'));
 
 
