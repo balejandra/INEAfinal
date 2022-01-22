@@ -16,13 +16,13 @@ class CreateMenusRolesTable extends Migration
 
             Schema::create('menus_roles', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('role_id');
-                $table->foreign('role_id', 'fk_menurol_roles')->references('id')->on('roles')
-                    ->onDelete('restrict')
-                    ->onUpdate('restrict');
                 $table->unsignedBigInteger('menu_id');
                 $table->foreign('menu_id', 'fk_menurol_menu')->references('id')->on('menus')
                     ->onDelete('cascade')
+                    ->onUpdate('restrict');
+                $table->unsignedBigInteger('role_id');
+                $table->foreign('role_id', 'fk_menurol_roles')->references('id')->on('roles')
+                    ->onDelete('restrict')
                     ->onUpdate('restrict');
                 $table->timestamps();
                 $table->softDeletes();

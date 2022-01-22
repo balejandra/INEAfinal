@@ -17,7 +17,7 @@ class UserExtSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'UserExt']);
+        Role::create(['name' => 'Web']);
         $user = User::create([
             'nombres' => 'Pedro',
             'apellidos' => 'Perez',

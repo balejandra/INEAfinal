@@ -28,7 +28,6 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer("partials.menu.menu", function ($view) {
             $menus = Menu::getMenu(true);
-            //dd($menus);
             $view->with('menus', $menus);
         });
        // View::share('partials', 'menu');

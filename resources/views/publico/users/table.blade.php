@@ -5,6 +5,7 @@
         <th>Email</th>
         <th>Nombres</th>
         <th>Iniciales</th>
+        
                 <th colspan="3">Acciones</th>
             </tr>
         </thead>

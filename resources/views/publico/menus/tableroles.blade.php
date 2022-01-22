@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">Menu Rols</li>
+        <li class="breadcrumb-item">Menu Roles</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
@@ -14,13 +14,28 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>
-                            Menu_rols
-                            <a class="pull-right" href="{{ route('menuRols.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
+                            Roles en los Menus
                         </div>
                         <div class="card-body">
-                            @include('publico.menu_rols.table')
-                            <div class="pull-right mr-3">
-
+                            <div class="table-responsive-sm">
+                                <table class="table table-responsive-sm table-bordered table-striped " id="menusroles-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Menu</th>
+                                        <th>Rol Asociado</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($menuRols as $menuRol)
+                                        <tr>
+                                            <td>{{ $menuRol->id }}</td>
+                                            <td>{{ $menuRol->name_menu}}</td>
+                                            <td>{{ $menuRol->name_role}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
