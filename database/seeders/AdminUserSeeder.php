@@ -17,7 +17,6 @@ class AdminUserSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'admin']);
         $user = User::create([
             'nombres' => 'admin',
             'apellidos' => 'admin',
@@ -30,7 +29,7 @@ class AdminUserSeeder extends Seeder
             'tipo_usuario' => 'interno'
 
         ]);
-        $user->assignRole('admin');
+        $user->assignRole('Super Admin');
 
     }
 }
