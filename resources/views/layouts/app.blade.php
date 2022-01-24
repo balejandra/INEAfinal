@@ -41,17 +41,8 @@
 <script src="{{asset('assets/coreui/perfect-scrollbar.js')}}"></script>
 <script src="{{asset('assets/jquery/moment.min.js')}}"></script>
 <script src="{{asset('assets/bootstrap/js/dist/bootstrap-datetimepicker.min.js')}}"></script>
-<<<<<<< HEAD
-<script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('js/dataTables.bootstrap4.js')}}"></script>
-
-<script src="{{asset('js/functions.js')}}"></script>
-
-
-=======
 <script src="{{asset('assets/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/datatables/dataTable.bootstrap4.js')}}"></script>
 
 <script src="{{asset('js/functions.js')}}"></script>
->>>>>>> 946a5ec3f8ba2e8de7f6efbb3b7bbe5635983500
 </html>

@@ -9,11 +9,12 @@ use Illuminate\Support\Collection;
 use Spatie\Permission\Contracts\Permission;
 use Spatie\Permission\Contracts\Role;
 use Spatie\Permission\PermissionRegistrar;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 trait HasRoles
 {
     use HasPermissions;
-
+    use SoftDeletes;
     /** @var string */
     private $roleClass;
 

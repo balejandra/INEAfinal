@@ -52,15 +52,17 @@ class MenuController extends AppBaseController
      */
     public function create()
     {
-        $roles=Role::pluck('name','id');
+       // $roles=Role::pluck('name','id');
 
         $parents= Menu::where('enabled',1)->orderBy('id')->get();
         $noparent=['0' => 'Menu Padre'];
         $parents2=$parents->pluck('name','id','description')->toArray();
         $parent=$noparent+$parents2;
 
+        $menuRols = Role::selectRaw(" roles.*, '' as checked")->get();
+
         return view('publico.menus.create')
-            ->with('roles',$roles)
+            ->with('roles',$menuRols)
             ->with('parent',$parent);
     }
 
@@ -118,7 +120,7 @@ class MenuController extends AppBaseController
     public function edit($id)
     {
 
-        $roles=Role::pluck('name','id');
+       // $roles=Role::pluck('name','id');
 
         $parents= Menu::where('enabled',1)->orderBy('id')->get();
         $noparent=['0' => 'Menu Padre'];
@@ -133,10 +135,19 @@ class MenuController extends AppBaseController
             return redirect(route('menus.index'));
         }
 
+        $menuRols = Role::selectRaw(" roles.name as name, roles.id as id,menus_roles.menu_id, menus_roles.role_id,(CASE WHEN menus_roles.role_id = roles.id THEN 'checked' ELSE '' END) AS
+        checked")
+            ->leftJoin('menus_roles', function ($join) use ($id) {
+                $join->on('roles.id', '=', 'menus_roles.role_id')
+                    ->where('menus_roles.menu_id', '=', $id);
+            })
+            ->get();
+
         return view('publico.menus.edit')
             ->with('menu', $menu)
-            ->with('roles',$roles)
-            ->with('parent',$parent);
+           // ->with('roles',$roles)
+            ->with('parent',$parent)
+            ->with('roles',$menuRols);
     }
 
     /**
@@ -156,15 +167,15 @@ class MenuController extends AppBaseController
 
             return redirect(route('menus.index'));
         }
-
-        $menu = $this->menuRepository->update($request->all(), $id);
+        var_dump($request['role']);
+        /*$menu = $this->menuRepository->update($request->all(), $id);
         $role=new Menu();
-        $roles1=$request['roles'];
-        $roles = $role->roles()->sync([$roles1,$id]);
+        $roles1=$request['role'];
+        $roles = $role->roles()->sync([$roles1,$id]);*/
 
         Flash::success('Menú actualizado correctamente.');
 
-        return redirect(route('menus.index'));
+       // return redirect(route('menus.index'));
     }
 
     /**
