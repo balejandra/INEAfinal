@@ -57,7 +57,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'nombres' => ['required', 'string', 'max:255'],
             'apellidos' => ['string', 'max:255'],
-            'tipo_documento' => ['required','string', 'max:20'],
+            'tipo_identificacion' => ['required','string', 'max:20'],
             'numero_identificacion' => ['required','string', 'max:20'],
             'fecha_nacimiento' => ['date', 'max:50'],
             'telefono' => ['required', 'string', 'max:20'],
@@ -77,10 +77,11 @@ class RegisterController extends Controller
      */
     protected function create(array $input)
     {
+        if ($input['tipo_persona']=="natural"){
         $user = User::create([
             'nombres' => $input['nombres'],
             'apellidos' => $input['apellidos'],
-            'tipo_documento' => $input['tipo_documento'],
+            'tipo_identificacion' => $input['tipo_identificacion'],
             'numero_identificacion' => $input['numero_identificacion'],
             'fecha_nacimiento' => $input['fecha_nacimiento'],
             'telefono' => $input['telefono'],
@@ -93,6 +94,22 @@ class RegisterController extends Controller
         $user->roles()->sync($role->id);
         event(new Registered($user));
         return $user;
+        }else if($input['tipo_persona']=="juridica"){
+            $user = User::create([
+                'nombres' => $input['nombres'],
+                'tipo_identificacion' => $input['tipo_identificacion'],
+                'numero_identificacion' => $input['numero_identificacion'],
+                'telefono' => $input['telefono'],
+                'direccion' => $input['direccion'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                'tipo_usuario' => 'Usuario web'
+            ]);
+            $role = Role::where('name', 'Usuario web')->first();
+            $user->roles()->sync($role->id);
+            event(new Registered($user));
+            return $user;
+        }
     }
 
 
