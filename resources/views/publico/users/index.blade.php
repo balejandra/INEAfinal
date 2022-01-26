@@ -19,7 +19,7 @@
                             <strong>Usuarios</strong>
                             @can('crear-usuario')
                             <div class="card-header-actions">
-                                <a class="btn btn-primary btm-sm"  href="{{ route('users.create') }}">Nuevo</a>
+                                <a class="btn btn-primary btn-sm"  href="{{ route('users.create') }}">Nuevo</a>
                             </div>
                             @endcan
                         </div>

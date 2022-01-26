@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\DB;
 use Response;
+use App\Models\Publico\Menu;
+use App\Models\Publico\Menu_rol;
+
 class Menu_rolController extends AppBaseController
 {
     /** @var  Menu_rolRepository */
@@ -32,14 +35,28 @@ class Menu_rolController extends AppBaseController
 
 
         $menuRols = DB::table('menus_roles')
-            ->select('menus_roles.id','menus.name as name_menu', 'roles.name as name_role')
+            ->select('menus_roles.*','menus.name as name_menu', 'roles.name as name_role')
             ->Join('menus', 'menus.id', '=', 'menus_roles.menu_id')
             ->Join('roles', 'roles.id', '=', 'menus_roles.role_id')
+            ->orderBy('name_menu','ASC')
             ->get();
+        
+        $count=Menu::select(DB::raw('count(menus.name) as rowspan'), 'menus.name')
+        ->Join('menus_roles', 'menus.id', '=', 'menus_roles.menu_id')
+        ->groupBy('menus.name')
+        ->orderBy('name','ASC')
+        ->get();
 
+        $datos=[];
+        foreach ($count as $value) {
+            $datos[$value->name]=$value->rowspan;
+        }
 
         return view('publico.menus.tableroles')
-            ->with('menuRols', $menuRols);
+        ->with('menuRols', $menuRols)
+        ->with('rowspan', $datos)
+        ->with('count', $count);
+
     }
 
     /**

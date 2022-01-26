@@ -20,6 +20,8 @@
             </div>
         @endif
 
+
+
              <div class="row">
                  <div class="col-lg-12">
                      <div class="card">
@@ -28,7 +30,7 @@
                             <strong>Roles</strong>
                                  @can('crear-rol')
                                 <div class="card-header-actions">
-                                    <a class="btn btn-primary btm-sm"  href="{{ route('roles.create') }}">Nuevo</a>
+                                    <a class="btn btn-primary btn-sm"  href="{{ route('roles.create') }}">Nuevo</a>
                                 </div>
                                 @endcan
                                 
