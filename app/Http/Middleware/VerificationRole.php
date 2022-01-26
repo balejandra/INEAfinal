@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Closure;
-class verificationRole extends Middleware
+class VerificationRole extends Middleware
 {
     /**
      * Handle an incoming request.
