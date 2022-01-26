@@ -32,6 +32,7 @@ return array(
     'App\\Http\\Middleware\\TrustHosts' => $baseDir . '/app/Http/Middleware/TrustHosts.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Http\\Middleware\\role' => $baseDir . '/app/Http/Middleware/role.php',
     'App\\Http\\Requests\\Publico\\CreateCapitaniaRequest' => $baseDir . '/app/Http/Requests/Publico/CreateCapitaniaRequest.php',
     'App\\Http\\Requests\\Publico\\CreateMenuRequest' => $baseDir . '/app/Http/Requests/Publico/CreateMenuRequest.php',
     'App\\Http\\Requests\\Publico\\CreateMenu_rolRequest' => $baseDir . '/app/Http/Requests/Publico/CreateMenu_rolRequest.php',

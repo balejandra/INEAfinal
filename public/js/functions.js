@@ -1,41 +1,75 @@
+
+
 //-------------------Datatables----------------------------
 
-$(document).ready(function() {
-    $('#TablePermissions').DataTable({
-    	 "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": false,
-      "info": true,
-      "autoWidth": true,
-    });
-
-} );
 
 $(document).ready(function() {
     $('#TableRoles').DataTable({
-    	"paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": false,
-      "info": true,
-      "autoWidth": true,
-<<<<<<< HEAD
-=======
-        "buttons": [
-            "copy",
-            "csv",
-            "xls",
-            "pdf",
-            { "type": "print", "buttonText": "Print me!" }
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
         ]
->>>>>>> 946a5ec3f8ba2e8de7f6efbb3b7bbe5635983500
     });
 } );
 
 
-<<<<<<< HEAD
-//------------------Fin de datadables------------------------
-=======
-//------------------Fin de datadables------------------------
->>>>>>> 946a5ec3f8ba2e8de7f6efbb3b7bbe5635983500
+$(document).ready(function() {
+    $('#TablePermissions').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+} );
+
+$(document).ready(function() {
+    $('#TableMenus').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+} );
+
+$(document).ready(function() {
+    $('#users-table').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+} );
+
+$(document).ready(function() {
+    $('#capitanias-table').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+} );

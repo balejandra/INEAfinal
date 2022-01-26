@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -17,12 +18,16 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+
+Route::get('error', function (){
+    return view('auth.error');
+})->name('error');
 
 
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verified');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth' , 'verified'])->group(function () {
     Route::resource('menus', \App\Http\Controllers\Publico\MenuController::class)->middleware('auth');
 
     Route::resource('menuRols', \App\Http\Controllers\Publico\Menu_rolController::class);

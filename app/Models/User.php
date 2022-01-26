@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,11 +12,10 @@ use Spatie\Permission\Traits\HasRoles;
 use OwenIt\Auditing\Contracts\Auditable;
 
 
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
     use HasFactory, Notifiable;
     use HasRoles;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     /**

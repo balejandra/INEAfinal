@@ -598,6 +598,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Middleware\\role' => __DIR__ . '/../..' . '/app/Http/Middleware/role.php',
         'App\\Http\\Requests\\Publico\\CreateCapitaniaRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Publico/CreateCapitaniaRequest.php',
         'App\\Http\\Requests\\Publico\\CreateMenuRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Publico/CreateMenuRequest.php',
         'App\\Http\\Requests\\Publico\\CreateMenu_rolRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Publico/CreateMenu_rolRequest.php',
