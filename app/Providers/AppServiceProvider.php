@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        
         View::composer("partials.menu.menu", function ($view) {
             $menus = Menu::getMenu(true);
             $view->with('menus', $menus);

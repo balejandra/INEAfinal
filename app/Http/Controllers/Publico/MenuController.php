@@ -105,13 +105,25 @@ class MenuController extends AppBaseController
     {
         $menu = $this->menuRepository->find($id);
 
+        $parents= Menu::where('enabled',1)->orderBy('id')->get();
+        $noparent=['0' => 'Menu Padre'];
+        $parents2=$parents->pluck('name','id','description')->toArray();
+        $parent=$noparent+$parents2;
+
+        $menuRols = Role::selectRaw(" roles.name as name, roles.id as id,menus_roles.menu_id, menus_roles.role_id,(CASE WHEN menus_roles.role_id = roles.id THEN 'checked' ELSE '' END) AS
+        checked")
+            ->leftJoin('menus_roles', function ($join) use ($id) {
+                $join->on('roles.id', '=', 'menus_roles.role_id')
+                    ->where('menus_roles.menu_id', '=', $id);
+            })
+            ->get();
         if (empty($menu)) {
             return redirect()->route('menus.index')->with('error','Menu no encontrado'); 
 
             //return redirect(route('menus.index'));
         }
 
-        return view('publico.menus.show')->with('menu', $menu);
+        return view('publico.menus.show')->with('menu', $menu)->with('parent', $parent)->with('menuRols', $menuRols);
     }
 
     /**

@@ -16,7 +16,7 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Consultar Menu {{$menu->name}}</strong>
+                                 <strong>Consultar Menu  - {{$menu->name}}</strong>
                                  <div class="card-header-actions">
                                      <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
                                  </div>
