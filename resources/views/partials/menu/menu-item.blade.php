@@ -22,15 +22,7 @@
                 @else
                     @include('partials.menu.menu-item', [ 'item' => $submenu ])
                 @endif
-                    <script>
-                        $(document).ready(function(){
-                            $("#hijo{{$submenu['id']}}").on("click",function(){
-                                $("#hijo{{$submenu['id']}}").removeClass("active");
-                                $(this).addClass("active");
-                                $("submenu{{$item['id']}}").addClass("show");
-                            })
-                        })
-                    </script>
+
             @endforeach
         </ul>
     </li>

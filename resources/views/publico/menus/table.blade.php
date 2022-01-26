@@ -1,16 +1,15 @@
-<table class="table table-responsive-sm table-bordered table-striped " id="menus-table">
+<table class="table table-responsive-sm table-bordered table-striped " id="TableMenus">
     <thead>
-    <tr>
+
         <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
+        <th>Nombre</th>
+        <th>Descripcion</th>
         <th>Url</th>
-        <th>Parent</th>
-        <th>Order</th>
+        <th>Padre</th>
+        <th>Orden</th>
         <th>Icono</th>
-        <th>Enabled</th>
-        <th colspan="3">Action</th>
-    </tr>
+        <th>Habilitado</th>
+        <th>Acciones</th>
     </thead>
     <tbody>
     @foreach($menus as $menu)

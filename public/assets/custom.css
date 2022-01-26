@@ -24,3 +24,18 @@ img.nav-avatar {
 .active {
     background-color: #1c549a;
 }
+
+.btn-secondary, .btn-secondary:active {
+    background-color: #20a8d8 !important;
+    border-color: #20a8d8 !important;
+    color: #fff !important;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
+}
+
+.dataTables_length{
+    padding-top: 20px;
+}
+
+.form-select {
+    font-size: .875rem !important;
+}

@@ -1,22 +1,34 @@
-@extends('layouts.app')
-
+@extends('layouts.auth')
+@section("titulo")
+    Confirmar Correo
+@endsection
 @section('content')
-    <div class="container">
+
         <div class="row justify-content-center">
-            <div class="col-md-8" style="margin-top: 2%">
-                <div class="card" style="width: 40rem;">
-                    <div class="card-body">
-                        <h4 class="card-title">Verify Your Email Address</h4>
+
+            <div class="col-md-8">
+              <span>
+                    <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">
+                </span>
+                <div class="card" >
+                    <div class="card-body text-center">
+                        <h4 class="card-title ">{{__('Verify Your Email Address')}}</h4>
                         @if (session('resent'))
-                            <p class="alert alert-success" role="alert">A fresh verification link has been sent to
-                                your email address</p>
+                            <p class="alert alert-success" role="alert">{{__('A fresh verification link has been sent to your email address.')}}</p>
                         @endif
-                        <p class="card-text">Before proceeding, please check your email for a verification link.If you
-                            did not receive the email,</p>
-                        <a href="{{ route('verification.resend') }}">click here to request another</a>.
+                        <p class="card-text text-left">{{__('Before proceeding, please check your email for a verification link.')}}</p>
+                        <p class="card-text text-left">{{__('If you did not receive the email')}} {{__('click here to request another')}}</p>
+
+                        <form method="POST" action="{{ route('verification.resend') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="align-content-center">
+                                <button type="submit" class="btn btn-primary px-4">{{ __('Send Email') }}</button>
+                            </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 @endsection

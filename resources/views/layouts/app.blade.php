@@ -16,7 +16,10 @@
     <link href="{{asset('assets/simplelineicons.github/css/simple-line-icons.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/flag-icons-master/css/flag-icon.css')}}">
     <link rel="stylesheet" href="{{asset('assets/custom.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/bootstrap/dataTables.bootstrap4.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/DataTables/datatables.css')}}">
+
+
+
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header>
@@ -35,14 +38,12 @@
 </body>
 @stack('scripts')
 <script src="{{asset('assets/jquery/jquery-3.6.0.min.js')}}"></script>
+<script src="{{asset('assets/DataTables/datatables.js')}}"></script>
 <script src="{{asset('assets/jquery/popper.min.js')}}"></script>
 <script src="{{asset('assets/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/coreui/coreui.min.js')}}"></script>
 <script src="{{asset('assets/coreui/perfect-scrollbar.js')}}"></script>
 <script src="{{asset('assets/jquery/moment.min.js')}}"></script>
 <script src="{{asset('assets/bootstrap/js/dist/bootstrap-datetimepicker.min.js')}}"></script>
-<script src="{{asset('assets/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/datatables/dataTable.bootstrap4.js')}}"></script>
-
 <script src="{{asset('js/functions.js')}}"></script>
 </html>

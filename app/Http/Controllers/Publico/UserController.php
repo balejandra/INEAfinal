@@ -21,13 +21,13 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepo)
     {
         $this->userRepository = $userRepo;
-         
- 
+
+
         $this->middleware('permission:listar-usuario', ['only'=>['index'] ]);
         $this->middleware('permission:crear-usuario', ['only'=>['create','store']]);
         $this->middleware('permission:editar-usuario', ['only'=>['edit','update']]);
         $this->middleware('permission:consultar-usuario', ['only'=>['show'] ]);
-        $this->middleware('permission:eliminar-usuario', ['only'=>['destroy'] ]);  
+        $this->middleware('permission:eliminar-usuario', ['only'=>['destroy'] ]);
     }
 
     /**
@@ -70,6 +70,7 @@ class UserController extends Controller
         $data->nombres = $request->nombres;
         $data->password = Hash::make($request->password);
         $data->tipo_usuario=$request->tipo_usuario;
+        $data->email_verified_at= now();
         $data->save();
         $input = $request->all();
 

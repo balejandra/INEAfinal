@@ -14,7 +14,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 trait HasRoles
 {
     use HasPermissions;
-    use SoftDeletes;
+
+
     /** @var string */
     private $roleClass;
 
