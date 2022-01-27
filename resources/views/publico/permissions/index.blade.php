@@ -27,9 +27,9 @@
                             <i class="fa fa-align-justify"></i>
                             <strong>Permisos</strong>
                             @can('crear-permiso')
-                                <div class="card-header-actions">
-                                    <a class="btn btn-primary btm-sm" href="{{ route('permissions.create') }}">Nuevo</a>
-                                </div>
+                            <div class="card-header-actions">
+                                <a class="btn btn-primary btn-sm" href="{{ route('permissions.create') }}">Nuevo</a>
+                            </div>
                             @endcan
                         </div>
                         <div class="card-body">

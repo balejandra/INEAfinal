@@ -17,7 +17,7 @@
                              <strong>Capitanias</strong>
                               @can('consultar-capitania')
                              <div class="card-header-actions">
-                                 <a class="btn btn-primary btm-sm"  href="{{ route('capitanias.create') }}">Nuevo</a>
+                                 <a class="btn btn-primary btn-sm"  href="{{ route('capitanias.create') }}">Nuevo</a>
                              </div>
                               @endcan
                          </div>

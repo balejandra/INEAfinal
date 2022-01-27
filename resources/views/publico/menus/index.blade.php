@@ -8,7 +8,14 @@
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-             @include('flash::message')
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" id="msj" role="success">
+                <button type="button" class="close success-op" data-dismiss="alert" aria-label="close">
+                    &times;
+                </button>
+                {{session('success')}}
+            </div>
+        @endif
 
 
              <div class="row">
@@ -19,9 +26,9 @@
                              <strong>Menus</strong>
                              <div class="card-header-actions">
                                  @can('crear-menu')
-                                 <a class="btn btn-primary btm-sm"  href="{{ route('menus.create') }}">Nuevo</a>
+                                 <a class="btn btn-primary btn-sm"  href="{{ route('menus.create') }}">Nuevo</a>
                                  @endcan
-                                  <a class="btn btn-primary btm-sm"  href="{{ route('menuRols.index') }}">Listado de Roles y Menus</a>
+                                  <a class="btn btn-primary btn-sm"  href="{{ route('menuRols.index') }}">Listado de Roles y Menus</a>
                              </div>
                          </div>
                          <div class="card-body">

@@ -2,7 +2,7 @@
 
 namespace App\Models\Publico;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -62,7 +62,7 @@ class Menu_rol extends Model implements Auditable
      **/
     public function menus()
     {
-        return $this->belongsToMany(Menu::class,'menus_roles','menu_id');
+        return $this->belongsToMany(Menu::class,'menus_roles','menu_id')->withPivot('name');
     }
 
     /**
@@ -70,7 +70,7 @@ class Menu_rol extends Model implements Auditable
      **/
     public function roles()
     {
-        return $this->belongsToMany(Role::class,'menus_roles','role_id','menu_id');
+        return $this->belongsToMany(Role::class,'menus_roles','role_id','menu_id')->withPivot('name');;
     }
 
 }

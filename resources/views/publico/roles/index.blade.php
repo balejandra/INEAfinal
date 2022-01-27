@@ -8,27 +8,29 @@
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-            @include('flash::message')
+             @include('flash::message')
 
 
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" id="msj" role="success">
-                    <button type="button" class="close success-op" data-dismiss="alert" aria-label="close">
-                        &times;
-                    </button>
-                    {{session('success')}}
-                </div>
-            @endif
+              @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" id="msj" role="success">
+                <button type="button" class="close success-op" data-dismiss="alert" aria-label="close">
+                    &times;
+                </button>
+                {{session('success')}}
+            </div>
+        @endif
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fa fa-align-justify"></i>
+
+
+             <div class="row">
+                 <div class="col-lg-12">
+                     <div class="card">
+                         <div class="card-header">
+                             <i class="fa fa-align-justify"></i>
                             <strong>Roles</strong>
                             @can('crear-rol')
                                 <div class="card-header-actions">
-                                    <a class="btn btn-primary btm-sm" href="{{ route('roles.create') }}">Nuevo</a>
+                                    <a class="btn btn-primary btn-sm"  href="{{ route('roles.create') }}">Nuevo</a>
                                 </div>
                             @endcan
 
