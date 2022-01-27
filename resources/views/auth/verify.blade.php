@@ -19,14 +19,22 @@
                         <p class="card-text text-left">{{__('Before proceeding, please check your email for a verification link.')}}</p>
                         <p class="card-text text-left">{{__('If you did not receive the email')}} {{__('click here to request another')}}</p>
 
-                        <form method="POST" action="{{ route('verification.resend') }}">
-                            @csrf
+
                             <div class="row">
-                                <div class="align-content-center">
+                                <div class="col-6">
+                                    <form method="POST" action="{{ route('verification.resend') }}">
+                                        @csrf
                                 <button type="submit" class="btn btn-primary px-4">{{ __('Send Email') }}</button>
+                                    </form>
                             </div>
+                                <div class="col-6">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary px-4" href="{{route('logout')}}">Ir a Inicio de Sesion</button>
+                                    </form>
+                                </div>
                             </div>
-                        </form>
+
                     </div>
                 </div>
             </div>

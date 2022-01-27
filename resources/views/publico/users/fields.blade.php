@@ -12,8 +12,11 @@
 
 <!-- Password Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('password', 'Password:') !!}
-    {!! Form::text('password',null, ['class' => 'form-control' ]) !!}
+    {!! Form::label('password', 'Contraseña:') !!}
+    <input type="password" class="form-control" id="password" name="password" value="{{$user->password}}">
+    {!! Form::label('password', 'Confirmar Contraseña:') !!}
+    <input type="password" name="password_confirmation" class="form-control"
+           placeholder={{ __('Confirm Password') }}>
 </div>
 
 

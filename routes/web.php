@@ -24,6 +24,7 @@ Route::get('error', function (){
     return view('auth.error');
 })->name('error');
 
+Route::get('consultasaime',[\App\Http\Controllers\Publico\UserController::class,'consulta'])->name('consultasaime');
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verified');
 
@@ -52,6 +53,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::delete('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'destroy'])->name('roles.destroy');
 
     Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
+
 });
 
 

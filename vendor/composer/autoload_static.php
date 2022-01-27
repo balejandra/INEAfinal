@@ -59,6 +59,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'T' => 
         array (
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
+            'Tightenco\\Ziggy\\' => 16,
             'Tests\\' => 6,
         ),
         'S' => 
@@ -213,6 +214,10 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
             0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
+        ),
+        'Tightenco\\Ziggy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tightenco/ziggy/src',
         ),
         'Tests\\' => 
         array (
@@ -597,8 +602,8 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
+        'App\\Http\\Middleware\\VerificationRole' => __DIR__ . '/../..' . '/app/Http/Middleware/VerificationRole.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Http\\Middleware\\role' => __DIR__ . '/../..' . '/app/Http/Middleware/role.php',
         'App\\Http\\Requests\\Publico\\CreateCapitaniaRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Publico/CreateCapitaniaRequest.php',
         'App\\Http\\Requests\\Publico\\CreateMenuRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Publico/CreateMenuRequest.php',
         'App\\Http\\Requests\\Publico\\CreateMenu_rolRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Publico/CreateMenu_rolRequest.php',
@@ -5630,6 +5635,10 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
+        'Tightenco\\Ziggy\\BladeRouteGenerator' => __DIR__ . '/..' . '/tightenco/ziggy/src/BladeRouteGenerator.php',
+        'Tightenco\\Ziggy\\CommandRouteGenerator' => __DIR__ . '/..' . '/tightenco/ziggy/src/CommandRouteGenerator.php',
+        'Tightenco\\Ziggy\\Ziggy' => __DIR__ . '/..' . '/tightenco/ziggy/src/Ziggy.php',
+        'Tightenco\\Ziggy\\ZiggyServiceProvider' => __DIR__ . '/..' . '/tightenco/ziggy/src/ZiggyServiceProvider.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Processor.php',

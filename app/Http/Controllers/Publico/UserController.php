@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Publico\CreateUserRequest;
 use App\Http\Requests\Publico\UpdateUserRequest;
+use App\Models\Publico\Saime_cedula;
 use App\Models\User;
 use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
@@ -175,5 +176,23 @@ class UserController extends Controller
         Flash::success('Usuario eliminado exitosamente.');
 
         return redirect(route('users.index'));
+    }
+
+    public function consulta(Request $request){
+        $cedula=$_REQUEST['cedula'];
+        $fecha=$_REQUEST['fecha'];
+        $newDate = date("d/m/Y", strtotime($fecha));
+        $data= Saime_cedula::where('cedula',$cedula)
+            ->where('fecha_nacimiento',$newDate)
+            ->get();
+        if (is_null($data->first())) {
+            dd('error');
+            $data=response()->json([
+                'status'=>3,
+                'msg' => $exception->getMessage(),
+                'errors'=>[],
+            ], 200);
+        }
+            echo json_encode($data);
     }
 }
