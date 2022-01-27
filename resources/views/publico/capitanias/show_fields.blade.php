@@ -1,24 +1,24 @@
-<!-- Nombre Field -->
-<div class="form-group">
-    {!! Form::label('nombre', 'Nombre:') !!}
-    <p>{{ $capitania->nombre }}</p>
-</div>
 
-<!-- Sigla Field -->
-<div class="form-group">
-    {!! Form::label('sigla', 'Sigla:') !!}
-    <p>{{ $capitania->sigla }}</p>
-</div>
+<table class="table">
+    <tbody>
+        <tr>
+            <th class="bg-light">Nombre</th>
+            <td>{{ $capitania->nombre }}</td>
+        </tr>
+        <tr>
+            <th class="bg-light">Siglas</th>
+            <td>{{ $capitania->sigla }}</td>
+        </tr>
+       
+        <tr>
+            <th class="bg-light" style="width:25%">Latitud</th>
+            <td>{{ $capitania->latitud }}</td>
+        </tr>
+        
+        <tr>
+            <th class="bg-light">Longitud</th>
+            <td>{{ $capitania->longitud }}</td>
+        </tr>
 
-<!-- Created At Field -->
-<div class="form-group">
-    {!! Form::label('created_at', 'Creado:') !!}
-    <p>{{ $capitania->created_at }}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="form-group">
-    {!! Form::label('updated_at', 'Actualizado:') !!}
-    <p>{{ $capitania->updated_at }}</p>
-</div>
-
+    </tbody>
+</table>
