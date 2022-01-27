@@ -7,7 +7,7 @@
         <li class="breadcrumb-item">
             <a href="{{ route('users.index') }}">Usuario</a>
         </li>
-        <li class="breadcrumb-item active">Consulta</li>
+        <li class="breadcrumb-item active1">Consulta</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">

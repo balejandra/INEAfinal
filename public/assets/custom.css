@@ -39,3 +39,10 @@ img.nav-avatar {
 .form-select {
     font-size: .875rem !important;
 }
+
+.table-audit td {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

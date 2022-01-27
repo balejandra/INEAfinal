@@ -1,11 +1,13 @@
 @extends('layouts.app')
-
+@section("titulo")
+    Roles
+@endsection
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{!! route('roles') !!}">Roles</a>
         </li>
-        <li class="breadcrumb-item active">Editar</li>
+        <li class="breadcrumb-item active1">Editar</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
@@ -61,7 +63,7 @@
                                                         </div>
                                                     </div>
 
-                            
+
                                                 @endforeach
                                             </div>
                                         </div>

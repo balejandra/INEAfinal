@@ -7,7 +7,7 @@
         <li class="breadcrumb-item">
             <a href="{!! route('permissions') !!}">Permisos</a>
         </li>
-        <li class="breadcrumb-item active">Modificar</li>
+        <li class="breadcrumb-item active1">Modificar</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">

@@ -54,6 +54,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
 
+    Route::resource('auditables', \App\Http\Controllers\Publico\AuditsController::class);
+
 });
 
 
