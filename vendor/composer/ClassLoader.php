@@ -108,6 +108,9 @@ class ClassLoader
         $this->vendorDir = $vendorDir;
     }
 
+    /**
+     * @return string[]
+     */
     public function getPrefixes()
     {
         if (!empty($this->prefixesPsr0)) {
