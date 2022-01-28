@@ -84,7 +84,7 @@ class CapitaniaController extends AppBaseController
             }
         }
 
-        Flash::success('Capitanía guardado con éxito.');
+        //Flash::success('Capitanía guardado con éxito.');
 
         return redirect(route('capitanias.index'))->with('success','Capitanía guardado con éxito.'); 
     }
@@ -102,9 +102,9 @@ class CapitaniaController extends AppBaseController
         $coords=Coordenas_capitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenas_capitania.capitania_id', '=', $id)->get();
 
         if (empty($capitania)) {
-            Flash::error('Capitania no encontrada');
+            //Flash::error('Capitania no encontrada');
 
-            return redirect(route('capitanias.index'));
+            return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada'); 
         }
 
        
@@ -125,9 +125,9 @@ class CapitaniaController extends AppBaseController
         $coords=Coordenas_capitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenas_capitania.capitania_id', '=', $id)->get();
 
         if (empty($capitania)) {
-            Flash::error('Capitania no encontrada');
+            //Flash::error('Capitania no encontrada');
 
-            return redirect(route('capitanias.index'));
+            return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada');
         }
 
         return view('publico.capitanias.edit')
@@ -182,15 +182,15 @@ class CapitaniaController extends AppBaseController
         $capitania = $this->capitaniaRepository->find($id);
 
         if (empty($capitania)) {
-            Flash::error('Capitania no encontrada');
+        //    Flash::error('Capitania no encontrada');
 
-            return redirect(route('capitanias.index'));
+            return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada'); ;
         }
 
         $this->capitaniaRepository->delete($id);
 
-        Flash::success('Capitania eliminada con éxito.');
+        //Flash::success('Capitania eliminada con éxito.');
 
-        return redirect(route('capitanias.index'));
+        return redirect(route('capitanias.index'))->with('success','Capitanía eliminada con éxito.'); ;
     }
 }

@@ -35,9 +35,9 @@ class AuditsController extends Controller
         $auditable = Audit::find($id);
 
         if (empty($auditable)) {
-            Flash::error('Auditable not found');
+           // Flash::error('Auditable not found');
 
-            return redirect(route('auditables.index'));
+            return redirect(route('auditables.index'))->with('danger','Auditable not found');
         }
 
         return view('publico.audits.show')->with('auditable', $auditable);
