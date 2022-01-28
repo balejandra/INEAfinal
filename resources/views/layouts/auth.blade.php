@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{asset('assets/flag-icons-master/css/flag-icon.css')}}">
     <link rel="stylesheet" href="{{asset('assets/custom.css')}}">
     <link rel="stylesheet" href="{{asset('assets/fontawesome/css/all.css')}}">
+    @routes
     @stack('scripts')
 </head>
 <body class="app flex-row align-items-center">

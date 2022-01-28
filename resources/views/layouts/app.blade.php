@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="{{asset('assets/flag-icons-master/css/flag-icon.css')}}">
     <link rel="stylesheet" href="{{asset('assets/custom.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/DataTables/datatables.css')}}">
-
+    <link rel="stylesheet" href="{{asset('assets/fontawesome/css/all.css')}}">
+    @routes
 
 
 </head>
@@ -46,4 +47,5 @@
 <script src="{{asset('assets/jquery/moment.min.js')}}"></script>
 <script src="{{asset('assets/bootstrap/js/dist/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset('js/functions.js')}}"></script>
+<script src="{{asset('assets/fontawesome/js/all.js')}}"></script>
 </html>

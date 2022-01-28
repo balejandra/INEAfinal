@@ -1,11 +1,13 @@
 @extends('layouts.app')
-
+@section("titulo")
+    Usuarios
+@endsection
 @section('content')
     <ol class="breadcrumb">
           <li class="breadcrumb-item">
              <a href="{!! route('users.index') !!}">Usuarios</a>
           </li>
-          <li class="breadcrumb-item active">Editar</li>
+          <li class="breadcrumb-item active1">Editar</li>
         </ol>
     <div class="container-fluid">
          <div class="animated fadeIn">

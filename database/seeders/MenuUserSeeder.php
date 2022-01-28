@@ -70,6 +70,19 @@ class MenuUserSeeder extends Seeder
         ];
         DB::table('menus_roles')->insert($menuRols5);
 
+        $auditoria = Menu::create([
+            'name' => 'Auditorias',
+            'url' => 'auditables',
+            'order' => '3',
+            'parent' => $menuConfig['id'],
+            'icono'=>'fas fa-history',
+        ]);
+
+        $menuRols6 = [
+            array('role_id' => '1', 'menu_id' => $auditoria['id']),
+        ];
+        DB::table('menus_roles')->insert($menuRols6);
+
 
 /////PUBLICO///////
         $menuPublico = Menu::create([

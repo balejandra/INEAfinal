@@ -5,6 +5,7 @@ namespace App\Models\Publico;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Capitania
@@ -14,10 +15,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $nombre
  * @property string $sigla
  */
-class Capitania extends Model
+class Capitania extends Model implements Auditable
 {
     use SoftDeletes;
-
+    use \OwenIt\Auditing\Auditable;
     use HasFactory;
 
     public $table = 'capitanias';

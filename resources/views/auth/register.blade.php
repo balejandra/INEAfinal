@@ -26,7 +26,7 @@
                                         <div class="col-6 form-group">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="tipo_persona" id="natural" value="natural"
-                                                onclick="javascript:showContentNatural()" required>
+                                                onclick="javascript:showContentNatural()" required checked>
                                                 <label class="form-check-label" for="natural">
                                                     Natural
                                                 </label>
@@ -48,11 +48,10 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-passport"></i></span>
                                         </div>
-                                        <select class="form-select" aria-label="tipo_identificacion" id="tipo_identificacion" name="tipo_identificacion" required>
-                                            <option selected>Tipo de Documento</option>
+                                        <select class="form-select" aria-label="tipo_identificacion" id="tipo_identificacion"
+                                                name="tipo_identificacion" onchange="changetipodocumento();" required>
                                             <option value="cedula">Cedula</option>
                                             <option value="pasaporte">Pasaporte</option>
-                                            <option value="rif">RIF</option>
                                         </select>
                                         @if ($errors->has('tipo_identificacion'))
                                             <span class="invalid-feedback">
@@ -70,7 +69,7 @@
                                         <input type="text"
                                                class="form-control {{ $errors->has("numero_identificacion")?"is-invalid":"" }}"
                                                name="numero_identificacion" value="{{ old('numero_identificacion') }}"
-                                               placeholder="Numero de identificacion" required>
+                                               placeholder="Numero de identificacion" id="numero_identificacion" required>
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
@@ -83,7 +82,7 @@
                                         <input type="date"
                                                class="form-control "
                                                name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" id="fecha_nacimiento"
-                                               placeholder="fecha_nacimiento" required>
+                                               placeholder="fecha_nacimiento" required onblur="getEmployees($('#numero_identificacion').val(),$('#fecha_nacimiento').val())" >
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
@@ -97,10 +96,11 @@
                                         </div>
                                         <input type="text"
                                                class="form-control"
-                                               name="nombres" value="{{ old('nombres') }}"
+                                               name="nombres" value="{{ old('nombres') }}" id="nombres"
                                                placeholder="Nombres" required>
                                     </div>
                                 </div>
+
                                 <!--////////// APELLIDOS //////////////-->
                                 <div class="col-md-6 col-sm-12" id="apellidosdiv">
                                     <div id="apellidosdivint">
@@ -184,9 +184,10 @@
                                 </div>
 
                                 <!--////////// BOTON //////////////-->
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">{{ __('Register') }}</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-flat" id="btonregister" disabled>{{ __('Register') }}</button>
                                 <a href="{{ url('/login') }}"
                                    class="text-center">{{ __('I already have a membership')}}</a>
+
                             </div>
                         </form>
                     </div>

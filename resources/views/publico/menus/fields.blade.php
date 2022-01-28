@@ -53,7 +53,7 @@
     {!! Form::label('enabled', 'Habilitado:') !!}
     <label class="checkbox-inline">
         {!! Form::hidden('enabled', 0) !!}
-        {!! Form::checkbox('enabled', '1', null) !!}
+        {!! Form::checkbox('enabled', '1', true) !!}
     </label>
 </div>
 
