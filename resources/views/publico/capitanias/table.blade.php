@@ -1,5 +1,5 @@
-<div class="table-responsive-sm">
-    <table class="table table-striped" id="capitanias-table">
+<div class="table-responsive-sm ">
+    <table class="table table-striped table-bordered" id="capitanias-table">
         <thead>
         <tr>
             <th>Nombre</th>
@@ -12,7 +12,7 @@
             <tr>
                 <td>{{ $capitania->nombre }}</td>
                 <td>{{ $capitania->sigla }}</td>
-                <td>
+                <td width="20%">
                     @can('consultar-capitania')
                         <a class="btn btn-sm btn-success" href="  {{ route('capitanias.show', [$capitania->id]) }}">
                             <i class="fa fa-search"></i>

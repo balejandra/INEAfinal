@@ -7,7 +7,7 @@
       <li class="breadcrumb-item">
          <a href="{!! route('capitanias.index') !!}">Capitania</a>
       </li>
-      <li class="breadcrumb-item active">Crear</li>
+      <li class="breadcrumb-item">Crear</li>
     </ol>
      <div class="container-fluid">
           <div class="animated fadeIn">

@@ -55,6 +55,6 @@ class Capitania extends Model
 
     public function coordenas_capitania()
     {
-        return $this->hasMany(Coordenas_capitania::class);
+        return $this->HasMany(Coordenas_capitania::class);
     }
 }

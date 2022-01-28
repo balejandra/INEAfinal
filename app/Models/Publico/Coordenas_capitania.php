@@ -38,6 +38,6 @@ class Coordenas_capitania extends Model
 
     public function capitania()
     {
-        return $this->belongsTo(Capitania::class);
+        return $this->belongsTo(Capitania::class,'id','capitania_id');
     }
 }
