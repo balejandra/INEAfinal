@@ -88,6 +88,23 @@ $(document).ready(function() {
     });
 } );
 
+
+$(document).ready(function() {
+    $('#menusroles-table').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+} );
+
+
+
 //-------------------------------------------------------------------------------
 
 function agregarCoordenadas(){
