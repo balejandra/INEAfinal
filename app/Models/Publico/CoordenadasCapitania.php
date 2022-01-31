@@ -11,6 +11,8 @@ class CoordenadasCapitania extends Model implements Auditable
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
+    protected $table = 'coordenadas_capitanias';
+
     protected $fillable = [
         'capitania_id',
         'latitud',
@@ -27,7 +29,7 @@ class CoordenadasCapitania extends Model implements Auditable
 
     public function capitania()
     {
-        return $this->belongsTo(Capitania::class,'id','capitania_id');
+        return $this->belongsTo(Capitania::class,'capitania_id','id');
     }
 
 }

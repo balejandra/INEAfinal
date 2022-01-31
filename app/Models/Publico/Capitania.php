@@ -53,9 +53,14 @@ class Capitania extends Model implements Auditable
         'nombre' => 'required',
         'sigla' => 'required'
     ];
-
+/*
     public function coordenas_capitania()
     {
         return $this->HasMany(Coordenas_capitania::class);
+    }*/
+
+    public function CoordenadasCapitania()
+    {
+        return $this->HasMany(CoordenadasCapitania::class,'capitania_id','id');
     }
 }

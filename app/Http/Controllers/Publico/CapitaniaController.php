@@ -6,10 +6,12 @@ namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Publico\CreateCapitaniaRequest;
 use App\Http\Requests\Publico\UpdateCapitaniaRequest;
-use App\Models\Publico\Coordenas_capitania;
+//use App\Models\Publico\Coordenas_capitania;
 use App\Models\Publico\Capitania;
 use App\Repositories\Publico\CapitaniaRepository;
 use Illuminate\Http\Request;
+use App\Models\Publico\CoordenadasCapitania;
+
 use Flash;
 use Response;
 
@@ -80,13 +82,13 @@ class CapitaniaController extends AppBaseController
                     'latitud'      => $lat[$i],
                     'longitud'     => $long[$i],
                 ];
-                Coordenas_capitania::create($coordenadas);
+                CoordenadasCapitania::create($coordenadas);
             }
         }
 
         //Flash::success('Capitanía guardado con éxito.');
 
-        return redirect(route('capitanias.index'))->with('success','Capitanía guardado con éxito.'); 
+        return redirect(route('capitanias.index'))->with('success','Capitanía guardado con éxito.');
     }
 
     /**
@@ -99,15 +101,16 @@ class CapitaniaController extends AppBaseController
     public function show($id)
     {
         $capitania = $this->capitaniaRepository->find($id);
-        $coords=Coordenas_capitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenas_capitania.capitania_id', '=', $id)->get();
-
+       // $coords=Coordenas_capitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenas_capitania.capitania_id', '=', $id)->get();
+       // $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
+       $coords= $capitania->coordenadas_capitania();
         if (empty($capitania)) {
             //Flash::error('Capitania no encontrada');
 
-            return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada'); 
+            return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada');
         }
 
-       
+
 
         return view('publico.capitanias.show')->with('capitania', $capitania)->with('coords', $coords);
     }
@@ -122,8 +125,8 @@ class CapitaniaController extends AppBaseController
     public function edit($id)
     {
         $capitania = $this->capitaniaRepository->find($id);
-        $coords=Coordenas_capitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenas_capitania.capitania_id', '=', $id)->get();
-
+        //$coords=Coordenas_capitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenas_capitania.capitania_id', '=', $id)->get();
+        $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
         if (empty($capitania)) {
             //Flash::error('Capitania no encontrada');
 
@@ -145,27 +148,15 @@ class CapitaniaController extends AppBaseController
      */
     public function update($id, UpdateCapitaniaRequest $request, Capitania $cap)
     {
-        
+
          $capi = $this->capitaniaRepository->update($request->all(), $id);
         $lat=$request->input('latitud', []);
         $long=$request->input('longitud', []);
-        $c = count($lat);
-        $c2= count($long);
+        $capi->update($request->only('name'));
+        $capi->CoordenadasCapitania()->sync([$lat, $long]);
 
-        if($c==$c2){
-            for( $i=0;$i<$c;$i++ )
-            {
-                $coordenadas = [        
-                    'latitud'      => $lat[$i],
-                    'longitud'     => $long[$i],
-                ];
-                $cap->coordenas_capitania()->update($coordenadas);
-            }
-        }
- 
-                
         return redirect(route('capitanias.index'))->with('success','Capitanía modificada con éxito.');
-         
+
     }
 
     /**
