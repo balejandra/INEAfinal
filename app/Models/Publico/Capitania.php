@@ -25,7 +25,7 @@ class Capitania extends Model implements Auditable
 
 
     protected $dates = ['deleted_at'];
-
+    //protected $connection = 'pgsql_zarpes';
 
 
     public $fillable = [
