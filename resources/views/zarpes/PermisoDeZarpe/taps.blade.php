@@ -7,6 +7,9 @@
     <button class="nav-link" id="licencia-tab" data-bs-toggle="tab" data-bs-target="#licencia" type="button" role="tab" aria-controls="licencia" aria-selected="false">Licencia</button>
   </li>
   <li class="nav-item" role="presentation">
+    <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Declaracion jurada</button>
+  </li>
+  <li class="nav-item" role="presentation">
     <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Datos de la tripulación</button>
   </li>
   <li class="nav-item" role="presentation">
@@ -15,9 +18,7 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Ruta</button>
   </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Declaracion jurada</button>
-  </li>
+  
    
 </ul>
 <div class="tab-content" id="myTabContent ">
@@ -72,7 +73,7 @@
 
       <div class="form-group col-sm-12 text-center">
           {!! Form::label('0', ' ') !!}
-          {!! Form::button('Continuar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'rutas()']) !!}
+          {!! Form::button('Finalizar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'rutas()']) !!}
         </div>
 
 
@@ -82,13 +83,52 @@
   </div>
 
   <div class="tab-pane fade bg-white" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
-     <h3>Declaracion de cumplimineto de normativas</h3>
+
+    <div id="msjDeclaracion"></div>
+     <h3 class="text-center">Declaracion de cumplimineto de normativas</h3>
 
      <p class="text-justify">Por medio de la presente declaro que la presente solicitud se hace bajo el estricto cumplimiento de las normativas vigentes y las disposiciones previstas por las leyes venezolanas.</p>
 
+     <p>Asi mismo declaro poseer en la embarcacion los siguientes equipos de seguridad raqueridos por la normativa vigente:</p>
+
+    @php
+          $array = array(
+              "1" => "CHALECOS SALVAVIDAS",
+              "2" => "SEÑALES PIROTÉCNICAS",
+              "3" => "EQUIPO PARTÁTIL CONTRA INCENDIO",
+              "4" => "EQUIPO FIJO CONTRA INCENDIO",
+              "5" => "KIT DE PRIMEROS AUXILIOS",
+              "6" => "COMPAS MAGNÉTICO",
+              "7" => "GPS",
+              "8" => "RADIOBALIZA DE SINIESTRO (EPIRB)",
+              "9" => "RADAR",
+              "10" => "AIS DEBIDAMENTE CONFIGURADO",
+              "11" => "VHF FIJO",
+              "12" => "VHF PORTÁTIL",
+              "13" => "BALSA SALVAVIDAS",
+              "14" => "CAJA DE HERRAMIENTAS",
+              "15" => "SPOT",
+          );
+        @endphp
+        <div class="row  ">
+          @foreach ($array as $key => $item)
+        <div class="form-check form-switch col-sm-3 ">
+
+
+                <input class="form-check-input" type="checkbox" name="role[]" id='role'    style="margin-left: auto;"  >
+                <label class="form-check-label" for="flexSwitchCheckDefault" style="margin-inline-start: 30px;">{{$item }} </label>
+
+
+        </div>
+    @endforeach
+        </div>
+         
+
      <div class="form-group col-sm-12 text-center">
+    
+
           {!! Form::label('0', ' ') !!}
-          {!! Form::button('Registrar solicitud', ['class' => 'btn btn-primary mt-2', 'onclick' => 'final()']) !!}
+          {!! Form::button('Continuar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'msj("msjDeclaracion", "Su declaracion se ha registrado con éxito.")']) !!}
       </div>
   </div>
 

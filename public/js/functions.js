@@ -355,7 +355,7 @@ function rutas(){
     txtresp=document.querySelector("#msjruta");
          
     txtresp.innerHTML=`<div class="alert alert-success">Ruta registrada exitosamente, avance al paso siguiente.</div >`;
-
+final();
 }
 
 
@@ -393,6 +393,13 @@ function final(){
      window.location="http://localhost/INEAfinal/public/zarpes/permisosDeZarpe";
 }
 
+
+function msj(id, msj){ alert("#"+id);
+    txtresp=document.querySelector("#"+id);
+         
+    txtresp.innerHTML='<div class="alert alert-success">'+msj+'</div >';
+
+}
 //-----------------------------------------------------------------------------------------
 
 
