@@ -4,9 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
-Route::get('/', function () {
-    return view('auth.login'); //ruta de login
-});
 
 Route::get('error', function (){
     return view('auth.error'); //seccion de validacion de autehticación de usuario
@@ -14,4 +11,7 @@ Route::get('error', function (){
 
 Route::middleware(['auth' , 'verified'])->group(function () {
 //seccion para incorporación de rutas por módulo
+
+    Route::resource('permisosestadia', \App\Http\Controllers\Zarpes\PermisoEstadiaController::class);
+
 });

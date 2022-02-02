@@ -14,11 +14,11 @@ img.nav-avatar {
     flex-direction: column;
     padding: 0;
     color: #fff;
-    background: #3c4b64 !important;
+    background: #042350 !important;
 }
 .sidebar .nav-item.active {
     color: #fff;
-    background: #1c549a !important;
+    background: #178abc !important;
 }
 
 .active {
