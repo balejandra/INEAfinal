@@ -12,7 +12,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="nav navbar-nav ml-auto">
-    <strong>SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</strong>
+    <h3><strong>SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</strong></h3>
     </div>
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item d-md-down-none">

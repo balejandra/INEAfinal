@@ -5,7 +5,7 @@
         <!-- bandera Field -->
         <div class="form-group col-sm-5">
             {!! Form::label('0', 'Bandera:') !!}
-            {!! Form::select('bandera', ['nacional'=>'NACIONAL', 'extrangera'=>'EXTRANGERA'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione su bandera', 'onChange'=>'bandera()', 'id'=>'bandera']) !!}
+            {!! Form::select('bandera', ['nacional'=>'NACIONAL', 'extrangera'=>'EXTRANJERA'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione su bandera', 'onChange'=>'bandera()', 'id'=>'bandera']) !!}
         </div>
 
         <div id="form-nacional" style="display:none" class="col-md-6 ">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div id="form-extrangera">
-            
+
         </div>
 
 
@@ -65,10 +65,10 @@
         </tbody>
     </table>
 
-             
+
         </div>
 
 
     </div>
-    
+
 </div>

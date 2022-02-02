@@ -26,7 +26,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/zarpes/permisosDeZarpe/show', function () {
         return view('zarpes.PermisoDeZarpe.show');
     });
-     
+
 
     Route::resource('permisosestadia', \App\Http\Controllers\Zarpes\PermisoEstadiaController::class);
 

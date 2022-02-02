@@ -1,4 +1,4 @@
- 
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Datos del buque</button>
@@ -6,20 +6,21 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="licencia-tab" data-bs-toggle="tab" data-bs-target="#licencia" type="button" role="tab" aria-controls="licencia" aria-selected="false">Licencia</button>
   </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Declaracion jurada</button>
-  </li>
-  <li class="nav-item" role="presentation">
+
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Ruta</button>
+    </li>
+    <li class="nav-item" role="presentation">
     <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Datos de la tripulación</button>
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Datos de pasajeros</button>
   </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Ruta</button>
-  </li>
-  
-   
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Declaracion jurada</button>
+    </li>
+
+
 </ul>
 <div class="tab-content" id="myTabContent ">
   <div class="tab-pane fade show active bg-white" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -32,7 +33,7 @@
   	 @include('zarpes.PermisoDeZarpe.pasajeros')
   </div>
   <div class="tab-pane fade bg-white" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
-     
+
       <div class="row">
         <div class="col-lg-12" id="msjruta"></div>
       <div class="col-md-3">
@@ -48,14 +49,14 @@
       <div class="col-md-3">
         {!! Form::label('salida', 'Fecha/hora Salida:') !!}
         <input type="datetime-local" name="salida" class="form-control">
-                    
+
       </div>
 
       <div class="col-md-3">
 
         {!! Form::label('regreso', 'Fecha/hora regreso:') !!}
         <input type="datetime-local" name="regreso" class="form-control">
-                     
+
       </div>
 
 
@@ -69,12 +70,14 @@
 
 
       </div>
+          <div class="form-group col-sm-12 text-center">
 
 
-      <div class="form-group col-sm-12 text-center">
-          {!! Form::label('0', ' ') !!}
-          {!! Form::button('Finalizar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'rutas()']) !!}
-        </div>
+              {!! Form::label('0', ' ') !!}
+              {!! Form::button('Continuar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'rutas()' ]) !!}
+          </div>
+
+
 
 
       </div>
@@ -85,7 +88,7 @@
   <div class="tab-pane fade bg-white" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
 
     <div id="msjDeclaracion"></div>
-     <h3 class="text-center">Declaracion de cumplimineto de normativas</h3>
+     <h3 class="text-center">Declaracion de cumplimiento de normativas</h3>
 
      <p class="text-justify">Por medio de la presente declaro que la presente solicitud se hace bajo el estricto cumplimiento de las normativas vigentes y las disposiciones previstas por las leyes venezolanas.</p>
 
@@ -122,18 +125,16 @@
         </div>
     @endforeach
         </div>
-         
 
-     <div class="form-group col-sm-12 text-center">
-    
-
+      <div class="form-group col-sm-12 text-center">
           {!! Form::label('0', ' ') !!}
-          {!! Form::button('Continuar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'msj("msjDeclaracion", "Su declaracion se ha registrado con éxito.")']) !!}
+          {!! Form::button('Finalizar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'final()' ]) !!}
       </div>
+
   </div>
 
   <div class="tab-pane fade bg-white" id="licencia" role="tabpanel" aria-labelledby="licencia-tab">
-     
+
      <div id="form-nacional"   class="col-md-12">
       <h3>Consultar licencia de navegación</h3>
             <div class="row">
@@ -142,7 +143,7 @@
                     {!! Form::label('licencia', 'Licencia:') !!}
                     {!! Form::text('txtlicencias', null, ['class' => 'form-control', 'id'=>'txtlicencias']) !!}
                 </div>
-                 
+
                 <!-- Submit Field -->
                 <div class="form-group col-sm-2">
                     {!! Form::label('0', ' ') !!}
@@ -174,7 +175,7 @@
                   2/9/2018
                 </td>
                 <td>
-                  2/9/2023 
+                  2/9/2023
                 </td>
                 <td>
                   Jorge Luis Montenegro
@@ -186,7 +187,6 @@
 
   </div>
 
-   
+
 </div>
 
- 

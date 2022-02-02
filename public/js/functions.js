@@ -182,7 +182,7 @@ function eliminarCoordenadas(id){
 
 function bandera(){
     const div = document.querySelector("#bandera");
-    
+
 
     var divdestino=document.querySelector("#form-nacional");
     var divdestino2=document.querySelector("#form-extrangera");
@@ -206,7 +206,7 @@ function bandera(){
 function matricula(){
      const matriculas=['123','ADKN-SE-0001','ADKN-SE-0003','ADKN-RE-0002', 'ADKN-SE-0002'];
         txtmatricula=document.querySelector("#matricula");
-        
+
         if(matriculas.includes(txtmatricula.value)){
            // alert(txtmatricula.value);
             licencia=document.querySelector("#table-licencia");
@@ -226,7 +226,7 @@ function matricula(){
 
 
 function agregarPasajero(destino){
-     
+
 var pass=document.getElementById(destino);
 let cantAct=pass.getAttribute('data-cant');
 cantAct<=0 ? cantAct=1 : cantAct++;
@@ -240,13 +240,13 @@ divname.innerHTML=`<label for="nombre" > Nombre</label>
             <input class="form-control" name="nombre[]" id="nombre`+cantAct+`" type="text" placeholder='Nombre'>`;
 
 const divape=document.createElement("div");
-divape.classList.add("form-group", "col-sm-2" );      
+divape.classList.add("form-group", "col-sm-2" );
 divape.innerHTML=`<label for="Apellido" > Apellido</label>
             <input class="form-control" name="apellido[]" id="apellido`+cantAct+`"  type="text" placeholder='Apellido'>`;
 
 
 const divsexo=document.createElement("div");
-divsexo.classList.add("form-group", "col-sm-1");      
+divsexo.classList.add("form-group", "col-sm-1");
 divsexo.innerHTML=`<label for="sexo" > Sexo</label>
             <select class='form-control'>
                 <option value='0'>Sexo</option>
@@ -255,14 +255,14 @@ divsexo.innerHTML=`<label for="sexo" > Sexo</label>
             </select>`;
 
 const divcedula=document.createElement("div");
-divcedula.classList.add("form-group", "col-sm-2" );      
+divcedula.classList.add("form-group", "col-sm-2" );
 divcedula.innerHTML=`
             <label for="cedula" > Cedula</label>
             <input class="form-control" name="cedula[]" id="cedula`+cantAct+`"  type="text" placeholder='cedula / pasaporte'>`;
 
 
 const divtipodoc=document.createElement("div");
-divtipodoc.classList.add("form-group", "col-sm-1");      
+divtipodoc.classList.add("form-group", "col-sm-1");
 divtipodoc.innerHTML=`<label for="Tipodoc" > Tipo </label>
             <select class='form-control'>
                 <option value='0'>Seleccione</option>
@@ -272,7 +272,7 @@ divtipodoc.innerHTML=`<label for="Tipodoc" > Tipo </label>
 
 
 const divfechanac=document.createElement("div");
-divfechanac.classList.add("form-group", "col-sm-2" );      
+divfechanac.classList.add("form-group", "col-sm-2" );
 divfechanac.innerHTML=`<label for="fechanac" > Fecha de nacimiento</label>
             <input class="form-control" name="fechanac[]" id="fechanac`+cantAct+`"  type="date" placeholder='Fecha nacimiento'>`;
 
@@ -282,10 +282,10 @@ divfechanac.innerHTML=`<label for="fechanac" > Fecha de nacimiento</label>
 const divbtn=document.createElement("div");
 divbtn.classList.add("form-group", "col-sm-2", "text-center","pt-3");
 divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarTripulante(`+cantAct+`, '`+destino+`')" type="button">borrar</button>`;
- 
+
 
 divdatos.appendChild(divtipodoc);
-divdatos.appendChild(divcedula); 
+divdatos.appendChild(divcedula);
 divdatos.appendChild(divname);
 divdatos.appendChild(divape);
 divdatos.appendChild(divsexo);
@@ -298,7 +298,7 @@ pass.appendChild(divdatos);
 
 pass.setAttribute('data-cant', cantAct);
 //coords.innerHTML=  coords.innerHTML+campos;
- 
+
 }
 
 
@@ -307,8 +307,8 @@ function eliminarTripulante(id, destino){
     if(id!=""){
         const div = document.querySelector("#"+destino+"-datos"+id);
         div.remove();
-    } 
-    
+    }
+
 
 }
 
@@ -318,16 +318,16 @@ function ValidarMarinos(){
     var marinos=['123456789','987654321','1357913579', '24682468'];
 
     txtresp=document.querySelector("#msjresmarinos");
-         
+
 txtresp.innerHTML=`<div class="alert alert-success">Marinos validados exitosamente, avance al paso siguiente.</div >`;
 
 }
 
 function next(){
-    
+
 
     txtresp=document.querySelector("#msjpasajeros");
-         
+
 txtresp.innerHTML=`<div class="alert alert-success">Pasajeros validados exitosamente, avance al paso siguiente.</div >`;
 
 }
@@ -344,18 +344,18 @@ function licencia(){
         tableLicencias=document.querySelector("#tableLicencias");
         tableLicencias.setAttribute('style','display:show');
 
-    }else{  
+    }else{
         alert("Licencia no encontrada");
     }
-    
+
 }
 
 function rutas(){
 
     txtresp=document.querySelector("#msjruta");
-         
+
     txtresp.innerHTML=`<div class="alert alert-success">Ruta registrada exitosamente, avance al paso siguiente.</div >`;
-final();
+
 }
 
 
@@ -373,14 +373,14 @@ function acciones(accion, id){
                     </a>`;
         break;
 
-        case 'rechazar': 
+        case 'rechazar':
             var justificacion = prompt('Describa brevemente porque desea rechazar esta solicitud'+id);
 
             if(justificacion!=""){
                 z.innerHTML="RECHAZADO";
                 z.setAttribute('class','text-danger');
             }
-            
+
         break;
 
     }
@@ -394,9 +394,9 @@ function final(){
 }
 
 
-function msj(id, msj){  
+function msj(id, msj){
     txtresp=document.querySelector("#"+id);
-         
+
     txtresp.innerHTML='<div class="alert alert-success">'+msj+'</div >';
 
 }
