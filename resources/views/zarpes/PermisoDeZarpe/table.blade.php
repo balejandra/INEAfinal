@@ -1,13 +1,14 @@
-<div class="table-responsive-sm ">
-    <table class="table table-striped table-bordered" id="capitanias-table">
+<div class="table-responsive-sm mt-5">
+    <table class="table table-striped table-bordered" id="generic-table">
         <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Sigla</th>
-            <th>Acciones</th>
+            <th>MATRÍCULA</th>
+            <th>NOMBRE</th>
+            <th>DESTINACIÓN DEL BUQUE</th>
+            <th>PROPIETARIO</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="permisosZarpes">
             <tr>
                 <td>
 

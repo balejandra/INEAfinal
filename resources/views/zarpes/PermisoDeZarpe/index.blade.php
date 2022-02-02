@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section("titulo")
-    Capitania
+    Zarpes
 @endsection
 @section('content')
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">Solicitud de Permisos de Zarpe</li>
+        <li class="breadcrumb-item">Permisos de Zarpe</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
@@ -13,16 +13,17 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
+                             <i class="fas fa-ship"></i>
                              <strong>Solicitud de Permisos de Zarpe</strong>
 
                              <div class="card-header-actions">
-                                 <a class="btn btn-primary btn-sm"  href="#">Nuevo</a>
+                                 <a class="btn btn-primary btn-sm"  href="./permisosDeZarpe/create">Nuevo</a>
+                                  
                              </div>
 
                          </div>
-                         <div class="card-body">
-
+                         <div class="card-body" style="min-height: 350px;"> 
+                           @include('zarpes.PermisoDeZarpe.taps')
                          </div>
                      </div>
                   </div>

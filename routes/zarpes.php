@@ -15,8 +15,16 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
 
 
-    Route::get('/greeting', function () {
-        return 'Hello World';
+    Route::get('/zarpes/permisosDeZarpe', function () {
+        return view('zarpes.PermisoDeZarpe.index');
     });
+
+    Route::get('/zarpes/permisosDeZarpe/create', function () {
+        return view('zarpes.PermisoDeZarpe.create');
+    });
+    Route::get('/zarpes/permisosDeZarpe/show', function () {
+        return view('zarpes.PermisoDeZarpe.show');
+    });
+     
 
 });
