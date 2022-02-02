@@ -78,7 +78,7 @@ class MenuController extends AppBaseController
 
         $menu= Menu::create($request->except(['role']));
         $roles = $menu->roles()->sync($request['role']);
- 
+
 
         //$input = $request->all();
        // var_dump($request->except(['role']));
@@ -90,7 +90,7 @@ class MenuController extends AppBaseController
 
 
        // Flash::success('Menú guardado con éxito.');
-        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.'); 
+        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.');
         //return redirect(route('menus.index'));
     }
 
@@ -118,7 +118,7 @@ class MenuController extends AppBaseController
             })
             ->get();
         if (empty($menu)) {
-            return redirect()->route('menus.index')->with('error','Menu no encontrado'); 
+            return redirect()->route('menus.index')->with('error','Menu no encontrado');
 
             //return redirect(route('menus.index'));
         }
@@ -148,7 +148,7 @@ class MenuController extends AppBaseController
         if (empty($menu)) {
             //Flash::error('Menú no encontrado');
 
-            return redirect()->route('menus.index')->with('error','Menu no encontrado'); 
+            return redirect()->route('menus.index')->with('error','Menu no encontrado');
         }
 
         $menuRols = Role::selectRaw(" roles.name as name, roles.id as id,menus_roles.menu_id, menus_roles.role_id,(CASE WHEN menus_roles.role_id = roles.id THEN 'checked' ELSE '' END) AS
@@ -181,7 +181,7 @@ class MenuController extends AppBaseController
         if (empty($menu)) {
             //Flash::error('Menú no encontrado');
 
-            return redirect()->route('menus.index')->with('error','Menu no encontrado'); 
+            return redirect()->route('menus.index')->with('error','Menu no encontrado');
         }
         //var_dump($request['role']);
         $menu = $this->menuRepository->update($request->all(), $id);
@@ -190,7 +190,7 @@ class MenuController extends AppBaseController
         $roles = $menu->roles()->sync($request['role']);
 
        // Flash::success('Menú actualizado correctamente.');
-        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.'); 
+        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.');
 
        // return redirect(route('menus.index'));
     }
@@ -211,7 +211,7 @@ class MenuController extends AppBaseController
         if (empty($menu)) {
             //Flash::error('Menú no encontrado');
 
-            return redirect()->route('menus.index')->with('error','Menu no encontrado'); 
+            return redirect()->route('menus.index')->with('error','Menu no encontrado');
 
         }
 
@@ -220,6 +220,6 @@ class MenuController extends AppBaseController
 
         //Flash::success('Menú eliminado con éxito.');
 
-        return redirect()->route('menus.index')->with('success','Menu eliminado con exito.'); 
+        return redirect()->route('menus.index')->with('success','Menu eliminado con exito.');
     }
 }

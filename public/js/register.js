@@ -113,6 +113,12 @@ function datosbasicos(response) {
     if (response == 0) {
 
     }else{
+        if (response[0].nombre2==null){
+            response[0].nombre2=''
+        }
+        if (response[0].apellido2==null){
+            response[0].apellido2=''
+        }
         nombrescompletos=(response[0].nombre1)+" "+(response[0].nombre2);
         $("#nombres").val(nombrescompletos);
         apellidoscompletos= (response[0].apellido1)+" "+(response[0].apellido2);

@@ -6472,7 +6472,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-    background-color: #20a8d8 !important
+    background-color: #084f84 !important
 }
 
 a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover {
@@ -11889,7 +11889,7 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 .card.bg-primary {
-    border-color: #187da0
+    border-color: #042350
 }
 
 .card.bg-primary .card-header {

@@ -11,6 +11,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 //seccion para incorporación de rutas por módulo
 
 
+
     //-------------------------------------------------------------
 
 
@@ -26,5 +27,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         return view('zarpes.PermisoDeZarpe.show');
     });
      
+
+    Route::resource('permisosestadia', \App\Http\Controllers\Zarpes\PermisoEstadiaController::class);
+
 
 });
