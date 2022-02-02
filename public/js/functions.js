@@ -394,7 +394,7 @@ function final(){
 }
 
 
-function msj(id, msj){ alert("#"+id);
+function msj(id, msj){  
     txtresp=document.querySelector("#"+id);
          
     txtresp.innerHTML='<div class="alert alert-success">'+msj+'</div >';
