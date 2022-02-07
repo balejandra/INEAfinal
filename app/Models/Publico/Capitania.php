@@ -58,6 +58,12 @@ class Capitania extends Model implements Auditable
     {
         return $this->HasMany(Coordenas_capitania::class);
     }*/
+    public static function boot() {
+        parent::boot();
+        static::deleting(function($capi) {
+             $capi->CoordenadasCapitania()->delete();
+        });
+    }
 
     public function CoordenadasCapitania()
     {
