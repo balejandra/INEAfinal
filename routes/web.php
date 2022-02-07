@@ -56,6 +56,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('auditables', \App\Http\Controllers\Publico\AuditsController::class);
 
+    Route::delete('/coordenadasCapitania/{coordenadasCapitania}', [App\Http\Controllers\Publico\CoordenadasCapitania::class, 'destroy'])->name('coordenadasCapitania.destroy');
+
+
 });
 
 
