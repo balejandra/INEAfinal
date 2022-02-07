@@ -101,9 +101,8 @@ class CapitaniaController extends AppBaseController
     public function show($id)
     {
         $capitania = $this->capitaniaRepository->find($id);
-       // $coords=Coordenas_capitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenas_capitania.capitania_id', '=', $id)->get();
-       // $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
-       $coords= $capitania->coordenadas_capitania();
+        
+       $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
         if (empty($capitania)) {
             //Flash::error('Capitania no encontrada');
 
@@ -148,13 +147,40 @@ class CapitaniaController extends AppBaseController
      */
     public function update($id, UpdateCapitaniaRequest $request, Capitania $cap)
     {
+        $capi = $this->capitaniaRepository->update($request->all(), $id);
+        $capi=$cap->find($id);
+        $coordCaps = $cap->find($id)->CoordenadasCapitania;
+        
+        foreach ($coordCaps as $cc) {
+            $cc->delete($cc->id);
+           
+        }
+       
 
-         $capi = $this->capitaniaRepository->update($request->all(), $id);
+     
         $lat=$request->input('latitud', []);
         $long=$request->input('longitud', []);
-        $capi->update($request->only('name'));
-        $capi->CoordenadasCapitania()->sync([$lat, $long]);
+        $c = count($lat);
+        $c2= count($long);
 
+        if($c==$c2){
+            for( $i=0;$i<$c;$i++ )
+            {
+                $coord = [
+                    'capitania_id' => $id,
+                    'latitud'      => $lat[$i],
+                    'longitud'     => $long[$i],
+                ];
+
+                $coordenadas[]=new CoordenadasCapitania($coord);
+                
+            }
+        }
+
+          
+         $capi->CoordenadasCapitania()->saveMany($coordenadas);
+ 
+     
         return redirect(route('capitanias.index'))->with('success','Capitanía modificada con éxito.');
 
     }
@@ -168,7 +194,7 @@ class CapitaniaController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, Capitania $cap)
     {
         $capitania = $this->capitaniaRepository->find($id);
 
@@ -179,7 +205,15 @@ class CapitaniaController extends AppBaseController
         }
 
         $this->capitaniaRepository->delete($id);
-
+        
+        $capi=$cap->find($id);
+        $coordCaps = $cap->find($id)->CoordenadasCapitania;
+        
+        foreach ($coordCaps as $cc) {
+            $cc->delete($cc->id);
+           
+        }
+       
         //Flash::success('Capitania eliminada con éxito.');
 
         return redirect(route('capitanias.index'))->with('success','Capitanía eliminada con éxito.'); ;

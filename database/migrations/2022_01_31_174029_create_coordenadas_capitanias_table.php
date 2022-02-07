@@ -17,7 +17,7 @@ class CreateCoordenadasCapitaniasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('capitania_id');
             $table->foreign('capitania_id')->references('id')->on('capitanias')
-                ->onDelete('restrict')
+                ->onDelete('cascade')
                 ->onUpdate('restrict');
             $table->string('latitud');
             $table->string('longitud');
