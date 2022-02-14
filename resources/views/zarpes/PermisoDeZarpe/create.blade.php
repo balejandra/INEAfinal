@@ -25,11 +25,11 @@
 
                             </div>
                             <div class="card-body">
-                                
+
 
                                    @include('zarpes.PermisoDeZarpe.taps')
 
-                                
+
                             </div>
                         </div>
                     </div>

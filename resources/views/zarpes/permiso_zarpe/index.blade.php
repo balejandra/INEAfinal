@@ -24,7 +24,7 @@
                          </div>
                          <div class="card-body" style="min-height: 350px;">
 
-                           @include('zarpes.permiso_zarpe.table')
+
                          </div>
                      </div>
                   </div>
@@ -32,4 +32,3 @@
          </div>
     </div>
 @endsection
-

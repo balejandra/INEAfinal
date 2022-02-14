@@ -397,7 +397,7 @@ return false;
 
 function final(){
     alert("Su solicitud se ha guardado exitosamente");
-     window.location="http://localhost/INEAfinal/public/zarpes/permisosDeZarpe";
+     window.location="http://localhost/INEAfinal/public/zarpes/permiso_zarpe";
 }
 
 
