@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCoordenadasCapitaniasTable extends Migration
+class CreateCapitaniaUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateCoordenadasCapitaniasTable extends Migration
      */
     public function up()
     {
-        Schema::create('coordenadas_capitanias', function (Blueprint $table) {
+        Schema::create('capitania_user', function (Blueprint $table) {
             $table->id();
+            $table->string('cargo');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->unsignedBigInteger('capitania_id');
             $table->foreign('capitania_id')->references('id')->on('capitanias')
-                ->onDelete('cascade')
+                ->onDelete('restrict')
                 ->onUpdate('restrict');
-            $table->string('latitud');
-            $table->string('longitud');
-            $table->unsignedInteger('orden')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +36,6 @@ class CreateCoordenadasCapitaniasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coordenadas_capitanias');
+        Schema::dropIfExists('capitania_user');
     }
 }
