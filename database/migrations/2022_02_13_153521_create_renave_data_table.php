@@ -13,7 +13,7 @@ class CreateRenaveDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('renave_data', function (Blueprint $table) {
+        Schema::connection('pgsql_renave_schema')->create('renave_data', function (Blueprint $table) {
             $table->id();
             $table->string('numero_expediente');
             $table->string('nombrebuque_actual');
@@ -57,6 +57,6 @@ class CreateRenaveDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('renave_data');
+        Schema::connection('pgsql_renave_schema')->dropIfExists('renave_data');
     }
 }

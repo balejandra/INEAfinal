@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Renave;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +34,7 @@ class Renave_data extends Model
 
     use HasFactory;
 
+    protected $connection = 'pgsql_renave_schema';
     public $table = 'renave_data';
 
 
