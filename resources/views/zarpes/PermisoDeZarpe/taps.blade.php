@@ -6,18 +6,25 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="licencia-tab" data-bs-toggle="tab" data-bs-target="#licencia" type="button" role="tab" aria-controls="licencia" aria-selected="false">Licencia</button>
   </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Declaracion jurada</button>
-  </li>
-  <li class="nav-item" role="presentation">
+
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Ruta</button>
+    </li>
+    <li class="nav-item" role="presentation">
     <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Datos de la tripulación</button>
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Datos de pasajeros</button>
   </li>
+<<<<<<< HEAD
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Declaracion jurada</button>
+    </li>
+=======
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Ruta</button>
   </li>
+>>>>>>> 37184e23d2b28f3eabf01b16b97986b29ef16e51
 
 
 </ul>
@@ -69,12 +76,14 @@
 
 
       </div>
+          <div class="form-group col-sm-12 text-center">
 
 
-      <div class="form-group col-sm-12 text-center">
-          {!! Form::label('0', ' ') !!}
-          {!! Form::button('Finalizar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'rutas()']) !!}
-        </div>
+              {!! Form::label('0', ' ') !!}
+              {!! Form::button('Continuar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'rutas()' ]) !!}
+          </div>
+
+
 
 
       </div>
@@ -85,7 +94,7 @@
   <div class="tab-pane fade bg-white" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
 
     <div id="msjDeclaracion"></div>
-     <h3 class="text-center">Declaracion de cumplimineto de normativas</h3>
+     <h3 class="text-center">Declaracion de cumplimiento de normativas</h3>
 
      <p class="text-justify">Por medio de la presente declaro que la presente solicitud se hace bajo el estricto cumplimiento de las normativas vigentes y las disposiciones previstas por las leyes venezolanas.</p>
 
@@ -122,14 +131,19 @@
         </div>
     @endforeach
         </div>
+<<<<<<< HEAD
+=======
 
 
      <div class="form-group col-sm-12 text-center">
 
+>>>>>>> 37184e23d2b28f3eabf01b16b97986b29ef16e51
 
+      <div class="form-group col-sm-12 text-center">
           {!! Form::label('0', ' ') !!}
-          {!! Form::button('Continuar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'msj("msjDeclaracion", "Su declaracion se ha registrado con éxito.")']) !!}
+          {!! Form::button('Finalizar', ['class' => 'btn btn-primary mt-2', 'onclick' => 'final()' ]) !!}
       </div>
+
   </div>
 
   <div class="tab-pane fade bg-white" id="licencia" role="tabpanel" aria-labelledby="licencia-tab">

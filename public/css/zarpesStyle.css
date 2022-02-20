@@ -5,8 +5,8 @@
 }
 
 .stepSelected{
-	background: #a1fdb2;
+	background: #003B74;
 	font-weight: bold;
-	color: #4e4e4e;
-	border-color: #85eb98 !important;
+	color: #fff;
+	border-color: #CECECE !important;
 }

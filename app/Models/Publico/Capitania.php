@@ -2,6 +2,9 @@
 
 namespace App\Models\Publico;
 
+use App\Models\User;
+use App\Models\Zarpes\EstablecimientoNautico;
+use App\Models\Zarpes\PermisoZarpe;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -69,4 +72,21 @@ class Capitania extends Model implements Auditable
     {
         return $this->hasMany(CoordenadasCapitania::class);
     }
+
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function establecimientonauticos()
+    {
+        return $this->hasMany(EstablecimientoNautico::class);
+    }
+
+    public function permisozarpe()
+    {
+        return $this->hasMany(PermisoZarpe::class);
+    }
+
 }

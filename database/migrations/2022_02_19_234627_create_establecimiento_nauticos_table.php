@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCoordenadasCapitaniasTable extends Migration
+class CreateEstablecimientoNauticosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateCoordenadasCapitaniasTable extends Migration
      */
     public function up()
     {
-        Schema::create('coordenadas_capitanias', function (Blueprint $table) {
+        Schema::connection('pgsql_zarpes_schema')->create('establecimiento_nauticos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('capitania_id');
-            $table->foreign('capitania_id')->references('id')->on('capitanias')
+            $table->string('nombre');
+            $table->foreignId('capitania_id')->constrained('public.capitanias')
                 ->onDelete('cascade')
-                ->onUpdate('restrict');
-            $table->string('latitud');
-            $table->string('longitud');
-            $table->unsignedInteger('orden')->nullable();
+                ->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +31,6 @@ class CreateCoordenadasCapitaniasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coordenadas_capitanias');
+        Schema::connection('pgsql_zarpes_schema')->dropIfExists('establecimiento_nauticos');
     }
 }

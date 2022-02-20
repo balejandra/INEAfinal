@@ -11,7 +11,9 @@
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
     </button>
-
+    <div class="nav navbar-nav ml-auto">
+    <h3><strong>SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</strong></h3>
+    </div>
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#">
