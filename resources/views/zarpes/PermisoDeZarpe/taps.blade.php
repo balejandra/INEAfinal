@@ -16,9 +16,15 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Datos de pasajeros</button>
   </li>
+<<<<<<< HEAD
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">Declaracion jurada</button>
     </li>
+=======
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Ruta</button>
+  </li>
+>>>>>>> 37184e23d2b28f3eabf01b16b97986b29ef16e51
 
 
 </ul>
@@ -125,6 +131,13 @@
         </div>
     @endforeach
         </div>
+<<<<<<< HEAD
+=======
+
+
+     <div class="form-group col-sm-12 text-center">
+
+>>>>>>> 37184e23d2b28f3eabf01b16b97986b29ef16e51
 
       <div class="form-group col-sm-12 text-center">
           {!! Form::label('0', ' ') !!}

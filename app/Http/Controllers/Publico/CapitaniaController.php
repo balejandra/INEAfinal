@@ -11,7 +11,7 @@ use App\Models\Publico\Capitania;
 use App\Repositories\Publico\CapitaniaRepository;
 use Illuminate\Http\Request;
 use App\Models\Publico\CoordenadasCapitania;
-
+use DateTime;
 use Flash;
 use Response;
 
@@ -147,41 +147,51 @@ class CapitaniaController extends AppBaseController
      */
     public function update($id, UpdateCapitaniaRequest $request, Capitania $cap)
     {
-        $capi = $this->capitaniaRepository->update($request->all(), $id);
+       // $capi = $this->capitaniaRepository->update($request->all(), $id);
         $capi=$cap->find($id);
-        $coordCaps = $cap->find($id)->CoordenadasCapitania;
 
-        foreach ($coordCaps as $cc) {
-            $cc->delete($cc->id);
+        $ids=$request->input('ids', []);
+        $lat=$request->input('latitud', []);
+        $long=$request->input('longitud', []);
+        $deletes=$request->input('deletes', []);
+
+        foreach ($deletes as $k => $val) {
+
+           if($val!=""){
+            $coorDel=CoordenadasCapitania::find($val);
+            $coorDel->delete($val);
+           }
 
         }
 
-
-
-        $lat=$request->input('latitud', []);
-        $long=$request->input('longitud', []);
-        $c = count($lat);
-        $c2= count($long);
-
-        if($c==$c2){
-            for( $i=0;$i<$c;$i++ )
+        if(count($lat)==count($long)){
+            for( $i=0;$i<count($lat);$i++ )
             {
-                $coord = [
+                $coordenadas[]= [
                     'capitania_id' => $id,
                     'latitud'      => $lat[$i],
                     'longitud'     => $long[$i],
                 ];
+            }
 
-                $coordenadas[]=new CoordenadasCapitania($coord);
+            foreach ($coordenadas as $key => $value) {
+              //  echo $ids[$key];   echo "<br><br>---";  print_r($value); echo "<br><br>---";
+                if($ids[$key]==""){
+                    $coordenadas= [
+                        'capitania_id' => $id,
+                        'latitud'      => $lat[$key],
+                        'longitud'     => $long[$key],
+                    ];
+                    CoordenadasCapitania::create($coordenadas);
+                }else{
+                    $coord=CoordenadasCapitania::find($ids[$key]);
+                    $coord->update($value);
+                }
 
+              //  $capi->CoordenadasCapitania()->update($value,$ids[$key]);
             }
         }
-
-
-         $capi->CoordenadasCapitania()->saveMany($coordenadas);
-
-
-        return redirect(route('capitanias.index'))->with('success','Capitanía modificada con éxito.');
+       return redirect(route('capitanias.index'))->with('success','Capitanía modificada con éxito.');
 
     }
 

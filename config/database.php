@@ -63,7 +63,7 @@ return [
             ]) : [],
         ],
 
-        'pgsql' => [
+        'pgsql_public_schema' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -77,8 +77,7 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
-
-        'pgsql_zarpes' => [
+        'pgsql_zarpes_schema' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -92,6 +91,7 @@ return [
             'schema' => 'zarpes',
             'sslmode' => 'prefer',
         ],
+
 
         'pgsql_seguridad_maritima' => [
             'driver' => 'pgsql',

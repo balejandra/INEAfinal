@@ -143,10 +143,15 @@ cantAct<=0 ? cantAct=1 : cantAct++;
 const divrow= document.createElement("div");
 divrow.classList.add("row");
 divrow.id="coordenadas"+cantAct;
+
+const divids=document.createElement("div");
+divids.innerHTML=`<input class="form-control" name="ids[]" type="hidden" >`;
+
 const divlat=document.createElement("div");
 divlat.classList.add("form-group", "col-sm-5");
 divlat.innerHTML=`
             <input class="form-control" name="latitud[]" id="lat`+cantAct+`" type="text">`;
+
 
 const divlon=document.createElement("div");
 divlon.classList.add("form-group", "col-sm-5");
@@ -157,6 +162,7 @@ const divbtn=document.createElement("div");
 divbtn.classList.add("form-group", "col-sm-2");
 divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`)" type="button">borrar</button>`;
 
+divrow.appendChild(divids);
 divrow.appendChild(divlat);
 divrow.appendChild(divlon);
 divrow.appendChild(divbtn);
@@ -168,13 +174,14 @@ coords.setAttribute('data-cant', cantAct);
 
 }
 
-function eliminarCoordenadas(id){
+function eliminarCoordenadas(id, idcoord){
 
     if(id!=""){
         const div = document.querySelector("#coordenadas"+id);
+        const del = document.querySelector("#deletes"+id);
+        del.value=idcoord;
         div.remove();
     }
-
 
 }
 
@@ -390,7 +397,7 @@ return false;
 
 function final(){
     alert("Su solicitud se ha guardado exitosamente");
-     window.location="http://localhost/INEAfinal/public/zarpes/permisosDeZarpe";
+     window.location="http://localhost/INEAfinal/public/zarpes/permiso_zarpe";
 }
 
 

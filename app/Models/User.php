@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use App\Models\Publico\Capitania;
+use App\Models\Zarpes\PermisoZarpe;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -65,4 +67,13 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'nombres' => 'required',
         'password' => 'required'
     ];
+    public function capitanias()
+    {
+        return $this->belongsToMany(Capitania::class);
+    }
+
+    public function permisozarpes()
+    {
+        return $this->hasMany(PermisoZarpe::class);
+    }
 }

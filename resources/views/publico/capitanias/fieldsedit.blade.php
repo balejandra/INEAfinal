@@ -15,11 +15,17 @@
 
 {!! Form::label('coordenadas', 'Coordenas:') !!}
 @php($var=0)
-    
-@forelse($coordenadas as $key =>$coord)
 
+@forelse($coordenadas as $key =>$coord)
+<div>
+    {!! Form::hidden('deletes[]',  null, ['class' => 'form-control', 'id'=>'deletes'. $key]) !!}
+</div>
 <div class="row" id="coordenadas{{$key}}">
     <!-- latitud Field -->
+    <div>
+        {!! Form::hidden('ids[]',  $coord->id, ['class' => 'form-control']) !!}
+    </div>
+
     <div class="form-group col-sm-5">
         @if ($var==0)
         {!! Form::label('Latitud', 'Latitud:') !!}
@@ -41,7 +47,9 @@
         </div>
     @else
         <div class="form-group col-sm-2 ">
-        {!! Form::button('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'eliminarCoordenadas(this.id)', 'id'=>$key]) !!}
+
+        {!! Form::button('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'eliminarCoordenadas(this.id, '.$coord->id.')', 'id'=>$key]) !!}
+            {{$coord->id}}
         </div>
     @endif
 </div>
@@ -49,6 +57,7 @@
 @empty
 <div class="row" >
     <!-- latitud Field -->
+
     <div class="form-group col-sm-5">
         {!! Form::label('Latitud', 'Latitud:') !!}
         {!! Form::text('latitud[]', null, ['class' => 'form-control']) !!}
