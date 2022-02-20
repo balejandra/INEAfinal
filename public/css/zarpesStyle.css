@@ -1,0 +1,12 @@
+.steps{
+	background: #e4e4e4;
+	font-weight: bold;
+	color: #bac3bb;
+}
+
+.stepSelected{
+	background: #a1fdb2;
+	font-weight: bold;
+	color: #4e4e4e;
+	border-color: #85eb98 !important;
+}

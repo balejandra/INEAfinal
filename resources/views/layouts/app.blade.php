@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{asset('assets/custom.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/DataTables/datatables.css')}}">
     <link rel="stylesheet" href="{{asset('assets/fontawesome/css/all.css')}}">
+    <link rel="stylesheet" href="{{asset('css/zarpesStyle.css')}}">
+
     @routes
 
 

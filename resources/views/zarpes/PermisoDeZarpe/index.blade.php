@@ -17,14 +17,14 @@
                              <strong>Solicitud de Permisos de Zarpe</strong>
 
                              <div class="card-header-actions">
-                                 <a class="btn btn-primary btn-sm"  href="./permiso_zarpe/create">Nuevo</a>
+                                 <a class="btn btn-primary btn-sm"  href="./PermisoDeZarpe/create">Nuevo</a>
 
                              </div>
 
                          </div>
                          <div class="card-body" style="min-height: 350px;">
 
-                           @include('zarpes.permiso_zarpe.table')
+                           @include('zarpes.PermisoDeZarpe.table')
                          </div>
                      </div>
                   </div>

@@ -185,228 +185,9 @@ function eliminarCoordenadas(id, idcoord){
 
 }
 
+ 
 
 
-function bandera(){
-    const div = document.querySelector("#bandera");
-
-
-    var divdestino=document.querySelector("#form-nacional");
-    var divdestino2=document.querySelector("#form-extrangera");
-
-    if(div.value=="nacional"){
-       divdestino2.setAttribute('style','display:none');
-        divdestino.setAttribute('style','display:show');
-
-
-    }else if(div.value=="extrangera"){
-         divdestino2.setAttribute('style','display:show');
-        divdestino.setAttribute('style','display:none');
-    }else{
-
-    }
-
-
-}
-
-
-function matricula(){
-     const matriculas=['123','ADKN-SE-0001','ADKN-SE-0003','ADKN-RE-0002', 'ADKN-SE-0002'];
-        txtmatricula=document.querySelector("#matricula");
-
-        if(matriculas.includes(txtmatricula.value)){
-           // alert(txtmatricula.value);
-            licencia=document.querySelector("#table-licencia");
-            licencia.setAttribute('style','display:show');
-
-            tab=document.querySelector("#profile-tab");
-            tab.setAttribute('class','nav-link');
-
-           var btnsiguiente=document.querySelector("#table-licencia");
-
-
-        }else{
-            alert("Matricula no encontrada");
-        }
-
-}
-
-
-function agregarPasajero(destino){
-
-var pass=document.getElementById(destino);
-let cantAct=pass.getAttribute('data-cant');
-cantAct<=0 ? cantAct=1 : cantAct++;
-
-const divdatos= document.createElement("div");
-divdatos.classList.add("row");
-divdatos.id=destino+"-datos"+cantAct;
-const divname=document.createElement("div");
-divname.classList.add("form-group", "col-sm-2" );
-divname.innerHTML=`<label for="nombre" > Nombre</label>
-            <input class="form-control" name="nombre[]" id="nombre`+cantAct+`" type="text" placeholder='Nombre'>`;
-
-const divape=document.createElement("div");
-divape.classList.add("form-group", "col-sm-2" );
-divape.innerHTML=`<label for="Apellido" > Apellido</label>
-            <input class="form-control" name="apellido[]" id="apellido`+cantAct+`"  type="text" placeholder='Apellido'>`;
-
-
-const divsexo=document.createElement("div");
-divsexo.classList.add("form-group", "col-sm-1");
-divsexo.innerHTML=`<label for="sexo" > Sexo</label>
-            <select class='form-control'>
-                <option value='0'>Sexo</option>
-                <option value='1'>Masculino</option>
-                <option value='2'>Femenino</option>
-            </select>`;
-
-const divcedula=document.createElement("div");
-divcedula.classList.add("form-group", "col-sm-2" );
-divcedula.innerHTML=`
-            <label for="cedula" > Cedula</label>
-            <input class="form-control" name="cedula[]" id="cedula`+cantAct+`"  type="text" placeholder='cedula / pasaporte'>`;
-
-
-const divtipodoc=document.createElement("div");
-divtipodoc.classList.add("form-group", "col-sm-1");
-divtipodoc.innerHTML=`<label for="Tipodoc" > Tipo </label>
-            <select class='form-control'>
-                <option value='0'>Seleccione</option>
-                <option value='1'>V</option>
-                <option value='2'>E</option>
-            </select>`;
-
-
-const divfechanac=document.createElement("div");
-divfechanac.classList.add("form-group", "col-sm-2" );
-divfechanac.innerHTML=`<label for="fechanac" > Fecha de nacimiento</label>
-            <input class="form-control" name="fechanac[]" id="fechanac`+cantAct+`"  type="date" placeholder='Fecha nacimiento'>`;
-
-
-
-
-const divbtn=document.createElement("div");
-divbtn.classList.add("form-group", "col-sm-2", "text-center","pt-3");
-divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarTripulante(`+cantAct+`, '`+destino+`')" type="button">borrar</button>`;
-
-
-divdatos.appendChild(divtipodoc);
-divdatos.appendChild(divcedula);
-divdatos.appendChild(divname);
-divdatos.appendChild(divape);
-divdatos.appendChild(divsexo);
-divdatos.appendChild(divfechanac);
-
-
-divdatos.appendChild(divbtn);
-
-pass.appendChild(divdatos);
-
-pass.setAttribute('data-cant', cantAct);
-//coords.innerHTML=  coords.innerHTML+campos;
-
-}
-
-
-function eliminarTripulante(id, destino){
-
-    if(id!=""){
-        const div = document.querySelector("#"+destino+"-datos"+id);
-        div.remove();
-    }
-
-
-}
-
-
-
-function ValidarMarinos(){
-    var marinos=['123456789','987654321','1357913579', '24682468'];
-
-    txtresp=document.querySelector("#msjresmarinos");
-
-txtresp.innerHTML=`<div class="alert alert-success">Marinos validados exitosamente, avance al paso siguiente.</div >`;
-
-}
-
-function next(){
-
-
-    txtresp=document.querySelector("#msjpasajeros");
-
-txtresp.innerHTML=`<div class="alert alert-success">Pasajeros validados exitosamente, avance al paso siguiente.</div >`;
-
-}
-
-
-function licencia(){
-    var licencias=['729','ADKN-SE-0002','ADKN-SE-0002 ', '24682468'];
-    txtlicencias=document.querySelector("#txtlicencias");
-
-    if(licencias.includes(txtlicencias.value)){
-        txtresp=document.querySelector("#msjlic");
-        txtresp.innerHTML=`<div class="alert alert-success">Licencia encontrada</div >`;
-
-        tableLicencias=document.querySelector("#tableLicencias");
-        tableLicencias.setAttribute('style','display:show');
-
-    }else{
-        alert("Licencia no encontrada");
-    }
-
-}
-
-function rutas(){
-
-    txtresp=document.querySelector("#msjruta");
-
-    txtresp.innerHTML=`<div class="alert alert-success">Ruta registrada exitosamente, avance al paso siguiente.</div >`;
-final();
-}
-
-
-function acciones(accion, id){
-    z=document.querySelector("#z"+id);
-    d=document.querySelector("#b"+id);
-
-    switch(accion){
-        case 'consultar': break;
-        case 'aprobar':
-            z.innerHTML="AUTORIZADO";
-            z.setAttribute('class','text-success');
-            d.innerHTML=`<a href="#" class="btn btn-info btn-sm" title="Consultar" onclick="acciones('consultar',3)">
-                        <i class="fa fa-search" ></i>
-                    </a>`;
-        break;
-
-        case 'rechazar':
-            var justificacion = prompt('Describa brevemente porque desea rechazar esta solicitud'+id);
-
-            if(justificacion!=""){
-                z.innerHTML="RECHAZADO";
-                z.setAttribute('class','text-danger');
-            }
-
-        break;
-
-    }
-return false;
-}
-
-
-function final(){
-    alert("Su solicitud se ha guardado exitosamente");
-     window.location="http://localhost/INEAfinal/public/zarpes/permiso_zarpe";
-}
-
-
-function msj(id, msj){
-    txtresp=document.querySelector("#"+id);
-
-    txtresp.innerHTML='<div class="alert alert-success">'+msj+'</div >';
-
-}
 //-----------------------------------------------------------------------------------------
 
 
@@ -632,3 +413,65 @@ $(document).ready(function() {
 
 });
 
+
+
+
+
+
+//INICIO VALIDACIONES DE PERMISOS DE ZARPES
+
+
+ function getData() {
+    let cedula= document.getElementById('numero_identificacion').value;
+    let fechanac= document.getElementById('fecha_nacimiento').value;
+    let sexo= document.getElementById('sexo').value;
+    var msj= document.getElementById('msj');
+    if (cedula!="" || fechanac!="" || sexo!="") {
+        $.ajax({
+            url: route('consultasaime2'),
+            data: {cedula: cedula, fecha:fechanac, sexo:sexo }
+
+        })// This will be called on success
+        .done(function (response) {
+            alert(response);
+            var pass=document.getElementById('pasajeros');
+            var respuesta = JSON.parse(response);
+            let tamano = respuesta.length;
+            if (tamano == 0) {
+                console.log(respuesta);
+            } else {
+                respuesta=respuesta[0];
+                let sex='';
+                respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
+                var html="<tr id='"+respuesta.cedula+"'> <td>"+respuesta.cedula+"</td> <td>"+respuesta.nombre1+" "+respuesta.nombre2+"</td> <td>"+respuesta.apellido1+" "+respuesta.apellido2+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td></td> </tr>";
+                pass.innerHTML+=html;
+                console.log(respuesta);
+                console.log(respuesta.cedula);
+                
+            }
+            //alert(response);
+        })
+
+        // This will be called on error
+        .fail(function (response) {
+            msj.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias con los datos suministrados.</div>' ;
+             
+        });
+    }else{
+        
+        msj.innerHTML='<div class="alert alert-danger">Existen campos vacios en el formulario, por favor verifique...</div>' ;
+    }
+
+   
+
+}
+
+
+
+
+
+
+
+
+
+//FIN DE VALIDACION DE PERMISOS DE ZARPES

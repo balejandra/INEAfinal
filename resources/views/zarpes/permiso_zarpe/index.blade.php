@@ -17,7 +17,7 @@
                              <strong>Solicitud de Permisos de Zarpe</strong>
 
                              <div class="card-header-actions">
-                                 <a class="btn btn-primary btn-sm"  href="./permiso_zarpe/create">Nuevo</a>
+                                 <a class="btn btn-primary btn-sm"  href="{{ route('permisoszarpes.createStepOne') }}">Nuevo</a>
 
                              </div>
 
