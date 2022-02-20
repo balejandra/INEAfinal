@@ -443,6 +443,7 @@ $(document).ready(function() {
                 respuesta=respuesta[0];
                 let sex='';
                 respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
+                alert(respuesta.cedula);
                 var html="<tr id='"+respuesta.cedula+"'> <td>"+respuesta.cedula+"</td> <td>"+respuesta.nombre1+" "+respuesta.nombre2+"</td> <td>"+respuesta.apellido1+" "+respuesta.apellido2+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td></td> </tr>";
                 pass.innerHTML+=html;
                 console.log(respuesta);
