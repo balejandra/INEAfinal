@@ -29,12 +29,12 @@
 
                          	 <form action="{{ route('permisoszarpes.permissionCreateStepThree') }}" method="POST">
                 @csrf
-  
+
                 <div class="card">
-                    
-  
+
+
                     <div class="card-body">
-  
+
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -44,24 +44,24 @@
                                     </ul>
                                 </div>
                             @endif
-  
+
                             <div class="row">
                                 <div class="col-md-4"></div>
 
                                     <div class="col-md-4">
-                                                
+
                                         <div class="form-group">
-                                            <label for="title">Tipo de zarpe:</label>
-                                            {!! Form::select('tipozarpe', ['zarpe1'=>'Tipo Zarpe 1', 'zarpe2'=>'Tipo Zarpe 2'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipozarpe']) !!}        
+                                            <label for="title">Tipo de navegación:</label>
+                                            {!! Form::select('tipozarpe', ['1'=>'Zarpe deportivo', '2'=>'Zarpe de pezca'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipozarpe']) !!}
                                         </div>
 
                                     </div>
                                 <div class="col-md-4"></div>
-                                            
+
                             </div>
-                          
+
                     </div>
-  
+
                     <div class="card-footer text-right">
                         <div class="row">
 				            <div class="col-md-6 text-left">

@@ -25,16 +25,16 @@
                          <div class="card-body" style="min-height: 350px;">
                              @include('zarpes.permiso_zarpe.stepsIndicator')
 
-                        	
+
 
                          	 <form action="{{ route('permisoszarpes.permissionCreateStepOne') }}" method="POST">
                 @csrf
-  
+
                 <div class="card">
-                    
-  
+
+
                     <div class="card-body" style="min-height:200px">
-  
+
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -49,33 +49,33 @@
                                 <div class="col-md-4 text-right"><label for="title">Bandera:</label></div>
 
                                     <div class="col-md-4">
-  
-                                        <div class="form-group">
-                                            
-                                                 
 
-                                                {!! Form::select('bandera', ['nacional'=>'NACIONAL', 'extrangera'=>'EXTRANGERA'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione su bandera', 'onChange'=>'bandera()', 'id'=>'bandera']) !!}
+                                        <div class="form-group">
+
+
+
+                                                {!! Form::select('bandera', ['nacional'=>'NACIONAL', 'extrangera'=>'EXTRANJERA'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione su bandera', 'onChange'=>'bandera()', 'id'=>'bandera']) !!}
 
                                             </div>
 
                                     </div>
                                 <div class="col-md-4"></div>
-                                            
+
                             </div>
-                            
-                          
+
+
                     </div>
-  
+
                     <div class="card-footer text-right">
                     	<div class="row">
                     		<div class="col-md-6 text-left">
-                                 
+
                             </div>
                             <div class="col-md-6 text-right">
                                 <button type="submit" class="btn btn-primary">Next</button>
                             </div>
                     	</div>
-                    		
+
                     </div>
                 </div>
             </form>
