@@ -56,5 +56,7 @@ class TablaMando extends Model implements Auditable
         'cant_tripulantes' => 'required'
     ];
 
-
+    public function cargotablamandos(){
+        return $this->hasMany(CargoTablaMando::class);
+    }
 }

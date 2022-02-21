@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Zarpes;
 
 use App\Http\Controllers\Controller;
+use App\Models\Zarpes\Equipo;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 
@@ -14,7 +15,7 @@ class PermisoZarpeController extends Controller
     {
 
        // $products = Product::all();
-         
+
         return view('zarpes.permiso_zarpe.index');
     }
 
@@ -42,7 +43,7 @@ class PermisoZarpeController extends Controller
          $request->session()->put('solicitud', $solicitud);
 
 
- 
+
         return view('zarpes.permiso_zarpe.create-step-one')->with('paso', 1);
     }
 
@@ -52,7 +53,7 @@ class PermisoZarpeController extends Controller
       $validatedData = $request->validate([
             'bandera' => 'required',
         ]);
-         
+
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $solicitud['bandera']=$request->input('bandera', []);
  //       print_r($solicitud['bandera']);
@@ -84,7 +85,7 @@ class PermisoZarpeController extends Controller
 
     public function permissionCreateStepTwo(Request $request)
     {
-        
+
 
         $validatedData = $request->validate([
             'matricula' => 'required',
@@ -152,14 +153,14 @@ class PermisoZarpeController extends Controller
 
     public function createStepFour(Request $request)
     {
-      
+
          return view('zarpes.permiso_zarpe.create-step-four')->with('paso', 4);
 
     }
 
     public function permissionCreateStepFour(Request $request)
     {
-       
+
        $validatedData = $request->validate([
             'origen' => 'required',
             'salida' => 'required',
@@ -178,7 +179,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
-      
+
 
         $tripulantes=4;
 
@@ -188,7 +189,7 @@ class PermisoZarpeController extends Controller
 
     public function permissionCreateStepFive(Request $request)
     {
-        
+
          return redirect()->route('permisoszarpes.createStepSix');
 
     }
@@ -204,7 +205,7 @@ class PermisoZarpeController extends Controller
 
     public function permissionCreateStepSix(Request $request)
     {
-        
+
          return redirect()->route('permisoszarpes.createStepSeven');
 
     }
@@ -212,14 +213,17 @@ class PermisoZarpeController extends Controller
 
      public function createStepSeven(Request $request)
     {
-      
-         return view('zarpes.permiso_zarpe.create-step-seven')->with('paso', 7);
+            $equipos=Equipo::all();
+          //  dd($equipos);
+         return view('zarpes.permiso_zarpe.create-step-seven')
+             ->with('paso', 7)
+             ->with('equipos',$equipos);
 
     }
 
     public function store(Request $request)
     {
-        
+
          //return redirect()->route('permisoszarpes.createStepSeven');
         echo "  Guardar en BD y redireccionar";
 
@@ -243,7 +247,7 @@ class PermisoZarpeController extends Controller
                 'errors'=>[],
             ], 200);
         }
-        
+
             echo json_encode($data);
     }
 
