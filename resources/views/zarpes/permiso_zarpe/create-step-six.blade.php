@@ -44,22 +44,42 @@
                                     </ul>
                                 </div>
                             @endif
-  
-                           <div class="row">
-                                <div class="row px-5" id="msj">
+                            <div class="row px-5" id="msj">
                                     
-                                </div>
-                                <div class="col-md-3">
-                                                
-                                    <div class="form-group">
-                                        <label for="title">Cédula:</label>
-                                        <input type="text" class="form-control" id="numero_identificacion"  name="numero_identificacion">
-                                                    
+                            </div>
+                           <div class="row" id="VE">
+
+                                <div class="col-md-2 p-0">
+                                        
+                                    <div class="px-2 form-group form-check form-switch ">
+                                        <label  >Menor:</label><br>
+                                        &nbsp;
+                                        <input class="form-check-input" type="checkbox" name="menor" id='menor'    style="margin-left: auto;"  >  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;<label id="textoMenor">NO</label>
                                     </div>
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2 px-1">
+                                        
+                                    <div class="form-group">
+                                        <label for="title">Tipo doc..:</label>
+                                        {!! Form::select('tipodoc', ['V'=>'Cedula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
+                                                    
+                                    </div>
+
+                                </div>
+                                
+                                <div class="col-md-2 px-1">
+                                                
+                                    <div class="form-group">
+                                        <label for="title">Cédula/Pasaporte:</label>
+                                        <input type="text" class="form-control" id="numero_identificacion"  name="numero_identificacion" title="En caso de ser menor venezolano no cedulado, agregue la cédula del representante.">
+                                                    
+                                    </div>
+
+                                </div>
+ 
+                                <div class="col-md-2 px-1">
                                         
                                     <div class="form-group">
                                         <label for="title">Fecha de nacimiento:</label>
@@ -73,20 +93,46 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2 px-1">
                                         
                                     <div class="form-group">
                                         <label for="title">Sexo:</label>
-                                        {!! Form::select('sexo', ['F'=>'Femenino', 'M'=>'Masculino'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexo']) !!}
+                                        {!! Form::select('sexo', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexo']) !!}
                                                     
                                     </div>
 
                                 </div>
+                                
 
-                                <div class="col-md-3 mt-4">
+                                <div class="col-md-2 mt-4">
                                     <button type="button" class="btn btn-primary" onclick="getData()">Agregar</button>
                                 </div>
                                             
+                            </div>
+
+                            <div class="row mb-3"  >
+                                 
+                                    <div class="col-md-5 px-1 DatosRestantes" style="display:none">
+                                                
+                                    <div class="form-group">
+                                        <label for="title">Nombre:</label>
+                                        <input type="text" class="form-control" id="nombres"  name="nombres"  >
+                                                    
+                                    </div>
+
+                                </div>
+                                <div class="col-md-5 px-1 DatosRestantes" style="display:none">
+                                                
+                                    <div class="form-group">
+                                        <label for="title">Apellidos:</label>
+                                        <input type="text" class="form-control" id="apellidos"  name="apellidos" >
+                                                    
+                                    </div>
+
+                                </div>
+                                
+                                
+                                
                             </div>
 
                             <div class="row px-3">
@@ -98,8 +144,8 @@
                                                 <th>Nombres</th>
                                                 <th>Apellidos</th>
                                                 <th>sexo</th>
-                                                <th>Fecha Nacimiento</th>
-                                                <th></th>
+                                                <th>Fecha nac.</th>
+                                                <th>Menor</th>
                                                  
                                             </tr>
                                         </thead>

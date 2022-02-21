@@ -20,24 +20,25 @@ class PermisoZarpeController extends Controller
 
     public function createStepOne(Request $request)
     {
+         $request->session()->put('pasajeros', '');
+         $request->session()->put('tripulantes', '');
 
+           $solicitud=json_encode([
+            "user_id"=> '',
+            "nro_solicitud"=> '',
+            "bandera"=> '',
+            "matricula"=> '',
+            "tipo_zarpes_id"=> '',
+            "establecimiento_nauticos_id"=> '',
+            "coordenadas"=> '',
+            "origen_capitanias_id"=> '',
+            "destino_capitanias_id"=> '',
+            "fecha_hora_salida"=> '',
+            "fecha_hora_regreso"=> '',
+            "status_id"=> '',
+            "permiso_estadias_id"=> '',
 
-        $solicitud=json_encode([
-         "user_id"=> '',
-         "nro_solicitud"=> '',
-         "bandera"=> '',
-         "matricula"=> '',
-         "tipo_zarpes_id"=> '',
-         "establecimiento_nauticos_id"=> '',
-         "coordenadas"=> '',
-         "origen_capitanias_id"=> '',
-         "destino_capitanias_id"=> '',
-         "fecha_hora_salida"=> '',
-         "fecha_hora_regreso"=> '',
-         "status_id"=> '',
-         "permiso_estadias_id"=> '',
-
-         ]);
+            ]);
 
          $request->session()->put('solicitud', $solicitud);
 
@@ -198,13 +199,29 @@ class PermisoZarpeController extends Controller
      /*   $product = $request->session()->get('product');
 
         return view('products.create-step-three',compact('product'));*/
+        
+
+
          return view('zarpes.permiso_zarpe.create-step-six')->with('paso', 6);
 
     }
 
     public function permissionCreateStepSix(Request $request)
     {
-        
+        $pasajero=json_encode([
+         "nombres"=> '',
+         "apellidos"=> '',
+         "tipo_doc"=> '',
+         "nro_doc"=> '',
+         "sexo"=> '',
+         "fecha_nacimiento"=> '',
+         "menor_edad"=> '',
+         "permiso_zarpe_id"=> '',
+          
+         ]);
+        // $request->session()->put('pasajeros', {[]});
+
+
          return redirect()->route('permisoszarpes.createStepSeven');
 
     }
