@@ -3,6 +3,7 @@
     Zarpes
 @endsection
 @section('content')
+
     <ol class="breadcrumb">
         <li class="breadcrumb-item">Permisos de Zarpe</li>
     </ol>

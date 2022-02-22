@@ -26,7 +26,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/zarpes/permisosDeZarpe/create', function () {
         return view('zarpes.PermisoDeZarpe.index');
     });
-
+    Route::get('validationStepTwo',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validationStepTwo'])->name('validationStepTwo');
 
 
     Route::resource('permisosestadia', \App\Http\Controllers\Zarpes\PermisoEstadiaController::class);
