@@ -1,3 +1,6 @@
+@push('scripts')
+    <script src="{{asset('js/zarpe.js')}}"></script>
+@endpush
 <ul class="row px-5 mx-5 mb-3 " id="progressbar">
     <li class="col text-center p-2 mx-3 {{ $paso==1 ? 'active' : '' }}">Bandera</li>
     <li class="col text-center p-2 mx-3 {{ $paso==2 ? 'active' : '' }}">Matricula</li>

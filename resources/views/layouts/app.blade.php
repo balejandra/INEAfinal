@@ -21,8 +21,7 @@
     <link rel="stylesheet" href="{{asset('css/zarpesStyle.css')}}">
 
     @routes
-
-
+    @stack('scripts')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header>

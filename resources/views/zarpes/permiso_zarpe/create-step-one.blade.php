@@ -52,8 +52,6 @@
 
                                         <div class="form-group">
 
-
-
                                                 {!! Form::select('bandera', ['nacional'=>'NACIONAL', 'extrangera'=>'EXTRANJERA'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione su bandera', 'onChange'=>'bandera()', 'id'=>'bandera']) !!}
 
                                             </div>
@@ -72,7 +70,7 @@
 
                             </div>
                             <div class="col-md-6 text-right">
-                                <button type="submit" class="btn btn-primary">Next</button>
+                                <button type="submit" class="btn btn-primary">Siguiente</button>
                             </div>
                     	</div>
 
