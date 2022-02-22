@@ -29,7 +29,7 @@ class TablaMandoController extends Controller
     {
         $tablaMandos = $this->tablaMandoRepository->all();
 
-        return view('tabla_mandos.index')
+        return view('zarpes.tabla_mando.index')
             ->with('tablaMandos', $tablaMandos);
     }
 
@@ -40,7 +40,7 @@ class TablaMandoController extends Controller
      */
     public function create()
     {
-        return view('tabla_mandos.create');
+        return view('zarpes.tabla_mando.create');
     }
 
     /**
@@ -78,7 +78,7 @@ class TablaMandoController extends Controller
             return redirect(route('tablaMandos.index'));
         }
 
-        return view('tabla_mandos.show')->with('tablaMando', $tablaMando);
+        return view('zarpes.tabla_mando.show')->with('tablaMando', $tablaMando);
     }
 
     /**
@@ -98,7 +98,7 @@ class TablaMandoController extends Controller
             return redirect(route('tablaMandos.index'));
         }
 
-        return view('tabla_mandos.edit')->with('tablaMando', $tablaMando);
+        return view('zarpes.tabla_mando.edit')->with('tablaMando', $tablaMando);
     }
 
     /**

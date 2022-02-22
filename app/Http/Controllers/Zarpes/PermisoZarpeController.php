@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Zarpes;
 
 use App\Http\Controllers\Controller;
+use App\Models\Zarpes\Equipo;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 
@@ -253,8 +254,11 @@ class PermisoZarpeController extends Controller
 
      public function createStepSeven(Request $request)
     {
-
-         return view('zarpes.permiso_zarpe.create-step-seven')->with('paso', 7);
+            $equipos=Equipo::all();
+          //  dd($equipos);
+         return view('zarpes.permiso_zarpe.create-step-seven')
+             ->with('paso', 7)
+             ->with('equipos',$equipos);
 
     }
 

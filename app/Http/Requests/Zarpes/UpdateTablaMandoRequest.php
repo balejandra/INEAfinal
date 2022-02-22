@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Zarpes;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Zarpes\TablaMando;

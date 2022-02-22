@@ -16,7 +16,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
 
 
- 
+    Route::resource('tablaMandos', \App\Http\Controllers\Zarpes\TablaMandoController::class);
+
 
     Route::get('/zarpes/permisosDeZarpe', function () {
         return view('zarpes.PermisoDeZarpe.index');
@@ -29,9 +30,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
 
     Route::resource('permisosestadia', \App\Http\Controllers\Zarpes\PermisoEstadiaController::class);
-   
 
-    
+
+
     Route::get('/zarpes/permisoszarpes', [App\Http\Controllers\Zarpes\PermisoZarpeController::class, 'index'])->name('permisoszarpes.index')->middleware('auth');
 
     Route::get('/zarpes/permisoszarpes/createStepOne', [App\Http\Controllers\Zarpes\PermisoZarpeController::class,'createStepOne'])->name('permisoszarpes.createStepOne');

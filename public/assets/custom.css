@@ -21,7 +21,7 @@ img.nav-avatar {
     background: #042350 !important;
 }
 
-.active {
+li.w-100.active {
     background-color: #1c549a;
 }
 
