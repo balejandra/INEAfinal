@@ -25,16 +25,16 @@
                          <div class="card-body" style="min-height: 350px;">
 
                              @include('zarpes.permiso_zarpe.stepsIndicator')
-                    
 
-                         	 <form action="{{ route('permisoszarpes.permissionCreateStepSix') }}" method="POST">
+
+                         	 <form action="#" method="POST">
                 @csrf
-  
+
                 <div class="card">
-                    
-  
+
+
                     <div class="card-body">
-  
+
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -44,49 +44,95 @@
                                     </ul>
                                 </div>
                             @endif
-  
-                           <div class="row">
-                                <div class="row px-5" id="msj">
-                                    
-                                </div>
-                                <div class="col-md-3">
-                                                
-                                    <div class="form-group">
-                                        <label for="title">Cédula:</label>
-                                        <input type="text" class="form-control" id="numero_identificacion"  name="numero_identificacion">
-                                                    
+                            <div class="row px-5" id="msj">
+
+                            </div>
+                           <div class="row" id="VE">
+
+                                <div class="col-md-2 p-0">
+
+                                    <div class="px-2 form-group form-check form-switch ">
+                                        <label  >Menor:</label><br>
+                                        &nbsp;
+                                        <input class="form-check-input" type="checkbox" name="menor" id='menor'    style="margin-left: auto;"  >  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;<label id="textoMenor">NO</label>
                                     </div>
 
                                 </div>
 
-                                <div class="col-md-3">
-                                        
+                                <div class="col-md-2 px-1">
+
+                                    <div class="form-group">
+                                        <label for="title">Tipo doc..:</label>
+                                        {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-2 px-1">
+
+                                    <div class="form-group">
+                                        <label for="title">Cédula/Pasaporte:</label>
+                                        <input type="text" class="form-control" id="numero_identificacion"  name="numero_identificacion" title="En caso de ser menor venezolano no cedulado, agregue la cédula del representante.">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-2 px-1">
+
                                     <div class="form-group">
                                         <label for="title">Fecha de nacimiento:</label>
-                                        
+
                                         <input type="date"
                                                class="form-control "
                                                name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" id="fecha_nacimiento"
-                                               placeholder="fecha_nacimiento" required >
-                                    
-                                                    
+                                               placeholder="fecha_nacimiento" required max="{{date("Y-m-d")}}" >
+
+
                                     </div>
 
                                 </div>
-                                <div class="col-md-3">
-                                        
+                                <div class="col-md-2 px-1">
+
                                     <div class="form-group">
                                         <label for="title">Sexo:</label>
-                                        {!! Form::select('sexo', ['F'=>'Femenino', 'M'=>'Masculino'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexo']) !!}
-                                                    
+                                        {!! Form::select('sexo', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexo']) !!}
+
                                     </div>
 
                                 </div>
 
-                                <div class="col-md-3 mt-4">
+
+                                <div class="col-md-2 mt-4">
                                     <button type="button" class="btn btn-primary" onclick="getData()">Agregar</button>
                                 </div>
-                                            
+
+                            </div>
+
+                            <div class="row mb-3"  >
+
+                                    <div class="col-md-5 px-1 DatosRestantes" style="display:none">
+
+                                    <div class="form-group">
+                                        <label for="title">Nombre:</label>
+                                        <input type="text" class="form-control" id="nombres"  name="nombres"  >
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-5 px-1 DatosRestantes" style="display:none">
+
+                                    <div class="form-group">
+                                        <label for="title">Apellidos:</label>
+                                        <input type="text" class="form-control" id="apellidos"  name="apellidos" >
+
+                                    </div>
+
+                                </div>
+
+
+
                             </div>
 
                             <div class="row px-3">
@@ -98,23 +144,27 @@
                                                 <th>Nombres</th>
                                                 <th>Apellidos</th>
                                                 <th>sexo</th>
-                                                <th>Fecha Nacimiento</th>
-                                                <th></th>
-                                                 
+                                                <th>Fecha nac.</th>
+                                                <th>Menor</th>
+
                                             </tr>
                                         </thead>
 
-                                        <tbody id="pasajeros"> 
-                                             
+                                        <tbody id="pasajeros">
+
                                         </tbody>
                                     </table>
 
                                 </div>
-                                
+
                             </div>
-                          
+
                     </div>
-  
+                </form>
+                <form action="{{ route('permisoszarpes.permissionCreateStepSix') }}" method="POST">
+                        @csrf
+                         <div id="dataPassengers" data-cant="0"></div>
+
                     <div class="card-footer text-right">
                         <div class="row">
 				            <div class="col-md-6 text-left">
@@ -126,7 +176,7 @@
 				        </div>
                     </div>
                 </div>
-            </form>
+                </form>
                          </div>
                      </div>
                   </div>

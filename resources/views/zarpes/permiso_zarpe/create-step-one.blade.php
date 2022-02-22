@@ -54,7 +54,11 @@
 
 
 
+<<<<<<< HEAD
                                                 {!! Form::select('bandera', ['nacional'=>'NACIONAL', 'extranjera'=>'EXTRANJERA'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione su bandera', 'onChange'=>'bandera()', 'id'=>'bandera']) !!}
+=======
+                                                {!! Form::select('bandera', ['nacional'=>'NACIONAL', 'extrangera'=>'EXTRANJERA'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione su bandera', 'onChange'=>'bandera()', 'id'=>'bandera']) !!}
+>>>>>>> cd9f0a0c5694f8c66764356698310f2005a78aab
 
                                             </div>
 

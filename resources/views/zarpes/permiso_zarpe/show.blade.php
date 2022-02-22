@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section("titulo")
-    Tabla Mando
+    Zarpes
 @endsection
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ route('tablaMandos.index') }}">Tabla Mando</a>
+            <a href="{{ route('tablaMandos.index') }}">Zarpes</a>
         </li>
         <li class="breadcrumb-item active">Consulta</li>
     </ol>
@@ -16,13 +16,13 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Consulta</strong>
+                            <strong>Consultar Solicitud Zarpe</strong>
                             <div class="card-header-actions">
-                                <a href= "{{route('tablaMandos.index')}} " class="btn btn-primary btn-sm">Listado de Tabla de Mandos</a>
+                                <a href= "{{route('permisoszarpes.index')}} " class="btn btn-primary btn-sm">Listado de Solicitud de Zarpes</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            @include('zarpes.tabla_mando.show_fields')
+                            @include('zarpes.permiso_zarpe.show_fields')
                         </div>
                     </div>
                 </div>

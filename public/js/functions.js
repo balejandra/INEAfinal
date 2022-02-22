@@ -15,10 +15,19 @@ $(document).ready(function() {
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
-} );
 
+    $('#permisoZarpes-table').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
 
-$(document).ready(function() {
     $('#TablePermissions').DataTable({
         responsive: true,
         fixedHeader: true,
@@ -185,7 +194,7 @@ function eliminarCoordenadas(id, idcoord){
 
 }
 
- 
+
 
 
 //-----------------------------------------------------------------------------------------
@@ -425,53 +434,317 @@ $(document).ready(function() {
     let cedula= document.getElementById('numero_identificacion').value;
     let fechanac= document.getElementById('fecha_nacimiento').value;
     let sexo= document.getElementById('sexo').value;
+    let tipodoc= document.getElementById('tipodoc').value;
+    let menor= document.getElementById('menor').value;
+    let men='';
     var msj= document.getElementById('msj');
-    if (cedula!="" || fechanac!="" || sexo!="") {
-        $.ajax({
-            url: route('consultasaime2'),
-            data: {cedula: cedula, fecha:fechanac, sexo:sexo }
+    var pass=document.getElementById('pasajeros');
+    if ($("#menor").is(':checked')) {men="SI";}else{men="NO";}
 
-        })// This will be called on success
-        .done(function (response) {
-            alert(response);
-            var pass=document.getElementById('pasajeros');
-            var respuesta = JSON.parse(response);
-            let tamano = respuesta.length;
-            if (tamano == 0) {
-                console.log(respuesta);
-            } else {
-                respuesta=respuesta[0];
-                let sex='';
-                respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
-                var html="<tr id='"+respuesta.cedula+"'> <td>"+respuesta.cedula+"</td> <td>"+respuesta.nombre1+" "+respuesta.nombre2+"</td> <td>"+respuesta.apellido1+" "+respuesta.apellido2+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td></td> </tr>";
-                pass.innerHTML+=html;
-                console.log(respuesta);
-                console.log(respuesta.cedula);
-                
+    if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="") {
+
+        if(tipodoc=="P"){
+
+            if( $('#nombres').val()=="" ||  $('#apellidos').val()==""){
+                //si no han llenado los nombres y apellidos
+                msj.innerHTML='<div class="alert alert-danger">Los campos nombres y apellidos son requeridos</div>' ;
+            }else{
+                //si llenaron los nombres y apellidos
+                let  pasajeroExiste=document.getElementById('pass'+cedula);
+                if(pasajeroExiste==null){
+                    var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
+                    pass.innerHTML+=html;
+                    addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
+                }else{
+                    msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
+                }
             }
-            //alert(response);
-        })
+        }else{
 
-        // This will be called on error
-        .fail(function (response) {
-            msj.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias con los datos suministrados.</div>' ;
-             
-        });
+            if( $('#nombres').val()=="" ||  $('#apellidos').val()==""){
+
+                msj.innerHTML='<div class="alert alert-danger">111Los campos nombres y apellidos son requeridos</div>' ;
+            }else{
+                if ($('#menor').prop('checked')) {
+                    //si es venezolano menor de edad
+                    if(tipodoc=="NC"){ //si es no cedulado
+                        let  pasajeroExiste=document.getElementById('pass'+cedula);
+                        if(pasajeroExiste==null){
+                            var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
+                            pass.innerHTML+=html;
+                            addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
+                        }else{
+                            msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
+                        }
+
+                    }else{//si es menor con cedula
+                        $.ajax({
+                            url: route('consultasaime2'),
+                            data: {cedula: cedula, fecha:fechanac, sexo:sexo }
+
+                        })// This will be called on success
+                        .done(function (response) {
+
+                            var respuesta = JSON.parse(response);
+                            let tamano = respuesta.length;
+                            if (tamano == 0) {
+                                console.log(respuesta);
+                            } else {
+                                respuesta=respuesta[0];
+                                let sex='';
+                                respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
+                               let  pasajeroExiste=document.getElementById('pass'+respuesta.cedula);
+
+                                if(pasajeroExiste==null){
+                                    let nombres, apellidos;
+                                    if (respuesta.nombre2==null) {nombres=respuesta.nombre1; }else{ nombres=respuesta.nombre1+" "+respuesta.nombre2;}
+                                    if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
+                                    $('#nombres').val(nombres);
+                                    $('#apellidos').val(apellidos);
+
+                                    var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
+                                        addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
+
+                                    pass.innerHTML+=html;
+
+                                }else{
+                                    msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
+
+                                }
+
+
+                            }
+                            //alert(response);
+                        })
+                        .fail(function (response) {
+                            msj.innerHTML='<div class="alert alert-danger">No se encontraron coincidencias con los datos suministrados.</div>' ;
+
+                        });
+
+                    }
+                }else{
+
+                    //si es venezolano mayor de edad
+                    $.ajax({
+                        url: route('consultasaime2'),
+                        data: {cedula: cedula, fecha:fechanac, sexo:sexo }
+
+                    })// This will be called on success
+                    .done(function (response) {
+
+                        var respuesta = JSON.parse(response);
+                        let tamano = respuesta.length;
+                        if (tamano == 0) {
+                            console.log(respuesta);
+                        } else {
+                            respuesta=respuesta[0];
+                            let sex='';
+                            respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
+                           let  pasajeroExiste=document.getElementById('pass'+respuesta.cedula);
+
+                            if(pasajeroExiste==null){
+                                let nombres, apellidos;
+                                if (respuesta.nombre2==null) {nombres=respuesta.nombre1; }else{ nombres=respuesta.nombre1+" "+respuesta.nombre2;}
+                                if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
+                                $('#nombres').val(nombres);
+                                $('#apellidos').val(apellidos);
+
+
+                                    var html="<tr id='pass"+respuesta.cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td>"+men+"</td> </tr>";
+
+                                pass.innerHTML+=html;
+                                addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
+
+                            }else{
+                                msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
+
+                            }
+
+
+                        }
+                        //alert(response);
+                    })
+                    .fail(function (response) {
+                        msj.innerHTML='<div class="alert alert-danger">No se encontraron coincidencias con los datos suministrados.</div>' ;
+
+                    });
+
+
+                }
+            }
+
+        }
+
+
+
     }else{
-        
+
         msj.innerHTML='<div class="alert alert-danger">Existen campos vacios en el formulario, por favor verifique...</div>' ;
     }
 
-   
+
 
 }
 
 
 
 
+$('#menor').click(function() {
+    let option= document.createElement("option");
+
+    if($("#menor").is(':checked')){
+        $("#textoMenor").text('SI');  // checked
+        $('.DatosRestantes').attr('style', 'display:block');
+
+        let select=document.querySelector("#tipodoc");
+        option.id="nc";
+        option.value="NC";
+        option.textContent="No cedulado";
+        select.appendChild(option);
+
+        str =$( "select option:selected" ).val();
+        let date = new Date();
+        let fechamin="";
+        if( str=="NC"){
+            $('#apellidos').val("");
+            $('#nombres').val("");
+            fechamin=date.getFullYear()-10;
+            fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+            fechamin+="-"+String(date.getDate()).padStart(2, '0');
+        }else{
+            fechamin=date.getFullYear()-18;
+            fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+            fechamin+="-"+String(date.getDate()).padStart(2, '0');
+        }
+
+        let fmax=date.getFullYear()+"-"+(String(date.getMonth() + 1).padStart(2, '0'))+"-"+String(date.getDate()).padStart(2, '0');
+
+        $('#fecha_nacimiento').attr('min',fechamin );
+        $('#fecha_nacimiento').attr('max',fmax );
+
+
+    }
+    else{
+        $("#textoMenor").text('NO');
+        $('.DatosRestantes').attr('style', 'display:none');
+        document.querySelector("#nc").remove();
+        let date = new Date();
+        let fechamax="";
+        fechamax=date.getFullYear()-18;
+        fechamax+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+        fechamax+="-"+String(date.getDate()).padStart(2, '0');
+        $('#fecha_nacimiento').attr('max',fechamax );
+        $('#fecha_nacimiento').attr('min',"" );
+
+
+    }
+
+
+});
 
 
 
 
+$( "#tipodoc" )
+  .change(function () {
+    var str = "";
+    str =$( "select option:selected" ).val();
+
+    if(str=="P"){
+      $('.DatosRestantes').attr('style', 'display:block');
+    }else{
+        let date = new Date();
+        let fechamin="";
+
+        if((str=="V" || str=="NC") && $('#menor').prop('checked')){
+
+            $('.DatosRestantes').attr('style', 'display:block');
+            if( str=="NC"){
+                fechamin=date.getFullYear()-10;
+                fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+                fechamin+="-"+String(date.getDate()).padStart(2, '0');
+            }else{
+                fechamin=date.getFullYear()-18;
+                fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+                fechamin+="-"+String(date.getDate()).padStart(2, '0');
+            }
+
+            $('#fecha_nacimiento').attr('min',fechamin );
+            let fmax=date.getFullYear()+"-"+(String(date.getMonth() + 1).padStart(2, '0'))+"-"+String(date.getDate()).padStart(2, '0');
+            $('#fecha_nacimiento').attr('max',fmax );
+        }else{
+            $('.DatosRestantes').attr('style', 'display:none');
+            $('#fecha_nacimiento').attr('min',"" );
+
+            let date = new Date();
+            let fechamax="";
+            fechamax=date.getFullYear()-18;
+            fechamax+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+            fechamax+="-"+String(date.getDate()).padStart(2, '0');
+            $('#fecha_nacimiento').attr('max',fechamax );
+
+
+        }
+    }
+
+  })
+  .change();
+
+
+function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos){
+    console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
+
+    var div=document.getElementById("dataPassengers");
+    cantAct=parseInt(div.getAttribute("data-cant"));
+    let contenedor= document.createElement("div");
+    contenedor.id="content"+cantAct;
+
+
+    let inputMenor= document.createElement("input");
+    let inputTipodoc= document.createElement("input");
+    let inputNrodocc= document.createElement("input");
+    let inputFechanac= document.createElement("input");
+    let inputSexo= document.createElement("input");
+    let inputNombres= document.createElement("input");
+    let inputApellidos= document.createElement("input");
+
+     inputMenor.type="hidden";
+     inputTipodoc.type="hidden";
+     inputNrodocc.type="hidden";
+     inputFechanac.type="hidden";
+     inputSexo.type="hidden";
+     inputNombres.type="hidden";
+     inputApellidos.type="hidden";
+
+     inputMenor.name="menor[]";
+     inputTipodoc.name="tipodoc[]";
+     inputNrodocc.name="nrodoc[]";
+     inputFechanac.name="fechanac[]";
+     inputSexo.name="sexo[]";
+     inputNombres.name="nombres[]";
+     inputApellidos.name="apellidos[]";
+
+     inputMenor.value=menor;
+     inputTipodoc.value=tipodoc;
+     inputNrodocc.value=nrodoc;
+     inputFechanac.value=fechanac;
+     inputSexo.value=sexo;
+     inputNombres.value=nombres;
+     inputApellidos.value=apellidos;
+
+     contenedor.appendChild(inputMenor);
+     contenedor.appendChild(inputTipodoc);
+     contenedor.appendChild(inputNrodocc);
+     contenedor.appendChild(inputFechanac);
+     contenedor.appendChild(inputSexo);
+     contenedor.appendChild(inputNombres);
+     contenedor.appendChild(inputApellidos);
+
+     div.appendChild(contenedor);
+
+     div.setAttribute("data-cant",cantAct+1);
+    console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
+
+}
 
 //FIN DE VALIDACION DE PERMISOS DE ZARPES
