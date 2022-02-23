@@ -69,5 +69,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::get('consultasaime2',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'consulta2'])->name('consultasaime2');
 
+    Route::get('validarMarino',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validarMarino'])->name('validarMarino');
+    
+
 
 });

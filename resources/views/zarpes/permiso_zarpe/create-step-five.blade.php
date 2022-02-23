@@ -27,7 +27,7 @@
                              @include('zarpes.permiso_zarpe.stepsIndicator')
                     
 
-                         	 <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}" method="POST">
+                         	 <form action="#" method="POST">
                 @csrf
   
                 <div class="card">
@@ -44,16 +44,32 @@
                                     </ul>
                                 </div>
                             @endif
+
+                            @if (isset($msj))
+                                <div class="alert alert-danger">
+                                     {{$msj}}
+                                </div>
+                            @endif
   
                             <div class="row">
-                                <div class="row px-5" id="msj">
+                                <div class="row px-5" id="msjMarino">
                                     
+                                </div>
+                                <div class="col-md-2">
+                                                
+                                    <div class="form-group form-check form-switch ">
+                                        <label for="title">Capitan?</label><br>
+                                        &nbsp;
+                                         
+                                         <input class="form-check-input" type="checkbox" name="cap" id='cap'    style="margin-left: auto;" checked disabled>  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;<label id="textoCap">SI</label>     
+                                    </div>
+
                                 </div>
                                 <div class="col-md-3">
                                                 
                                     <div class="form-group">
                                         <label for="title">Cédula:</label>
-                                        <input type="text" class="form-control" id="cedula"  name="cedula">
+                                        <input type="number" class="form-control" id="cedula"  name="cedula" maxlength="10">
                                                     
                                     </div>
 
@@ -62,12 +78,16 @@
                                 <div class="col-md-3">
                                         
                                     <div class="form-group">
-                                        <label for="title">Fecha de vencimiento:</label>
-                                        
+                                        <label for="title">Fecha de nacimiento:</label>
+                                        @php 
+                                            $ano=date('Y')-18; 
+                                            $fechamin=$ano.'-'.date('m-d');
+                                            
+                                        @endphp
                                         <input type="date"
                                                class="form-control "
-                                               name="fecha_vencimiento" value="{{ old('fecha_vencimiento') }}" id="fecha_vencimiento"
-                                               placeholder="fecha_vencimiento" required >
+                                               name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" id="fecha_nacimiento"
+                                               placeholder="Fecha de nacimiento" max="{{$fechamin}}">
                                     
                                                     
                                     </div>
@@ -76,7 +96,7 @@
                                 
 
                                 <div class="col-md-3 mt-4">
-                                    <button type="button" class="btn btn-primary" onclick="getData()">Agregar</button>
+                                    <button type="button" class="btn btn-primary" onclick="getMarinos()">Agregar</button>
                                 </div>
                                             
                             </div>
@@ -87,14 +107,58 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Documento</th>
-                                                <th>Nombres</th>
-                                                <th>Apellidos</th>
+                                                <th>Capitan</th>
                                                 <th>Cédula</th>
-                                                <th></th>
+                                                <th>Nombres y Apellidos</th>
+                                                <th>fecha vencimiento</th>
+                                                <th>Documento</th>
+                                       
                                                  
                                             </tr>
                                         </thead>
+
+                                        <tbody id="marinos">
+                                           
+                                        
+                                             @if(is_int($tripulantes[0]))
+                                                @php
+                                                
+                                                    $cant=0;
+
+                                                @endphp
+                                                <tr>
+                                                    <td colspan="6" class="text-center">
+                                                            Sin registros para mostrar
+                                                    </td>
+                                                </tr>
+                                            @else
+                                               
+                                                @php
+                                                    $cant=count($tripulantes);
+                                                @endphp
+
+                                                @foreach($tripulantes as $trip)
+                                            
+                                                    <tr>
+                                                        @if($trip["capitan"]==1)
+                                                        <td>SI</td>
+                                                        @else
+                                                        <td>NO</td>
+                                                        @endif
+                                                        <td>{{$trip["cedula"]}}</td>
+                                                        <td>{{$trip["nombre"]}}</td>
+                                                        <td>{{$trip["fecha_vencimiento"]}}</td>
+                                                        <td>{{$trip["documento"]}}</td>
+                                                       
+                                                        
+                                                    </tr>
+                                            
+                                                
+                                                @endforeach
+                                                  
+
+                                            @endif 
+                                        </tbody>
                                     </table>
 
                                 </div>
@@ -102,6 +166,13 @@
                             </div>
                           
                     </div>
+
+                 <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}" method="POST">
+                @csrf
+
+                <div id="dataMarinos" data-cantMar="0">
+                    
+                </div>
   
                     <div class="card-footer text-right">
                         <div class="row">

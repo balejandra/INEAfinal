@@ -87,7 +87,7 @@
                                         <input type="date"
                                                class="form-control "
                                                name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" id="fecha_nacimiento"
-                                               placeholder="fecha_nacimiento" required max="{{date("Y-m-d")}}" >
+                                               placeholder="fecha_nacimiento" required max='{{date("Y-m-d")}}' >
 
 
                                     </div>
@@ -151,7 +151,42 @@
                                         </thead>
 
                                         <tbody id="pasajeros">
+                                              
+                                            @if($passengers[0]==0)
+                                                @php
+                                                    $cant=0;
+                                                @endphp
+                                                <tr>
+                                                    <td colspan="6" class="text-center">
+                                                            Sin registros para mostrar
+                                                    </td>
+                                                </tr>
+                                            @else
+                                                @php
+                                                    $cant=count($passengers);
+                                                @endphp
 
+                                                @foreach($passengers as $position)
+                                            
+                                                    <tr>
+                                                        <td>{{$position["tipo_doc"]}}-{{$position["nro_doc"]}} </td>
+                                                        <td>{{$position["nombres"]}}</td>
+                                                        <td>{{$position["apellidos"]}}</td>
+                                                        <td>{{$position["sexo"]}}</td>
+                                                        <td>{{$position["fecha_nacimiento"]}}</td>
+                                                        @if($position["menor_edad"]==1)
+                                                        <td>SI</td>
+                                                        @else
+                                                        <td>NO</td>
+                                                        @endif
+                                                    </tr>
+                                            
+                                                
+                                                @endforeach
+
+                                            @endif
+                                            
+                                               
                                         </tbody>
                                     </table>
 
@@ -163,7 +198,32 @@
                 </form>
                 <form action="{{ route('permisoszarpes.permissionCreateStepSix') }}" method="POST">
                         @csrf
-                         <div id="dataPassengers" data-cant="0"></div>
+                         <div id="dataPassengers" data-cant="{{$cant}}">
+
+                            @if($cant!=0)
+                                @php  $count=0; @endphp
+                                 @foreach($passengers as $position)
+                                    @php $count++; $id="content".$count; @endphp
+                                     <div id="{{$id}}">
+                                        
+                                        @if($position["menor_edad"]==1)
+                                         <input type="hidden" name="menor[]" value="SI">
+                                        @else
+                                          <input type="hidden" name="menor[]" value="NO">
+                                        @endif
+                                        <input type="hidden" name="tipodoc[]" value="{{$position['tipo_doc']}}">
+                                        <input type="hidden" name="nrodoc[]" value='{{$position["nro_doc"]}}'>
+                                        <input type="hidden" name="fechanac[]" value='{{$position["fecha_nacimiento"]}}'>
+                                        <input type="hidden" name="sexo[]" value='{{$position["sexo"]}}'>
+                                        <input type="hidden" name="nombres[]" value='{{$position["nombres"]}}'>
+                                        <input type="hidden" name="apellidos[]" value='{{$position["apellidos"]}}'>
+                                    </div>
+
+                                 @endforeach
+
+                             @endif
+
+                         </div>
 
                     <div class="card-footer text-right">
                         <div class="row">

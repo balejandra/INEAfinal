@@ -430,6 +430,16 @@ $(document).ready(function() {
     let men='';
     var msj= document.getElementById('msj');
     var pass=document.getElementById('pasajeros');
+
+
+
+    var div=document.getElementById("dataPassengers");
+    cantAct=parseInt(div.getAttribute("data-cant"));
+
+    if(cantAct==0){
+        pass.innerHTML="";
+    }
+
     if ($("#menor").is(':checked')) {men="SI";}else{men="NO";}
 
     if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="") {
@@ -731,11 +741,173 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
      contenedor.appendChild(inputNombres);
      contenedor.appendChild(inputApellidos);
 
+
+
      div.appendChild(contenedor);
 
      div.setAttribute("data-cant",cantAct+1);
     console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
 
 }
+
+
+
+/* inicio de validacion paso cinco marinos*/
+
+function getMarinos() {
+        let cedula= document.getElementById('cedula').value;
+        let fechanac= document.getElementById('fecha_nacimiento').value;
+        let msj=document.getElementById('msjMarino');
+        msj.innerHTML="";
+
+        let tabla=document.getElementById('marinos');
+
+if($("#cap").is(':checked')){ 
+    var cap="SI"; 
+
+    $("#cap").prop("checked", false);
+    $("#textoCap").text('NO');
+}else{ var cap="NO";}
+
+if(cedula=="" || fechanac==""){
+    msj.innerHTML='<div class="alert alert-danger">El campo cédula y fecha de nacimiento son requeridos, por favor verifique</div>' ;
+
+}else{
+    $.ajax({
+        url: route('validarMarino'),
+        data: {cedula: cedula, fecha:fechanac }
+
+    })// This will be called on success
+        .done(function (response) {
+            respuesta = JSON.parse(response);
+            let tamano = respuesta.length;
+            console.log(respuesta[0].id);
+
+            if(typeof respuesta=='string'){
+                 switch(respuesta){
+                    case 'saimeNotFound':
+                        msj.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias con los datos suministrados, por favor verifique</div>' ;
+
+                    break;
+                    case 'gmarNotFound':
+                        msj.innerHTML='<div class="alert alert-danger">La cédula suministrada no pertenece a ningun marino, por favor verifique</div>' ;
+
+                    break;
+                    default:
+                    console.log(respuesta);
+                    break;
+                }
+             
+            }else{
+                let  marinoExiste=document.getElementById('trip'+respuesta[0].ci);
+                 
+                if(marinoExiste==null){ 
+                    let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
+                    
+
+                    var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fecha+"</td> <td>"+respuesta[0].documento+"</td> </tr>";
+                    tabla.innerHTML+=html;
+                    document.getElementById('cedula').value="";
+                    document.getElementById('fecha_nacimiento').value="";
+                    addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento);
+
+                }else{
+                    msj.innerHTML='<div class="alert alert-danger">El tripulante ya se encuentra asignado a la lista, por favor verifique</div>' ;
+
+                }
+
+            }
+        })
+
+        // This will be called on error
+        .fail(function (response) {
+                    msj.innerHTML='<div class="alert alert-danger">No se ha encontrado la cedula o la fecha de nacimiento</div>' ;
+            
+        });
+}
+
+    
+
+}
+
+
+
+function addMarino(ids, cap, ci, nombreape, fechav, doc){
+   
+    var div=document.getElementById("dataMarinos");
+    cantAct=parseInt(div.getAttribute("data-cantMar"));
+    let contenedor= document.createElement("div");
+    contenedor.id="contentMar"+cantAct;
+
+
+    let idmar= document.createElement("input");
+    let capitan= document.createElement("input");
+    let cedula= document.createElement("input");
+    let nombre= document.createElement("input");
+    let fechaVence= document.createElement("input");
+    let documento= document.createElement("input");
+
+    
+
+     idmar.type="hidden";
+     capitan.type="hidden";
+     cedula.type="hidden";
+     nombre.type="hidden";
+     fechaVence.type="hidden";
+     documento.type="hidden";
+      
+
+     idmar.name="ids[]";
+     capitan.name="capitan[]";
+     cedula.name="cedula[]";
+     nombre.name="nombre[]";
+     fechaVence.name="fechaVence[]";
+     documento.name="documento[]";
+
+
+     idmar.value=ids;
+     capitan.value=cap;
+     cedula.value=ci;
+     nombre.value=nombreape;
+     fechaVence.value=fechav;
+     documento.value=doc;
+
+     
+     contenedor.appendChild(idmar);
+     contenedor.appendChild(capitan);
+     contenedor.appendChild(cedula);
+     contenedor.appendChild(nombre);
+     contenedor.appendChild(fechaVence);
+     contenedor.appendChild(documento);
+
+
+     div.appendChild(contenedor);
+
+     div.setAttribute("data-cantMar",cantAct+1);
+    console.log(idmar, cap);
+
+}
+
+
+$('#cap').click(function() {
+    
+
+    if($("#cap").is(':checked')){
+        $("#textoCap").text('SI');  // checked  
+    }
+    else{
+        $("#textoCap").text('NO');
+        
+    }
+
+
+});
+
+
+
+/*FIN validacion paso cinco marinos*/
+
+
+
 
 //FIN DE VALIDACION DE PERMISOS DE ZARPES

@@ -7,6 +7,7 @@ use App\Models\Renave\Renave_data;
 use App\Models\Zarpes\Equipo;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
+use App\Models\Gmar\LicenciasTitulosGmar;
 
 
 class PermisoZarpeController extends Controller
@@ -22,8 +23,8 @@ class PermisoZarpeController extends Controller
 
     public function createStepOne(Request $request)
     {
-         $request->session()->put('pasajeros', ['']);
-         $request->session()->put('tripulantes', '');
+         $request->session()->put('pasajeros', [0]);
+         $request->session()->put('tripulantes', [0]);
 
            $solicitud=json_encode([
             "user_id"=> '',
@@ -112,7 +113,7 @@ class PermisoZarpeController extends Controller
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $solicitud['matricula'] = $request->input('matricula', []);
         $request->session()->put('solicitud', json_encode($solicitud));
-        dd($solicitud);
+       // dd($solicitud);
         return redirect()->route('permisoszarpes.createStepThree');
 
     }
@@ -123,7 +124,7 @@ class PermisoZarpeController extends Controller
         /*$product = $request->session()->get('product');
 
         return view('products.create-step-two',compact('product'));*/
-        return view('zarpes.permiso_zarpe.extrangera.create-step-two')->with('paso', 2);
+        return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', 2);
 
     }
 
@@ -197,18 +198,68 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
+ 
+        $tripulantes=$request->session()->get('tripulantes');
 
-
-        $tripulantes = 4;
-
-        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', 5);
+        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', 5)->with('tripulantes', $tripulantes);
 
     }
 
     public function permissionCreateStepFive(Request $request)
     {
+         
+         $request->session()->put('tripulantes', [0]);
+         $trip=[
+            "permiso_zarpe_id"=> '',
+            "ctrl_documento_id"=> '',
+            "capitan"=> '',
+            "nombre"=>'',
+            "cedula"=>'',
+            "fecha_vencimiento"=>'',
+            "documento"=>''
+         ];
+          $ctrldocumento=$request->input('ids', []);
+            $cap=$request->input('capitan', []);
+            $nombre=$request->input('nombre', []);
+            $cedula=$request->input('cedula', []);
+            $fecha_vencimiento=$request->input('fechaVence', []);
+            $documento=$request->input('documento', []);
 
-        return redirect()->route('permisoszarpes.createStepSix');
+            
+            $tripulantes=$request->session()->get('tripulantes');
+          
+            if(isset($ctrldocumento)){
+               
+
+                for($i=0;$i<count($ctrldocumento);$i++){
+                    $trip["ctrl_documento_id"]=$ctrldocumento[$i];
+                     
+                    if($cap[$i]=="SI"){
+                        $trip["capitan"]=true;
+                    }else{
+                        $trip["capitan"]=false;
+                    }
+
+                    $trip["nombre"]=$nombre[$i];
+                    $trip["cedula"]=$cedula[$i];
+                    $trip["fecha_vencimiento"]=$fecha_vencimiento[$i];
+                    $trip["documento"]=$documento[$i];
+
+
+                    $tripulantes[$i]=$trip;
+                 }
+
+                 $request->session()->put('tripulantes', $tripulantes);
+                 //$tr = json_decode($request->session()->get('tripulantes'), true);
+                 return redirect()->route('permisoszarpes.createStepSix');
+            }else{
+                $mensj="Los tripulantes de la embarcación son requeridos, por favor verifique.";
+                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', 5)->with('msj', $mensj);
+            }
+          
+        /*
+       */
+        //
 
     }
 
@@ -217,12 +268,15 @@ class PermisoZarpeController extends Controller
         /*   $product = $request->session()->get('product');
 
            return view('products.create-step-three',compact('product'));*/
-        return view('zarpes.permiso_zarpe.create-step-six')->with('paso', 6);
+        $passengers=$request->session()->get('pasajeros');
+        
+        return view('zarpes.permiso_zarpe.create-step-six')->with('paso', 6)->with('passengers', $passengers);
 
     }
 
     public function permissionCreateStepSix(Request $request)
     {
+        $request->session()->put('pasajeros', [0]);
         $pass=[
          "nombres"=> '',
          "apellidos"=> '',
@@ -260,7 +314,7 @@ class PermisoZarpeController extends Controller
          }
 
          $request->session()->put('pasajeros',  $passengers);
-         print_r($request->session()->get('pasajeros'));
+         
          return redirect()->route('permisoszarpes.createStepSeven');
 
     }
@@ -305,6 +359,31 @@ class PermisoZarpeController extends Controller
         }
 
         echo json_encode($data);
+    }
+
+
+    public function validarMarino(Request $request)
+    {
+      $cedula = $_REQUEST['cedula'];
+        $fecha = $_REQUEST['fecha'];
+        
+
+        $newDate = date("d/m/Y", strtotime($fecha));
+        $data = Saime_cedula::where('cedula', $cedula)
+            ->where('fecha_nacimiento', $newDate)
+            ->get();
+        if (is_null($data->first())) {
+             
+            $data2="saimeNotFound";
+        }else{
+            $data2= LicenciasTitulosGmar::where('ci', $cedula)->get();
+            if (is_null($data2->first())) {
+                $data2="gmarNotFound";
+            }
+
+        }
+
+        echo json_encode($data2);
     }
 
 
