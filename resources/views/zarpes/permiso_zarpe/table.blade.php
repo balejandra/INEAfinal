@@ -16,26 +16,16 @@
             <td>{{ $permisoZarpe->matricula }}</td>
             <td>{{ $permisoZarpe->tipo_zarpe_id }}</td>
             <td>
-                {!! Form::open(['route' => ['permisoZarpes.destroy', $permisoZarpe->id], 'method' => 'delete']) !!}
-                <div class='btn-group'>
-                    <a href="{{ route('permisoZarpes.show', [$permisoZarpe->id]) }}" class='btn btn-ghost-success'><i
-                            class="fa fa-eye"></i></a>
-                    <a href="{{ route('permisoZarpes.edit', [$permisoZarpe->id]) }}" class='btn btn-ghost-info'><i
-                            class="fa fa-edit"></i></a>
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
-                </div>
-                {!! Form::close() !!}
-
-                @can('')
+                @can('consultar-zarpe')
                     <a class="btn btn-sm btn-success"
-                       href=" {{route('permisoZarpes.show',$permisoZarpe->id)}}">
+                       href=" {{route('permisoszarpes.show',$permisoZarpe->id)}}">
                         <i class="fa fa-search"></i>
                     </a>
                 @endcan
-                @can('')
+                @can('eliminar-zarpe')
 
                     <div class='btn-group'>
-                        {!! Form::open(['route' => ['permisoZarpes.destroy', $permisoZarpe->id], 'method' => 'delete']) !!}
+                        {!! Form::open(['route' => ['permisoszarpes.destroy', $permisoZarpe->id], 'method' => 'delete']) !!}
 
                         {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el rol $permisoZarpe->id ?')"]) !!}
 

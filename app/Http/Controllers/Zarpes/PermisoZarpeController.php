@@ -8,6 +8,7 @@ use App\Models\Zarpes\CargoTablaMando;
 use App\Models\Zarpes\Equipo;
 use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\TablaMando;
+use App\Repositories\Zarpes\PermisoZarpeRepository;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
@@ -16,7 +17,13 @@ use Flash;
 
 class PermisoZarpeController extends Controller
 {
+    /** @var  PermisoZarpeRepository */
+    private $permisoZarpeRepository;
 
+    public function __construct(PermisoZarpeRepository $permisoZarpeRepo)
+    {
+        $this->permisoZarpeRepository = $permisoZarpeRepo;
+    }
     public function index()
     {
 
@@ -426,5 +433,29 @@ class PermisoZarpeController extends Controller
         echo json_encode($data2);
     }
 
+    /**
+     * Remove the specified PermisoZarpe from storage.
+     *
+     * @param int $id
+     *
+     * @throws \Exception
+     *
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $permisoZarpe = $this->permisoZarpeRepository->find($id);
 
+        if (empty($permisoZarpe)) {
+            Flash::error('Permiso Zarpe not found');
+
+            return redirect(route('permisoZarpes.index'));
+        }
+
+        $this->permisoZarpeRepository->delete($id);
+
+        Flash::success('Permiso Zarpe deleted successfully.');
+
+        return redirect(route('permisoZarpes.index'));
+    }
 }
