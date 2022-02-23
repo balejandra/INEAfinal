@@ -60,8 +60,15 @@
                                     <div class="form-group form-check form-switch ">
                                         <label for="title">Capitan?</label><br>
                                         &nbsp;
+
+                                        @if(is_int($tripulantes[0]))
+                                            @php $texto='SI'; $checked="checked"; @endphp
+                                        @else
+                                            @php $texto='NO'; $checked=""; @endphp
+
+                                        @endif
                                          
-                                         <input class="form-check-input" type="checkbox" name="cap" id='cap'    style="margin-left: auto;" checked disabled>  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;<label id="textoCap">SI</label>     
+                                         <input class="form-check-input" type="checkbox" name="cap" id='cap'    style="margin-left: auto;" {{$checked}} disabled>  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;<label id="textoCap">{{$texto}}</label>     
                                     </div>
 
                                 </div>
@@ -118,8 +125,8 @@
                                         </thead>
 
                                         <tbody id="marinos">
-                                           
-                                        
+                                            
+                                         
                                              @if(is_int($tripulantes[0]))
                                                 @php
                                                 
@@ -170,8 +177,26 @@
                  <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}" method="POST">
                 @csrf
 
-                <div id="dataMarinos" data-cantMar="0">
+                <div id="dataMarinos" data-cantMar="{{$cant}}">
+
+                    @if($cant!=0)
+                          @php  $count=0; @endphp
+
+                           @foreach($tripulantes as $trip)
+                                @php $count++; $id="contentMar".$count; @endphp            
+                                <div id="{{$id}}">
+                                    <input type="hidden" name="ids[]" value="{{$trip['ctrl_documento_id']}}"><input type="hidden" name="capitan[]" value="SI">
+                                    <input type="hidden" name="cedula[]" value="{{$trip['cedula']}}">
+                                    <input type="hidden" name="nombre[]" value="{{$trip['nombre']}}">
+                                    <input type="hidden" name="fechaVence[]" value="{{$trip['fecha_vencimiento']}}">
+                                    <input type="hidden" name="documento[]" value="{{$trip['documento']}}">
+                                </div>
+                                                     
+                            @endforeach
+                    @endif
+
                     
+
                 </div>
   
                     <div class="card-footer text-right">

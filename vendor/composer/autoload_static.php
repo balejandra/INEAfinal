@@ -129,6 +129,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
             'League\\Flysystem\\' => 17,
             'League\\Config\\' => 14,
             'League\\CommonMark\\' => 18,
+            'Larswiegers\\LaravelMaps\\' => 24,
             'Laraveles\\Spanish\\' => 18,
             'Laravel\\Ui\\' => 11,
             'Laravel\\Tinker\\' => 15,
@@ -150,6 +151,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
             'GrahamCampbell\\ResultType\\' => 26,
+            'Gajus\\Dindent\\' => 14,
         ),
         'F' => 
         array (
@@ -412,6 +414,10 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         array (
             0 => __DIR__ . '/..' . '/league/commonmark/src',
         ),
+        'Larswiegers\\LaravelMaps\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/larswiegers/laravel-maps/src',
+        ),
         'Laraveles\\Spanish\\' => 
         array (
             0 => __DIR__ . '/..' . '/laraveles/spanish/src',
@@ -472,6 +478,10 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
+        ),
+        'Gajus\\Dindent\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gajus/dindent/src',
         ),
         'Fruitcake\\Cors\\' => 
         array (
@@ -618,7 +628,10 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'App\\Http\\Requests\\Publico\\UpdateMenu_rolRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Publico/UpdateMenu_rolRequest.php',
         'App\\Http\\Requests\\Publico\\UpdateUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Publico/UpdateUserRequest.php',
         'App\\Http\\Requests\\Zarpes\\CreateCapitaniaUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Zarpes/CreateCapitaniaUserRequest.php',
+        'App\\Http\\Requests\\Zarpes\\CreateTablaMandoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Zarpes/CreateTablaMandoRequest.php',
         'App\\Http\\Requests\\Zarpes\\UpdateCapitaniaUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Zarpes/UpdateCapitaniaUserRequest.php',
+        'App\\Http\\Requests\\Zarpes\\UpdateTablaMandoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Zarpes/UpdateTablaMandoRequest.php',
+        'App\\Models\\Gmar\\LicenciasTitulosGmar' => __DIR__ . '/../..' . '/app/Models/Gmar/LicenciasTitulosGmar.php',
         'App\\Models\\Publico\\Capitania' => __DIR__ . '/../..' . '/app/Models/Publico/Capitania.php',
         'App\\Models\\Publico\\CapitaniaUser' => __DIR__ . '/../..' . '/app/Models/Publico/CapitaniaUser.php',
         'App\\Models\\Publico\\CoordenadasCapitania' => __DIR__ . '/../..' . '/app/Models/Publico/CoordenadasCapitania.php',
@@ -649,6 +662,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'App\\Repositories\\Publico\\Menu_rolRepository' => __DIR__ . '/../..' . '/app/Repositories/Publico/Menu_rolRepository.php',
         'App\\Repositories\\Publico\\UserRepository' => __DIR__ . '/../..' . '/app/Repositories/Publico/UserRepository.php',
         'App\\Repositories\\Zarpes\\CapitaniaUserRepository' => __DIR__ . '/../..' . '/app/Repositories/Zarpes/CapitaniaUserRepository.php',
+        'App\\Repositories\\Zarpes\\TablaMandoRepository' => __DIR__ . '/../..' . '/app/Repositories/Zarpes/TablaMandoRepository.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
@@ -763,8 +777,10 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Seeders\\AdminUserSeeder' => __DIR__ . '/../..' . '/database/seeders/AdminUserSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\EquiposSeeder' => __DIR__ . '/../..' . '/database/seeders/EquiposSeeder.php',
         'Database\\Seeders\\MenuUserSeeder' => __DIR__ . '/../..' . '/database/seeders/MenuUserSeeder.php',
         'Database\\Seeders\\RoleHasPermissionSeeder' => __DIR__ . '/../..' . '/database/seeders/RoleHasPermissionSeeder.php',
+        'Database\\Seeders\\TablaMandoSeeder' => __DIR__ . '/../..' . '/database/seeders/TablaMandoSeeder.php',
         'Database\\Seeders\\UserExtSeeder' => __DIR__ . '/../..' . '/database/seeders/UserExtSeeder.php',
         'Database\\Seeders\\seederPermissions' => __DIR__ . '/../..' . '/database/seeders/seederPermissions.php',
         'Database\\Seeders\\seederRoles' => __DIR__ . '/../..' . '/database/seeders/seederRoles.php',
@@ -1457,6 +1473,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'Faker\\Provider\\nl_BE\\Payment' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Payment.php',
         'Faker\\Provider\\nl_BE\\Person' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Person.php',
         'Faker\\Provider\\nl_BE\\PhoneNumber' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/PhoneNumber.php',
+        'Faker\\Provider\\nl_BE\\Text' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Text.php',
         'Faker\\Provider\\nl_NL\\Address' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Address.php',
         'Faker\\Provider\\nl_NL\\Color' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Color.php',
         'Faker\\Provider\\nl_NL\\Company' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Company.php',
@@ -1582,6 +1599,10 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'Fideloper\\Proxy\\TrustedProxyServiceProvider' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustedProxyServiceProvider.php',
         'Fruitcake\\Cors\\CorsServiceProvider' => __DIR__ . '/..' . '/fruitcake/laravel-cors/src/CorsServiceProvider.php',
         'Fruitcake\\Cors\\HandleCors' => __DIR__ . '/..' . '/fruitcake/laravel-cors/src/HandleCors.php',
+        'Gajus\\Dindent\\Exception\\DindentException' => __DIR__ . '/..' . '/gajus/dindent/src/Exception/DindentException.php',
+        'Gajus\\Dindent\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/gajus/dindent/src/Exception/InvalidArgumentException.php',
+        'Gajus\\Dindent\\Exception\\RuntimeException' => __DIR__ . '/..' . '/gajus/dindent/src/Exception/RuntimeException.php',
+        'Gajus\\Dindent\\Indenter' => __DIR__ . '/..' . '/gajus/dindent/src/Indenter.php',
         'GrahamCampbell\\ResultType\\Error' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Error.php',
         'GrahamCampbell\\ResultType\\Result' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Result.php',
         'GrahamCampbell\\ResultType\\Success' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Success.php',
@@ -2890,6 +2911,11 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'Laravel\\Ui\\UiServiceProvider' => __DIR__ . '/..' . '/laravel/ui/src/UiServiceProvider.php',
         'Laraveles\\Spanish\\Commands\\InstallLang' => __DIR__ . '/..' . '/laraveles/spanish/src/Commands/InstallLang.php',
         'Laraveles\\Spanish\\SpanishServiceProvider' => __DIR__ . '/..' . '/laraveles/spanish/src/SpanishServiceProvider.php',
+        'Larswiegers\\LaravelMaps\\Components\\Google' => __DIR__ . '/..' . '/larswiegers/laravel-maps/src/Components/Google.php',
+        'Larswiegers\\LaravelMaps\\Components\\Leaflet' => __DIR__ . '/..' . '/larswiegers/laravel-maps/src/Components/Leaflet.php',
+        'Larswiegers\\LaravelMaps\\LaravelMaps' => __DIR__ . '/..' . '/larswiegers/laravel-maps/src/LaravelMaps.php',
+        'Larswiegers\\LaravelMaps\\LaravelMapsFacade' => __DIR__ . '/..' . '/larswiegers/laravel-maps/src/LaravelMapsFacade.php',
+        'Larswiegers\\LaravelMaps\\LaravelMapsServiceProvider' => __DIR__ . '/..' . '/larswiegers/laravel-maps/src/LaravelMapsServiceProvider.php',
         'League\\CommonMark\\CommonMarkConverter' => __DIR__ . '/..' . '/league/commonmark/src/CommonMarkConverter.php',
         'League\\CommonMark\\Delimiter\\Delimiter' => __DIR__ . '/..' . '/league/commonmark/src/Delimiter/Delimiter.php',
         'League\\CommonMark\\Delimiter\\DelimiterInterface' => __DIR__ . '/..' . '/league/commonmark/src/Delimiter/DelimiterInterface.php',
