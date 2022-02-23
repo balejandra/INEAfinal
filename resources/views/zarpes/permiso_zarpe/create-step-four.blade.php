@@ -47,31 +47,60 @@
   
                               <div class="row">
        
-                          <div class="col-md-4">
+                                  <div class="col-md-4">
 
 
-                            <div class="form-group col-sm-12">
-                                {!! Form::label('0', 'Origen:') !!}
-                                {!! Form::select('origen', ['1'=>' Maracaibo', '2'=>'Las Piedras', '3'=>'La Guaira', '4'=>'Puerto la Cruz', '5'=>'Carupano', '6'=>'Pampatar', '7'=>'Puerto Cabello', '8'=>'Caripito', '9'=>'Puerto Sucre', '10'=>'Ciudad Bolivar', '11'=>'Guiria', '12'=>'Ciudad Guayana', '13'=>'Apure', '14'=>'Amazonas', '15'=>'Miranda', '16'=>'La Vela de Coro', '17'=>'La Ceiba', '18'=>'Delta Amacuro'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'bandera']) !!}
+                                    <div class="form-group col-sm-12">
+                                        {!! Form::label('0', 'Origen:') !!}
+                                        {!! Form::select('origen', ['1'=>' Maracaibo', '2'=>'Las Piedras', '3'=>'La Guaira', '4'=>'Puerto la Cruz', '5'=>'Carupano', '6'=>'Pampatar', '7'=>'Puerto Cabello', '8'=>'Caripito', '9'=>'Puerto Sucre', '10'=>'Ciudad Bolivar', '11'=>'Guiria', '12'=>'Ciudad Guayana', '13'=>'Apure', '14'=>'Amazonas', '15'=>'Miranda', '16'=>'La Vela de Coro', '17'=>'La Ceiba', '18'=>'Delta Amacuro'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'bandera']) !!}
+                                    </div>
+
+                                  </div>
+
+                                  <div class="col-md-4">
+                                    {!! Form::label('salida', 'Fecha/hora salida:') !!}
+                                    <input type="datetime-local" name="salida" class="form-control">
+
+                                  </div>
+
+                                  <div class="col-md-4">
+
+                                    {!! Form::label('regreso', 'Fecha/hora regreso:') !!}
+                                    <input type="datetime-local" name="regreso" class="form-control">
+
+                                  </div>
+
+                                    
+                                </div>
+
+                            <div class="row px-3"  >
+                                <div class="col-md-5">
+
+                                    <div class="form-group">
+                                        <label for="title">Latitud:</label>
+                                        <input type="text" class="form-control" id="latitud"  name="latitud"  >
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-5" >
+
+                                    <div class="form-group">
+                                        <label for="title">Longitud:</label>
+                                        <input type="text" class="form-control" id="longitud"  name="longitud"  >
+
+                                    </div>
+
+                                </div>
+                                
                             </div>
 
-                          </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @include('zarpes.permiso_zarpe.map')
+                                </div>
+                            </div>
 
-                          <div class="col-md-4">
-                            {!! Form::label('salida', 'Fecha/hora salida:') !!}
-                            <input type="datetime-local" name="salida" class="form-control">
-
-                          </div>
-
-                          <div class="col-md-4">
-
-                            {!! Form::label('regreso', 'Fecha/hora regreso:') !!}
-                            <input type="datetime-local" name="regreso" class="form-control">
-
-                          </div>
-
- 
-                          </div>
                           
                     </div>
   

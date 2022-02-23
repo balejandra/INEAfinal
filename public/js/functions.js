@@ -815,6 +815,10 @@ if(cedula=="" || fechanac==""){
                     
 
                     var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fecha+"</td> <td>"+respuesta[0].documento+"</td> </tr>";
+                    cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
+                    if(cantAct==0){
+                        tabla.innerHTML="";
+                    } 
                     tabla.innerHTML+=html;
                     document.getElementById('cedula').value="";
                     document.getElementById('fecha_nacimiento').value="";

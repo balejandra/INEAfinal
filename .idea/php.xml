@@ -123,6 +123,8 @@
       <path value="$PROJECT_DIR$/vendor/laraveles/spanish" />
       <path value="$PROJECT_DIR$/vendor/owen-it/laravel-auditing" />
       <path value="$PROJECT_DIR$/vendor/tightenco/ziggy" />
+      <path value="$PROJECT_DIR$/vendor/gajus/dindent" />
+      <path value="$PROJECT_DIR$/vendor/larswiegers/laravel-maps" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7" />

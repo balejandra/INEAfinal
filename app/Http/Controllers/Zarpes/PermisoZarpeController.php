@@ -8,7 +8,6 @@ use App\Models\Zarpes\CargoTablaMando;
 use App\Models\Zarpes\Equipo;
 use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\TablaMando;
-use App\Repositories\Zarpes\PermisoZarpeRepository;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
@@ -17,13 +16,12 @@ use Flash;
 
 class PermisoZarpeController extends Controller
 {
-    /** @var  PermisoZarpeRepository */
-    private $permisoZarpeRepository;
+    private $step;
 
-    public function __construct(PermisoZarpeRepository $permisoZarpeRepo)
-    {
-        $this->permisoZarpeRepository = $permisoZarpeRepo;
+    public function __construct(){
+        $this->step=1;
     }
+
     public function index()
     {
 
@@ -35,7 +33,7 @@ class PermisoZarpeController extends Controller
     public function createStepOne(Request $request)
     {
         $request->session()->put('pasajeros', ['']);
-        $request->session()->put('tripulantes', ['']);
+        $request->session()->put('tripulantes', [0]);
         $request->session()->put('validaciones', '');
 
         $solicitud=json_encode([
@@ -54,13 +52,15 @@ class PermisoZarpeController extends Controller
             "permiso_estadias_id"=> '',
 
         ]);
+        $this->step=1;
+
 
         $request->session()->put('solicitud', $solicitud);
 
         $request->session()->put('solicitud', $solicitud);
 
 
-        return view('zarpes.permiso_zarpe.create-step-one')->with('paso', 1);
+        return view('zarpes.permiso_zarpe.create-step-one')->with('paso', $this->step);
     }
 
 
@@ -75,11 +75,11 @@ class PermisoZarpeController extends Controller
         //       print_r($solicitud['bandera']);
 
         $request->session()->put('solicitud', json_encode($solicitud));
-
+        $this->step=2;
         if ($solicitud['bandera'] == 'nacional') {
-            return redirect()->route('permisoszarpes.CreateStepTwo')->with('paso', 2);
+            return redirect()->route('permisoszarpes.CreateStepTwo')->with('paso', $this->step);
         } else {
-            return redirect()->route('permisoszarpes.CreateStepTwoE')->with('paso', 2);
+            return redirect()->route('permisoszarpes.CreateStepTwoE')->with('paso', $this->step);
 
         }
 
@@ -92,9 +92,9 @@ class PermisoZarpeController extends Controller
         /*$product = $request->session()->get('product');
 
         return view('products.create-step-two',compact('product'));*/
+        $this->step=2;
 
-
-        return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', 2);
+        return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', $this->step);
 
     }
 
@@ -155,12 +155,12 @@ class PermisoZarpeController extends Controller
         ];
 
         $request->session()->put('validacion', json_encode($validation));
-       // dd($request->session()->get('validacion'));
+        // dd($request->session()->get('validacion'));
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $solicitud['matricula'] = $request->input('matricula', []);
         $request->session()->put('solicitud', json_encode($solicitud));
-       // dd($solicitud);
+        // dd($solicitud);
         return redirect()->route('permisoszarpes.createStepThree');
 
     }
@@ -171,7 +171,9 @@ class PermisoZarpeController extends Controller
         /*$product = $request->session()->get('product');
 
         return view('products.create-step-two',compact('product'));*/
-        return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', 2);
+        $this->step=2;
+
+        return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', $this->step);
 
     }
 
@@ -188,6 +190,7 @@ class PermisoZarpeController extends Controller
          $request->session()->put('product', $product);
 
          return redirect()->route('products.create.step.three');*/
+        $this->step=3;
         return redirect()->route('permisoszarpes.createStepThree');
 
     }
@@ -195,10 +198,9 @@ class PermisoZarpeController extends Controller
 
     public function createStepThree(Request $request)
     {
-        /*   $product = $request->session()->get('product');
+        $this->step=3;
 
-           return view('products.create-step-three',compact('product'));*/
-        return view('zarpes.permiso_zarpe.create-step-three')->with('paso', 3);
+        return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step);
 
     }
 
@@ -212,6 +214,7 @@ class PermisoZarpeController extends Controller
         $solicitud['tipo_zarpes_id'] = $request->input('tipozarpe', []);
         $request->session()->put('solicitud', json_encode($solicitud));
         // print_r($solicitud);
+        $this->step=4;
 
         return redirect()->route('permisoszarpes.createStepFour');
 
@@ -219,8 +222,8 @@ class PermisoZarpeController extends Controller
 
     public function createStepFour(Request $request)
     {
-
-        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', 4);
+        $this->step=4;
+        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step);
 
     }
 
@@ -238,6 +241,7 @@ class PermisoZarpeController extends Controller
         $solicitud['fecha_hora_salida'] = $request->input('salida', []);
         $solicitud['fecha_hora_regreso'] = $request->input('regreso', []);
         $request->session()->put('solicitud', json_encode($solicitud));
+        $this->step=5;
         return redirect()->route('permisoszarpes.createStepFive');
 
     }
@@ -248,15 +252,16 @@ class PermisoZarpeController extends Controller
 
         $tripulantes=$request->session()->get('tripulantes');
 
-        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', 5)->with('tripulantes', $tripulantes);
+        $this->step=5;
+        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes);
 
     }
 
     public function permissionCreateStepFive(Request $request)
     {
 
-         $request->session()->put('tripulantes', [0]);
-         $trip=[
+        $request->session()->put('tripulantes', [0]);
+        $trip=[
             "permiso_zarpe_id"=> '',
             "ctrl_documento_id"=> '',
             "capitan"=> '',
@@ -264,45 +269,48 @@ class PermisoZarpeController extends Controller
             "cedula"=>'',
             "fecha_vencimiento"=>'',
             "documento"=>''
-         ];
-          $ctrldocumento=$request->input('ids', []);
-            $cap=$request->input('capitan', []);
-            $nombre=$request->input('nombre', []);
-            $cedula=$request->input('cedula', []);
-            $fecha_vencimiento=$request->input('fechaVence', []);
-            $documento=$request->input('documento', []);
+        ];
+        $ctrldocumento=$request->input('ids', []);
+        $cap=$request->input('capitan', []);
+        $nombre=$request->input('nombre', []);
+        $cedula=$request->input('cedula', []);
+        $fecha_vencimiento=$request->input('fechaVence', []);
+        $documento=$request->input('documento', []);
 
 
-            $tripulantes=$request->session()->get('tripulantes');
+        $tripulantes=$request->session()->get('tripulantes');
 
-            if(isset($ctrldocumento)){
-
-
-                for($i=0;$i<count($ctrldocumento);$i++){
-                    $trip["ctrl_documento_id"]=$ctrldocumento[$i];
-
-                    if($cap[$i]=="SI"){
-                        $trip["capitan"]=true;
-                    }else{
-                        $trip["capitan"]=false;
-                    }
-
-                    $trip["nombre"]=$nombre[$i];
-                    $trip["cedula"]=$cedula[$i];
-                    $trip["fecha_vencimiento"]=$fecha_vencimiento[$i];
-                    $trip["documento"]=$documento[$i];
+        if(isset($ctrldocumento)){
 
 
-                    $tripulantes[$i]=$trip;
-                 }
+            for($i=0;$i<count($ctrldocumento);$i++){
+                $trip["ctrl_documento_id"]=$ctrldocumento[$i];
 
-                 $request->session()->put('tripulantes', $tripulantes);
-                 //$tr = json_decode($request->session()->get('tripulantes'), true);
-                 return redirect()->route('permisoszarpes.createStepSix');
-            }else{
-                $mensj="Los tripulantes de la embarcación son requeridos, por favor verifique.";
-                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', 5)->with('msj', $mensj);
+                if($cap[$i]=="SI"){
+                    $trip["capitan"]=true;
+                }else{
+                    $trip["capitan"]=false;
+                }
+
+                $trip["nombre"]=$nombre[$i];
+                $trip["cedula"]=$cedula[$i];
+                $trip["fecha_vencimiento"]=$fecha_vencimiento[$i];
+                $trip["documento"]=$documento[$i];
+
+
+                $tripulantes[$i]=$trip;
             }
+
+            $request->session()->put('tripulantes', $tripulantes);
+            //$tr = json_decode($request->session()->get('tripulantes'), true);
+            $this->step=6;
+            return redirect()->route('permisoszarpes.createStepSix');
+        }else{
+            $this->step=5;
+
+            $mensj="Los tripulantes de la embarcación son requeridos, por favor verifique.";
+            return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('msj', $mensj);
+        }
 
         /*
        */
@@ -316,8 +324,8 @@ class PermisoZarpeController extends Controller
 
            return view('products.create-step-three',compact('product'));*/
         $passengers=$request->session()->get('pasajeros');
-
-        return view('zarpes.permiso_zarpe.create-step-six')->with('paso', 6)->with('passengers', $passengers);
+        $this->step=6;
+        return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers);
 
     }
 
@@ -360,9 +368,9 @@ class PermisoZarpeController extends Controller
             $passengers[$i]=$pass;
         }
 
-         $request->session()->put('pasajeros',  $passengers);
-
-         return redirect()->route('permisoszarpes.createStepSeven');
+        $request->session()->put('pasajeros',  $passengers);
+        $this->step=7;
+        return redirect()->route('permisoszarpes.createStepSeven');
 
     }
 
@@ -371,8 +379,9 @@ class PermisoZarpeController extends Controller
     {
         $equipos = Equipo::all();
         //  dd($equipos);
+        $this->step=7;
         return view('zarpes.permiso_zarpe.create-step-seven')
-            ->with('paso', 7)
+            ->with('paso', $this->step)
             ->with('equipos', $equipos);
 
     }
@@ -411,7 +420,7 @@ class PermisoZarpeController extends Controller
 
     public function validarMarino(Request $request)
     {
-      $cedula = $_REQUEST['cedula'];
+        $cedula = $_REQUEST['cedula'];
         $fecha = $_REQUEST['fecha'];
 
 
@@ -433,29 +442,5 @@ class PermisoZarpeController extends Controller
         echo json_encode($data2);
     }
 
-    /**
-     * Remove the specified PermisoZarpe from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $permisoZarpe = $this->permisoZarpeRepository->find($id);
 
-        if (empty($permisoZarpe)) {
-            Flash::error('Permiso Zarpe not found');
-
-            return redirect(route('permisoZarpes.index'));
-        }
-
-        $this->permisoZarpeRepository->delete($id);
-
-        Flash::success('Permiso Zarpe deleted successfully.');
-
-        return redirect(route('permisoZarpes.index'));
-    }
 }
