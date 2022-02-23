@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Zarpes;
 
 use App\Http\Controllers\Controller;
 use App\Models\Renave\Renave_data;
+use App\Models\Zarpes\CargoTablaMando;
 use App\Models\Zarpes\Equipo;
+use App\Models\Zarpes\PermisoZarpe;
+use App\Models\Zarpes\TablaMando;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
@@ -16,17 +19,18 @@ class PermisoZarpeController extends Controller
     public function index()
     {
 
-        // $products = Product::all();
+        $data = PermisoZarpe::all();
 
-        return view('zarpes.permiso_zarpe.index');
+        return view('zarpes.permiso_zarpe.index')->with('permisoZarpes',$data);
     }
 
     public function createStepOne(Request $request)
     {
-         $request->session()->put('pasajeros', [0]);
-         $request->session()->put('tripulantes', [0]);
+        $request->session()->put('pasajeros', ['']);
+        $request->session()->put('tripulantes', ['']);
+        $request->session()->put('validaciones', '');
 
-           $solicitud=json_encode([
+        $solicitud=json_encode([
             "user_id"=> '',
             "nro_solicitud"=> '',
             "bandera"=> '',
@@ -41,9 +45,9 @@ class PermisoZarpeController extends Controller
             "status_id"=> '',
             "permiso_estadias_id"=> '',
 
-            ]);
+        ]);
 
-         $request->session()->put('solicitud', $solicitud);
+        $request->session()->put('solicitud', $solicitud);
 
         $request->session()->put('solicitud', $solicitud);
 
@@ -91,7 +95,7 @@ class PermisoZarpeController extends Controller
         $matricula = $_REQUEST['matricula'];
         $data = Renave_data::where('matricula_actual', $matricula)->get();
         if (is_null($data->first())) {
-            dd('error');
+            $exception ='Error en consulta';
             $data = response()->json([
                 'status' => 3,
                 'msg' => $exception->getMessage(),
@@ -103,12 +107,41 @@ class PermisoZarpeController extends Controller
 
     public function permissionCreateStepTwo(Request $request)
     {
-
-
         $validatedData = $request->validate([
             'matricula' => 'required',
             'UAB' => 'required',
         ]);
+        $validation = json_decode($request->session()->get('validacion'), true);
+        $UAB =  $request->input('UAB');
+        //dd($UAB);
+        $tabla= new TablaMando();
+        $mando=$tabla->where([
+            ['UAB_minimo','<',$UAB],
+            ['UAB_maximo','>',$UAB]
+        ])->get()->toArray();
+        $validation['UAB'] = $request->input('UAB', []);
+        $validation['cant_tripulantes'] = $mando[0]["cant_tripulantes"];
+
+        $idtablamando=$mando[0]["id"];
+        $cargos=CargoTablaMando::where('tabla_mando_id',$idtablamando)->get()->toArray();
+        foreach ($cargos as $clave => $valor) {
+            $cargo["cargo_desempena"]=$valor['cargo_desempena'];
+            $cargo["titulacion_aceptada_minima"]=$valor['titulacion_aceptada_minima'];
+            $cargo["titulacion_aceptada_maxima"]=$valor['titulacion_aceptada_maxima'];
+            $validation[$clave]=$cargo;
+        }
+        $valida=[
+            "UAB"=> '',
+            "cant_tripulantes"=> '',
+            "cargos"=>[
+                "cargo_desempena"=>'',
+                "titulacion_aceptada_minima"=>'',
+                "titulacion_aceptada_maxima"=>''
+            ]
+        ];
+
+        $request->session()->put('validacion', json_encode($validation));
+        dd($request->session()->get('validacion'));
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $solicitud['matricula'] = $request->input('matricula', []);
@@ -278,15 +311,15 @@ class PermisoZarpeController extends Controller
     {
         $request->session()->put('pasajeros', [0]);
         $pass=[
-         "nombres"=> '',
-         "apellidos"=> '',
-         "tipo_doc"=> '',
-         "nro_doc"=> '',
-         "sexo"=> '',
-         "fecha_nacimiento"=> '',
-         "menor_edad"=> '',
-         "permiso_zarpe_id"=> '',
-         ];
+            "nombres"=> '',
+            "apellidos"=> '',
+            "tipo_doc"=> '',
+            "nro_doc"=> '',
+            "sexo"=> '',
+            "fecha_nacimiento"=> '',
+            "menor_edad"=> '',
+            "permiso_zarpe_id"=> '',
+        ];
         // $request->session()->put('pasajeros', {[]});
         $passengers=$request->session()->get('pasajeros');
 
@@ -298,7 +331,7 @@ class PermisoZarpeController extends Controller
         $fechanac=$request->input('fechanac', []);
         $nrodoc=$request->input('nrodoc', []);
 
-         for($i=0;$i<count($nrodoc);$i++){
+        for($i=0;$i<count($nrodoc);$i++){
             $pass["nombres"]=$nombres[$i];
             $pass["apellidos"]=$apellidos[$i];
             $pass["tipo_doc"]=$tipodoc[$i];
@@ -311,7 +344,7 @@ class PermisoZarpeController extends Controller
                 $pass["menor_edad"]=false;
             }
             $passengers[$i]=$pass;
-         }
+        }
 
          $request->session()->put('pasajeros',  $passengers);
          

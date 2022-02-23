@@ -15,8 +15,8 @@ class CreateTablaMandosTable extends Migration
     {
         Schema::connection('pgsql_zarpes_schema')->create('tabla_mandos', function (Blueprint $table) {
             $table->id();
-            $table->string('UAB_minimo');
-            $table->string('UAB_maximo');
+            $table->float('UAB_minimo');
+            $table->float('UAB_maximo');
             $table->string('cant_tripulantes');
             $table->timestamps();
             $table->softDeletes();
