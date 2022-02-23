@@ -11,6 +11,7 @@ use App\Models\Zarpes\TablaMando;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
+use Flash;
 
 
 class PermisoZarpeController extends Controller
@@ -113,7 +114,13 @@ class PermisoZarpeController extends Controller
         ]);
         $validation = json_decode($request->session()->get('validacion'), true);
         $UAB =  $request->input('UAB');
-        //dd($UAB);
+        $matricula =  $request->input('matricula');
+        $identificacion =  $request->input('numero_identificacion');
+        if ($identificacion!=auth()->user()->numero_identificacion) {
+            Flash::error('Su usuario no puede realizar solicitudes a nombre del Buque Matricula '. $matricula);
+            return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', 2);
+        }
+        
         $tabla= new TablaMando();
         $mando=$tabla->where([
             ['UAB_minimo','<',$UAB],
@@ -231,7 +238,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
- 
+
         $tripulantes=$request->session()->get('tripulantes');
 
         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', 5)->with('tripulantes', $tripulantes);
@@ -240,7 +247,7 @@ class PermisoZarpeController extends Controller
 
     public function permissionCreateStepFive(Request $request)
     {
-         
+
          $request->session()->put('tripulantes', [0]);
          $trip=[
             "permiso_zarpe_id"=> '',
@@ -258,15 +265,15 @@ class PermisoZarpeController extends Controller
             $fecha_vencimiento=$request->input('fechaVence', []);
             $documento=$request->input('documento', []);
 
-            
+
             $tripulantes=$request->session()->get('tripulantes');
-          
+
             if(isset($ctrldocumento)){
-               
+
 
                 for($i=0;$i<count($ctrldocumento);$i++){
                     $trip["ctrl_documento_id"]=$ctrldocumento[$i];
-                     
+
                     if($cap[$i]=="SI"){
                         $trip["capitan"]=true;
                     }else{
@@ -289,7 +296,7 @@ class PermisoZarpeController extends Controller
                 $mensj="Los tripulantes de la embarcación son requeridos, por favor verifique.";
                 return view('zarpes.permiso_zarpe.create-step-five')->with('paso', 5)->with('msj', $mensj);
             }
-          
+
         /*
        */
         //
@@ -302,7 +309,7 @@ class PermisoZarpeController extends Controller
 
            return view('products.create-step-three',compact('product'));*/
         $passengers=$request->session()->get('pasajeros');
-        
+
         return view('zarpes.permiso_zarpe.create-step-six')->with('paso', 6)->with('passengers', $passengers);
 
     }
@@ -347,7 +354,7 @@ class PermisoZarpeController extends Controller
         }
 
          $request->session()->put('pasajeros',  $passengers);
-         
+
          return redirect()->route('permisoszarpes.createStepSeven');
 
     }
@@ -399,14 +406,14 @@ class PermisoZarpeController extends Controller
     {
       $cedula = $_REQUEST['cedula'];
         $fecha = $_REQUEST['fecha'];
-        
+
 
         $newDate = date("d/m/Y", strtotime($fecha));
         $data = Saime_cedula::where('cedula', $cedula)
             ->where('fecha_nacimiento', $newDate)
             ->get();
         if (is_null($data->first())) {
-             
+
             $data2="saimeNotFound";
         }else{
             $data2= LicenciasTitulosGmar::where('ci', $cedula)->get();

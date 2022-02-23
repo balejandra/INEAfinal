@@ -65,6 +65,7 @@
                                                                 <th>NOMBRE</th>
                                                                 <th>DESTINACIÓN DEL BUQUE</th>
                                                                 <th>UAB</th>
+                                                                <th>PROPIETARIO</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="myTable">
@@ -73,6 +74,10 @@
                                                                 <td><input type="text" id="nombre" name="nombre" readonly></td>
                                                                 <td><input type="text" name="destinacion" id="destinacion" readonly></td>
                                                                 <td><input type="text" name="UAB" id="UAB" readonly></td>
+                                                                <td><input type="text" name="nombre_propietario" id="nombre_propietario" readonly>
+                                                                    <input type="text" name="numero_identificacion" id="numero_identificacion" hidden>
+                                                                </td>
+
                                                             </tr>
                                                         </tbody>
                                                     </table>

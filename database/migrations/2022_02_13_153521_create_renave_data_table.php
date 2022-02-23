@@ -41,6 +41,8 @@ class CreateRenaveDataTable extends Migration
                 ->default('no posee');
             $table->string('estatus_buque')
                 ->default('operativo');
+            $table->string('nombre_propietario')->nullable();
+            $table->string('numero_identificacion')->nullable();
             $table->string('bandera')
                 ->default('V');
             $table->string('bandera_origen')
