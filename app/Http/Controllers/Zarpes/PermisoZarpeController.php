@@ -120,7 +120,7 @@ class PermisoZarpeController extends Controller
             Flash::error('Su usuario no puede realizar solicitudes a nombre del Buque Matricula '. $matricula);
             return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', 2);
         }
-        
+
         $tabla= new TablaMando();
         $mando=$tabla->where([
             ['UAB_minimo','<',$UAB],
@@ -148,7 +148,7 @@ class PermisoZarpeController extends Controller
         ];
 
         $request->session()->put('validacion', json_encode($validation));
-        dd($request->session()->get('validacion'));
+       // dd($request->session()->get('validacion'));
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $solicitud['matricula'] = $request->input('matricula', []);
