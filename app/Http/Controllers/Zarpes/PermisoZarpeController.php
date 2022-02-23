@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Zarpes;
 
 use App\Http\Controllers\Controller;
+use App\Models\Renave\Renave_data;
+use App\Models\Zarpes\CargoTablaMando;
+use App\Models\Zarpes\Equipo;
+use App\Models\Zarpes\PermisoZarpe;
+use App\Models\Zarpes\TablaMando;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 
@@ -13,15 +18,16 @@ class PermisoZarpeController extends Controller
     public function index()
     {
 
-        // $products = Product::all();
+        $data = PermisoZarpe::all();
 
-        return view('zarpes.permiso_zarpe.index');
+        return view('zarpes.permiso_zarpe.index')->with('permisoZarpes',$data);
     }
 
     public function createStepOne(Request $request)
     {
         $request->session()->put('pasajeros', ['']);
         $request->session()->put('tripulantes', '');
+        $request->session()->put('validaciones', '');
 
         $solicitud=json_encode([
             "user_id"=> '',
@@ -42,6 +48,7 @@ class PermisoZarpeController extends Controller
 
         $request->session()->put('solicitud', $solicitud);
 
+        $request->session()->put('solicitud', $solicitud);
 
 
         return view('zarpes.permiso_zarpe.create-step-one')->with('paso', 1);
@@ -55,14 +62,14 @@ class PermisoZarpeController extends Controller
         ]);
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-        $solicitud['bandera']=$request->input('bandera', []);
+        $solicitud['bandera'] = $request->input('bandera', []);
         //       print_r($solicitud['bandera']);
 
         $request->session()->put('solicitud', json_encode($solicitud));
 
-        if($solicitud['bandera']=='nacional'){
+        if ($solicitud['bandera'] == 'nacional') {
             return redirect()->route('permisoszarpes.CreateStepTwo')->with('paso', 2);
-        }else{
+        } else {
             return redirect()->route('permisoszarpes.CreateStepTwoE')->with('paso', 2);
 
         }
@@ -82,29 +89,12 @@ class PermisoZarpeController extends Controller
 
     }
 
-
-    public function permissionCreateStepTwo(Request $request)
-    {
-
-
-        $validatedData = $request->validate([
-            'matricula' => 'required',
-        ]);
-
-        $solicitud = json_decode($request->session()->get('solicitud'), true);
-        $solicitud['matricula']=$request->input('matricula', []);
-        $request->session()->put('solicitud', json_encode($solicitud));
-        print_r($solicitud);
-        return redirect()->route('permisoszarpes.createStepThree');
-
-    }
-
     public function validationStepTwo(Request $request)
     {
         $matricula = $_REQUEST['matricula'];
         $data = Renave_data::where('matricula_actual', $matricula)->get();
         if (is_null($data->first())) {
-            dd('error');
+            $exception ='Error en consulta';
             $data = response()->json([
                 'status' => 3,
                 'msg' => $exception->getMessage(),
@@ -112,6 +102,52 @@ class PermisoZarpeController extends Controller
             ], 200);
         }
         echo json_encode($data);
+    }
+
+    public function permissionCreateStepTwo(Request $request)
+    {
+        $validatedData = $request->validate([
+            'matricula' => 'required',
+            'UAB' => 'required',
+        ]);
+        $validation = json_decode($request->session()->get('validacion'), true);
+        $UAB =  $request->input('UAB');
+        //dd($UAB);
+        $tabla= new TablaMando();
+        $mando=$tabla->where([
+            ['UAB_minimo','<',$UAB],
+            ['UAB_maximo','>',$UAB]
+        ])->get()->toArray();
+        $validation['UAB'] = $request->input('UAB', []);
+        $validation['cant_tripulantes'] = $mando[0]["cant_tripulantes"];
+
+        $idtablamando=$mando[0]["id"];
+        $cargos=CargoTablaMando::where('tabla_mando_id',$idtablamando)->get()->toArray();
+        foreach ($cargos as $clave => $valor) {
+            $cargo["cargo_desempena"]=$valor['cargo_desempena'];
+            $cargo["titulacion_aceptada_minima"]=$valor['titulacion_aceptada_minima'];
+            $cargo["titulacion_aceptada_maxima"]=$valor['titulacion_aceptada_maxima'];
+            $validation[$clave]=$cargo;
+        }
+        $valida=[
+            "UAB"=> '',
+            "cant_tripulantes"=> '',
+            "cargos"=>[
+                "cargo_desempena"=>'',
+                "titulacion_aceptada_minima"=>'',
+                "titulacion_aceptada_maxima"=>''
+            ]
+        ];
+
+        $request->session()->put('validacion', json_encode($validation));
+        dd($request->session()->get('validacion'));
+
+        $solicitud = json_decode($request->session()->get('solicitud'), true);
+        $solicitud['matricula'] = $request->input('matricula', []);
+        $request->session()->put('solicitud', json_encode($solicitud));
+        dd($solicitud);
+        return redirect()->route('permisoszarpes.createStepThree');
+
     }
 
 
@@ -158,7 +194,7 @@ class PermisoZarpeController extends Controller
         ]);
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-        $solicitud['tipo_zarpes_id']=$request->input('tipozarpe', []);
+        $solicitud['tipo_zarpes_id'] = $request->input('tipozarpe', []);
         $request->session()->put('solicitud', json_encode($solicitud));
         // print_r($solicitud);
 
@@ -183,9 +219,9 @@ class PermisoZarpeController extends Controller
         ]);
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-        $solicitud['origen_capitanias_id']=$request->input('origen', []);
-        $solicitud['fecha_hora_salida']=$request->input('salida', []);
-        $solicitud['fecha_hora_regreso']=$request->input('regreso', []);
+        $solicitud['origen_capitanias_id'] = $request->input('origen', []);
+        $solicitud['fecha_hora_salida'] = $request->input('salida', []);
+        $solicitud['fecha_hora_regreso'] = $request->input('regreso', []);
         $request->session()->put('solicitud', json_encode($solicitud));
         return redirect()->route('permisoszarpes.createStepFive');
 
@@ -196,7 +232,7 @@ class PermisoZarpeController extends Controller
     {
 
 
-        $tripulantes=4;
+        $tripulantes = 4;
 
         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', 5);
 
@@ -214,9 +250,6 @@ class PermisoZarpeController extends Controller
         /*   $product = $request->session()->get('product');
 
            return view('products.create-step-three',compact('product'));*/
-
-
-
         return view('zarpes.permiso_zarpe.create-step-six')->with('paso', 6);
 
     }
@@ -268,8 +301,11 @@ class PermisoZarpeController extends Controller
 
     public function createStepSeven(Request $request)
     {
-
-        return view('zarpes.permiso_zarpe.create-step-seven')->with('paso', 7);
+        $equipos = Equipo::all();
+        //  dd($equipos);
+        return view('zarpes.permiso_zarpe.create-step-seven')
+            ->with('paso', 7)
+            ->with('equipos', $equipos);
 
     }
 
@@ -281,28 +317,28 @@ class PermisoZarpeController extends Controller
 
     }
 
-    public function consulta2(Request $request){
-        $cedula=$_REQUEST['cedula'];
-        $fecha=$_REQUEST['fecha'];
-        $sexo=$_REQUEST['sexo'];
+    public function consulta2(Request $request)
+    {
+        $cedula = $_REQUEST['cedula'];
+        $fecha = $_REQUEST['fecha'];
+        $sexo = $_REQUEST['sexo'];
 
         $newDate = date("d/m/Y", strtotime($fecha));
-        $data= Saime_cedula::where('cedula',$cedula)
-            ->where('fecha_nacimiento',$newDate)
-            ->where('sexo',$sexo)
+        $data = Saime_cedula::where('cedula', $cedula)
+            ->where('fecha_nacimiento', $newDate)
+            ->where('sexo', $sexo)
             ->get();
         if (is_null($data->first())) {
             dd('error');
-            $data=response()->json([
-                'status'=>3,
+            $data = response()->json([
+                'status' => 3,
                 'msg' => $exception->getMessage(),
-                'errors'=>[],
+                'errors' => [],
             ], 200);
         }
 
         echo json_encode($data);
     }
-
 
 
 }
