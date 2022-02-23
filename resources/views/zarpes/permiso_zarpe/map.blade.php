@@ -1,21 +1,7 @@
-<div id="map" style="width:400px; heigth:800px;" class="my-3"></div>
-
-
-<script type="text/javascript">
+<div id="map" style="heigth:300px;" class="my-3 col-md-12">
+<x-maps-leaflet :centerPoint="['lat' => 36.719631, 'long' => -4.420000]"></x-maps-leaflet>
 	
-	let map;
-	function initMap(){
-		map=new google.maps.Map(document.getElementById('map'), {
-			center:{ lat: -34.247, lng: 158.644},
-			zoom:8,
-			scrollWhell:true,
-
-		});
-	}
-</script>
+</div>
 
 
- <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlmSJeecjkcY0QWvKfVhBD_ppF0ftIB7g&callback=initMap&v=weekly"
-      async
-    ></script>
+        

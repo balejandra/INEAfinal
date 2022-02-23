@@ -5,7 +5,7 @@ function getmatricula(data1) {
 
     })// This will be called on success
         .done(function (response) {
-              alert(response);
+             // alert(response);
             table = document.getElementById("table-buque");
             table.style.display='block';
             respuesta = JSON.parse(response);
@@ -17,6 +17,12 @@ function getmatricula(data1) {
             $("#destinacion").val(destinacion);
             UAB=(respuesta[0].UAB);
             $("#UAB").val(UAB);
+            UAB=(respuesta[0].UAB);
+            $("#UAB").val(UAB);
+            nombre_propietario=(respuesta[0].nombre_propietario);
+            $("#nombre_propietario").val(nombre_propietario);
+            numero_identificacion=(respuesta[0].numero_identificacion);
+            $("#numero_identificacion").val(numero_identificacion);
             //alert(response);
         })
 

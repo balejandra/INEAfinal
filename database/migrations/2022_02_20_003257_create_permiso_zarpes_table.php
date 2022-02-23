@@ -26,7 +26,7 @@ class CreatePermisoZarpesTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->unsignedBigInteger('establecimiento_nautico_id');
-            $table->foreign('establecimiento_nautico_id')->references('id')->on('tipo_zarpes')
+            $table->foreign('establecimiento_nautico_id')->references('id')->on('establecimiento_nauticos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('coordenadas');
