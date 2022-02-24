@@ -31,7 +31,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('permisosestadia', \App\Http\Controllers\Zarpes\PermisoEstadiaController::class);
     Route::resource('permisoszarpes', \App\Http\Controllers\Zarpes\PermisoZarpeController::class);
-
+    Route::get('update/{id}/{status}', [\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'updateStatus'])->name('status');
 
 
     Route::get('/zarpes/permisoszarpes', [App\Http\Controllers\Zarpes\PermisoZarpeController::class, 'index'])->name('permisoszarpes.index')->middleware('auth');

@@ -4,7 +4,6 @@ namespace App\Models\Zarpes;
 
 use App\Models\Pasajero;
 use App\Models\Publico\Capitania;
-use App\Models\Status;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -68,7 +67,8 @@ class PermisoZarpe extends Model implements Auditable
         'matricula' => 'string',
         'coordenadas' => 'string',
         'fecha_hora_salida' => 'datetime',
-        'fecha_hora_regreso' => 'datetime'
+        'fecha_hora_regreso' => 'datetime',
+         'user_id' => 'integer'
     ];
 
     /**
@@ -90,7 +90,7 @@ class PermisoZarpe extends Model implements Auditable
         'status_id' => 'required',
     ];
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }

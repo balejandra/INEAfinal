@@ -55,6 +55,6 @@ class EstablecimientoNautico extends Model implements Auditable
 
     public function permisozarpe()
     {
-        return $this->hasOne(PermisoZarpe::class);
+        return $this->hasMany(PermisoZarpe::class);
     }
 }

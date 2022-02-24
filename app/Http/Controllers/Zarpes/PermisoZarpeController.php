@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Zarpes;
 
 use App\Http\Controllers\Controller;
+use App\Models\Publico\CapitaniaUser;
 use App\Models\Renave\Renave_data;
+use App\Models\User;
 use App\Models\Zarpes\CargoTablaMando;
 use App\Models\Zarpes\Equipo;
+use App\Models\Zarpes\EstablecimientoNautico;
 use App\Models\Zarpes\PermisoZarpe;
+use App\Models\Zarpes\Status;
 use App\Models\Zarpes\TablaMando;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
@@ -24,10 +28,23 @@ class PermisoZarpeController extends Controller
 
     public function index()
     {
-
-        $data = PermisoZarpe::all();
-
-        return view('zarpes.permiso_zarpe.index')->with('permisoZarpes',$data);
+        if (auth()->user()->getRoleNames()[0]==="Super Admin") {
+            $data = PermisoZarpe::all();
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
+        } elseif (auth()->user()->getRoleNames()[0]==="Usuario web") {
+            $user = auth()->id();
+            $data = PermisoZarpe::where('user_id', $user)->get();
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
+        } elseif  (auth()->user()->getRoleNames()[0]==="Capitán") {
+            $user = auth()->id();
+            $capitania=CapitaniaUser::where('user_id', $user)->first()->capitania_id;
+            $establecimiento=EstablecimientoNautico::where('capitania_id',$capitania)->first()->id;
+            $datazarpeorigen = PermisoZarpe::where('establecimiento_nautico_id',$establecimiento)->get();
+            $datazarpedestino = PermisoZarpe::where('destino_capitania_id',$capitania)->get();
+            return view('zarpes.permiso_zarpe.indexcapitan')
+                ->with('permisoOrigenZarpes', $datazarpeorigen)
+                ->with('permisoDestinoZarpes',$datazarpedestino);
+        }
     }
 
     public function createStepOne(Request $request)
@@ -442,5 +459,54 @@ class PermisoZarpeController extends Controller
         echo json_encode($data2);
     }
 
+
+
+    public function updateStatus($id,$status)
+    {
+        if ($status==='aprobado') {
+            $transaccion = PermisoZarpe::find($id);
+            $idstatus= Status::find(1);
+            $solicitante=User::find($transaccion->user_id);
+            $transaccion->status_id = $idstatus->id;
+            $transaccion->update();
+            $email = new MailController();
+            $data = [
+                    'solicitud' => $transaccion->nro_solicitud,
+                    'status' => $idstatus->nombre,
+                    'cedula_solic' => $solicitante->numero_identificacion,
+                    'nombres_solic'=>$solicitante->nombres,
+                    'apellidos_solic' =>$solicitante->apellidos,
+                    'matricula' => $transaccion->matricula,
+            ];
+            $view='emails.zarpes.revision';
+            $subject='Solicitud de Zarpe '.$transaccion->nro_solicitud;
+            $email->mailZarpe($solicitante->email,$subject,$data,$view);
+
+            Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
+            return redirect(route('permisoszarpes.index'));
+
+        } elseif ($status==='rechazado'){
+            $transaccion = PermisoZarpe::find($id);
+            $idstatus= Status::find(2);
+            $solicitante=User::find($transaccion->user_id);
+            $transaccion->status_id = $idstatus->id;
+            $transaccion->update();
+            $email = new MailController();
+            $data = [
+                'solicitud' => $transaccion->nro_solicitud,
+                'status' => $idstatus->nombre,
+                'nombres_solic'=>$solicitante->nombres,
+                'apellidos_solic' =>$solicitante->apellidos,
+                'matricula' => $transaccion->matricula,
+            ];
+            $view='emails.zarpes.revision';
+            $subject='Solicitud de Zarpe '.$transaccion->nro_solicitud;
+            $email->mailZarpe($solicitante->email,$subject,$data,$view);
+
+            Flash::success('Solicitud rechazada y correo enviado al usuario solicitante.');
+            return redirect(route('permisoszarpes.index'));
+        }
+
+    }
 
 }

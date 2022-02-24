@@ -22,17 +22,6 @@
                         <i class="fa fa-search"></i>
                     </a>
                 @endcan
-                @can('eliminar-zarpe')
-
-                    <div class='btn-group'>
-                        {!! Form::open(['route' => ['permisoszarpes.destroy', $permisoZarpe->id], 'method' => 'delete']) !!}
-
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el rol $permisoZarpe->id ?')"]) !!}
-
-                        {!! Form::close() !!}
-                    </div>
-                @endcan
-
             </td>
         </tr>
     @endforeach
