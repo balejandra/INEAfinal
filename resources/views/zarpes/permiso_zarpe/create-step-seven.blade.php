@@ -20,6 +20,7 @@
                                 <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Listado</a>
                             </div>
                         </div>
+                        
                         <div class="card-body" style="min-height: 350px;">
 
                             @include('zarpes.permiso_zarpe.stepsIndicator')
@@ -52,8 +53,8 @@
                                             <div class="row">
                                                 @foreach($equipos as $equipo)
                                                     <div class="form-check form-switch col-sm-4 ">
-                                                        <input class="form-check-input" type="checkbox" name="role"
-                                                               id='role' value="{{$equipo->id}}"
+                                                        <input class="form-check-input" type="checkbox" name="equipo[] "
+                                                               id='equipo' value="{{$equipo->id}}"
                                                                style="margin-left: auto;">
                                                         <label class="form-check-label" for="flexSwitchCheckDefault"
                                                                style="margin-inline-start: 30px;">{{$equipo->equipo}}</label>

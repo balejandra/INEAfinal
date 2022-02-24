@@ -52,7 +52,13 @@
 
                                         <div class="form-group">
                                             <label for="title">Tipo de navegación:</label>
-                                            {!! Form::select('tipozarpe', ['1'=>'Zarpe deportivo', '2'=>'Zarpe de pezca'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipozarpe']) !!}
+                                           
+                                            <select id="tipozarpe" name="tipozarpe" class="form-control custom-select">
+                                            <option value="0">Seleccione</option>
+                                             @foreach ($TipoZarpes as $tz)
+                                                <option value="{{$tz->id}}">{{$tz->nombre}} </option>
+                                            @endforeach
+                                        </select>
                                         </div>
 
                                     </div>
