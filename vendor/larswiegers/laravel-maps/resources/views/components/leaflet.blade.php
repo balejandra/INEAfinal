@@ -31,7 +31,8 @@
         iconSize: [{{$marker['iconSizeX'] ?? 32}} , {{ $marker['iconSizeY'] ?? 32 }}],
        });
      @endif
-    var marker = L.marker([{{$marker['lat'] ?? $marker[0]}}, {{$marker['long'] ?? $marker[1]}}]).addTo(mymap);
+    var marker = L.marker([{{$marker['lat'] ?? $marker[0]}}, {{$marker['long'] ?? $marker[1]}}]).addTo(mymap).bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+        .openPopup();
     @endforeach
 
     @if($tileHost === 'mapbox')
@@ -49,4 +50,7 @@
         tileSize: 512,
         zoomOffset: -1
     }).addTo(mymap);
+
+
+    
 </script>

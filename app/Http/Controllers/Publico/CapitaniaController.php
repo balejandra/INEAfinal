@@ -147,7 +147,7 @@ class CapitaniaController extends AppBaseController
      */
     public function update($id, UpdateCapitaniaRequest $request, Capitania $cap)
     {
-       // $capi = $this->capitaniaRepository->update($request->all(), $id);
+        $capi = $this->capitaniaRepository->update($request->all(), $id);
         $capi=$cap->find($id);
 
         $ids=$request->input('ids', []);

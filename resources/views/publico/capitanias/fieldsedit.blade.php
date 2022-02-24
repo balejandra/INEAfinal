@@ -49,7 +49,7 @@
         <div class="form-group col-sm-2 ">
 
         {!! Form::button('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'eliminarCoordenadas(this.id, '.$coord->id.')', 'id'=>$key]) !!}
-            {{$coord->id}}
+           
         </div>
     @endif
 </div>

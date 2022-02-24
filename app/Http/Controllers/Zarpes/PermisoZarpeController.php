@@ -8,9 +8,12 @@ use App\Models\Zarpes\CargoTablaMando;
 use App\Models\Zarpes\Equipo;
 use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\TablaMando;
+use App\Models\Zarpes\EstablecimientoNautico;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
+use App\Models\Publico\CoordenadasCapitania;
+
 use Flash;
 
 
@@ -37,18 +40,17 @@ class PermisoZarpeController extends Controller
         $request->session()->put('validaciones', '');
 
         $solicitud=json_encode([
-            "user_id"=> '',
+            "user_id"=> auth()->id(),
             "nro_solicitud"=> '',
             "bandera"=> '',
             "matricula"=> '',
             "tipo_zarpes_id"=> '',
             "establecimiento_nauticos_id"=> '',
             "coordenadas"=> '',
-            "origen_capitanias_id"=> '',
             "destino_capitanias_id"=> '',
             "fecha_hora_salida"=> '',
             "fecha_hora_regreso"=> '',
-            "status_id"=> '',
+            "status_id"=> 3,
             "permiso_estadias_id"=> '',
 
         ]);
@@ -222,9 +224,32 @@ class PermisoZarpeController extends Controller
 
     public function createStepFour(Request $request)
     {
-        $this->step=4;
-        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step);
+        $EstNauticos = EstablecimientoNautico::all();
+        $coordCaps=CoordenadasCapitania::all();
+         $coordenadas=[];
+        if(count($coordCaps)>0){
+           
+            $arr=["capitania"=> 0,"coords"=> [] ];
+            
 
+            $capi="";
+            foreach($coordCaps as $coord){
+                if ($capi=="" || $capi!=$coord->capitania_id) {
+                    if($capi!=""){
+                       array_push($coordenadas,$arr); 
+                       $arr=["capitania"=> 0,"coords"=> [] ];
+                    }
+                    $capi=$coord->capitania_id;
+                    $arr["capitania"]=$coord->capitania_id;
+                }
+                 array_push($arr["coords"], [$coord->latitud, $coord->longitud]);                 
+            }
+
+            
+        } 
+
+        $this->step=4;
+        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas));
     }
 
     public function permissionCreateStepFour(Request $request)
@@ -234,12 +259,22 @@ class PermisoZarpeController extends Controller
             'origen' => 'required',
             'salida' => 'required',
             'regreso' => 'required',
+            'latitud'=> 'required',
+            'longitud'=> 'required',
+            'coordenadasDestino'=> 'required',
+
         ]);
 
+
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-        $solicitud['origen_capitanias_id'] = $request->input('origen', []);
-        $solicitud['fecha_hora_salida'] = $request->input('salida', []);
-        $solicitud['fecha_hora_regreso'] = $request->input('regreso', []);
+        $solicitud['establecimiento_nauticos_id'] = $request->input('origen');
+        $solicitud['fecha_hora_salida'] = $request->input('salida');
+        $solicitud['fecha_hora_regreso'] = $request->input('regreso');
+        $solicitud['coordenadas'] = json_encode([$request->input('latitud'),$request->input('longitud')]);
+        $solicitud['destino_capitanias_id'] = $request->input('coordenadasDestino');
+
+       
+
         $request->session()->put('solicitud', json_encode($solicitud));
         $this->step=5;
         return redirect()->route('permisoszarpes.createStepFive');
@@ -249,7 +284,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
-
+        //print_r(json_decode($request->session()->get('solicitud'), true));   
         $tripulantes=$request->session()->get('tripulantes');
 
          $this->step=5;
@@ -377,6 +412,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepSeven(Request $request)
     {
+    
         $equipos = Equipo::all();
         //  dd($equipos);
         $this->step=7;
@@ -388,6 +424,11 @@ class PermisoZarpeController extends Controller
 
     public function store(Request $request)
     {
+       /* print_r(json_decode($request->session()->get('solicitud'), true));
+        echo "---------------------------------------------------------------";
+        print_r($request->session()->get('tripulantes'));
+        echo "---------------------------------------------------------------";
+        print_r($request->session()->get('pasajeros'));*/
 
         //return redirect()->route('permisoszarpes.createStepSeven');
         echo "  Guardar en BD y redireccionar";
