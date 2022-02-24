@@ -169,7 +169,7 @@ divlon.innerHTML=`
 
 const divbtn=document.createElement("div");
 divbtn.classList.add("form-group", "col-sm-2");
-divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`)" type="button">borrar</button>`;
+divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">borrar</button>`;
 
 divrow.appendChild(divids);
 divrow.appendChild(divlat);
@@ -187,9 +187,11 @@ function eliminarCoordenadas(id, idcoord){
 
     if(id!=""){
         const div = document.querySelector("#coordenadas"+id);
-        const del = document.querySelector("#deletes"+id);
-        del.value=idcoord;
         div.remove();
+    }
+    if(idcoord!=""){
+       const del = document.querySelector("#deletes"+id);
+        del.value=idcoord; 
     }
 
 }
@@ -771,12 +773,7 @@ function getMarinos() {
 
         let tabla=document.getElementById('marinos');
 
-if($("#cap").is(':checked')){ 
-    var cap="SI"; 
-
-    $("#cap").prop("checked", false);
-    $("#textoCap").text('NO');
-}else{ var cap="NO";}
+ 
 
 if(cedula=="" || fechanac==""){
     msj.innerHTML='<div class="alert alert-danger">El campo cédula y fecha de nacimiento son requeridos, por favor verifique</div>' ;
@@ -812,7 +809,7 @@ if(cedula=="" || fechanac==""){
                  
                 if(marinoExiste==null){ 
                     let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
-                    
+                    let cap=validarCapitan();
 
                     var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fecha+"</td> <td>"+respuesta[0].documento+"</td> </tr>";
                     cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
@@ -841,6 +838,18 @@ if(cedula=="" || fechanac==""){
 
     
 
+}
+
+function validarCapitan(){
+    if($("#cap").is(':checked')){ 
+    var cap="SI"; 
+
+        $("#cap").prop("checked", false);
+        $("#textoCap").text('NO');
+    }else{ 
+        var cap="NO";
+    }
+    return cap;
 }
 
 
@@ -921,6 +930,28 @@ $('#cap').click(function() {
 /*FIN validacion paso cinco marinos*/
 
 
+///**INICION DE VALIDACIONES DE PASO 4 MAPA*//
+function compararFechas(){
+    var salida =document.getElementById('salida').value;
+    var regreso =document.getElementById('regreso');
 
+    regreso.setAttribute("min",salida);
+    var date1 = new Date(salida);
+    var date2 = new Date(regreso.value);
+
+    if(date1>date2){
+         
+        document.getElementById("msjRuta").innerHTML="<div class='alert alert-danger'>La fecha y hora de salida no pueden ser menores que la de regreso, por favor verifique.</div>"
+        regreso.value="";
+    }
+
+    
+}
+         
+ 
+ 
+
+
+//*FIN DE VALIDACIONES DE PASO 4 MAPA*//
 
 //FIN DE VALIDACION DE PERMISOS DE ZARPES
