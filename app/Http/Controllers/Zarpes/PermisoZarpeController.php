@@ -23,7 +23,7 @@ use App\Models\Gmar\LicenciasTitulosGmar;
 use App\Models\Publico\CoordenadasCapitania;
 
 use Flash;
-
+use Illuminate\Support\Facades\Session;
 
 class PermisoZarpeController extends Controller
 {
@@ -234,6 +234,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepFour(Request $request)
     {
+        
         $EstNauticos = EstablecimientoNautico::all();
         $coordCaps=CoordenadasCapitania::all();
          $coordenadas=[];
@@ -482,7 +483,9 @@ class PermisoZarpeController extends Controller
             } 
             Flash::success('Se ha generado la solocitud <b>
 '.$codigo.'</b> exitodamente');
-            
+            $this->SendMail($saveSolicitud->id,1);
+            $this->SendMail($saveSolicitud->id,0);
+            $this->limpiarVariablesSession();
             return redirect()->route('permisoszarpes.index');
         }
 
@@ -607,5 +610,64 @@ class PermisoZarpeController extends Controller
         }
 
     }
+
+    public function SendMail($idsolicitud, $tipo){
+        $solicitud = PermisoZarpe::find($idsolicitud);
+        $solicitante=User::find($solicitud->user_id);
+
+        $capitanDestino=CapitaniaUser::select('capitania_id','email')
+        ->Join('users', 'users.id', '=', 'user_id')
+        ->where('capitania_id', '=', $solicitud->destino_capitania_id)
+        ->get();
+
+        $estNautico=EstablecimientoNautico::find($solicitud->establecimiento_nautico_id);
+
+
+        $capitanOrigen=CapitaniaUser::select('capitania_id','email')
+        ->Join('users', 'users.id', '=', 'user_id')
+        ->where('capitania_id', '=', $estNautico->capitania_id)
+        ->get();
+              
+          if($tipo==1){
+            //mensaje para caitania origen
+    $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una 
+    nueva solicitud de permiso de zarpe en su jurisdicción que espera por su aprobación.";
+            $mailTo=$capitanOrigen[0]->email;
+            $subject='Nueva solicitud de permiso de Zarpe '.$solicitud->nro_solicitud;
+          }else{
+            //mensaje para capitania destino
+$mensaje="El sistema de control y gestion de zarpes del INEA le notifica que 
+    la siguiente embarcación está próxima a arribar a su jurisdicción.";
+            $mailTo=$capitanDestino[0]->email;
+            $subject='Notificación de arribo de embacación '.$solicitud->matricula;
+          }
+          
+
+            $email = new MailController();
+             $data = [
+                'solicitud' => $solicitud->nro_solicitud,
+                'matricula' => $solicitud->matricula,
+                'nombres_solic'=>$solicitante->nombres,
+                'apellidos_solic' =>$solicitante->apellidos,
+                'fecha_salida' =>$solicitud->fecha_hora_salida,
+                'fecha_regreso' =>$solicitud->fecha_hora_regreso,
+                'mensaje' =>$mensaje,
+
+            ];
+            $view='emails.zarpes.solicitudPermisoZarpe';
+            
+            $email->mailZarpe($mailTo,$subject,$data,$view);
+    }
+
+
+    public function limpiarVariablesSession(){
+         
+        Session::forget('pasajeros');
+        Session::forget('tripulantes');
+        Session::forget('validaciones');
+        Session::forget('solicitud');
+        $this->step=1;
+    }
+
 
 }
