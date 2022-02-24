@@ -22,7 +22,7 @@ class EquipoPermisoZarpe extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $connection = 'pgsql_zarpes_schema';
-    public $table = 'equipo_permiso_zarpes';
+    public $table = 'equipo_permiso_zarpe';
 
 
     protected $dates = ['deleted_at'];

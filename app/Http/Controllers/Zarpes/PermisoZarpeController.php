@@ -11,7 +11,9 @@ use App\Models\Zarpes\TablaMando;
 use App\Models\Zarpes\EstablecimientoNautico;
 use App\Models\Zarpes\Tripulante;
 use App\Models\Zarpes\Pasajero;
-use App\Models\Zarpes\TipoZarpes;
+use App\Models\Zarpes\TipoZarpe;
+use App\Models\Zarpes\EquipoPermisoZarpe;
+
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
@@ -59,11 +61,7 @@ class PermisoZarpeController extends Controller
         ]);
         $this->step=1;
 
-
         $request->session()->put('solicitud', $solicitud);
-
-        $request->session()->put('solicitud', $solicitud);
-
 
         return view('zarpes.permiso_zarpe.create-step-one')->with('paso', $this->step);
     }
@@ -206,6 +204,7 @@ class PermisoZarpeController extends Controller
     {
         
         $TipoZarpes ="";
+        $TipoZarpes = TipoZarpe::all();
 
                 $this->step=3;
 
@@ -431,16 +430,7 @@ class PermisoZarpeController extends Controller
 
     public function store(Request $request)
     {
-       /* print_r(json_decode($request->session()->get('solicitud'), true));
-        echo "---------------------------------------------------------------";
-        print_r($request->session()->get('tripulantes'));
-        echo "---------------------------------------------------------------";
-        print_r($request->session()->get('pasajeros'));*/
-       
-
-        //return redirect()->route('permisoszarpes.createStepSeven');
-
-        $eq=["permiso_zarpe_id"=>'',"equipo_id"=>''];
+        
 
         $validatedData = $request->validate([
             'equipo' => 'required',
@@ -451,6 +441,7 @@ class PermisoZarpeController extends Controller
 
         
         if(count($equipo)==0){
+            Flash::error('Debe indicar los equipos que posee a bordo, por favor verifique.');
             return redirect()->route('permisoszarpes.createStepSeven');
         }else{
             $codigo=$this->codigo();
@@ -465,25 +456,30 @@ class PermisoZarpeController extends Controller
             for($i=0;$i<count($tripulantes);$i++){
                 $tripulantes[$i]["permiso_zarpe_id"]=$saveSolicitud->id;
                 $trip=Tripulante::create($tripulantes[$i]); 
-                print_r($tripulantes[$i]); echo "<br>";
+              //  print_r($tripulantes[$i]); echo "<br>";
 
             }
 
             $pasajeros=$request->session()->get('pasajeros');
+            //print_r( $pasajeros);
             for($i=0;$i<count($pasajeros);$i++){
                 $pasajeros[$i]["permiso_zarpe_id"]=$saveSolicitud->id;
                 $pass=Pasajero::create($pasajeros[$i]); 
-                print_r($pasajeros[$i]); echo "<br>";
+               // print_r($pasajeros[$i]); echo "<br>";
             }
              
- 
+             
+            $eq=["permiso_zarpe_id"=>'',"equipo_id"=>''];
             for($i=0;$i<count($equipo);$i++){
                 $eq["permiso_zarpe_id"]=$saveSolicitud->id;
                 $eq["equipo_id"]=$equipo[$i];
-                Pasajero::create($eq); 
+                EquipoPermisoZarpe::create($eq); 
+                 
             } 
+            Flash::success('Se ha generado la solocitud <b>
+'.$codigo.'</b> exitodamente');
             
-           // return redirect()->route('zarpes.permisoszarpes');
+            return redirect()->route('permisoszarpes.index');
         }
 
         
@@ -551,20 +547,12 @@ class PermisoZarpeController extends Controller
 
     }
 
-    public function destroy($id, PermisoZarpe $pz)
-    {
-        
-    }
-
+    
     public function show($id)
     {
         
     }
 
-    public function edit($id)
-    {
-        
-    }
-
+     
 
 }

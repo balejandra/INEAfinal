@@ -52,12 +52,13 @@
 
                                         <div class="form-group">
                                             <label for="title">Tipo de navegación:</label>
-                                           
+                                            
                                             <select id="tipozarpe" name="tipozarpe" class="form-control custom-select">
-                                            <option value="1">Seleccione</option>
-                                              {{--@foreach ($TipoZarpes as $tz)
+                                            <option value="">Seleccione</option>
+
+                                              @foreach ($TipoZarpes as $tz)
                                                 <option value="{{$tz->id}}">{{$tz->nombre}} </option>
-                                            @endforeach --}}
+                                            @endforeach 
                                         </select>
                                         </div>
 

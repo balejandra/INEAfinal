@@ -48,7 +48,12 @@
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    {!! Form::select('bandera', ['nacional'=>'NACIONAL', 'extranjera'=>'EXTRANJERA'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione su bandera', 'onChange'=>'bandera()', 'id'=>'bandera']) !!}
+                                            
+                                                    <select name="bandera" id="bandera" class="form-control custom-select" placeholder='Seleccione'>
+                                                        <option value="nacional">NACIONAL</option>
+                                                        <option value="extranjera" disabled>EXTRANJERA</option>
+                                                        
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4"></div>
