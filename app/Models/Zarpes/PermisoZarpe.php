@@ -105,9 +105,9 @@ class PermisoZarpe extends Model implements Auditable
         return $this->belongsTo(EstablecimientoNautico::class);
     }
 
-    public function capitania()
+    public function capitania():\Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Capitania::class);
+        return $this->belongsTo(Capitania::class,'destino_capitania_id','id');
     }
 
     public function status()

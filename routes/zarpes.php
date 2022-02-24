@@ -67,9 +67,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('permisoszarpes/create-step-seven', [App\Http\Controllers\Zarpes\PermisoZarpeController::class,'createStepSeven'])->name('permisoszarpes.createStepSeven');
 
     Route::post('permisoszarpes/create-step-seven', [App\Http\Controllers\Zarpes\PermisoZarpeController::class, 'store'])->name('permisoszarpes.store');
-  
-     Route::post('permisoszarpes/show', [App\Http\Controllers\Zarpes\PermisoZarpeController::class, 'show'])->name('permisoszarpes.show');
-   
+
+     Route::get('permisoszarpes/{permisoszarpe}', [App\Http\Controllers\Zarpes\PermisoZarpeController::class, 'show'])->name('permisoszarpes.show');
+
 
     Route::get('consultasaime2',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'consulta2'])->name('consultasaime2');
 

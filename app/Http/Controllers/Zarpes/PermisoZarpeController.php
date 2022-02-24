@@ -238,25 +238,25 @@ class PermisoZarpeController extends Controller
         $coordCaps=CoordenadasCapitania::all();
          $coordenadas=[];
         if(count($coordCaps)>0){
-           
+
             $arr=["capitania"=> 0,"coords"=> [] ];
-            
+
 
             $capi="";
             foreach($coordCaps as $coord){
                 if ($capi=="" || $capi!=$coord->capitania_id) {
                     if($capi!=""){
-                       array_push($coordenadas,$arr); 
+                       array_push($coordenadas,$arr);
                        $arr=["capitania"=> 0,"coords"=> [] ];
                     }
                     $capi=$coord->capitania_id;
                     $arr["capitania"]=$coord->capitania_id;
                 }
-                 array_push($arr["coords"], [$coord->latitud, $coord->longitud]);                 
+                 array_push($arr["coords"], [$coord->latitud, $coord->longitud]);
             }
 
-            
-        } 
+
+        }
 
         $this->step=4;
         return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas));
@@ -283,7 +283,7 @@ class PermisoZarpeController extends Controller
         $solicitud['coordenadas'] = json_encode([$request->input('latitud'),$request->input('longitud')]);
         $solicitud['destino_capitania_id'] = $request->input('coordenadasDestino');
 
-       
+
 
         $request->session()->put('solicitud', json_encode($solicitud));
         $this->step=5;
@@ -294,7 +294,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
-        //print_r(json_decode($request->session()->get('solicitud'), true));   
+        //print_r(json_decode($request->session()->get('solicitud'), true));
         $tripulantes=$request->session()->get('tripulantes');
 
         $this->step=5;
@@ -422,7 +422,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepSeven(Request $request)
     {
-    
+
         $equipos = Equipo::all();
         //  dd($equipos);
         $this->step=7;
@@ -434,7 +434,7 @@ class PermisoZarpeController extends Controller
 
     public function store(Request $request)
     {
-        
+
 
         $validatedData = $request->validate([
             'equipo' => 'required',
@@ -443,23 +443,23 @@ class PermisoZarpeController extends Controller
         $equipo=$request->input('equipo', []);
 
 
-        
+
         if(count($equipo)==0){
             Flash::error('Debe indicar los equipos que posee a bordo, por favor verifique.');
             return redirect()->route('permisoszarpes.createStepSeven');
         }else{
             $codigo=$this->codigo();
-            
+
 
             $solicitud=json_decode($request->session()->get('solicitud'), true);
             $solicitud['nro_solicitud']=$codigo;
-            $saveSolicitud = PermisoZarpe::create($solicitud); 
+            $saveSolicitud = PermisoZarpe::create($solicitud);
 
- 
+
             $tripulantes=$request->session()->get('tripulantes');
             for($i=0;$i<count($tripulantes);$i++){
                 $tripulantes[$i]["permiso_zarpe_id"]=$saveSolicitud->id;
-                $trip=Tripulante::create($tripulantes[$i]); 
+                $trip=Tripulante::create($tripulantes[$i]);
               //  print_r($tripulantes[$i]); echo "<br>";
 
             }
@@ -468,26 +468,26 @@ class PermisoZarpeController extends Controller
             //print_r( $pasajeros);
             for($i=0;$i<count($pasajeros);$i++){
                 $pasajeros[$i]["permiso_zarpe_id"]=$saveSolicitud->id;
-                $pass=Pasajero::create($pasajeros[$i]); 
+                $pass=Pasajero::create($pasajeros[$i]);
                // print_r($pasajeros[$i]); echo "<br>";
             }
-             
-             
+
+
             $eq=["permiso_zarpe_id"=>'',"equipo_id"=>''];
             for($i=0;$i<count($equipo);$i++){
                 $eq["permiso_zarpe_id"]=$saveSolicitud->id;
                 $eq["equipo_id"]=$equipo[$i];
-                EquipoPermisoZarpe::create($eq); 
-                 
-            } 
+                EquipoPermisoZarpe::create($eq);
+
+            }
             Flash::success('Se ha generado la solocitud <b>
 '.$codigo.'</b> exitodamente');
-            
+
             return redirect()->route('permisoszarpes.index');
         }
 
-        
-        
+
+
 
     }
 
@@ -551,14 +551,6 @@ class PermisoZarpeController extends Controller
 
     }
 
-    
-    public function show($id)
-    {
-        
-    }
-
-     
-
 
     public function updateStatus($id,$status)
     {
@@ -617,6 +609,8 @@ class PermisoZarpeController extends Controller
     public function show($id)
     {
         $permisoZarpe = PermisoZarpe::find($id);
+        $tripulantes=$permisoZarpe->tripulantes()->get();
+        dd($tripulantes);
 
         if (empty($permisoZarpe)) {
             Flash::error('Permiso Zarpe not found');

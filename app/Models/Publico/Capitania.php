@@ -24,12 +24,11 @@ class Capitania extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
 
+    protected $connection = 'pgsql_public_schema';
     public $table = 'capitanias';
 
 
     protected $dates = ['deleted_at'];
-    //protected $connection = 'pgsql_zarpes';
-
 
     public $fillable = [
         'nombre',
@@ -84,9 +83,6 @@ class Capitania extends Model implements Auditable
         return $this->hasMany(EstablecimientoNautico::class);
     }
 
-    public function permisozarpe()
-    {
-        return $this->hasMany(PermisoZarpe::class);
-    }
+
 
 }
