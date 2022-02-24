@@ -508,5 +508,24 @@ class PermisoZarpeController extends Controller
         }
 
     }
+    /**
+     * Display the specified PermisoZarpe.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function show($id)
+    {
+        $permisoZarpe = PermisoZarpe::find($id);
+
+        if (empty($permisoZarpe)) {
+            Flash::error('Permiso Zarpe not found');
+
+            return redirect(route('permisoZarpes.index'));
+        }
+
+        return view('zarpes.permiso_zarpe.show')->with('permisoZarpe', $permisoZarpe);
+    }
 
 }

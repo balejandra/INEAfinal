@@ -25,8 +25,10 @@
                                 <thead>
                                 <tr>
                                     <th>Nro Solicitud</th>
+                                    <th>Solicitante</th>
                                     <th>Bandera</th>
                                     <th>Matricula</th>
+                                    <th>Tipo Navegacion</th>
                                     <th>Status</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -35,12 +37,14 @@
                                 @foreach($permisoOrigenZarpes as $permisoOrigenZarpe)
                                     <tr>
                                         <td>{{ $permisoOrigenZarpe->nro_solicitud }}</td>
+                                        <td>{{ $permisoOrigenZarpe->user->nombres }} {{ $permisoOrigenZarpe->user->apellidos }}</td>
                                         <td>{{ $permisoOrigenZarpe->bandera }}</td>
                                         <td>{{ $permisoOrigenZarpe->matricula }}</td>
+                                        <td>{{ $permisoOrigenZarpe->tipo_zarpe->nombre }}</td>
                                         <td>{{ $permisoOrigenZarpe->status->nombre}} </td>
                                         <td>
 
-                                            <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado'])}}" class="btn btn-success btn-sm" title="Aprobar">
+                                            <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado'])}}" class="btn btn-primary btn-sm" title="Aprobar">
                                                 <i class="fa fa-check" ></i>
                                             </a>
                                             <a href="{{route('status',[$permisoOrigenZarpe->id,'rechazado'])}}" class="btn btn-danger btn-sm" title="Rechazar">
@@ -58,8 +62,10 @@
                                 @foreach($permisoDestinoZarpes as $permisoDestinoZarpe)
                                     <tr>
                                         <td>{{ $permisoDestinoZarpe->nro_solicitud }}</td>
+                                        <td>{{ $permisoDestinoZarpe->user->nombres }} {{ $permisoDestinoZarpe->user->apellidos }}</td>
                                         <td>{{ $permisoDestinoZarpe->bandera }}</td>
                                         <td>{{ $permisoDestinoZarpe->matricula }}</td>
+                                        <td>{{ $permisoDestinoZarpe->tipo_zarpe->nombre }}</td>
                                         <td>{{ $permisoDestinoZarpe->status->nombre}} </td>
                                         <td>
                                             @can('consultar-zarpe')

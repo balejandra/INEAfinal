@@ -95,12 +95,12 @@ class PermisoZarpe extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
-    public function tipozarpe()
+    public function tipo_zarpe():\Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(TipoZarpe::class);
     }
 
-    public function establecimientonautico()
+    public function establecimiento_nautico()
     {
         return $this->belongsTo(EstablecimientoNautico::class);
     }

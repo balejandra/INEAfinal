@@ -1,40 +1,39 @@
 <table class="table">
     <tbody>
     <tr>
-        <th class="bg-light">Uab Minimo</th>
-        <td>{{ $tablaMando->UAB_minimo }}</td>
+        <th class="bg-light">Nro de Solicitud</th>
+        <td>{{ $permisoZarpe->nro_solicitud }}</td>
     </tr>
     <tr>
-        <th class="bg-light">Uab Maximo</th>
-        <td>{{ $tablaMando->UAB_maximo }}</td>
+        <th class="bg-light">Nombre Solicitante</th>
+        <td>{{ $permisoZarpe->user->nombres}}</td>
     </tr>
     <tr>
         <th class="bg-light" style="width:25%">Cant Tripulantes</th>
-        <td>{{ $tablaMando->cant_tripulantes }}</td>
+        <td>{{ $permisoZarpe->bandera }}</td>
     </tr>
 
     <tr>
         <th class="bg-light">Created At</th>
-        <td>{{ $tablaMando->created_at }}</td>
+        <td>{{ $permisoZarpe->matricula }}</td>
+    </tr>
+    <tr>
+        <th class="bg-light">Created At</th>
+        <td>{{ $permisoZarpe->tipo_zarpe->nombre }}</td>
+    </tr>
+    <tr>
+        <th class="bg-light">Created At</th>
+        <td>{{ $permisoZarpe->establecimiento_nautico->nombre }}</td>
+    </tr>
+    <tr>
+        <th class="bg-light">Created At</th>
+        <td>{{ $permisoZarpe->coordenadas }}</td>
+    </tr>
+    <tr>
+        <th class="bg-light">Created At</th>
+        <td>{{ $permisoZarpe->coordenadas }}</td>
     </tr>
     </tbody>
 </table>
-<table class="table">
-    <tbody>
-    <thead>
-    <th>Cargo</th>
-    <th>Titulacion Minima</th>
-    </thead>
-    @forelse($tablaMando->cargotablamandos as $cargotablamando)
-        <tr>
-            <td>
-                <span class="badge badge-info">{{$cargotablamando->cargo_desempena}} </span>
-            <td>
-                <span class="badge badge-info">{{$cargotablamando->titulacion_aceptada_minima}} </span>
-            </td>
-            @empty
-                <span class="badge badge-danger">Sin Cargos asignados</span>
-        </tr>
-    @endforelse
-</table>
+
 

@@ -20,6 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     use HasRoles;
     use \OwenIt\Auditing\Auditable;
 
+    protected $connection = 'pgsql_public_schema';
+    public $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
