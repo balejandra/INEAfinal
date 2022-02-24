@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Zarpes;
 
 use App\Http\Controllers\Controller;
+use App\Models\Publico\CapitaniaUser;
 use App\Models\Renave\Renave_data;
+use App\Models\User;
 use App\Models\Zarpes\CargoTablaMando;
 use App\Models\Zarpes\Equipo;
-use App\Models\Zarpes\PermisoZarpe;
-use App\Models\Zarpes\TablaMando;
 use App\Models\Zarpes\EstablecimientoNautico;
+use App\Models\Zarpes\PermisoZarpe;
+use App\Models\Zarpes\Status;
+use App\Models\Zarpes\TablaMando;
 use App\Models\Zarpes\Tripulante;
 use App\Models\Zarpes\Pasajero;
 use App\Models\Zarpes\TipoZarpe;
@@ -32,10 +35,23 @@ class PermisoZarpeController extends Controller
 
     public function index()
     {
-
-        $data = PermisoZarpe::all();
-
-        return view('zarpes.permiso_zarpe.index')->with('permisoZarpes',$data);
+        if (auth()->user()->getRoleNames()[0]==="Super Admin") {
+            $data = PermisoZarpe::all();
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
+        } elseif (auth()->user()->getRoleNames()[0]==="Usuario web") {
+            $user = auth()->id();
+            $data = PermisoZarpe::where('user_id', $user)->get();
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
+        } elseif  (auth()->user()->getRoleNames()[0]==="Capitán") {
+            $user = auth()->id();
+            $capitania=CapitaniaUser::where('user_id', $user)->first()->capitania_id;
+            $establecimiento=EstablecimientoNautico::where('capitania_id',$capitania)->first()->id;
+            $datazarpeorigen = PermisoZarpe::where('establecimiento_nautico_id',$establecimiento)->get();
+            $datazarpedestino = PermisoZarpe::where('destino_capitania_id',$capitania)->get();
+            return view('zarpes.permiso_zarpe.indexcapitan')
+                ->with('permisoOrigenZarpes', $datazarpeorigen)
+                ->with('permisoDestinoZarpes',$datazarpedestino);
+        }
     }
 
     public function createStepOne(Request $request)
@@ -78,7 +94,7 @@ class PermisoZarpeController extends Controller
         //       print_r($solicitud['bandera']);
 
         $request->session()->put('solicitud', json_encode($solicitud));
-            $this->step=2;
+        $this->step=2;
         if ($solicitud['bandera'] == 'nacional') {
             return redirect()->route('permisoszarpes.CreateStepTwo')->with('paso', $this->step);
         } else {
@@ -158,12 +174,12 @@ class PermisoZarpeController extends Controller
         ];
 
         $request->session()->put('validacion', json_encode($validation));
-       // dd($request->session()->get('validacion'));
+        // dd($request->session()->get('validacion'));
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $solicitud['matricula'] = $request->input('matricula', []);
         $request->session()->put('solicitud', json_encode($solicitud));
-       // dd($solicitud);
+        // dd($solicitud);
         return redirect()->route('permisoszarpes.createStepThree');
 
     }
@@ -183,17 +199,6 @@ class PermisoZarpeController extends Controller
 
     public function permissionCreateStepTwoE(Request $request)
     {
-        /* $validatedData = $request->validate([
-             'stock' => 'required',
-             'status' => 'required',
-         ]);
-
-         $product = $request->session()->get('product');
-         $product->fill($validatedData);
-         $request->session()->put('product', $product);
-
-         return redirect()->route('products.create.step.three');*/
-
          $this->step=3;
         return redirect()->route('permisoszarpes.createStepThree');
 
@@ -202,8 +207,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepThree(Request $request)
     {
-        
-        $TipoZarpes ="";
+
         $TipoZarpes = TipoZarpe::all();
 
                 $this->step=3;
@@ -222,7 +226,7 @@ class PermisoZarpeController extends Controller
         $solicitud['tipo_zarpe_id'] = $request->input('tipozarpe', []);
         $request->session()->put('solicitud', json_encode($solicitud));
         // print_r($solicitud);
-         $this->step=4;
+        $this->step=4;
 
         return redirect()->route('permisoszarpes.createStepFour');
 
@@ -293,7 +297,7 @@ class PermisoZarpeController extends Controller
         //print_r(json_decode($request->session()->get('solicitud'), true));   
         $tripulantes=$request->session()->get('tripulantes');
 
-         $this->step=5;
+        $this->step=5;
         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes);
 
     }
@@ -301,8 +305,8 @@ class PermisoZarpeController extends Controller
     public function permissionCreateStepFive(Request $request)
     {
 
-         $request->session()->put('tripulantes', [0]);
-         $trip=[
+        $request->session()->put('tripulantes', [0]);
+        $trip=[
             "permiso_zarpe_id"=> '',
             "ctrl_documento_id"=> '',
             "capitan"=> '',
@@ -310,48 +314,48 @@ class PermisoZarpeController extends Controller
             "cedula"=>'',
             "fecha_vencimiento"=>'',
             "documento"=>''
-         ];
-          $ctrldocumento=$request->input('ids', []);
-            $cap=$request->input('capitan', []);
-            $nombre=$request->input('nombre', []);
-            $cedula=$request->input('cedula', []);
-            $fecha_vencimiento=$request->input('fechaVence', []);
-            $documento=$request->input('documento', []);
+        ];
+        $ctrldocumento=$request->input('ids', []);
+        $cap=$request->input('capitan', []);
+        $nombre=$request->input('nombre', []);
+        $cedula=$request->input('cedula', []);
+        $fecha_vencimiento=$request->input('fechaVence', []);
+        $documento=$request->input('documento', []);
 
 
-            $tripulantes=$request->session()->get('tripulantes');
+        $tripulantes=$request->session()->get('tripulantes');
 
-            if(isset($ctrldocumento)){
-
-
-                for($i=0;$i<count($ctrldocumento);$i++){
-                    $trip["ctrl_documento_id"]=$ctrldocumento[$i];
-
-                    if($cap[$i]=="SI"){
-                        $trip["capitan"]=true;
-                    }else{
-                        $trip["capitan"]=false;
-                    }
-
-                    $trip["nombre"]=$nombre[$i];
-                    $trip["cedula"]=$cedula[$i];
-                    $trip["fecha_vencimiento"]=$fecha_vencimiento[$i];
-                    $trip["documento"]=$documento[$i];
+        if(isset($ctrldocumento)){
 
 
-                    $tripulantes[$i]=$trip;
-                 }
+            for($i=0;$i<count($ctrldocumento);$i++){
+                $trip["ctrl_documento_id"]=$ctrldocumento[$i];
 
-                 $request->session()->put('tripulantes', $tripulantes);
-                 //$tr = json_decode($request->session()->get('tripulantes'), true);
-                 $this->step=6;
-                 return redirect()->route('permisoszarpes.createStepSix');
-            }else{
-                 $this->step=5;
+                if($cap[$i]=="SI"){
+                    $trip["capitan"]=true;
+                }else{
+                    $trip["capitan"]=false;
+                }
 
-                $mensj="Los tripulantes de la embarcación son requeridos, por favor verifique.";
-                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('msj', $mensj);
+                $trip["nombre"]=$nombre[$i];
+                $trip["cedula"]=$cedula[$i];
+                $trip["fecha_vencimiento"]=$fecha_vencimiento[$i];
+                $trip["documento"]=$documento[$i];
+
+
+                $tripulantes[$i]=$trip;
             }
+
+            $request->session()->put('tripulantes', $tripulantes);
+            //$tr = json_decode($request->session()->get('tripulantes'), true);
+            $this->step=6;
+            return redirect()->route('permisoszarpes.createStepSix');
+        }else{
+            $this->step=5;
+
+            $mensj="Los tripulantes de la embarcación son requeridos, por favor verifique.";
+            return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('msj', $mensj);
+        }
 
         /*
        */
@@ -409,9 +413,9 @@ class PermisoZarpeController extends Controller
             $passengers[$i]=$pass;
         }
 
-         $request->session()->put('pasajeros',  $passengers);
-         $this->step=7;
-         return redirect()->route('permisoszarpes.createStepSeven');
+        $request->session()->put('pasajeros',  $passengers);
+        $this->step=7;
+        return redirect()->route('permisoszarpes.createStepSeven');
 
     }
 
@@ -513,7 +517,7 @@ class PermisoZarpeController extends Controller
 
     public function validarMarino(Request $request)
     {
-      $cedula = $_REQUEST['cedula'];
+        $cedula = $_REQUEST['cedula'];
         $fecha = $_REQUEST['fecha'];
 
 
@@ -554,5 +558,54 @@ class PermisoZarpeController extends Controller
     }
 
      
+
+
+    public function updateStatus($id,$status)
+    {
+        if ($status==='aprobado') {
+            $transaccion = PermisoZarpe::find($id);
+            $idstatus= Status::find(1);
+            $solicitante=User::find($transaccion->user_id);
+            $transaccion->status_id = $idstatus->id;
+            $transaccion->update();
+            $email = new MailController();
+            $data = [
+                    'solicitud' => $transaccion->nro_solicitud,
+                    'status' => $idstatus->nombre,
+                    'cedula_solic' => $solicitante->numero_identificacion,
+                    'nombres_solic'=>$solicitante->nombres,
+                    'apellidos_solic' =>$solicitante->apellidos,
+                    'matricula' => $transaccion->matricula,
+            ];
+            $view='emails.zarpes.revision';
+            $subject='Solicitud de Zarpe '.$transaccion->nro_solicitud;
+            $email->mailZarpe($solicitante->email,$subject,$data,$view);
+
+            Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
+            return redirect(route('permisoszarpes.index'));
+
+        } elseif ($status==='rechazado'){
+            $transaccion = PermisoZarpe::find($id);
+            $idstatus= Status::find(2);
+            $solicitante=User::find($transaccion->user_id);
+            $transaccion->status_id = $idstatus->id;
+            $transaccion->update();
+            $email = new MailController();
+            $data = [
+                'solicitud' => $transaccion->nro_solicitud,
+                'status' => $idstatus->nombre,
+                'nombres_solic'=>$solicitante->nombres,
+                'apellidos_solic' =>$solicitante->apellidos,
+                'matricula' => $transaccion->matricula,
+            ];
+            $view='emails.zarpes.revision';
+            $subject='Solicitud de Zarpe '.$transaccion->nro_solicitud;
+            $email->mailZarpe($solicitante->email,$subject,$data,$view);
+
+            Flash::success('Solicitud rechazada y correo enviado al usuario solicitante.');
+            return redirect(route('permisoszarpes.index'));
+        }
+
+    }
 
 }

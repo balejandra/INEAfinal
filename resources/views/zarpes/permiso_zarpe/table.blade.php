@@ -16,16 +16,12 @@
             <td>{{ $permisoZarpe->matricula }}</td>
             <td>{{ $permisoZarpe->tipo_zarpe_id }}</td>
             <td>
-                
-
-                @can('')
+                @can('consultar-zarpe')
                     <a class="btn btn-sm btn-success"
                        href=" {{route('permisoszarpes.show',$permisoZarpe->id)}}">
                         <i class="fa fa-search"></i>
                     </a>
                 @endcan
-               
-
             </td>
         </tr>
     @endforeach
