@@ -71,7 +71,7 @@
 
                                   <div class="col-md-4">
                                     {!! Form::label('salida', 'Fecha/hora salida:') !!}
-                                    <input type="datetime-local"  id="salida" name="salida" min='{{date("Y-m-dTh:i:s")}}' class="form-control" onblur="compararFechas()">
+                                    <input type="datetime-local"  id="salida" name="salida" min='{{date("Y-m-d")}}T{{date("h:i")}}' class="form-control" onblur="compararFechas()">
 
                                   </div>
 
