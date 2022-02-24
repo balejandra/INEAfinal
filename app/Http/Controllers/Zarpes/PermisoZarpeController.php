@@ -205,7 +205,7 @@ class PermisoZarpeController extends Controller
     public function createStepThree(Request $request)
     {
         
-        $TipoZarpes = TipoZarpes::all();
+        $TipoZarpes ="";
 
                 $this->step=3;
 
@@ -472,7 +472,7 @@ class PermisoZarpeController extends Controller
             $pasajeros=$request->session()->get('pasajeros');
             for($i=0;$i<count($pasajeros);$i++){
                 $pasajeros[$i]["permiso_zarpe_id"]=$saveSolicitud->id;
-                Pasajero::create($pasajeros[$i]); 
+                $pass=Pasajero::create($pasajeros[$i]); 
                 print_r($pasajeros[$i]); echo "<br>";
             }
              
@@ -549,6 +549,21 @@ class PermisoZarpeController extends Controller
         $codigo="SCZ".$ano.$mes."000".$data;
         return $codigo;
 
+    }
+
+    public function destroy($id, PermisoZarpe $pz)
+    {
+        
+    }
+
+    public function show($id)
+    {
+        
+    }
+
+    public function edit($id)
+    {
+        
     }
 
 
