@@ -614,8 +614,10 @@ class PermisoZarpeController extends Controller
     public function show($id)
     {
         $permisoZarpe = PermisoZarpe::find($id);
-        $tripulantes=Tripulante::where('permiso_zarpe_id',$id)->get();
-        $pasajeros=$permisoZarpe->pasajeros()->get();
+        $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->get();
+        $pasajeros=$permisoZarpe->pasajeros()->where('permiso_zarpe_id',$id)->get();
+       $tripulantes2= LicenciasTitulosGmar::whereIn('id',$tripulantes)->get();
+        
 
         if (empty($permisoZarpe)) {
             Flash::error('Permiso Zarpe not found');
@@ -625,7 +627,7 @@ class PermisoZarpeController extends Controller
 
         return view('zarpes.permiso_zarpe.show')
             ->with('permisoZarpe', $permisoZarpe)
-            ->with('tripulantes',$tripulantes)
+            ->with('tripulantes',$tripulantes2)
             ->with('pasajeros',$pasajeros);
     }
 
