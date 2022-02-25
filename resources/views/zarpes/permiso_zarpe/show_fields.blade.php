@@ -21,7 +21,8 @@
     </tr>
     <tr>
         <th class="bg-light">Coordenadas</th>
-        <td>{{ $permisoZarpe->coordenadas }}</td>
+        @php $coords=json_decode($permisoZarpe->coordenadas); @endphp
+        <td>Latitud: {{ $coords[0]}} , Longitud: {{ $coords[1]}}</td>
         <th class="bg-light">Destino</th>
         <td>{{ $permisoZarpe->capitania->nombre }}</td>
     </tr>
