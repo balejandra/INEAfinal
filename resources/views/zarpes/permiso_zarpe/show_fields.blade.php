@@ -39,35 +39,54 @@
 </table>
 <br>
 <strong>Tripulantes</strong>
+
 <table class="table">
     <tbody>
     <thead>
+
+
     <th>Nombres y Apellidos</th>
+    <th>Cédula</th>
+    <th>Documento</th>
+    <th>Fecha vencimiento</th>
 
     </thead>
-    @forelse($permisoZarpe->tripulantes as $tripulante)
+    @forelse($tripulantes as $tripulante)
         <tr>
-            <td>
-            {{$tripulante->licencias_titulos_gmar}}
+           
+           
+            <td>{{$tripulante->nombre}} {{$tripulante->apellido}} </td>
+            <td>{{$tripulante->ci}}</td>
+            <td>{{$tripulante->documento}} </td>
+            <td>{{$tripulante->fecha_vencimiento}} </td>
+
+            
             @empty
                 <span class="badge badge-danger">Sin Cargos asignados</span>
         </tr>
     @endforelse
 </table>
 <strong>Pasajeros</strong>
+
 <table class="table">
     <tbody>
     <thead>
     <th>Nombres y Apellidos</th>
     <th>Documentacion</th>
+    <th>Sexo</th>
+    <th>menor</th>
+     
     </thead>
-    @forelse($permisoZarpe->pasajeros as $pasajero)
+    @forelse($pasajeros as $pasajero)
         <tr>
-            <td>
-                {{$pasajero->nombres}}  {{$pasajero->apellidos}}
-            <td>
-                {{$pasajero->tipo_doc}}  {{$pasajero->nro_doc}}
-            </td>
+            <td> {{$pasajero->nombres}}  {{$pasajero->apellidos}}</td>
+            <td> {{$pasajero->tipo_doc}}  {{$pasajero->nro_doc}}</td>
+            <td>{{$pasajero->sexo}} </td>
+            @if($pasajero->menor)
+            <td>SI </td>
+             @else
+            <td>NO</td>
+             @endif
             @empty
                 <span class="badge badge-danger">Sin Cargos asignados</span>
         </tr>
