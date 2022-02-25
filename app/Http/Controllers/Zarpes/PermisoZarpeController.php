@@ -44,6 +44,7 @@ class PermisoZarpeController extends Controller
             return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
         } elseif  (auth()->user()->getRoleNames()[0]==="Capitán") {
             $user = auth()->id();
+
             $capitania=CapitaniaUser::where('user_id', $user)->first()->capitania_id;
             //dd($capitania);
             $establecimiento=EstablecimientoNautico::where('capitania_id',$capitania)->first()->id;
