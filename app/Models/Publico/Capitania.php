@@ -73,7 +73,7 @@ class Capitania extends Model implements Auditable
     }
 
 
-    public function users()
+    public function user()
     {
         return $this->belongsToMany(User::class);
     }

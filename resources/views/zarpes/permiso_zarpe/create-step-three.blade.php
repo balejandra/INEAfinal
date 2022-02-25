@@ -52,13 +52,13 @@
 
                                         <div class="form-group">
                                             <label for="title">Tipo de navegación:</label>
-                                            
+
                                             <select id="tipozarpe" name="tipozarpe" class="form-control custom-select">
                                             <option value="">Seleccione</option>
 
                                               @foreach ($TipoZarpes as $tz)
                                                 <option value="{{$tz->id}}">{{$tz->nombre}} </option>
-                                            @endforeach 
+                                            @endforeach
                                         </select>
                                         </div>
 
@@ -72,10 +72,10 @@
                     <div class="card-footer text-right">
                         <div class="row">
 				            <div class="col-md-6 text-left">
-				                <a href="{{ route('permisoszarpes.CreateStepTwo') }}" class="btn btn-primary pull-right">Previous</a>
+				                <a href="{{ route('permisoszarpes.CreateStepTwo') }}" class="btn btn-primary pull-right">Anterior</a>
 				            </div>
 				            <div class="col-md-6 text-right">
-				                <button type="submit" class="btn btn-primary">Next</button>
+				                <button type="submit" class="btn btn-primary">Siguiente</button>
 				            </div>
 				        </div>
                     </div>

@@ -2,7 +2,6 @@
 
 namespace App\Models\Zarpes;
 
-use App\Models\Pasajero;
 use App\Models\Publico\Capitania;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

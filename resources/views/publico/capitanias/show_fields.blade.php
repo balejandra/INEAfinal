@@ -9,8 +9,12 @@
             <th class="bg-light">Siglas</th>
             <td>{{ $capitania->sigla }}</td>
         </tr>
-       
-         
+        <tr>
+            <th class="bg-light">Correo Capitan asignado</th>
+            <td>{{ $capitan->email }}</td>
+        </tr>
+
+
 
     </tbody>
 </table>

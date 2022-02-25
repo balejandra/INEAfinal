@@ -45,6 +45,7 @@ class PermisoZarpeController extends Controller
         } elseif  (auth()->user()->getRoleNames()[0]==="Capitán") {
             $user = auth()->id();
             $capitania=CapitaniaUser::where('user_id', $user)->first()->capitania_id;
+            //dd($capitania);
             $establecimiento=EstablecimientoNautico::where('capitania_id',$capitania)->first()->id;
             $datazarpeorigen = PermisoZarpe::where('establecimiento_nautico_id',$establecimiento)->get();
             $datazarpedestino = PermisoZarpe::where('destino_capitania_id',$capitania)->get();
@@ -482,7 +483,7 @@ class PermisoZarpeController extends Controller
 
             }
             Flash::success('Se ha generado la solocitud <b>
-'.$codigo.'</b> exitodamente');
+'.$codigo.'</b> exitosamente');
  $this->SendMail($saveSolicitud->id,1);
             $this->SendMail($saveSolicitud->id,0);
             $this->limpiarVariablesSession();
@@ -612,8 +613,8 @@ class PermisoZarpeController extends Controller
     public function show($id)
     {
         $permisoZarpe = PermisoZarpe::find($id);
-        $tripulantes=$permisoZarpe->tripulantes()->get();
-        dd($tripulantes);
+        $tripulantes=Tripulante::where('permiso_zarpe_id',$id)->get();
+        $pasajeros=$permisoZarpe->pasajeros()->get();
 
         if (empty($permisoZarpe)) {
             Flash::error('Permiso Zarpe not found');
@@ -621,7 +622,10 @@ class PermisoZarpeController extends Controller
             return redirect(route('permisoZarpes.index'));
         }
 
-        return view('zarpes.permiso_zarpe.show')->with('permisoZarpe', $permisoZarpe);
+        return view('zarpes.permiso_zarpe.show')
+            ->with('permisoZarpe', $permisoZarpe)
+            ->with('tripulantes',$tripulantes)
+            ->with('pasajeros',$pasajeros);
     }
 
     public function SendMail($idsolicitud, $tipo){

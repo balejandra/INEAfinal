@@ -2,6 +2,7 @@
 
 namespace App\Models\Zarpes;
 
+use App\Models\Gmar\LicenciasTitulosGmar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -43,6 +44,7 @@ class Tripulante extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
+        'permiso_zarpe_id'=>'integer',
         'ctrl_documento_id' => 'string',
         'capitan' => 'boolean'
     ];
@@ -61,6 +63,11 @@ class Tripulante extends Model implements Auditable
     public function permisozarpe()
     {
         return $this->belongsTo(PermisoZarpe::class);
+    }
+
+    public function licencias_titulos_gmar()
+    {
+        return $this->belongsTo(LicenciasTitulosGmar::class,'ctrl_documento_id','nro_ctrl');
     }
 
 }

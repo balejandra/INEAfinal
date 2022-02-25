@@ -64,8 +64,8 @@ class CapitaniaUser extends Model implements Auditable
     {
         return $this->hasMany(Capitania::class);
     }
-    public function users()
+    public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class,'id','user_id');
     }
 }

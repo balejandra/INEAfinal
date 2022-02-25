@@ -11,7 +11,13 @@
         {!! Form::text('sigla', null, ['class' => 'form-control']) !!}
     </div>
 </div>
-
+<div class="row" >
+    <!-- Nombre Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('capitanes', 'Capitan:') !!}
+        {!! Form::select('capitanes',$capitanes, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un capitan']) !!}
+    </div>
+</div>
 
 {!! Form::label('coordenadas', 'Coordenas:') !!}
 @php($var=0)
@@ -49,7 +55,7 @@
         <div class="form-group col-sm-2 ">
 
         {!! Form::button('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'eliminarCoordenadas(this.id, '.$coord->id.')', 'id'=>$key]) !!}
-           
+
         </div>
     @endif
 </div>

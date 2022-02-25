@@ -43,13 +43,16 @@
                                         <td>{{ $permisoOrigenZarpe->tipo_zarpe->nombre }}</td>
                                         <td>{{ $permisoOrigenZarpe->status->nombre}} </td>
                                         <td>
-
+                                            @if(($permisoOrigenZarpe->status->id=='2') || ($permisoOrigenZarpe->status->id=='3'))
                                             <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado'])}}" class="btn btn-primary btn-sm" title="Aprobar">
                                                 <i class="fa fa-check" ></i>
                                             </a>
+                                            @endif
+                                                @if ($permisoOrigenZarpe->status->id=='3')
                                             <a href="{{route('status',[$permisoOrigenZarpe->id,'rechazado'])}}" class="btn btn-danger btn-sm" title="Rechazar">
                                                 <i class="fa fa-ban"></i>
                                             </a>
+                                                @endif
                                             @can('consultar-zarpe')
                                                 <a class="btn btn-sm btn-success"
                                                    href=" {{route('permisoszarpes.show',$permisoOrigenZarpe->id)}}">
