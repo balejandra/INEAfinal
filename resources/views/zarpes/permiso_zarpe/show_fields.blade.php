@@ -109,7 +109,7 @@
     <a href="{{route('status',[$permisoZarpe->id,'rechazado'])}}" class="btn btn-danger" title="Rechazar">
      Rechazar
     </a>
-        @endif
+            @endif
        @endcan
 </div>
 

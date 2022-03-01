@@ -23,6 +23,9 @@ class CreateEquipoPermisoZarpeTable extends Migration
             $table->foreign('equipo_id')->references('id')->on('equipos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->string('cantidad')->nullable();
+            $table->string('otros')->nullable();
+            $table->string('valores_otros')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

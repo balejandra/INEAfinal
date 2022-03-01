@@ -617,7 +617,7 @@ class PermisoZarpeController extends Controller
         $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->get();
         $pasajeros=$permisoZarpe->pasajeros()->where('permiso_zarpe_id',$id)->get();
        $tripulantes2= LicenciasTitulosGmar::whereIn('id',$tripulantes)->get();
-        
+
 
         if (empty($permisoZarpe)) {
             Flash::error('Permiso Zarpe not found');

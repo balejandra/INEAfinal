@@ -29,7 +29,9 @@ class Equipo extends Model implements Auditable
 
 
     public $fillable = [
-        'equipo'
+        'equipo',
+        'cantidad',
+        'otros'
     ];
 
     /**
@@ -39,7 +41,9 @@ class Equipo extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
-        'equipo' => 'string'
+        'equipo' => 'string',
+        'cantidad'=>'boolean',
+        'otros'=>'string'
     ];
 
     /**

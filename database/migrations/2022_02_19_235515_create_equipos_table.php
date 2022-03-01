@@ -16,6 +16,8 @@ class CreateEquiposTable extends Migration
         Schema::connection('pgsql_zarpes_schema')->create('equipos', function (Blueprint $table) {
             $table->id();
             $table->string('equipo');
+            $table->boolean('cantidad');
+            $table->string('otros');
             $table->timestamps();
             $table->softDeletes();
         });
