@@ -48,6 +48,7 @@ class PermisoZarpeController extends Controller
             return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
         } elseif  (auth()->user()->getRoleNames()[0]==="Capitán") {
             $user = auth()->id();
+
             $capitania=CapitaniaUser::where('user_id', $user)->first()->capitania_id;
             //dd($capitania);
             $establecimiento=EstablecimientoNautico::where('capitania_id',$capitania)->first()->id;
@@ -654,7 +655,7 @@ class PermisoZarpeController extends Controller
         $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->get();
         $pasajeros=$permisoZarpe->pasajeros()->where('permiso_zarpe_id',$id)->get();
        $tripulantes2= LicenciasTitulosGmar::whereIn('id',$tripulantes)->get();
-        
+
 
         if (empty($permisoZarpe)) {
             Flash::error('Permiso Zarpe not found');

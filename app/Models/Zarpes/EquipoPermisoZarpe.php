@@ -31,7 +31,10 @@ class EquipoPermisoZarpe extends Model implements Auditable
 
     public $fillable = [
         'permiso_zarpe_id',
-        'equipo_id'
+        'equipo_id',
+        'cantidad',
+        'otros',
+        'valores_otros'
     ];
 
     /**
@@ -40,7 +43,10 @@ class EquipoPermisoZarpe extends Model implements Auditable
      * @var array
      */
     protected $casts = [
-        'id' => 'integer'
+        'id' => 'integer',
+        'cantidad'=>'string',
+        'otros'=>'string',
+        'valores_otros'=>'string'
     ];
 
     /**

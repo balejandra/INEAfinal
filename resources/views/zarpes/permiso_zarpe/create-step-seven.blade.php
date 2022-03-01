@@ -20,7 +20,7 @@
                                 <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Listado</a>
                             </div>
                         </div>
-                        
+
                         <div class="card-body" style="min-height: 350px;">
 
                             @include('zarpes.permiso_zarpe.stepsIndicator')
@@ -50,16 +50,64 @@
                                                 <p>Asi mismo declaro poseer en la embarcacion los siguientes equipos de
                                                     seguridad raqueridos por la normativa vigente:</p>
                                             </div>
-                                            <div class="row">
+                                            <table class="table table-striped table-bordered" id="equipos">
+                                                <thead>
+                                                <tr>
+                                                    <th>Equipo</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Otros</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
                                                 @foreach($equipos as $equipo)
-                                                    <div class="form-check form-switch col-sm-4 ">
-                                                        <input class="form-check-input" type="checkbox" name="equipo[] "
-                                                               id='equipo' value="{{$equipo->id}}"
-                                                               style="margin-left: auto;">
-                                                        <label class="form-check-label" for="flexSwitchCheckDefault"
-                                                               style="margin-inline-start: 30px;">{{$equipo->equipo}}</label>
-                                                    </div>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-check form-switch col-12">
+                                                                <input class="form-check-input" type="checkbox" name="equipo[] "
+                                                                       id='equipo' value="{{$equipo->id}}"
+                                                                       style="margin-left: auto;">
+                                                                <label class="form-check-label" for="flexSwitchCheckDefault"
+                                                                       style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            @if ($equipo->cantidad==true)
+                                                                <div class=" col-12 ">
+                                                                    <input type="number" class="form-control" id="cantidad" name="cantidad">
+                                                                </div>
+                                                            @else
+                                                                <div class=" col-12 ">
+                                                                    NO APLICA
+                                                                </div>
+                                                                @endif
+
+                                                        </td>
+
+                                                        <td>
+                                                            @if ($equipo->otros=='fecha_ultima_inspeccion')
+                                                                <div class=" col ">
+                                                                    <div class=" form-inline">
+                                                                        <label for="inputEmail4" class="col-sm-5">ULTIMA INSPECCION</label>
+                                                                        <input type="date" class="form-control col-sm-7" id="fecha_ultima_inspeccion">
+                                                                    </div>
+                                                                </div>
+                                                            @elseif($equipo->otros=='ninguno')
+                                                            @else
+                                                                <div class=" col ">
+                                                                    <div class=" form-inline">
+                                                                        <label for="inputEmail4" class="col-sm-5" style="text-transform: uppercase;">{{$equipo->otros}}</label>
+                                                                        <input type="text" class="form-control col-sm-7" id="valores_otros" name="valores_otros">
+                                                                        <input type="text" class="form-control col-sm-7" id="otros" name="otros" value="{{$equipo->otros}}" hidden>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
+                                                </tbody>
+                                            </table>
+
                                             </div>
                                         </div>
                                     </div>

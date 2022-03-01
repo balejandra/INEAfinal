@@ -54,14 +54,14 @@
     </thead>
     @forelse($tripulantes as $tripulante)
         <tr>
-           
-           
+
+
             <td>{{$tripulante->nombre}} {{$tripulante->apellido}} </td>
             <td>{{$tripulante->ci}}</td>
             <td>{{$tripulante->documento}} </td>
             <td>{{$tripulante->fecha_vencimiento}} </td>
 
-            
+
             @empty
                 <span class="badge badge-danger">Sin Cargos asignados</span>
         </tr>
@@ -76,7 +76,7 @@
     <th>Documentacion</th>
     <th>Sexo</th>
     <th>menor</th>
-     
+
     </thead>
     @forelse($pasajeros as $pasajero)
         <tr>
@@ -97,15 +97,19 @@
 <!-- Submit Field -->
 
 <div class="form-group col-sm-12">
+    @can('aprobar-zarpe')
     @if(($permisoZarpe->status->id=='2') || ($permisoZarpe->status->id=='3'))
     <a href="{{route('status',[$permisoZarpe->id,'aprobado'])}}" class="btn btn-primary" title="Aprobar">
       Aprobar
     </a>
     @endif
+    @endcan
+        @can('rechazar-zarpe')
     @if ($permisoZarpe->status->id=='3')
     <a href="{{route('status',[$permisoZarpe->id,'rechazado'])}}" class="btn btn-danger" title="Rechazar">
      Rechazar
     </a>
-        @endif
+            @endif
+       @endcan
 </div>
 
