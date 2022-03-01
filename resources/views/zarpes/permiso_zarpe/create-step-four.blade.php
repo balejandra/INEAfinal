@@ -71,10 +71,15 @@
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-4"> 
+                                                @php
+                                                $fechaActual=new DateTime();
+                                                $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
+                                                $fechaActual=$fechaActual->format('Y-m-d')."T".$fechaActual->format('h:i');
+                                                @endphp
                                                 {!! Form::label('salida', 'Fecha/hora salida:') !!}
                                                 <input type="datetime-local" id="salida" name="salida"
-                                                       min='{{date("Y-m-d")}}T{{date("h:i")}}' class="form-control"
+                                                       min="{{$fechaActual}}" class="form-control"
                                                        onblur="compararFechas()">
 
                                             </div>

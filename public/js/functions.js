@@ -772,69 +772,92 @@ function getMarinos() {
         msj.innerHTML="";
 
         let tabla=document.getElementById('marinos');
+        let divMarinos=document.getElementById('dataMarinos');
+        let cantMax=divMarinos.getAttribute('data-cantMaxima');
+        let cantMar=divMarinos.getAttribute('data-cantMar');
+let cap=validarCapitan();
+ if(cantMar >= cantMax){
+    msj.innerHTML='<div class="alert alert-danger">ha alcanzado la cantidad máxima de tripulantes para esta embarcación</div>' ;
 
- 
+ }else{
 
-if(cedula=="" || fechanac==""){
+    if(cedula=="" || fechanac==""){
     msj.innerHTML='<div class="alert alert-danger">El campo cédula y fecha de nacimiento son requeridos, por favor verifique</div>' ;
 
-}else{
-    $.ajax({
-        url: route('validarMarino'),
-        data: {cedula: cedula, fecha:fechanac }
+    }else{
+            $.ajax({
+                url: route('validarMarino'),
+                data: {cedula: cedula, fecha:fechanac, cap:cap }
 
-    })// This will be called on success
-        .done(function (response) {
-            respuesta = JSON.parse(response);
-            let tamano = respuesta.length;
-            console.log(respuesta[0].id);
+            })// This will be called on success
+                .done(function (response) {
+                    console.log(response);
+                    resp = JSON.parse(response);
+                    respuesta=resp[0];
+                    validacion=resp[1];
+                    let tamano = respuesta.length;
+                    console.log(validacion);
+                    
 
-            if(typeof respuesta=='string'){
-                 switch(respuesta){
-                    case 'saimeNotFound':
-                        msj.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias con los datos suministrados, por favor verifique</div>' ;
+                    if(typeof respuesta=='string'){
+                         switch(respuesta){
+                            case 'saimeNotFound':
+                                msj.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias con los datos suministrados, por favor verifique</div>' ;
 
-                    break;
-                    case 'gmarNotFound':
-                        msj.innerHTML='<div class="alert alert-danger">La cédula suministrada no pertenece a ningun marino, por favor verifique</div>' ;
+                            break;
+                            case 'gmarNotFound':
+                                msj.innerHTML='<div class="alert alert-danger">La cédula suministrada no pertenece a ningun marino, por favor verifique</div>' ;
 
-                    break;
-                    default:
-                    console.log(respuesta);
-                    break;
-                }
-             
-            }else{
-                let  marinoExiste=document.getElementById('trip'+respuesta[0].ci);
-                 
-                if(marinoExiste==null){ 
-                    let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
-                    let cap=validarCapitan();
+                            break;
+                            default:
+                            console.log(respuesta);
+                            break;
+                        }
+                     
+                    }else{
+                        let  marinoExiste=document.getElementById('trip'+respuesta[0].ci);
+                         
+                        if(marinoExiste==null){ 
+                            let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
+                            
 
-                    var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fecha+"</td> <td>"+respuesta[0].documento+"</td> </tr>";
-                    cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
-                    if(cantAct==0){
-                        tabla.innerHTML="";
-                    } 
-                    tabla.innerHTML+=html;
-                    document.getElementById('cedula').value="";
-                    document.getElementById('fecha_nacimiento').value="";
-                    addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento);
+                            //let vt=validarTripulante(respuesta[0].documento, cap);
+                            if(validacion[0]){
+                                console.log(respuesta);
+                                var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fecha+"</td> <td>"+respuesta[0].documento+"</td> </tr>";
+                                cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
+                                if(cantAct==0){
+                                    tabla.innerHTML="";
+                                } 
+                                tabla.innerHTML+=html;
+                                document.getElementById('cedula').value="";
+                                document.getElementById('fecha_nacimiento').value="";
+                                addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento);
 
-                }else{
-                    msj.innerHTML='<div class="alert alert-danger">El tripulante ya se encuentra asignado a la lista, por favor verifique</div>' ;
+                            }else{
+                                msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para tripular esta embarcación.</div>' ;
 
-                }
+                            }
+                            
+                        }else{
+                            msj.innerHTML='<div class="alert alert-danger">El tripulante ya se encuentra asignado a la lista, por favor verifique</div>' ;
 
-            }
-        })
+                        }
 
-        // This will be called on error
-        .fail(function (response) {
-                    msj.innerHTML='<div class="alert alert-danger">No se ha encontrado la cedula o la fecha de nacimiento</div>' ;
-            
-        });
-}
+                    }
+                })
+
+                // This will be called on error
+                .fail(function (response) {
+                            msj.innerHTML='<div class="alert alert-danger">No se ha encontrado la cedula o la fecha de nacimiento</div>' ;
+                            console.log(response);
+                    
+                });
+        }
+
+
+ }
+
 
     
 
@@ -850,6 +873,28 @@ function validarCapitan(){
         var cap="NO";
     }
     return cap;
+}
+
+ 
+function validarTripulante(documento, capitan) {
+    $.ajax({
+        url: route('validacionJerarquizacion'),
+        data: {doc: documento, cap:capitan }
+
+    })// This will be called on success
+        .done(function (response) {
+          //  alert(response);
+            respuesta = JSON.parse(response);
+            
+            alert(response);
+        })
+
+        // This will be called on error
+        .fail(function (response) {
+             
+            alert('fallo');
+        });
+
 }
 
 

@@ -183,7 +183,7 @@
                                     <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}" method="POST">
                                         @csrf
 
-                                        <div id="dataMarinos" data-cantMar="{{$cant}}">
+                                        <div id="dataMarinos" data-cantMar="{{$cant}}" data-cantMaxima="{{$validacion['cant_tripulantes']}}">
 
                                             @if($cant!=0)
                                                 @php  $count=0; @endphp

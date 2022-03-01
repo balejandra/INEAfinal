@@ -10,6 +10,12 @@
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
+
+            <div class="col-md-12" id="errorMat">
+          
+
+            </div>
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -58,29 +64,43 @@
                                                     <div class="text-center">
                                                         <h4>Datos de la embarcación</h4>
                                                     </div>
-                                                    <table class="table table-striped table-bordered" id="">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>MATRÍCULA</th>
-                                                                <th>NOMBRE</th>
-                                                                <th>DESTINACIÓN DEL BUQUE</th>
-                                                                <th>UAB</th>
-                                                                <th>PROPIETARIO</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="myTable">
-                                                            <tr>
-                                                                <td><input type="text" id="matricula" name="matricula" readonly></td>
-                                                                <td><input type="text" id="nombre" name="nombre" readonly></td>
-                                                                <td><input type="text" name="destinacion" id="destinacion" readonly></td>
-                                                                <td><input type="text" name="UAB" id="UAB" readonly></td>
-                                                                <td><input type="text" name="nombre_propietario" id="nombre_propietario" readonly>
-                                                                    <input type="text" name="numero_identificacion" id="numero_identificacion" hidden>
-                                                                </td>
+                                                     
 
-                                                            </tr>
-                                                        </tbody>
+                                                        <table class="table table-bordered" id="">
+                                                        <tr>
+                                                            <th width="25%" class="bg-light">MATRÍCULA</th>
+                                                            <td width="25%"><input type="text" id="matricula" name="matricula" readonly></td>
+                                                            <th width="25%" class="bg-light">NOMBRE</th>
+                                                            <td width="25%"><input type="text" id="nombre" name="nombre" readonly></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th class="bg-light">DESTINACIÓN DEL BUQUE</th>
+                                                            <td><input type="text" name="destinacion" id="destinacion" readonly></td>
+                                                            <th class="bg-light">UAB</th>
+                                                            <td><input type="text" name="UAB" id="UAB" readonly></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th class="bg-light">PROPIETARIO</th>
+                                                              <td><input type="text" name="nombre_propietario" id="nombre_propietario" readonly>
+                                                                    <input type="text" name="nombre_propietario" id="nombre_propietario" hidden>
+                                                                </td>
+                                                            <th class="bg-light">CÉDULA / RIF</th>
+                                                            <td>
+                                                                <input type="text" name="numero_identificacion" id="numero_identificacion" readonly>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="bg-light">ESLORA</th>
+                                                            <td> <input type="text" name="eslora" id="eslora" readonly></td>
+                                                            <th class="bg-light">MANGA</th>
+                                                            <td> <input type="text" name="manga" id="manga" readonly></td>
+                                                        </tr>
                                                     </table>
+
+
+
                                                 </div>
                                             </div>
                                             </div>

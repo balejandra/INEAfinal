@@ -21,6 +21,21 @@ console.log(capitanias);
  	 
  });
 
+    /*let cordXX=[[7,58],
+    [8,59],
+    [9,60],
+    [10,61],
+    [11,62],
+    [12,63],
+    [13,64],
+    [14,65],
+    [15,67],
+    [16,68],
+    [17,69],
+    [18,70],
+    [19,85]];
+
+     polygonX = L.polygon(cordXX, {color: 'red'}).addTo(mymap);*/
  
  
 //var polygon = L.polygon(CoordsCeiba, {color: 'blue', capitaniaid:13}).addTo(mymap);

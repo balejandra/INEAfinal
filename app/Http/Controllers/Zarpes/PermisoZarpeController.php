@@ -21,9 +21,13 @@ use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
 use App\Models\Publico\CoordenadasCapitania;
+use App\Models\Publico\Capitania;
+
 
 use Flash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
 
 class PermisoZarpeController extends Controller
 {
@@ -35,7 +39,7 @@ class PermisoZarpeController extends Controller
 
     public function index()
     {
-        if (auth()->user()->getRoleNames()[0]==="Super Admin") {
+        if (auth()->user()->getRoleNames()[0]==="Super Admin" || auth()->user()->getRoleNames()[0]==="Admin") {
             $data = PermisoZarpe::all();
             return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
         } elseif (auth()->user()->getRoleNames()[0]==="Usuario web") {
@@ -57,6 +61,9 @@ class PermisoZarpeController extends Controller
 
     public function createStepOne(Request $request)
     {
+
+        $request->session()->put('matriculasPermisadas', ['']);
+        
         $request->session()->put('pasajeros', ['']);
         $request->session()->put('tripulantes', [0]);
         $request->session()->put('validaciones', '');
@@ -77,7 +84,7 @@ class PermisoZarpeController extends Controller
 
         ]);
         $this->step=1;
-
+       
         $request->session()->put('solicitud', $solicitud);
 
         return view('zarpes.permiso_zarpe.create-step-one')->with('paso', $this->step);
@@ -108,10 +115,9 @@ class PermisoZarpeController extends Controller
 
     public function createStepTwo(Request $request)
     {
+        
+      
 
-        /*$product = $request->session()->get('product');
-
-        return view('products.create-step-two',compact('product'));*/
         $this->step=2;
 
         return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', $this->step);
@@ -121,23 +127,39 @@ class PermisoZarpeController extends Controller
     public function validationStepTwo(Request $request)
     {
         $matricula = $_REQUEST['matricula'];
-        $data = Renave_data::where('matricula_actual', $matricula)->get();
+         $user =  User::find(auth()->id());
+
+        $permisoZ = PermisoZarpe::select("matricula")->where('user_id', auth()->id())->where('matricula', $matricula )->whereIn('status_id', [1,3])->get();
+
+        $data = Renave_data::where('matricula_actual', $matricula)->where('numero_identificacion', $user->numero_identificacion)->get();
+
+ 
         if (is_null($data->first())) {
-            $exception ='Error en consulta';
+            /*$exception ='Error en consulta';
             $data = response()->json([
                 'status' => 3,
                 'msg' => $exception->getMessage(),
                 'errors' => [],
-            ], 200);
+            ], 200);*/
+            echo "sinCoincidencias";
+        }else{
+            if(count($permisoZ)>0){
+                echo 'permisoPorCerrar';
+            }else{
+                echo json_encode($data);
+            }
         }
-        echo json_encode($data);
+        
+        
+        
     }
 
     public function permissionCreateStepTwo(Request $request)
     {
+
         $validatedData = $request->validate([
             'matricula' => 'required',
-            'UAB' => 'required',
+          //  'UAB' => 'required',
         ]);
         $validation = json_decode($request->session()->get('validacion'), true);
         $UAB =  $request->input('UAB');
@@ -154,6 +176,7 @@ class PermisoZarpeController extends Controller
             ['UAB_maximo','>',$UAB]
         ])->get()->toArray();
         $validation['UAB'] = $request->input('UAB', []);
+        $validation['eslora'] = $request->input('eslora', []);
         $validation['cant_tripulantes'] = $mando[0]["cant_tripulantes"];
 
         $idtablamando=$mando[0]["id"];
@@ -235,7 +258,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepFour(Request $request)
     {
-
+        
         $EstNauticos = EstablecimientoNautico::all();
         $coordCaps=CoordenadasCapitania::all();
          $coordenadas=[];
@@ -297,10 +320,13 @@ class PermisoZarpeController extends Controller
     public function createStepFive(Request $request)
     {
         //print_r(json_decode($request->session()->get('solicitud'), true));
+
+        $validation = json_decode($request->session()->get('validacion'), true);
+       // print_r($validation);
         $tripulantes=$request->session()->get('tripulantes');
 
         $this->step=5;
-        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes);
+        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation );
 
     }
 
@@ -450,10 +476,10 @@ class PermisoZarpeController extends Controller
             Flash::error('Debe indicar los equipos que posee a bordo, por favor verifique.');
             return redirect()->route('permisoszarpes.createStepSeven');
         }else{
-            $codigo=$this->codigo();
-
-
             $solicitud=json_decode($request->session()->get('solicitud'), true);
+
+            $codigo=$this->codigo($solicitud);
+
             $solicitud['nro_solicitud']=$codigo;
             $saveSolicitud = PermisoZarpe::create($solicitud);
 
@@ -523,34 +549,46 @@ class PermisoZarpeController extends Controller
     {
         $cedula = $_REQUEST['cedula'];
         $fecha = $_REQUEST['fecha'];
+        $cap = $_REQUEST['cap'];
 
-
+        $vj=[];
         $newDate = date("d/m/Y", strtotime($fecha));
         $data = Saime_cedula::where('cedula', $cedula)
             ->where('fecha_nacimiento', $newDate)
             ->get();
         if (is_null($data->first())) {
-
             $data2="saimeNotFound";
         }else{
             $data2= LicenciasTitulosGmar::where('ci', $cedula)->get();
             if (is_null($data2->first())) {
                 $data2="gmarNotFound";
+            }else{
+
+                $vj=$this->validacionJerarquizacion($data2[0]->documento, $cap);
+              //  array_push($data2, json_encode($vj));
             }
 
         }
+        $return=[$data2,$vj];
 
-        echo json_encode($data2);
+        echo json_encode($return);
     }
 
-    private function codigo(){
+    private function codigo($solicitud){
         $ano=date('Y');
         $mes=date('m');
 
-         $data = PermisoZarpe::count();
+          $cantidadActual=PermisoZarpe::select(DB::raw('count(nro_solicitud) as cantidad'))
+        ->where(DB::raw("(SUBSTR(nro_solicitud, 6, 4) = '".$ano."')"), '=', true)
+        ->get();
+        
+        $estNautico=EstablecimientoNautico::find($solicitud['establecimiento_nautico_id']);
+       
+        $capitania=Capitania::find($estNautico->capitania_id);
+        $correlativo=$cantidadActual[0]->cantidad+1;
+        $codigo=$capitania->sigla."-".$ano.$mes."-".$correlativo;
+        
 
-          $data++;
-        $codigo="SCZ".$ano.$mes."000".$data;
         return $codigo;
 
     }
@@ -676,6 +714,228 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
             $view='emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo,$subject,$data,$view);
+    }
+
+
+    public function validacionJerarquizacion($doc, $cap){
+        $capitan = $cap;
+        $documento = $doc;
+        $return=false;
+        $validacion = json_decode(session('validacion'), true);
+ 
+        switch ($documento) {
+            case 'Capitán de Altura':   
+                $return=[true,$documento];
+
+            break;
+            case 'Primer Oficial de Navegación':   
+                if($validacion['UAB']<=3000){
+                    $return=[true];
+                }else{
+                    $return=[false];
+                }
+
+            break;
+            case 'Segundo Oficial de Navegación':   
+                if($validacion['UAB']<=500){
+                    $return=[true];
+                }else{
+                    $return=[false];
+                }
+            break;
+            case 'Capitán de Yate':   
+                if($validacion['UAB']<=300){
+                    $return=[true];
+                }else{
+                    $return=[false];
+                }
+            break;
+            case 'Capitán Costanero':   
+                $coordenadas=[];
+                if($validacion['UAB']<=3000){
+                    $return=[true,$coordenadas];
+                }else{
+                    $return=[false,$coordenadas];
+                }
+            break;
+            case 'Patrón de Primera':   
+                $coordenadas=[];
+                if($validacion['UAB']<=500){
+                    $return=[true,$coordenadas];
+                }else{
+                    $return=[false,$coordenadas];
+                }
+            break;
+            case 'Patrón Deportivo de Primera':   
+                $coordenadas=[];
+                if($validacion['UAB']<=150){
+                    $return=[true,$coordenadas];
+                }else{
+                    $return=[false,$coordenadas];
+                }
+            break;
+            case 'Patrón de Segunda':  
+                $coordenadas=[];
+                if($validacion['UAB']<=500 && $validacion['eslora']<24){
+                    $return=[true,$coordenadas,1];//validacion, coordenadas, cantidad de jurisdicciones que puede visitar
+                }else{
+                    $return=[false,$coordenadas,1];
+                }
+             break;
+            case 'Patrón Deportivo de Segunda':   
+                 if($validacion['UAB']<=40){
+                    $return=[true];
+                }else{
+                    $return=[false];
+                }
+            break;
+            case 'Patrón Deportivo de Tercera':   
+                if($validacion['UAB']<=10){
+                    $return=[true];
+                }else{
+                    $return=[false];
+                }
+            break;
+            case 'Tercer Oficial de Navegación':   
+                $return=[false];
+            break;
+            case 'Capitán de Pesca':   
+                $return=[false];
+            break;
+            case 'Oficial de Pesca':   
+                $return=[false];
+            break;
+            case 'Patrón Artesanal':   
+                if($capitan=="NO"){
+                    if($validacion['eslora']<=24){
+                        $return=[true];
+                    }else{
+                        $return=[false];
+                    }
+                }else{
+                    $return=[false];
+                }
+
+                 
+            break;
+            case 'Jefe de Máquinas':   
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    $return=[true]; 
+                }
+            
+            break;
+            case 'Primer Oficial de Máquinas':   
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    /*if($validacion['KW']<=3000){
+                        $return=[true];
+                    }else{
+                        $return=[false];
+                    }*/
+                    $return=[true]; 
+
+                }
+                 
+            break;
+            case 'Segundo Oficial de Máquinas':
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                   /* if($validacion['KW']<=3000){
+                        $return=[true];
+                    }else{
+                        $return=[false];
+                    }*/
+                    $return=[true]; 
+
+                }   
+                 
+            break;
+            case 'Motorista de Primera': 
+                $coordenadas=[];
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    /*if($validacion['KW']<=2237){
+                        $return=[true,$coordenadas];
+                    }else{
+                        $return=[false,$coordenadas];
+                    }*/
+                    $return=[true]; 
+
+                }
+
+                
+            break;
+            case 'Motorista de Segunda':   
+                $coordenadas=[];
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    /*if($validacion['KW']<=560){
+                        $return=[true,$coordenadas];
+                    }else{
+                        $return=[false,$coordenadas];
+                    } */
+                    $return=[true]; 
+
+                }
+
+                
+            break;
+            case 'Jefe de Máquinas de Pesca':  
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    /*if($validacion['KW']<=560){
+                        $return=[true];
+                    }else{
+                        $return=[false];
+                    }*/
+                    $return=[true]; 
+
+                } 
+                
+            break;
+            case 'Tercer Oficial de Máquinas':  
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    /*if($validacion['KW']<=350){
+                        $return=[true];
+                    }else{
+                        $return=[false];
+                    }*/
+                    $return=[true]; 
+
+                } 
+                
+            break;
+            case 'Oficial de Máquinas de Pesca':  
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    /*if($validacion['KW']<=560){
+                        $return=[true];
+                    }else{
+                        $return=[false];
+                    }*/
+                    $return=[true]; 
+
+                } 
+                
+            break;
+            
+            default:
+                $return=[false];
+            break;
+        }
+
+        return $return;
+         
     }
 
 
