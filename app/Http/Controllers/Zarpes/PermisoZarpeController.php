@@ -17,6 +17,7 @@ use App\Models\Zarpes\Pasajero;
 use App\Models\Zarpes\TipoZarpe;
 use App\Models\Zarpes\EquipoPermisoZarpe;
 
+use App\Models\Zarpes\ZarpeRevision;
 use Illuminate\Http\Request;
 use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
@@ -45,11 +46,11 @@ class PermisoZarpeController extends Controller
         } elseif  (auth()->user()->getRoleNames()[0]==="Capitán") {
             $user = auth()->id();
 
-            $capitania=CapitaniaUser::where('user_id', $user)->first()->capitania_id;
-            //dd($capitania);
-            $establecimiento=EstablecimientoNautico::where('capitania_id',$capitania)->first()->id;
-            $datazarpeorigen = PermisoZarpe::where('establecimiento_nautico_id',$establecimiento)->get();
-            $datazarpedestino = PermisoZarpe::where('destino_capitania_id',$capitania)->get();
+            $capitania=CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id',$capitania)->get();
+
+            $establecimiento=EstablecimientoNautico::select('id')->whereIn('capitania_id', $capitania)->get();
+            $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id',$establecimiento)->get();
             return view('zarpes.permiso_zarpe.indexcapitan')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)
                 ->with('permisoDestinoZarpes',$datazarpedestino);
@@ -557,7 +558,7 @@ class PermisoZarpeController extends Controller
     }
 
 
-    public function updateStatus($id,$status)
+    public function updateStatus($id,$status,$establecimiento)
     {
         if ($status==='aprobado') {
             $transaccion = PermisoZarpe::find($id);
@@ -565,9 +566,18 @@ class PermisoZarpeController extends Controller
             $solicitante=User::find($transaccion->user_id);
             $transaccion->status_id = $idstatus->id;
             $transaccion->update();
+            $establecimiento=EstablecimientoNautico::select('capitania_id')->where('id',$establecimiento)->get();
+            $capitania_user= CapitaniaUser::whereIn('capitania_id',$establecimiento)->first()->id;
+            ZarpeRevision::create([
+                'capitania_user_id'=>$capitania_user,
+                'permiso_zarpe_id'=>$id,
+                'accion'=>$idstatus->nombre,
+                'motivo'=>'Aprobado'
+            ]);
             $email = new MailController();
             $data = [
                     'solicitud' => $transaccion->nro_solicitud,
+                    'idstatus'=>$idstatus->id,
                     'status' => $idstatus->nombre,
                     'cedula_solic' => $solicitante->numero_identificacion,
                     'nombres_solic'=>$solicitante->nombres,
@@ -582,24 +592,35 @@ class PermisoZarpeController extends Controller
             return redirect(route('permisoszarpes.index'));
 
         } elseif ($status==='rechazado'){
+            $motivo = $_GET['motivo'];
             $transaccion = PermisoZarpe::find($id);
             $idstatus= Status::find(2);
             $solicitante=User::find($transaccion->user_id);
             $transaccion->status_id = $idstatus->id;
             $transaccion->update();
+            $establecimiento=EstablecimientoNautico::select('capitania_id')->where('id',$establecimiento)->get();
+            $capitania_user= CapitaniaUser::whereIn('capitania_id',$establecimiento)->first()->id;
+            ZarpeRevision::create([
+                'capitania_user_id'=>$capitania_user,
+                'permiso_zarpe_id'=>$id,
+                'accion'=>$idstatus->nombre,
+                'motivo'=>$motivo
+            ]);
             $email = new MailController();
             $data = [
                 'solicitud' => $transaccion->nro_solicitud,
+                'idstatus'=>$idstatus->id,
                 'status' => $idstatus->nombre,
                 'nombres_solic'=>$solicitante->nombres,
                 'apellidos_solic' =>$solicitante->apellidos,
                 'matricula' => $transaccion->matricula,
+                'motivo' =>$motivo
             ];
             $view='emails.zarpes.revision';
             $subject='Solicitud de Zarpe '.$transaccion->nro_solicitud;
             $email->mailZarpe($solicitante->email,$subject,$data,$view);
 
-            Flash::success('Solicitud rechazada y correo enviado al usuario solicitante.');
+            Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
             return redirect(route('permisoszarpes.index'));
         }
 

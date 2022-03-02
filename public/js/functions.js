@@ -1,5 +1,7 @@
-
-
+//-------------------Tooltips----------------------------
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
 //-------------------Datatables----------------------------
 
 
@@ -191,7 +193,7 @@ function eliminarCoordenadas(id, idcoord){
     }
     if(idcoord!=""){
        const del = document.querySelector("#deletes"+id);
-        del.value=idcoord; 
+        del.value=idcoord;
     }
 
 }
@@ -216,6 +218,7 @@ function ochina(data1){
 }
 
 
+/*
 $(document).ready(function() {
     const nacionalidad = document.querySelector("#nacionalidad");
     nacionalidad.innerHTML=" <select class=\"form-control\" name=\"nacionalidad_buque\" id=\"nacionalidad_buque\">\n" +
@@ -423,6 +426,8 @@ $(document).ready(function() {
         "    </select>"
 
 });
+*/
+
 
 
 
@@ -773,7 +778,7 @@ function getMarinos() {
 
         let tabla=document.getElementById('marinos');
 
- 
+
 
 if(cedula=="" || fechanac==""){
     msj.innerHTML='<div class="alert alert-danger">El campo cédula y fecha de nacimiento son requeridos, por favor verifique</div>' ;
@@ -803,11 +808,11 @@ if(cedula=="" || fechanac==""){
                     console.log(respuesta);
                     break;
                 }
-             
+
             }else{
                 let  marinoExiste=document.getElementById('trip'+respuesta[0].ci);
-                 
-                if(marinoExiste==null){ 
+
+                if(marinoExiste==null){
                     let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
                     let cap=validarCapitan();
 
@@ -815,7 +820,7 @@ if(cedula=="" || fechanac==""){
                     cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
                     if(cantAct==0){
                         tabla.innerHTML="";
-                    } 
+                    }
                     tabla.innerHTML+=html;
                     document.getElementById('cedula').value="";
                     document.getElementById('fecha_nacimiento').value="";
@@ -832,21 +837,21 @@ if(cedula=="" || fechanac==""){
         // This will be called on error
         .fail(function (response) {
                     msj.innerHTML='<div class="alert alert-danger">No se ha encontrado la cedula o la fecha de nacimiento</div>' ;
-            
+
         });
 }
 
-    
+
 
 }
 
 function validarCapitan(){
-    if($("#cap").is(':checked')){ 
-    var cap="SI"; 
+    if($("#cap").is(':checked')){
+    var cap="SI";
 
         $("#cap").prop("checked", false);
         $("#textoCap").text('NO');
-    }else{ 
+    }else{
         var cap="NO";
     }
     return cap;
@@ -855,7 +860,7 @@ function validarCapitan(){
 
 
 function addMarino(ids, cap, ci, nombreape, fechav, doc){
-   
+
     var div=document.getElementById("dataMarinos");
     cantAct=parseInt(div.getAttribute("data-cantMar"));
     let contenedor= document.createElement("div");
@@ -869,7 +874,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
     let fechaVence= document.createElement("input");
     let documento= document.createElement("input");
 
-    
+
 
      idmar.type="hidden";
      capitan.type="hidden";
@@ -877,7 +882,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
      nombre.type="hidden";
      fechaVence.type="hidden";
      documento.type="hidden";
-      
+
 
      idmar.name="ids[]";
      capitan.name="capitan[]";
@@ -894,7 +899,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
      fechaVence.value=fechav;
      documento.value=doc;
 
-     
+
      contenedor.appendChild(idmar);
      contenedor.appendChild(capitan);
      contenedor.appendChild(cedula);
@@ -912,14 +917,14 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
 
 
 $('#cap').click(function() {
-    
+
 
     if($("#cap").is(':checked')){
-        $("#textoCap").text('SI');  // checked  
+        $("#textoCap").text('SI');  // checked
     }
     else{
         $("#textoCap").text('NO');
-        
+
     }
 
 
@@ -940,16 +945,16 @@ function compararFechas(){
     var date2 = new Date(regreso.value);
 
     if(date1>date2){
-         
+
         document.getElementById("msjRuta").innerHTML="<div class='alert alert-danger'>La fecha y hora de salida no pueden ser menores que la de regreso, por favor verifique.</div>"
         regreso.value="";
     }
 
-    
+
 }
-         
- 
- 
+
+
+
 
 
 //*FIN DE VALIDACIONES DE PASO 4 MAPA*//

@@ -9,6 +9,10 @@
     <h2>Nro de Solicitud: {{$solicitud}} </h2>
     <br>
     <h2>Buque Matricula Nro: {{$matricula}} </h2>
+    @if ($idstatus==2)
+        <br>
+        <h2>Motivo Rechazo: {{$motivo}} </h2>
+    @endif
 @endcomponent
     Para más detalles ingrese a la página web:
 
