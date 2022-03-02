@@ -775,13 +775,20 @@ function getMarinos() {
         let divMarinos=document.getElementById('dataMarinos');
         let cantMax=divMarinos.getAttribute('data-cantMaxima');
         let cantMar=divMarinos.getAttribute('data-cantMar');
-let cap=validarCapitan('');
+        let cap="";
+        if($("#cap").is(':checked')){
+            cap="SI";
+        }else{
+            cap="NO";
+        }
+
  if(cantMar >= cantMax){
     msj.innerHTML='<div class="alert alert-danger">ha alcanzado la cantidad máxima de tripulantes para esta embarcación</div>' ;
 
  }else{
 
     if(cedula=="" || fechanac==""){
+        
     msj.innerHTML='<div class="alert alert-danger">El campo cédula y fecha de nacimiento son requeridos, por favor verifique</div>' ;
 
     }else{
@@ -818,9 +825,10 @@ let cap=validarCapitan('');
                         let  marinoExiste=document.getElementById('trip'+respuesta[0].ci);
                          
                         if(marinoExiste==null){ 
-                            let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
+                           
+                                validarCapitan("");
                             
-
+                            let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
                             //let vt=validarTripulante(respuesta[0].documento, cap);
                             if(validacion[0]){
                                 console.log(respuesta);
@@ -837,10 +845,10 @@ let cap=validarCapitan('');
                             }else{
                                  
 
-                                if(cap=='SI'){
-                                    validarCapitan('X');
+                                if($("#cap").is(':checked')){
+                                    
                                     msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para ser capitán esta embarcación.</div>' ;
-
+                                    validarCapitan('X');
                                 }else{
                                     msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para tripular esta embarcación.</div>' ;
 
@@ -976,7 +984,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
 
 
 $('#cap').click(function() {
-    
+     
 
     if($("#cap").is(':checked')){
         $("#textoCap").text('SI');  // checked  
