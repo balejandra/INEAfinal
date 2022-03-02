@@ -775,7 +775,7 @@ function getMarinos() {
         let divMarinos=document.getElementById('dataMarinos');
         let cantMax=divMarinos.getAttribute('data-cantMaxima');
         let cantMar=divMarinos.getAttribute('data-cantMar');
-let cap=validarCapitan();
+let cap=validarCapitan('');
  if(cantMar >= cantMax){
     msj.innerHTML='<div class="alert alert-danger">ha alcanzado la cantidad máxima de tripulantes para esta embarcación</div>' ;
 
@@ -835,7 +835,16 @@ let cap=validarCapitan();
                                 addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento);
 
                             }else{
-                                msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para tripular esta embarcación.</div>' ;
+                                 
+
+                                if(cap=='SI'){
+                                    validarCapitan('X');
+                                    msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para ser capitán esta embarcación.</div>' ;
+
+                                }else{
+                                    msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para tripular esta embarcación.</div>' ;
+
+                                }
 
                             }
                             
@@ -863,17 +872,27 @@ let cap=validarCapitan();
 
 }
 
-function validarCapitan(){
-    if($("#cap").is(':checked')){ 
-    var cap="SI"; 
-
-        $("#cap").prop("checked", false);
-        $("#textoCap").text('NO');
-    }else{ 
-        var cap="NO";
+function validarCapitan(param){
+    if(param==""){
+        if($("#cap").is(':checked')){ 
+            var cap="SI"; 
+            $("#cap").prop("checked", false);
+            $("#textoCap").text('NO');
+        }else{ 
+            var cap="NO";
+        }
+    }else{
+        
+        $("#cap").prop("checked", true);
+        $("#textoCap").text('SI');
+        var cap="SI"; 
     }
+    
     return cap;
 }
+
+ 
+ 
 
  
 function validarTripulante(documento, capitan) {
@@ -970,6 +989,19 @@ $('#cap').click(function() {
 
 });
 
+
+$('.equipo').click(function() { 
+    
+    let id=$(this).val();
+        
+    if($("#equipo").is(':checked')){
+        document.getElementById(id+"selected").value="true";
+    }
+    else{
+        document.getElementById(id+"selected").value="false";
+    }
+
+});
 
 
 /*FIN validacion paso cinco marinos*/

@@ -63,18 +63,20 @@
                                                     <tr>
                                                         <td>
                                                             <div class="form-check form-switch col-12">
-                                                                <input class="form-check-input" type="checkbox" name="equipo[] "
+                                                                <input class="form-check-input equipo" type="checkbox" name="equipo[] "
                                                                        id='equipo' value="{{$equipo->id}}"
-                                                                       style="margin-left: auto;">
+                                                                       style="margin-left: auto;" >
                                                                 <label class="form-check-label" for="flexSwitchCheckDefault"
                                                                        style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
+
+                                                                 <input type="text" class="form-control col-sm-7" id="{{$equipo->id}}selected" name="{{$equipo->id}}selected" value="false" hidden>
                                                             </div>
                                                         </td>
 
                                                         <td>
                                                             @if ($equipo->cantidad==true)
                                                                 <div class=" col-12 ">
-                                                                    <input type="number" class="form-control" id="cantidad" name="cantidad">
+                                                                    <input type="number" class="form-control" id="cantidad" name="{{$equipo->id}}cantidad">
                                                                 </div>
                                                             @else
                                                                 <div class=" col-12 ">
@@ -85,22 +87,32 @@
                                                         </td>
 
                                                         <td>
-                                                            @if ($equipo->otros=='fecha_ultima_inspeccion')
-                                                                <div class=" col ">
+                                                            @if($equipo->otros!='ninguno')
+                                                           
+                                                                
                                                                     <div class=" form-inline">
-                                                                        <label for="inputEmail4" class="col-sm-5">ULTIMA INSPECCION</label>
-                                                                        <input type="date" class="form-control col-sm-7" id="fecha_ultima_inspeccion">
+                                                                        <label for="inputEmail4" class="col-sm-5" style="text-transform: uppercase;">
+                                                                            @if($equipo->otros=="fecha_ultima_inspeccion")
+                                                                                Fecha de última inspección
+
+                                                                                @php
+                                                                                $type="date";
+                                                                                @endphp
+
+                                                                            @else
+                                                                                {{$equipo->otros}}
+                                                                                @php
+                                                                                $type="text";
+                                                                                @endphp
+
+                                                                            @endif
+                                                                            
+
+                                                                        </label>
+                                                                        <input type="{{$type}}" class="form-control col-sm-7" id="valores_otros" name="{{$equipo->id}}valores_otros">
+                                                                        <input type="text" class="form-control col-sm-7" id="otros" name="{{$equipo->id}}otros" value="{{$equipo->otros}}" hidden>
                                                                     </div>
-                                                                </div>
-                                                            @elseif($equipo->otros=='ninguno')
-                                                            @else
-                                                                <div class=" col ">
-                                                                    <div class=" form-inline">
-                                                                        <label for="inputEmail4" class="col-sm-5" style="text-transform: uppercase;">{{$equipo->otros}}</label>
-                                                                        <input type="text" class="form-control col-sm-7" id="valores_otros" name="valores_otros">
-                                                                        <input type="text" class="form-control col-sm-7" id="otros" name="otros" value="{{$equipo->otros}}" hidden>
-                                                                    </div>
-                                                                </div>
+                                                                 
                                                             @endif
                                                         </td>
                                                     </tr>

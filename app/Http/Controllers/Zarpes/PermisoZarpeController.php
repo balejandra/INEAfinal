@@ -323,7 +323,7 @@ class PermisoZarpeController extends Controller
         //print_r(json_decode($request->session()->get('solicitud'), true));
 
         $validation = json_decode($request->session()->get('validacion'), true);
-       // print_r($validation);
+        //print_r($validation);
         $tripulantes=$request->session()->get('tripulantes');
 
         $this->step=5;
@@ -353,8 +353,9 @@ class PermisoZarpeController extends Controller
 
 
         $tripulantes=$request->session()->get('tripulantes');
+        $validation = json_decode($request->session()->get('validacion'), true);
 
-        if(isset($ctrldocumento)){
+        if(isset($ctrldocumento) && count($ctrldocumento) == $validation['cant_tripulantes']){
 
 
             for($i=0;$i<count($ctrldocumento);$i++){
@@ -382,8 +383,11 @@ class PermisoZarpeController extends Controller
         }else{
             $this->step=5;
 
-            $mensj="Los tripulantes de la embarcación son requeridos, por favor verifique.";
-            return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('msj', $mensj);
+            $mensj="Los tripulantes de la embarcación son requeridos (cantidad de tripulantes ".$validation['cant_tripulantes']."), por favor verifique.";
+        
+         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation )->with('msj', $mensj);
+
+           
         }
 
         /*
@@ -463,27 +467,22 @@ class PermisoZarpeController extends Controller
 
     public function store(Request $request)
     {
-
-
         $validatedData = $request->validate([
             'equipo' => 'required',
-
         ]);
+        $equipos = Equipo::all();
         $equipo=$request->input('equipo', []);
-
-
-
+        
         if(count($equipo)==0){
             Flash::error('Debe indicar los equipos que posee a bordo, por favor verifique.');
             return redirect()->route('permisoszarpes.createStepSeven');
         }else{
-            $solicitud=json_decode($request->session()->get('solicitud'), true);
+          $solicitud=json_decode($request->session()->get('solicitud'), true);
 
             $codigo=$this->codigo($solicitud);
 
             $solicitud['nro_solicitud']=$codigo;
             $saveSolicitud = PermisoZarpe::create($solicitud);
-
 
             $tripulantes=$request->session()->get('tripulantes');
             for($i=0;$i<count($tripulantes);$i++){
@@ -502,21 +501,54 @@ class PermisoZarpeController extends Controller
             }
 
 
-            $eq=["permiso_zarpe_id"=>'',"equipo_id"=>''];
-            for($i=0;$i<count($equipo);$i++){
-                $eq["permiso_zarpe_id"]=$saveSolicitud->id;
-                $eq["equipo_id"]=$equipo[$i];
-                EquipoPermisoZarpe::create($eq);
+            $listadoEquipos=["permiso_zarpe_id"=>'',"equipo_id"=>'',"cantidad"=>'',"otros"=>'',"valores_otros"=>''];
 
+            $otros=[];
+            $valoresOtros=[];
+
+            $listEq=[]; $i=0; $j=0;
+            
+            foreach($equipos as $equipoX){
+                foreach($equipo as $equip){
+                    if($equipoX->id==$equip){
+
+                        if($request->input($equip.'selected')==true){
+                            $listadoEquipos["permiso_zarpe_id"]=$saveSolicitud->id;
+                            $listadoEquipos["equipo_id"]=$equip;
+                            if ($equipoX->cantidad==true){
+                                $listadoEquipos["cantidad"]= $request->input($equip.'cantidad');
+
+                            }else{
+                                $listadoEquipos["cantidad"]='';
+                            }
+
+                            if($equipoX->otros!='ninguno'){
+                                $listadoEquipos["otros"]=$request->input($equip.'otros');
+                                $listadoEquipos["valores_otros"]=$request->input($equip.'valores_otros');   
+                            }else{
+                                $listadoEquipos["otros"]="";
+                                $listadoEquipos["valores_otros"]="";
+                               
+                            }
+                            
+                            $listEq[$i]=$listadoEquipos;
+                             $i++;
+                            EquipoPermisoZarpe::create($listadoEquipos);
+
+                            $listadoEquipos=["permiso_zarpe_id"=>'',"equipo_id"=>'',"cantidad"=>'',"otros"=>'',"valores_otros"=>''];
+                        }
+                        
+                    }
+                }
             }
+
             Flash::success('Se ha generado la solocitud <b>
 '.$codigo.'</b> exitosamente');
- $this->SendMail($saveSolicitud->id,1);
+            $this->SendMail($saveSolicitud->id,1);
             $this->SendMail($saveSolicitud->id,0);
             $this->limpiarVariablesSession();
             return redirect()->route('permisoszarpes.index');
         }
-
 
 
 
