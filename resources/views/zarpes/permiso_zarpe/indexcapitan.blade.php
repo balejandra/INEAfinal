@@ -41,17 +41,46 @@
                                         <td>{{ $permisoOrigenZarpe->bandera }}</td>
                                         <td>{{ $permisoOrigenZarpe->matricula }}</td>
                                         <td>{{ $permisoOrigenZarpe->tipo_zarpe->nombre }}</td>
+                                        @if ($permisoOrigenZarpe->status->id==1)
+                                            <td  class="text-success">{{ $permisoOrigenZarpe->status->nombre}} </td>
+                                        @endif
                                         <td>{{ $permisoOrigenZarpe->status->nombre}} </td>
                                         <td>
+
                                             @if(($permisoOrigenZarpe->status->id=='2') || ($permisoOrigenZarpe->status->id=='3'))
-                                            <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado'])}}" class="btn btn-primary btn-sm" title="Aprobar">
+                                            <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado',$permisoOrigenZarpe->establecimiento_nautico_id])}}" class="btn btn-primary btn-sm" title="Aprobar">
                                                 <i class="fa fa-check" ></i>
                                             </a>
                                             @endif
                                                 @if ($permisoOrigenZarpe->status->id=='3')
-                                            <a href="{{route('status',[$permisoOrigenZarpe->id,'rechazado'])}}" class="btn btn-danger btn-sm" title="Rechazar">
-                                                <i class="fa fa-ban"></i>
-                                            </a>
+                                                <!-- Button trigger modal -->
+                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                        <i class="fa fa-ban"></i>
+                                                    </a>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <form action="{{route('status',[$permisoOrigenZarpe->id,'rechazado',$permisoOrigenZarpe->establecimiento_nautico_id])}}">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                   <p>Por favor indique el motivo del rechado de la Solicitud Nro.{{ $permisoOrigenZarpe->nro_solicitud }}</p>
+                                                                   <div class="col-12 form-group">
+                                                                       <input type="text" class="form-control" name="motivo" id="motivo">
+                                                                   </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                                    <button type="submit" class="btn btn-primary">Rechazar</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </form>
+                                                    </div>
                                                 @endif
                                             @can('consultar-zarpe')
                                                 <a class="btn btn-sm btn-success"

@@ -1,3 +1,4 @@
+
 <table class="table table-striped table-bordered" id="permisoZarpes-table">
     <thead>
     <tr>
@@ -18,7 +19,11 @@
             <td>{{ $permisoZarpe->bandera }}</td>
             <td>{{ $permisoZarpe->matricula }}</td>
             <td>{{ $permisoZarpe->tipo_zarpe->nombre }}</td>
-            <td>{{ $permisoZarpe->status->nombre}} </td>
+            @if ($permisoZarpe->status->id==1)
+                <td  class="text-success">{{ $permisoZarpe->status->nombre}} </td>
+            @elseif($permisoZarpe->status->id==2)
+                <td  class="text-danger">{{ $permisoZarpe->status->nombre}} </td>
+                @endif
             <td>
                 @can('consultar-zarpe')
                     <a class="btn btn-sm btn-success"
@@ -26,6 +31,18 @@
                         <i class="fa fa-search"></i>
                     </a>
                 @endcan
+                @can('consultar-zarpe')
+                    @if ($permisoZarpe->status->id==1)
+                            <a class="btn btn-sm btn-primary"
+                               href=" {{route('zarpepdf',$permisoZarpe->id)}}" data-toggle="tooltip" data-bs-placement="bottom" title="Informar llegada">
+                                <i class="fas fa-anchor"></i>
+                            </a>
+                            <a class="btn btn-sm btn-dark"
+                               href=" {{route('zarpepdf',$permisoZarpe->id)}}" data-toggle="tooltip" data-bs-placement="bottom" title="Descargar PDF">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+                            @endif
+                    @endcan
             </td>
         </tr>
     @endforeach
