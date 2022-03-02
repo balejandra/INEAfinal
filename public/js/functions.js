@@ -826,11 +826,12 @@ function getMarinos() {
                          
                         if(marinoExiste==null){ 
                            
-                                validarCapitan("");
+                                
                             
                             let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
                             //let vt=validarTripulante(respuesta[0].documento, cap);
                             if(validacion[0]){
+                                validarCapitan("");
                                 console.log(respuesta);
                                 var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fecha+"</td> <td>"+respuesta[0].documento+"</td> </tr>";
                                 cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
@@ -1000,13 +1001,37 @@ $('#cap').click(function() {
 
 $('.equipo').click(function() { 
     
-    let id=$(this).val();
+    let id=$(this).val(); 
         
     if($("#equipo").is(':checked')){
         document.getElementById(id+"selected").value="true";
+        let cantidad=$(this).attr("data-cant");
+        let otros=$(this).attr("data-otrs");
+
+        if(cantidad==true){
+        document.getElementById(id+"cantidad").setAttribute("required",true);  
+        }
+        if(otros!="ninguno"){
+        document.getElementById(id+"valores_otros").setAttribute("required",true);  
+
+        }     
+      
+
     }
     else{
-        document.getElementById(id+"selected").value="false";
+        document.getElementById(id+"selected").value="false";  
+
+        let cantidad=$(this).attr("data-cant");
+        let otros=$(this).attr("data-otrs");
+
+        
+        if(cantidad==true){
+        document.getElementById(id+"cantidad").removeAttribute("required");   
+        }
+         
+        if(otros!="ninguno"){
+        document.getElementById(id+"valores_otros").removeAttribute("required");
+        } 
     }
 
 });

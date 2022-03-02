@@ -65,7 +65,7 @@
                                                             <div class="form-check form-switch col-12">
                                                                 <input class="form-check-input equipo" type="checkbox" name="equipo[] "
                                                                        id='equipo' value="{{$equipo->id}}"
-                                                                       style="margin-left: auto;" >
+                                                                       style="margin-left: auto;" data-cant="{{$equipo->cantidad}}" data-otrs="{{$equipo->otros}}" >
                                                                 <label class="form-check-label" for="flexSwitchCheckDefault"
                                                                        style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
 
@@ -76,7 +76,7 @@
                                                         <td>
                                                             @if ($equipo->cantidad==true)
                                                                 <div class=" col-12 ">
-                                                                    <input type="number" class="form-control" id="cantidad" name="{{$equipo->id}}cantidad">
+                                                                    <input type="number" class="form-control" id="{{$equipo->id}}cantidad" name="{{$equipo->id}}cantidad">
                                                                 </div>
                                                             @else
                                                                 <div class=" col-12 ">
@@ -97,19 +97,21 @@
 
                                                                                 @php
                                                                                 $type="date";
+                                                                                $max="max=".date('Y-m-d').""
                                                                                 @endphp
 
                                                                             @else
                                                                                 {{$equipo->otros}}
                                                                                 @php
                                                                                 $type="text";
+                                                                                $max="";
                                                                                 @endphp
 
                                                                             @endif
                                                                             
 
                                                                         </label>
-                                                                        <input type="{{$type}}" class="form-control col-sm-7" id="valores_otros" name="{{$equipo->id}}valores_otros">
+                                                                        <input type="{{$type}}" class="form-control col-sm-7" id="{{$equipo->id}}valores_otros" name="{{$equipo->id}}valores_otros" {{$max}} >
                                                                         <input type="text" class="form-control col-sm-7" id="otros" name="{{$equipo->id}}otros" value="{{$equipo->otros}}" hidden>
                                                                     </div>
                                                                  

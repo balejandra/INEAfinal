@@ -830,13 +830,31 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                 }
             break;
             case 'Tercer Oficial de Navegación':   
-                $return=[false];
+                 
+                if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    
+                    $return=[true]; 
+
+                }
+                 
             break;
             case 'Capitán de Pesca':   
-                $return=[false];
+                 if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    
+                    $return=[true]; 
+
+                }
             break;
             case 'Oficial de Pesca':   
-                $return=[false];
+                 if($capitan=="SI"){
+                    $return=[false];
+                }else{
+                    $return=[true]; 
+                }
             break;
             case 'Patrón Artesanal':   
                 if($capitan=="NO"){
