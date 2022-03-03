@@ -65,7 +65,7 @@ class PermisoZarpeController extends Controller
     {
 
         $request->session()->put('matriculasPermisadas', ['']);
-        
+
         $request->session()->put('pasajeros', ['']);
         $request->session()->put('tripulantes', [0]);
         $request->session()->put('validaciones', '');
@@ -86,7 +86,7 @@ class PermisoZarpeController extends Controller
 
         ]);
         $this->step=1;
-       
+
         $request->session()->put('solicitud', $solicitud);
 
         return view('zarpes.permiso_zarpe.create-step-one')->with('paso', $this->step);
@@ -117,8 +117,8 @@ class PermisoZarpeController extends Controller
 
     public function createStepTwo(Request $request)
     {
-        
-      
+
+
 
         $this->step=2;
 
@@ -135,7 +135,7 @@ class PermisoZarpeController extends Controller
 
         $data = Renave_data::where('matricula_actual', $matricula)->where('numero_identificacion', $user->numero_identificacion)->get();
 
- 
+
         if (is_null($data->first())) {
             /*$exception ='Error en consulta';
             $data = response()->json([
@@ -151,9 +151,9 @@ class PermisoZarpeController extends Controller
                 echo json_encode($data);
             }
         }
-        
-        
-        
+
+
+
     }
 
     public function permissionCreateStepTwo(Request $request)
@@ -260,7 +260,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepFour(Request $request)
     {
-        
+
         $EstNauticos = EstablecimientoNautico::all();
         $coordCaps=CoordenadasCapitania::all();
          $coordenadas=[];
@@ -385,10 +385,10 @@ class PermisoZarpeController extends Controller
             $this->step=5;
 
             $mensj="Los tripulantes de la embarcación son requeridos (cantidad de tripulantes ".$validation['cant_tripulantes']."), por favor verifique.";
-        
+
          return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation )->with('msj', $mensj);
 
-           
+
         }
 
         /*
@@ -473,7 +473,7 @@ class PermisoZarpeController extends Controller
         ]);
         $equipos = Equipo::all();
         $equipo=$request->input('equipo', []);
-        
+
         if(count($equipo)==0){
             Flash::error('Debe indicar los equipos que posee a bordo, por favor verifique.');
             return redirect()->route('permisoszarpes.createStepSeven');
@@ -508,7 +508,7 @@ class PermisoZarpeController extends Controller
             $valoresOtros=[];
 
             $listEq=[]; $i=0; $j=0;
-            
+
             foreach($equipos as $equipoX){
                 foreach($equipo as $equip){
                     if($equipoX->id==$equip){
@@ -525,20 +525,20 @@ class PermisoZarpeController extends Controller
 
                             if($equipoX->otros!='ninguno'){
                                 $listadoEquipos["otros"]=$request->input($equip.'otros');
-                                $listadoEquipos["valores_otros"]=$request->input($equip.'valores_otros');   
+                                $listadoEquipos["valores_otros"]=$request->input($equip.'valores_otros');
                             }else{
                                 $listadoEquipos["otros"]="";
                                 $listadoEquipos["valores_otros"]="";
-                               
+
                             }
-                            
+
                             $listEq[$i]=$listadoEquipos;
                              $i++;
                             EquipoPermisoZarpe::create($listadoEquipos);
 
                             $listadoEquipos=["permiso_zarpe_id"=>'',"equipo_id"=>'',"cantidad"=>'',"otros"=>'',"valores_otros"=>''];
                         }
-                        
+
                     }
                 }
             }
@@ -615,13 +615,13 @@ class PermisoZarpeController extends Controller
           $cantidadActual=PermisoZarpe::select(DB::raw('count(nro_solicitud) as cantidad'))
         ->where(DB::raw("(SUBSTR(nro_solicitud, 6, 4) = '".$ano."')"), '=', true)
         ->get();
-        
+
         $estNautico=EstablecimientoNautico::find($solicitud['establecimiento_nautico_id']);
-       
+
         $capitania=Capitania::find($estNautico->capitania_id);
         $correlativo=$cantidadActual[0]->cantidad+1;
         $codigo=$capitania->sigla."-".$ano.$mes."-".$correlativo;
-        
+
 
         return $codigo;
 
@@ -692,8 +692,15 @@ class PermisoZarpeController extends Controller
 
             Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
             return redirect(route('permisoszarpes.index'));
-        }
+        } elseif ($status==='cerrado') {
+            $transaccion = PermisoZarpe::find($id);
+            $idstatus = Status::find(4);
+            $transaccion->status_id = $idstatus->id;
+            $transaccion->update();
 
+            Flash::info('Solicitud de Zarpe Cerrada.');
+            return redirect(route('permisoszarpes.index'));
+        }
     }
     /**
      * Display the specified PermisoZarpe.
@@ -776,13 +783,13 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
         $documento = $doc;
         $return=false;
         $validacion = json_decode(session('validacion'), true);
- 
+
         switch ($documento) {
-            case 'Capitán de Altura':   
+            case 'Capitán de Altura':
                 $return=[true,$documento];
 
             break;
-            case 'Primer Oficial de Navegación':   
+            case 'Primer Oficial de Navegación':
                 if($validacion['UAB']<=3000){
                     $return=[true];
                 }else{
@@ -790,21 +797,21 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                 }
 
             break;
-            case 'Segundo Oficial de Navegación':   
+            case 'Segundo Oficial de Navegación':
                 if($validacion['UAB']<=500){
                     $return=[true];
                 }else{
                     $return=[false];
                 }
             break;
-            case 'Capitán de Yate':   
+            case 'Capitán de Yate':
                 if($validacion['UAB']<=300){
                     $return=[true];
                 }else{
                     $return=[false];
                 }
             break;
-            case 'Capitán Costanero':   
+            case 'Capitán Costanero':
                 $coordenadas=[];
                 if($validacion['UAB']<=3000){
                     $return=[true,$coordenadas];
@@ -812,7 +819,7 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     $return=[false,$coordenadas];
                 }
             break;
-            case 'Patrón de Primera':   
+            case 'Patrón de Primera':
                 $coordenadas=[];
                 if($validacion['UAB']<=500){
                     $return=[true,$coordenadas];
@@ -820,7 +827,7 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     $return=[false,$coordenadas];
                 }
             break;
-            case 'Patrón Deportivo de Primera':   
+            case 'Patrón Deportivo de Primera':
                 $coordenadas=[];
                 if($validacion['UAB']<=150){
                     $return=[true,$coordenadas];
@@ -828,7 +835,7 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     $return=[false,$coordenadas];
                 }
             break;
-            case 'Patrón de Segunda':  
+            case 'Patrón de Segunda':
                 $coordenadas=[];
                 if($validacion['UAB']<=500 && $validacion['eslora']<24){
                     $return=[true,$coordenadas,1];//validacion, coordenadas, cantidad de jurisdicciones que puede visitar
@@ -836,48 +843,48 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     $return=[false,$coordenadas,1];
                 }
              break;
-            case 'Patrón Deportivo de Segunda':   
+            case 'Patrón Deportivo de Segunda':
                  if($validacion['UAB']<=40){
                     $return=[true];
                 }else{
                     $return=[false];
                 }
             break;
-            case 'Patrón Deportivo de Tercera':   
+            case 'Patrón Deportivo de Tercera':
                 if($validacion['UAB']<=10){
                     $return=[true];
                 }else{
                     $return=[false];
                 }
             break;
-            case 'Tercer Oficial de Navegación':   
-                 
+            case 'Tercer Oficial de Navegación':
+
                 if($capitan=="SI"){
                     $return=[false];
                 }else{
-                    
-                    $return=[true]; 
+
+                    $return=[true];
 
                 }
-                 
+
             break;
-            case 'Capitán de Pesca':   
+            case 'Capitán de Pesca':
                  if($capitan=="SI"){
                     $return=[false];
                 }else{
-                    
-                    $return=[true]; 
+
+                    $return=[true];
 
                 }
             break;
-            case 'Oficial de Pesca':   
+            case 'Oficial de Pesca':
                  if($capitan=="SI"){
                     $return=[false];
                 }else{
-                    $return=[true]; 
+                    $return=[true];
                 }
             break;
-            case 'Patrón Artesanal':   
+            case 'Patrón Artesanal':
                 if($capitan=="NO"){
                     if($validacion['eslora']<=24){
                         $return=[true];
@@ -888,17 +895,17 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     $return=[false];
                 }
 
-                 
+
             break;
-            case 'Jefe de Máquinas':   
+            case 'Jefe de Máquinas':
                 if($capitan=="SI"){
                     $return=[false];
                 }else{
-                    $return=[true]; 
+                    $return=[true];
                 }
-            
+
             break;
-            case 'Primer Oficial de Máquinas':   
+            case 'Primer Oficial de Máquinas':
                 if($capitan=="SI"){
                     $return=[false];
                 }else{
@@ -907,10 +914,10 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     }else{
                         $return=[false];
                     }*/
-                    $return=[true]; 
+                    $return=[true];
 
                 }
-                 
+
             break;
             case 'Segundo Oficial de Máquinas':
                 if($capitan=="SI"){
@@ -921,12 +928,12 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     }else{
                         $return=[false];
                     }*/
-                    $return=[true]; 
+                    $return=[true];
 
-                }   
-                 
+                }
+
             break;
-            case 'Motorista de Primera': 
+            case 'Motorista de Primera':
                 $coordenadas=[];
                 if($capitan=="SI"){
                     $return=[false];
@@ -936,13 +943,13 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     }else{
                         $return=[false,$coordenadas];
                     }*/
-                    $return=[true]; 
+                    $return=[true];
 
                 }
 
-                
+
             break;
-            case 'Motorista de Segunda':   
+            case 'Motorista de Segunda':
                 $coordenadas=[];
                 if($capitan=="SI"){
                     $return=[false];
@@ -952,13 +959,13 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     }else{
                         $return=[false,$coordenadas];
                     } */
-                    $return=[true]; 
+                    $return=[true];
 
                 }
 
-                
+
             break;
-            case 'Jefe de Máquinas de Pesca':  
+            case 'Jefe de Máquinas de Pesca':
                 if($capitan=="SI"){
                     $return=[false];
                 }else{
@@ -967,12 +974,12 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     }else{
                         $return=[false];
                     }*/
-                    $return=[true]; 
+                    $return=[true];
 
-                } 
-                
+                }
+
             break;
-            case 'Tercer Oficial de Máquinas':  
+            case 'Tercer Oficial de Máquinas':
                 if($capitan=="SI"){
                     $return=[false];
                 }else{
@@ -981,12 +988,12 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     }else{
                         $return=[false];
                     }*/
-                    $return=[true]; 
+                    $return=[true];
 
-                } 
-                
+                }
+
             break;
-            case 'Oficial de Máquinas de Pesca':  
+            case 'Oficial de Máquinas de Pesca':
                 if($capitan=="SI"){
                     $return=[false];
                 }else{
@@ -995,19 +1002,19 @@ $mensaje="El sistema de control y gestion de zarpes del INEA le notifica que
                     }else{
                         $return=[false];
                     }*/
-                    $return=[true]; 
+                    $return=[true];
 
-                } 
-                
+                }
+
             break;
-            
+
             default:
                 $return=[false];
             break;
         }
 
         return $return;
-         
+
     }
 
 
