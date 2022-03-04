@@ -59,5 +59,8 @@ class EquipoPermisoZarpe extends Model implements Auditable
         'equipo_id' => 'required'
     ];
 
-
+    public function equipo()
+    {
+        return $this->belongsTo(Equipo::class);
+    }
 }

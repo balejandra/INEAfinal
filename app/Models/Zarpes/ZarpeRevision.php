@@ -62,9 +62,9 @@ class ZarpeRevision extends Model implements Auditable
         'motivo' => 'required'
     ];
 
-    public function capitaniaUsers()
+    public function capitaniauser()
     {
-        return $this->belongsToMany(\App\Models\Zarpes\CapitaniaUser::class, 'capitania_user_id', 'id');
+        return $this->belongsToMany(\App\Models\Publico\CapitaniaUser::class,'capitania_user','capitania_user_id','id');
     }
 
     public function permisozarpe()

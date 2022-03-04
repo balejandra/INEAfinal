@@ -13,11 +13,11 @@ function getmatricula(data1) {
                // alert('permiso por cerrar');
                 divError.innerHTML='<div class="alert alert-danger">La embarcación de matrícula <b>'+data1+'</b> posee un permiso de zarpe que no ha sido cerrado, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
                 table.style.display='none';
-                
+
             }else if(response=='sinCoincidencias'){
                 divError.innerHTML='<div class="alert alert-danger">Su usuario no puede realizar solicitudes a nombre del Buque Matricula <b>'+data1+' </b> </div>';
                 table.style.display='none';
-                
+
             }else {
                 divError.innerHTML='';
                 table.style.display='block';
@@ -41,7 +41,7 @@ function getmatricula(data1) {
                 $("#manga").val(manga);
 
             }
-            
+
            // alert(respuesta[0].manga);
         })
 
