@@ -213,9 +213,8 @@ class PermisoZarpeController extends Controller
 
     public function createStepTwoE(Request $request)
     {
-        /*$product = $request->session()->get('product');
+        $this->SendMail(42,1);
 
-        return view('products.create-step-two',compact('product'));*/
         $this->step=2;
 
         return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', $this->step);
