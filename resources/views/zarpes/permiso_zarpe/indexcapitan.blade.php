@@ -65,16 +65,28 @@
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                         <form action="{{route('status',[$permisoOrigenZarpe->id,'rechazado',$permisoOrigenZarpe->establecimiento_nautico_id])}}">
-                                                        <div class="modal-dialog">
+                                                        <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                                    <h5 class="modal-title" id="staticBackdropLabel">Rechazar Solicitud Zarpe</h5>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                    <p>Por favor indique el motivo del rechado de la Solicitud Nro.{{ $permisoOrigenZarpe->nro_solicitud }}</p>
-                                                                   <div class="col-12 form-group">
-                                                                       <input type="text" class="form-control" name="motivo" id="motivo">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="input-group mb-3">
+                                                                            <select class="form-select" aria-label="motivo" id="motivo1"
+                                                                                    name="motivo" onchange="motivoRechazo();" required>
+                                                                                <option value="">Seleccione un motivo</option>
+                                                                                <option value="Disposiciones del Ejecutivo Nacional">Disposiciones del Ejecutivo Nacional.</option>
+                                                                                <option value="Instrucciones especiales de la autoridad acuática">Instrucciones especiales de la autoridad acuática.</option>
+                                                                                <option value="Condiciones meteorológicas adversas">Condiciones meteorológicas adversas.</option>
+                                                                                <option value="Observaciones en los documentos">Observaciones en los documentos</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12 form-group" style="display: none" id="inputmotivo">
+                                                                       <input type="text" class="form-control" name="motivo" id="motivo2">
                                                                    </div>
                                                                 </div>
                                                                 <div class="modal-footer">

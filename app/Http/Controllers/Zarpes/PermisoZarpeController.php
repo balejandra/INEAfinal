@@ -714,8 +714,13 @@ class PermisoZarpeController extends Controller
         $permisoZarpe = PermisoZarpe::find($id);
         $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->get();
         $pasajeros=$permisoZarpe->pasajeros()->where('permiso_zarpe_id',$id)->get();
-       $tripulantes2= LicenciasTitulosGmar::whereIn('id',$tripulantes)->get();
+        $tripulantes2= LicenciasTitulosGmar::whereIn('id',$tripulantes)->get();
+        $equipos=EquipoPermisoZarpe::where('permiso_zarpe_id',$id)->get();
+        $revisiones= ZarpeRevision::where('permiso_zarpe_id',$id)->get();
 
+        $establecimiento=EstablecimientoNautico::select('capitania_id')->where('id',$permisoZarpe->establecimiento_nautico_id)->get();
+
+        $capitania_user=CapitaniaUser::select('user_id')->whereIn('capitania_id',$establecimiento)->get();
 
         if (empty($permisoZarpe)) {
             Flash::error('Permiso Zarpe not found');
@@ -726,7 +731,10 @@ class PermisoZarpeController extends Controller
         return view('zarpes.permiso_zarpe.show')
             ->with('permisoZarpe', $permisoZarpe)
             ->with('tripulantes',$tripulantes2)
-            ->with('pasajeros',$pasajeros);
+            ->with('pasajeros',$pasajeros)
+            ->with('equipos',$equipos)
+            ->with('revisiones',$revisiones)
+            ->with('capitania',$capitania_user);
     }
 
     public function SendMail($idsolicitud, $tipo){

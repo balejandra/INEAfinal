@@ -2,6 +2,24 @@
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
+
+function motivoRechazo() {
+    $motivo = $("#motivo1 option:selected").text();
+    if ($motivo == 'Observaciones en los documentos') {
+        table = document.getElementById("inputmotivo");
+        table.style.display = 'block';
+        $("#motivo1").attr("name","motivofalso");
+        $("#motivo2").attr("name","motivo");
+        document.querySelector('#motivo2').required = true;
+
+    }else{
+        table = document.getElementById("inputmotivo");
+        table.style.display = 'none';
+        $("#motivo1").attr("name","motivo");
+        $("#motivo2").attr("name","motivofalso");
+        document.querySelector('#motivo2').required = false;
+    }
+}
 //-------------------Datatables----------------------------
 
 
@@ -763,7 +781,14 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
 
      div.setAttribute("data-cant",cantAct+1);
     console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
-
+    $("#menor").prop('checked', false);
+    $("#textoMenor").text('NO');
+    document.getElementById("numero_identificacion").value="";
+    document.getElementById("tipodoc").options.item(0).selected = 'selected';
+    document.getElementById("fecha_nacimiento").value="";
+    document.getElementById("sexo").options.item(0).selected = 'selected';
+    document.getElementById("nombres").value="";
+    document.getElementById("apellidos").value="";
 }
 
 
@@ -793,7 +818,7 @@ function getMarinos() {
  }else{
 
     if(cedula=="" || fechanac==""){
-        
+
     msj.innerHTML='<div class="alert alert-danger">El campo cédula y fecha de nacimiento son requeridos, por favor verifique</div>' ;
 
     }else{
@@ -809,7 +834,7 @@ function getMarinos() {
                     validacion=resp[1];
                     let tamano = respuesta.length;
                     console.log(validacion);
-                    
+
 
                     if(typeof respuesta=='string'){
                          switch(respuesta){
@@ -825,14 +850,14 @@ function getMarinos() {
                             console.log(respuesta);
                             break;
                         }
-                     
+
                     }else{
                         let  marinoExiste=document.getElementById('trip'+respuesta[0].ci);
-                         
-                        if(marinoExiste==null){ 
-                           
-                                
-                            
+
+                        if(marinoExiste==null){
+
+
+
                             let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
                             //let vt=validarTripulante(respuesta[0].documento, cap);
                             if(validacion[0]){
@@ -842,17 +867,17 @@ function getMarinos() {
                                 cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
                                 if(cantAct==0){
                                     tabla.innerHTML="";
-                                } 
+                                }
                                 tabla.innerHTML+=html;
                                 document.getElementById('cedula').value="";
                                 document.getElementById('fecha_nacimiento').value="";
                                 addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento);
 
                             }else{
-                                 
+
 
                                 if($("#cap").is(':checked')){
-                                    
+
                                     msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para ser capitán esta embarcación.</div>' ;
                                     validarCapitan('X');
                                 }else{
@@ -861,7 +886,7 @@ function getMarinos() {
                                 }
 
                             }
-                            
+
                         }else{
                             msj.innerHTML='<div class="alert alert-danger">El tripulante ya se encuentra asignado a la lista, por favor verifique</div>' ;
 
@@ -874,7 +899,7 @@ function getMarinos() {
                 .fail(function (response) {
                             msj.innerHTML='<div class="alert alert-danger">No se ha encontrado la cedula o la fecha de nacimiento</div>' ;
                             console.log(response);
-                    
+
                 });
         }
 
@@ -888,27 +913,27 @@ function getMarinos() {
 
 function validarCapitan(param){
     if(param==""){
-        if($("#cap").is(':checked')){ 
-            var cap="SI"; 
+        if($("#cap").is(':checked')){
+            var cap="SI";
             $("#cap").prop("checked", false);
             $("#textoCap").text('NO');
-        }else{ 
+        }else{
             var cap="NO";
         }
     }else{
-        
+
         $("#cap").prop("checked", true);
         $("#textoCap").text('SI');
-        var cap="SI"; 
+        var cap="SI";
     }
-    
+
     return cap;
 }
 
- 
- 
 
- 
+
+
+
 function validarTripulante(documento, capitan) {
     $.ajax({
         url: route('validacionJerarquizacion'),
@@ -918,13 +943,13 @@ function validarTripulante(documento, capitan) {
         .done(function (response) {
           //  alert(response);
             respuesta = JSON.parse(response);
-            
+
             alert(response);
         })
 
         // This will be called on error
         .fail(function (response) {
-             
+
             alert('fallo');
         });
 
@@ -990,7 +1015,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
 
 
 $('#cap').click(function() {
-     
+
 
     if($("#cap").is(':checked')){
         $("#textoCap").text('SI');  // checked
@@ -1004,39 +1029,39 @@ $('#cap').click(function() {
 });
 
 
-$('.equipo').click(function() { 
-    
-    let id=$(this).val(); 
-        
+$('.equipo').click(function() {
+
+    let id=$(this).val();
+
     if($("#equipo").is(':checked')){
         document.getElementById(id+"selected").value="true";
         let cantidad=$(this).attr("data-cant");
         let otros=$(this).attr("data-otrs");
 
         if(cantidad==true){
-        document.getElementById(id+"cantidad").setAttribute("required",true);  
+        document.getElementById(id+"cantidad").setAttribute("required",true);
         }
         if(otros!="ninguno"){
-        document.getElementById(id+"valores_otros").setAttribute("required",true);  
+        document.getElementById(id+"valores_otros").setAttribute("required",true);
 
-        }     
-      
+        }
+
 
     }
     else{
-        document.getElementById(id+"selected").value="false";  
+        document.getElementById(id+"selected").value="false";
 
         let cantidad=$(this).attr("data-cant");
         let otros=$(this).attr("data-otrs");
 
-        
+
         if(cantidad==true){
-        document.getElementById(id+"cantidad").removeAttribute("required");   
+        document.getElementById(id+"cantidad").removeAttribute("required");
         }
-         
+
         if(otros!="ninguno"){
         document.getElementById(id+"valores_otros").removeAttribute("required");
-        } 
+        }
     }
 
 });
@@ -1070,3 +1095,6 @@ function compararFechas(){
 //*FIN DE VALIDACIONES DE PASO 4 MAPA*//
 
 //FIN DE VALIDACION DE PERMISOS DE ZARPES
+
+
+

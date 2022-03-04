@@ -4,6 +4,7 @@ namespace App\Models\Publico;
 
 use App\Models\Publico\Capitania;
 use App\Models\User;
+use App\Models\Zarpes\ZarpeRevision;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -67,5 +68,8 @@ class CapitaniaUser extends Model implements Auditable
     public function user()
     {
         return $this->hasMany(User::class,'id','user_id');
+    }
+    public function zarperevision(){
+        return $this->hasMany(ZarpeRevision::class);
     }
 }
