@@ -165,6 +165,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Laraveles\Spanish\SpanishServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -233,6 +234,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Flash' => Laracasts\Flash\Flash::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];

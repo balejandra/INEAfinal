@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('error', function (){
     return view('auth.error'); //seccion de validacion de autehticación de usuario
 })->name('error');
+Route::get('/consultazarpe/{id}',[\App\Http\Controllers\QrCodeController::class,'show'])->name('consultazarpe');
 
 Route::middleware(['auth' , 'verified'])->group(function () {
 //seccion para incorporación de rutas por módulo
