@@ -147,10 +147,14 @@
 
     <div style="position:fixed;padding-top: 40pt; left: 420pt;">
         @php
-            $QR =
-                "Nombre Embarcacion: ".$buque->nombrebuque_actual."\n".
-                "Destino: " .$zarpe->capitania->nombre."\n".
-                "Fecha Emision: " .$zarpe->updated_at
+
+    $vencimiento = strtotime ( '+24 hour' , strtotime ($zarpe->fecha_hora_salida) ) ;
+    $vencimiento = date ( 'Y-m-d H:i:s' , $vencimiento);
+                $QR =
+                    "Nombre Embarcacion: ".$buque->nombrebuque_actual."\n".
+                    "Destino: " .$zarpe->capitania->nombre."\n".
+                    "Fecha Emision: " .$zarpe->updated_at."\n".
+                    "Fecha Vencimiento: " .$vencimiento
         @endphp
 
         <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate($QR)) !!} ">
