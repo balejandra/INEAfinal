@@ -59,6 +59,12 @@ class EquiposSeeder extends Seeder
                     'created_at'=>now()
                 ],
                 [
+                    'equipo'=>'TELEFONO SATELITAL',
+                    'cantidad'=>true,
+                    'otros'=>'Numero Telefono',
+                    'created_at'=>now()
+                ],
+                [
                     'equipo'=>'RADIOBALIZA DE SINIESTRO (EPIRB)',
                     'cantidad'=>false,
                     'otros'=>'fecha_ultima_inspeccion',

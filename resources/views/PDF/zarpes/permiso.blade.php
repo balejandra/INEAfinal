@@ -146,16 +146,27 @@
     </div>
 
     <div style="position:fixed;padding-top: 40pt; left: 420pt;">
-        <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate(route('consultazarpe', $zarpe->id))) !!} ">
+        @php
+
+    $vencimiento = strtotime ( '+24 hour' , strtotime ($zarpe->fecha_hora_salida) ) ;
+    $vencimiento = date ( 'Y-m-d H:i:s' , $vencimiento);
+                $QR =
+                    "Nombre Embarcacion: ".$buque->nombrebuque_actual."\n".
+                    "Destino: " .$zarpe->capitania->nombre."\n".
+                    "Fecha Emision: " .$zarpe->updated_at."\n".
+                    "Fecha Vencimiento: " .$vencimiento
+        @endphp
+
+        <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate($QR)) !!} ">
     </div>
     <div style="padding-top:100pt; padding-left:130pt;">
         <p class=" text-center mbr-text display-5">
             República Bolivariana de Venezuela<br>
-            Ministerio de Infrastructura<br>
+            Ministerio del Poder Popular para el Transporte<br>
             INSTITUTO NACIONAL DE LOS ESPACIOS ACUATICOS<br>
             Capitanía de Puerto<br>
             <br>
-            <span style="color:black;">ZARPE</span><br>
+            <span style="color:black;">NOTIFICACION DE ZARPE</span><br>
             PORT CLEARANCE
         </p>
     </div>
@@ -176,9 +187,9 @@
             <span class="content">
                 (SINCE THE VESSEL <u> {{$zarpe->matricula}} </u> UNDER FLAG <u> {{$zarpe->bandera}})</u>
             </span>
-            del porte de <u> {{$tran->UAB}} </u> unidades de Registro Bruto <u> {{$tran->UAN}} </u>
+            del porte de <u> {{$buque->UAB}} </u> unidades de Registro Bruto <u> {{$buque->UAN}} </u>
             <span class="content">
-                (OF TONNAGE <u> {{$tran->UAB}} </u>UNITS OF GROSS REGISTER <u> {{$tran->UAN}} </u>)
+                (OF TONNAGE <u> {{$buque->UAB}} </u>UNITS OF GROSS REGISTER <u> {{$buque->UAN}} </u>)
             </span>
             procedente de <u> {{$zarpe->establecimiento_nautico->nombre}} </u> en <u> {{$capitania->nombre}} </u> al mando del Capitán <u> {{$trip->nombre}} {{$trip->apellido}} </u>
             <span class="content">
