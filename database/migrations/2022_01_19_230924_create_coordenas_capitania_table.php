@@ -13,7 +13,7 @@ class CreateCoordenasCapitaniaTable extends Migration
      */
     public function up()
     {
-        Schema::create('coordenas_capitania', function (Blueprint $table) {
+        Schema::create('coordenas_capitanias', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('capitania_id');
             $table->foreign('capitania_id', 'fk_capitaniaid_coordenadas')->references('id')->on('capitanias')
@@ -34,6 +34,6 @@ class CreateCoordenasCapitaniaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coordenas_capitania');
+        Schema::dropIfExists('coordenas_capitanias');
     }
 }
