@@ -363,7 +363,7 @@ class PermisoZarpeController extends Controller
         $validation = json_decode($request->session()->get('validacion'), true);
         //print_r($validation);
         $tripulantes=$request->session()->get('tripulantes');
-        print_r($tripulantes);
+       // print_r($tripulantes);
 
         $this->step=5;
         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation );
