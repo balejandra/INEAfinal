@@ -739,7 +739,7 @@ class PermisoZarpeController extends Controller
                 return redirect(route('permisoszarpes.index'));
             }
 
-            
+
         } elseif (auth()->user()->getRoleNames()[0] === "Usuario web") {
             if ($status === 'cerrado') {
                 $transaccion = PermisoZarpe::find($id);
