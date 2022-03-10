@@ -63,9 +63,9 @@ class ZarpeRevision extends Model implements Auditable
         'motivo' => 'required'
     ];
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasMany(User::class,'id','user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function permisozarpe()

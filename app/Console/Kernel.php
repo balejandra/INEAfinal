@@ -2,8 +2,13 @@
 
 namespace App\Console;
 
+use App\Console\Commands\VerificationZarpe;
+use App\Console\Commands\VerificationZarpeRescate;
+use App\Console\Commands\VerificationZarpeVencido;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +18,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+       VerificationZarpeVencido::class,
+        VerificationZarpeRescate::class,
     ];
 
     /**
@@ -24,7 +30,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('verification:zarpevencido')->everyMinute();
+        $schedule->command('verification:zarperescate')->everyThirtyMinutes();
     }
 
     /**

@@ -127,18 +127,18 @@
     <tbody>
     <thead>
     <tr>
+        <th>Nombre y Apellido</th>
         <th>Accion</th>
         <th>Motivo</th>
+        <th>Fecha</th>
     </tr>
     </thead>
     @forelse($revisiones as $revision)
         <tr>
-            <td>
-            {{$revision->accion}}
-
-            <td>
-                {{$revision->motivo}}
-            </td>
+            <td>{{$revision->user->nombres}} {{$revision->user->apellidos}}</td>
+            <td>{{$revision->accion}}</td>
+            <td>{{$revision->motivo}}</td>
+            <td>{{$revision->created_at}}</td>
         </tr>
     @empty
         <tr>
@@ -222,5 +222,21 @@
                 </div>
             @endif
         @endcan
+            @if(($permisoZarpe->status->id=='1'))
+                @can('informar-navegacion')
+                    <a class="btn btn-warning"
+                       href=" {{route('status',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip">
+                        Navegando
+                    </a>
+                @endcan
+            @endif
+            @if(($permisoZarpe->status->id=='5'))
+                @can('anular-sar')
+                    <a class="btn btn-outline-danger"
+                       href=" {{route('status',[$permisoZarpe->id,'anulado_sar',$permisoZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip">
+                        Anular por SAR
+                    </a>
+                @endcan
+            @endif
     @endif
 </div>
