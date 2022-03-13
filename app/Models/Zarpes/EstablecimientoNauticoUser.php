@@ -9,24 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class ZarpeRevision
+ * Class EstablecimientoNauticoUser
  * @package App\Models
- * @version February 20, 2022, 3:26 am UTC
+ * @version February 19, 2022, 9:36 pm UTC
  *
- * @property \Illuminate\Database\Eloquent\Collection $capitaniaUsers
- * @property unsignedBigInteger $user_id
- * @property unsignedBigInteger $permiso_zarpe_id
- * @property string $accion
- * @property string $motivo
+ * @property string $user_id
+ * @property string $establecimiento_nautico_id
  */
-class ZarpeRevision extends Model implements Auditable
+class EstablecimientoNauticoUser extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
     protected $connection = 'pgsql_zarpes_schema';
-    public $table = 'zarpe_revisions';
+    public $table = 'establecimiento_nautico_user';
 
 
     protected $dates = ['deleted_at'];
@@ -35,9 +32,7 @@ class ZarpeRevision extends Model implements Auditable
 
     public $fillable = [
         'user_id',
-        'permiso_zarpe_id',
-        'accion',
-        'motivo'
+        'establecimiento_nautico_id'
     ];
 
     /**
@@ -47,8 +42,8 @@ class ZarpeRevision extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
-        'accion' => 'string',
-        'motivo' => 'string'
+        'user_id' => 'string',
+        'establecimiento_nautico_id' => 'string'
     ];
 
     /**
@@ -58,18 +53,18 @@ class ZarpeRevision extends Model implements Auditable
      */
     public static $rules = [
         'user_id' => 'required',
-        'permiso_zarpe_id' => 'required',
-        'accion' => 'required',
-        'motivo' => 'required'
+        'establecimiento_nautico_id' => 'required'
     ];
 
+    public function establecimiento_nautico()
+    {
+        return $this->hasMany(EstablecimientoNautico::class);
+    }
     public function user()
     {
         return $this->hasMany(User::class,'id','user_id');
     }
-
-    public function permisozarpe()
-    {
-        return $this->belongsTo(PermisoZarpe::class);
+    public function zarperevision(){
+        return $this->hasMany(ZarpeRevision::class);
     }
 }

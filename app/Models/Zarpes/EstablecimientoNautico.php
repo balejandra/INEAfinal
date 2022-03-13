@@ -13,6 +13,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  *
  * @property string $nombre
  * @property unsignedBigInteger $capitania_id
+ * @property string $RIF
  */
 class EstablecimientoNautico extends Model implements Auditable
 {
@@ -30,7 +31,8 @@ class EstablecimientoNautico extends Model implements Auditable
 
     public $fillable = [
         'nombre',
-        'capitania_id'
+        'capitania_id',
+        'RIF'
     ];
 
     /**
@@ -40,7 +42,8 @@ class EstablecimientoNautico extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
-        'nombre' => 'string'
+        'nombre' => 'string',
+        'RIF' => 'string'
     ];
 
     /**

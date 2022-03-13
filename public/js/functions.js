@@ -59,6 +59,17 @@ $(document).ready(function() {
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
+
+    $('#permisoZarpesdestino-table').DataTable({
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
 } );
 
 $(document).ready(function() {
