@@ -17,7 +17,6 @@ class UserExtSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'UserExt']);
         $user = User::create([
             'nombres' => 'Pedro',
             'apellidos' => 'Perez',
@@ -27,9 +26,9 @@ class UserExtSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('123456789'), // password
             'remember_token' => Str::random(10),
-            'tipo_usuario' => 'externo'
+            'tipo_usuario' => 'Usuario web'
 
         ]);
-        $user->assignRole('UserExt');
+        $user->assignRole('Usuario web');
     }
 }

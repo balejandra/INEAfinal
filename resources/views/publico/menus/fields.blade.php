@@ -1,29 +1,34 @@
 <!-- Enabled Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('roles', 'Roles:') !!}
+<div class="form-group row">
+    {!! Form::label('name', 'Roles:') !!}
+
+
     @foreach ($roles as $key => $item)
-        <br>
-            <label class="checkbox-inline"> {{$item}}
-                {!! Form::hidden('roles', $key) !!}
-                {!! Form::checkbox('roles', $key, null) !!}
-            </label>
+        <div class="form-check form-switch col-sm-3 ">
+
+
+                <input class="form-check-input" type="checkbox" name="role[]" id='role' value="{{$item->id}}"  style="margin-left: auto;" {{$item->checked}}>
+                <label class="form-check-label" for="flexSwitchCheckDefault" style="margin-inline-start: 30px;">{{$item->name}} </label>
+
+
+        </div>
     @endforeach
 </div>
 <!-- Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name:') !!}
+    {!! Form::label('name', 'Nombre:') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Description Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('description', 'Description:') !!}
+    {!! Form::label('description', 'Descripcion:') !!}
     {!! Form::text('description', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Url Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('url', 'Url:') !!}
+    {!! Form::label('url', 'URL:') !!}
     {!! Form::text('url', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group col-sm-6">
@@ -33,7 +38,7 @@
 
 <!-- Order Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('order', 'Order:') !!}
+    {!! Form::label('order', 'Orden:') !!}
     {!! Form::number('order', null, ['class' => 'form-control']) !!}
 </div>
 
@@ -45,16 +50,15 @@
 
 <!-- Enabled Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('enabled', 'Enabled:') !!}
+    {!! Form::label('enabled', 'Habilitado:') !!}
     <label class="checkbox-inline">
         {!! Form::hidden('enabled', 0) !!}
-        {!! Form::checkbox('enabled', '1', null) !!}
+        {!! Form::checkbox('enabled', '1', true) !!}
     </label>
 </div>
 
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('menus.index') }}" class="btn btn-secondary">Cancel</a>
+    {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
 </div>

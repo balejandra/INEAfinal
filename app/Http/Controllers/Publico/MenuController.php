@@ -21,6 +21,12 @@ class MenuController extends AppBaseController
     public function __construct(MenuRepository $menuRepo)
     {
         $this->menuRepository = $menuRepo;
+
+        $this->middleware('permission:listar-menu', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-menu', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-menu', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-menu', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-menu', ['only'=>['destroy'] ]);
     }
 
     /**
@@ -46,15 +52,17 @@ class MenuController extends AppBaseController
      */
     public function create()
     {
-        $roles=Role::pluck('name','id');
+       // $roles=Role::pluck('name','id');
 
         $parents= Menu::where('enabled',1)->orderBy('id')->get();
         $noparent=['0' => 'Menu Padre'];
         $parents2=$parents->pluck('name','id','description')->toArray();
         $parent=$noparent+$parents2;
 
+        $menuRols = Role::selectRaw(" roles.*, '' as checked")->get();
+
         return view('publico.menus.create')
-            ->with('roles',$roles)
+            ->with('roles',$menuRols)
             ->with('parent',$parent);
     }
 
@@ -67,18 +75,23 @@ class MenuController extends AppBaseController
      */
     public function store(CreateMenuRequest $request)
     {
-        $input = $request->all();
 
-        $menu = $this->menuRepository->create($input);
+        $menu= Menu::create($request->except(['role']));
+        $roles = $menu->roles()->sync($request['role']);
+
+
+        //$input = $request->all();
+       // var_dump($request->except(['role']));
+        /*$menu = $this->menuRepository->create($input);
         $roles = Menu_rol::create([
             'menu_id' => $menu['id'],
-            'role_id' =>$request['roles']
-        ]);
+            'role_id' =>$request['role']
+        ]);*/
 
 
-        Flash::success('Menu saved successfully.');
-
-        return redirect(route('menus.index'));
+       // Flash::success('Menú guardado con éxito.');
+        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.');
+        //return redirect(route('menus.index'));
     }
 
     /**
@@ -92,13 +105,25 @@ class MenuController extends AppBaseController
     {
         $menu = $this->menuRepository->find($id);
 
-        if (empty($menu)) {
-            Flash::error('Menu not found');
+        $parents= Menu::where('enabled',1)->orderBy('id')->get();
+        $noparent=['0' => 'Menu Padre'];
+        $parents2=$parents->pluck('name','id','description')->toArray();
+        $parent=$noparent+$parents2;
 
-            return redirect(route('menus.index'));
+        $menuRols = Role::selectRaw(" roles.name as name, roles.id as id,menus_roles.menu_id, menus_roles.role_id,(CASE WHEN menus_roles.role_id = roles.id THEN 'checked' ELSE '' END) AS
+        checked")
+            ->leftJoin('menus_roles', function ($join) use ($id) {
+                $join->on('roles.id', '=', 'menus_roles.role_id')
+                    ->where('menus_roles.menu_id', '=', $id);
+            })
+            ->get();
+        if (empty($menu)) {
+            return redirect()->route('menus.index')->with('error','Menu no encontrado');
+
+            //return redirect(route('menus.index'));
         }
 
-        return view('publico.menus.show')->with('menu', $menu);
+        return view('publico.menus.show')->with('menu', $menu)->with('parent', $parent)->with('menuRols', $menuRols);
     }
 
     /**
@@ -111,7 +136,7 @@ class MenuController extends AppBaseController
     public function edit($id)
     {
 
-        $roles=Role::pluck('name','id');
+       // $roles=Role::pluck('name','id');
 
         $parents= Menu::where('enabled',1)->orderBy('id')->get();
         $noparent=['0' => 'Menu Padre'];
@@ -121,15 +146,24 @@ class MenuController extends AppBaseController
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
-            Flash::error('Menu not found');
+            //Flash::error('Menú no encontrado');
 
-            return redirect(route('menus.index'));
+            return redirect()->route('menus.index')->with('error','Menu no encontrado');
         }
+
+        $menuRols = Role::selectRaw(" roles.name as name, roles.id as id,menus_roles.menu_id, menus_roles.role_id,(CASE WHEN menus_roles.role_id = roles.id THEN 'checked' ELSE '' END) AS
+        checked")
+            ->leftJoin('menus_roles', function ($join) use ($id) {
+                $join->on('roles.id', '=', 'menus_roles.role_id')
+                    ->where('menus_roles.menu_id', '=', $id);
+            })
+            ->get();
 
         return view('publico.menus.edit')
             ->with('menu', $menu)
-            ->with('roles',$roles)
-            ->with('parent',$parent);
+           // ->with('roles',$roles)
+            ->with('parent',$parent)
+            ->with('roles',$menuRols);
     }
 
     /**
@@ -145,19 +179,20 @@ class MenuController extends AppBaseController
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
-            Flash::error('Menu not found');
+            //Flash::error('Menú no encontrado');
 
-            return redirect(route('menus.index'));
+            return redirect()->route('menus.index')->with('error','Menu no encontrado');
         }
-
+        //var_dump($request['role']);
         $menu = $this->menuRepository->update($request->all(), $id);
         $role=new Menu();
-        $roles1=$request['roles'];
-        $roles = $role->roles()->sync([$roles1,$id]);
+        $roles1=$request['role'];
+        $roles = $menu->roles()->sync($request['role']);
 
-        Flash::success('Menu updated successfully.');
+       // Flash::success('Menú actualizado correctamente.');
+        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.');
 
-        return redirect(route('menus.index'));
+       // return redirect(route('menus.index'));
     }
 
     /**
@@ -174,16 +209,17 @@ class MenuController extends AppBaseController
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
-            Flash::error('Menu not found');
+            //Flash::error('Menú no encontrado');
 
-            return redirect(route('menus.index'));
+            return redirect()->route('menus.index')->with('error','Menu no encontrado');
+
         }
 
         $this->menuRepository->delete($id);
         $parents= Menu_rol::where('menu_id',$id)->delete();
 
-        Flash::success('Menu deleted successfully.');
+        //Flash::success('Menú eliminado con éxito.');
 
-        return redirect(route('menus.index'));
+        return redirect()->route('menus.index')->with('success','Menu eliminado con exito.');
     }
 }

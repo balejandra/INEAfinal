@@ -1,6 +1,6 @@
 @extends('layouts/auth')
 @section("titulo")
-    Reseteo de Contraseña
+    Olvido de Contraseña
 @endsection
 @section('content')
 

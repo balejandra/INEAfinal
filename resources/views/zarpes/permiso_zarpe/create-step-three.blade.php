@@ -1,0 +1,90 @@
+@extends('layouts.app')
+@section("titulo")
+    Zarpes
+@endsection
+@section('content')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Permisos de Zarpe</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+             @include('flash::message')
+             <div class="row">
+                 <div class="col-lg-12">
+                     <div class="card">
+                         <div class="card-header">
+                             <i class="fas fa-ship"></i>
+                             <strong>Solicitud de Permisos de Zarpe | Paso 3</strong>
+
+                             <div class="card-header-actions">
+                                 <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Listado</a>
+
+                             </div>
+
+                         </div>
+                         <div class="card-body" style="min-height: 350px;">
+
+                         	@include('zarpes.permiso_zarpe.stepsIndicator')
+
+
+                         	 <form action="{{ route('permisoszarpes.permissionCreateStepThree') }}" method="POST">
+                @csrf
+
+                <div class="card">
+
+
+                    <div class="card-body">
+
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <div class="row">
+                                <div class="col-md-4"></div>
+
+                                    <div class="col-md-4">
+
+                                        <div class="form-group">
+                                            <label for="title">Tipo de navegación:</label>
+
+                                            <select id="tipozarpe" name="tipozarpe" class="form-control custom-select">
+                                            <option value="">Seleccione</option>
+
+                                              @foreach ($TipoZarpes as $tz)
+                                                <option value="{{$tz->id}}">{{$tz->nombre}} </option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+
+                                    </div>
+                                <div class="col-md-4"></div>
+
+                            </div>
+
+                    </div>
+
+                    <div class="card-footer text-right">
+                        <div class="row">
+				            <div class="col-md-6 text-left">
+				                <a href="{{ route('permisoszarpes.CreateStepTwo') }}" class="btn btn-primary pull-right">Anterior</a>
+				            </div>
+				            <div class="col-md-6 text-right">
+				                <button type="submit" class="btn btn-primary">Siguiente</button>
+				            </div>
+				        </div>
+                    </div>
+                </div>
+            </form>
+                         </div>
+                     </div>
+                  </div>
+             </div>
+         </div>
+    </div>
+@endsection

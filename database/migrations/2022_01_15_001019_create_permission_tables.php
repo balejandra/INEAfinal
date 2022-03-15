@@ -30,7 +30,7 @@ class CreatePermissionTables extends Migration
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
-
+            $table->softDeletes();
             $table->unique(['name', 'guard_name']);
         });
 
@@ -43,6 +43,7 @@ class CreatePermissionTables extends Migration
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
+            $table->softDeletes();
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
             } else {
@@ -56,7 +57,7 @@ class CreatePermissionTables extends Migration
             $table->string('model_type');
             $table->unsignedBigInteger($columnNames['model_morph_key']);
             $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_permissions_model_id_model_type_index');
-
+            $table->softDeletes();
             $table->foreign(PermissionRegistrar::$pivotPermission)
                 ->references('id')
                 ->on($tableNames['permissions'])
@@ -80,7 +81,7 @@ class CreatePermissionTables extends Migration
             $table->string('model_type');
             $table->unsignedBigInteger($columnNames['model_morph_key']);
             $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_roles_model_id_model_type_index');
-
+            $table->softDeletes();
             $table->foreign(PermissionRegistrar::$pivotRole)
                 ->references('id')
                 ->on($tableNames['roles'])
@@ -110,7 +111,7 @@ class CreatePermissionTables extends Migration
                 ->references('id')
                 ->on($tableNames['roles'])
                 ->onDelete('cascade');
-
+            $table->softDeletes();
             $table->primary([PermissionRegistrar::$pivotPermission, PermissionRegistrar::$pivotRole], 'role_has_permissions_permission_id_role_id_primary');
         });
 

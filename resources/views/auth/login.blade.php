@@ -8,6 +8,8 @@
             <span>
                 <img src="{{asset('images/inea.png')}}" alt="inea" class="nav-avatar">
             </span>
+            <div class="text-center">  <h2>SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</h2></div>
+
             <div class="card-group">
                 <div class="card p-4">
                     <div class="card-body">
@@ -59,7 +61,7 @@
                     <div class="card-body text-center">
                         <div>
                             <h2>{{__('Sign up')}}</h2>
-                            <p>Sino tienes una cuenta, registrate.</p>
+                            <p>No tienes cuenta, registrate aquí.</p>
                                 <a class="btn btn-primary active mt-3" href="{{ url('/register') }}">{{ __('Register') }}</a>
                         </div>
                     </div>

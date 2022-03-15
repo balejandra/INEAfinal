@@ -15,6 +15,9 @@
     <link href="{{asset('assets/simplelineicons.github/css/simple-line-icons.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/flag-icons-master/css/flag-icon.css')}}">
     <link rel="stylesheet" href="{{asset('assets/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/fontawesome/css/all.css')}}">
+    @routes
+    @stack('scripts')
 </head>
 <body class="app flex-row align-items-center">
 <div class="container">
@@ -30,5 +33,6 @@
 <script src="{{asset('assets/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/coreui/coreui.min.js')}}"></script>
 <script src="{{asset('assets/coreui/perfect-scrollbar.js')}}"></script>
+<script src="{{asset('assets/fontawesome/js/all.js')}}"></script>
 </body>
 </html>

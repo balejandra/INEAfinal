@@ -2,7 +2,7 @@
 
 namespace App\Models\Publico;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
@@ -75,9 +75,9 @@ class Menu extends Model implements Auditable
         'enabled' => 'required'
     ];
 
-    public function rolesMenu()
+    public function menus_roles()
     {
-        return $this->belongsToMany(Menu_rol::class,'menus_roles','menu_id','role_id');
+        return $this->belongsToMany(Menu_rol::class,'menus_roles','menu_id');
     }
 
     public function roles()
@@ -127,6 +127,7 @@ class Menu extends Model implements Auditable
     {
         $menus = new Menu();
         $data = $menus->getPadres($front);
+         
         $menuAll = [];
         foreach ($data as $line) {
             $item = [ array_merge($line, ['submenu' => $menus->getHijos($data, $line) ]) ];

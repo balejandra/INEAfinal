@@ -14,10 +14,35 @@ img.nav-avatar {
     flex-direction: column;
     padding: 0;
     color: #fff;
-    background: #3c4b64 !important;
+    background: #042350 !important;
 }
 .sidebar .nav-item.active {
     color: #fff;
-    background: #1c549a !important;
+    background: #042350 !important;
 }
 
+li.w-100.active {
+    background-color: #1c549a;
+}
+
+.btn-secondary, .btn-secondary:active {
+    background-color: #20a8d8 !important;
+    border-color: #20a8d8 !important;
+    color: #fff !important;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
+}
+
+.dataTables_length{
+    padding-top: 20px;
+}
+
+.form-select {
+    font-size: .875rem !important;
+}
+
+.table-audit td {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

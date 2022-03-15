@@ -11,14 +11,10 @@
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
     </button>
-
+    <div class="nav navbar-nav ml-auto">
+    <h3><strong>SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</strong></h3>
+    </div>
     <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
-            <a class="nav-link" href="#">
-                <i class="icon-bell"></i>
-                <span class="badge badge-pill badge-danger">5</span>
-            </a>
-        </li>
         <div class="dropdown">
             <a class="nav-link  dropdown-toggle" style="margin-right: 50px" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ Auth::user()->email }}

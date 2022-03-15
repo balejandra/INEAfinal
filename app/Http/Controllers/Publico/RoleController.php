@@ -13,6 +13,17 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        
+        $this->middleware('permission:listar-rol', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-rol', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-rol', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-rol', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-rol', ['only'=>['destroy'] ]);
+
+    }
+
    public function index()
     {
         $roles= Role::all();

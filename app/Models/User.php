@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+
+use App\Models\Publico\Capitania;
+use App\Models\Zarpes\PermisoZarpe;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,13 +14,14 @@ use Spatie\Permission\Traits\HasRoles;
 use OwenIt\Auditing\Contracts\Auditable;
 
 
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
     use HasFactory, Notifiable;
     use HasRoles;
-    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
+    protected $connection = 'pgsql_public_schema';
+    public $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -55,4 +59,23 @@ class User extends Authenticatable implements Auditable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'email' => 'required',
+        'nombres' => 'required',
+        'password' => 'required'
+    ];
+    public function capitanias()
+    {
+        return $this->belongsToMany(Capitania::class);
+    }
+
+    public function permisozarpes()
+    {
+        return $this->hasMany(PermisoZarpe::class);
+    }
 }

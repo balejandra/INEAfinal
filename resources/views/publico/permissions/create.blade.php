@@ -1,64 +1,69 @@
 @extends('layouts.app')
-
+@section("titulo")
+    Permisos
+@endsection
 @section('content')
     <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-         <a href="{!! route('menus.index') !!}">Permisos</a>
-      </li>
-      <li class="breadcrumb-item active">Nuevo Permiso</li>
+        <li class="breadcrumb-item">
+            <a href="{!! route('permissions') !!}">Permisos</a>
+        </li>
+        <li class="breadcrumb-item">Crear</li>
     </ol>
-     <div class="container-fluid">
-          <div class="animated fadeIn">
-                @include('coreui-templates::common.errors')
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                
-                                    <i class="fa fa-plus-square-o fa-lg"></i>
-                                    <strong>Crear Permiso</strong>
-                                 
-                                  <div class="card-header-actions">
-                                     <a href= "{{route('permissions')}} " class="btn btn-primary btn-sm">Listado de permisos</a>
-                                  </div>
- 
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            @include('coreui-templates::common.errors')
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fa fa-plus-square-o fa-lg"></i>
+                            <strong>Crear Permiso</strong>
+
+                            <div class="card-header-actions">
+                                <a href="{{route('permissions')}} " class="btn btn-primary btn-sm">Listado de
+                                    permisos</a>
                             </div>
-                            <div class="card-body">
-                                
- 
-                                          
-                        <form action= "{{route('permissions.store')}} " method="post" class="needs-validation" novalidate>
-                            @csrf
-                            <div class="form-row">
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <label for="nombre">Nombre:</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Nombre del permiso" name="name" value= "{{ old('name') }}" required>
-                                         @if($errors->has('name'))
-                                            <span class="error text-danger" for='input-name'>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row justify-content-center">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8 border rounded">
+                                   
+                                <form action="{{route('permissions.store')}} " method="post" class="needs-validation "
+                                  novalidate>
+                                @csrf
+                                <div class="form-row">
+                                    <div class="col-md-10 ">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre:</label>
+                                            <input type="text" class="form-control" id="name"
+                                                   placeholder="Nombre del permiso" name="name"
+                                                   value="{{ old('name') }}" required>
+                                            @if($errors->has('name'))
+                                                <span class="error text-danger" for='input-name'>
                                                     {{ $errors->first('name') }}
                                             </span>
-                                         @endif
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 text-center mt-4">
+                                        <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
                                     </div>
                                 </div>
-                                <div class="col-md-2 text-center mt-4">
-                                    <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
+                            </form>
+
                                 </div>
+                                <div class="col-md-2"></div>
                             </div>
-                        </form>
-                                
-             
-                    </div>
-  
 
-
-
-
-
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
-           </div>
+            </div>
+        </div>
+    </div>
     </div>
 @endsection

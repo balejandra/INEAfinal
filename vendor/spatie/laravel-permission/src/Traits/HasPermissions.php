@@ -14,9 +14,11 @@ use Spatie\Permission\Exceptions\WildcardPermissionInvalidArgument;
 use Spatie\Permission\Guard;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\WildcardPermission;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 trait HasPermissions
 {
+    use SoftDeletes;
     /** @var string */
     private $permissionClass;
 
