@@ -60,13 +60,27 @@
                                                 <div class="form-group form-check form-switch ">
                                                     <label for="title">Capitan?</label><br>
                                                     &nbsp;
-
-                                                    @if(is_int($tripulantes[0]))
-                                                        @php $texto='SI'; $checked="checked"; @endphp
+                                                    
+                                                    
+                                                    @if(isset($tripulantes))
+                                                        @php 
+                                                            $texto='NO'; $checked=""; 
+                                                        @endphp
+                                                        @if(is_int($tripulantes[0]))
+                                                            @php 
+                                                                $texto='SI';   
+                                                                $checked="checked"; 
+                                                            @endphp
+                                                        @endif
                                                     @else
-                                                        @php $texto='NO'; $checked=""; @endphp
-
+                                                        @php 
+                                                            $texto='SI';   
+                                                            $checked="checked"; 
+                                                        @endphp
+                                                    
                                                     @endif
+
+                                                    
 
                                                     <input class="form-check-input" type="checkbox" name="cap" id='cap'
                                                            style="margin-left: auto;" {{$checked}} disabled> &nbsp;
@@ -132,7 +146,9 @@
 
                                                     <tbody id="marinos">
 
-
+                                            @if(isset($tripulantes))
+                                                         
+                                                   
                                                     @if(is_int($tripulantes[0]))
                                                         @php
 
@@ -171,6 +187,7 @@
 
 
                                                     @endif
+                                            @endif
                                                     </tbody>
                                                 </table>
 
@@ -183,9 +200,9 @@
                                     <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}" method="POST">
                                         @csrf
 
-                                        <div id="dataMarinos" data-cantMar="{{$cant}}" data-cantMaxima="{{$validacion['cant_tripulantes']}}">
+                                        <div id="dataMarinos" data-cantMar="{{$cant ?? 0}}" data-cantMaxima="{{$validacion['cant_tripulantes']}}">
 
-                                            @if($cant!=0)
+                                            @if(isset($cant) && $cant!=0)
                                                 @php  $count=0; @endphp
 
                                                 @foreach($tripulantes as $trip)

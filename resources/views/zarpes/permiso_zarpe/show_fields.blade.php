@@ -70,13 +70,13 @@
     <th>Sexo</th>
     <th>menor</th>
 
-    </thead>
+    </thead>  
     @forelse($pasajeros as $pasajero)
         <tr>
             <td> {{$pasajero->nombres}}  {{$pasajero->apellidos}}</td>
             <td> {{$pasajero->tipo_doc}}  {{$pasajero->nro_doc}}</td>
             <td>{{$pasajero->sexo}} </td>
-            @if($pasajero->menor)
+            @if($pasajero->menor_edad==true)
                 <td>SI</td>
             @else
                 <td>NO</td>

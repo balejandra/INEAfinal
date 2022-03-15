@@ -78,19 +78,21 @@ class PermisoZarpeController extends Controller
         $request->session()->put('tripulantes', [0]);
         $request->session()->put('validaciones', '');
 
-        $solicitud = json_encode([
-            "user_id" => auth()->id(),
-            "nro_solicitud" => '',
-            "bandera" => '',
-            "matricula" => '',
-            "tipo_zarpe_id" => '',
-            "establecimiento_nautico_id" => '',
-            "coordenadas" => '',
-            "destino_capitania_id" => '',
-            "fecha_hora_salida" => '',
-            "fecha_hora_regreso" => '',
-            "status_id" => 3,
-            "permiso_estadias_id" => '',
+        $solicitud=json_encode([
+            "user_id"=> auth()->id(),
+            "nro_solicitud"=> '',
+            "bandera"=> '',
+            "matricula"=> '',
+            "tipo_zarpe_id"=> '',
+            "descripcion_zarpe_id"=> '',
+            "establecimiento_nautico_id"=> '',
+            "coordenadas"=> '',
+            "destino_capitania_id"=> '',
+            "origen_capitania_id"=> '',
+            "fecha_hora_salida"=> '',
+            "fecha_hora_regreso"=> '',
+            "status_id"=> 3,
+            "permiso_estadias_id"=> '',
 
         ]);
         $this->step = 1;
@@ -219,10 +221,9 @@ class PermisoZarpeController extends Controller
 
     public function createStepTwoE(Request $request)
     {
-        /*$product = $request->session()->get('product');
+       // $this->SendMail(42,1);
 
-        return view('products.create-step-two',compact('product'));*/
-        $this->step = 2;
+        $this->step=2;
 
         return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', $this->step);
 
@@ -241,21 +242,27 @@ class PermisoZarpeController extends Controller
     {
 
         $TipoZarpes = TipoZarpe::all();
+        $capitania=Capitania::all();
 
-        $this->step = 3;
+        $this->step=3;
 
-        return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes);
+        return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania);
 
     }
 
     public function permissionCreateStepThree(Request $request)
     {
         $validatedData = $request->validate([
-            'tipozarpe' => 'required',
+            'tipo_de_navegacion' => 'required',
+            'descripcion_de_navegacion' => 'required',
+            'capitania' => 'required',
+
         ]);
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-        $solicitud['tipo_zarpe_id'] = $request->input('tipozarpe', []);
+        $solicitud['tipo_zarpe_id'] = $request->input('tipo_de_navegacion', []);
+        $solicitud['descripcion_zarpe_id'] = $request->input('descripcion_de_navegacion', []);
+        $solicitud['origen_capitania_id'] = $request->input('capitania', []);
         $request->session()->put('solicitud', json_encode($solicitud));
         // print_r($solicitud);
         $this->step = 4;
@@ -266,50 +273,77 @@ class PermisoZarpeController extends Controller
 
     public function createStepFour(Request $request)
     {
+        $solicitud = json_decode($request->session()->get('solicitud'), true);
+        $EstNauticos = EstablecimientoNautico::where('capitania_id',$solicitud['origen_capitania_id'])->get();
+         $coordenadas=[];
+         $arr=["capitania"=> 0,"coords"=> [] ];
 
-        $EstNauticos = EstablecimientoNautico::all();
-        $coordCaps = CoordenadasCapitania::all();
-        $coordenadas = [];
-        if (count($coordCaps) > 0) {
+         switch ($solicitud['descripcion_zarpe_id']) {
+            case 1: //dentro de una circunscripción
+               $coordCaps=CoordenadasCapitania::where('capitania_id',$solicitud['origen_capitania_id'])->get();
+            break;
+            case 2://Dentro de una circunscripcion pero a una dependencia federal
+                $coordCaps=CoordenadasCapitania::where('capitania_id',$solicitud['origen_capitania_id'])->get();
+            break;
+            case 3: // entre circunsctipciones
+                $coordCaps=CoordenadasCapitania::all();
+            break;
+            case 4: // entre circunsctipciones
+                $coordCaps=[];
+            break;
+             
+        }
 
-            $arr = ["capitania" => 0, "coords" => []];
-
-
-            $capi = "";
-            foreach ($coordCaps as $coord) {
-                if ($capi == "" || $capi != $coord->capitania_id) {
-                    if ($capi != "") {
-                        array_push($coordenadas, $arr);
-                        $arr = ["capitania" => 0, "coords" => []];
+        if(count($coordCaps)>0){
+            $capi="";
+            foreach($coordCaps as $coord){
+                if ($capi=="" || $capi!=$coord->capitania_id) {
+                    if($capi!=""){
+                       array_push($coordenadas,$arr);
+                       $arr=["capitania"=> 0,"coords"=> [] ];
                     }
                     $capi = $coord->capitania_id;
                     $arr["capitania"] = $coord->capitania_id;
                 }
                 array_push($arr["coords"], [$coord->latitud, $coord->longitud]);
+                
             }
 
+            if($arr["capitania"]!=0){
+                array_push($coordenadas,$arr);
+            }
 
         }
 
         $this->step = 4;
         return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas));
-    }
+    
+ }
 
-    public function permissionCreateStepFour(Request $request)
+ public function permissionCreateStepFour(Request $request)
     {
-
-        $validatedData = $request->validate([
-            'origen' => 'required',
-            'salida' => 'required',
-            'regreso' => 'required',
-            'latitud' => 'required',
-            'longitud' => 'required',
-            'coordenadasDestino' => 'required',
-
-        ]);
-
-
         $solicitud = json_decode($request->session()->get('solicitud'), true);
+
+        if($solicitud['descripcion_zarpe_id']==4){
+            $validatedData = $request->validate([
+                'origen' => 'required',
+                'salida' => 'required',
+                'regreso' => 'required',
+                'latitud'=> 'required',
+                'longitud'=> 'required',
+                
+            ]);
+        }else{
+            $validatedData = $request->validate([
+                'origen' => 'required',
+                'salida' => 'required',
+                'regreso' => 'required',
+                'latitud'=> 'required',
+                'longitud'=> 'required',
+                'coordenadasDestino'=> 'required',
+            ]);
+        }
+
         $solicitud['establecimiento_nautico_id'] = $request->input('origen');
         $solicitud['fecha_hora_salida'] = $request->input('salida');
         $solicitud['fecha_hora_regreso'] = $request->input('regreso');
@@ -330,7 +364,8 @@ class PermisoZarpeController extends Controller
 
         $validation = json_decode($request->session()->get('validacion'), true);
         //print_r($validation);
-        $tripulantes = $request->session()->get('tripulantes');
+        $tripulantes=$request->session()->get('tripulantes');
+       // print_r($tripulantes);
 
         $this->step = 5;
         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation);
@@ -629,9 +664,7 @@ class PermisoZarpeController extends Controller
         $correlativo = $cantidadActual[0]->cantidad + 1;
         $codigo = $capitania->sigla . "-" . $ano . $mes . "-" . $correlativo;
 
-
         return $codigo;
-
     }
 
 
@@ -1123,4 +1156,5 @@ class PermisoZarpeController extends Controller
     }
 
 
+   
 }

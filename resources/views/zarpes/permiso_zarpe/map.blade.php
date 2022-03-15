@@ -21,7 +21,7 @@ console.log(capitanias);
  	 
  });
 
-    /*let cordXX=[[7,58],
+   /* let cordXX=[[7,58],
     [8,59],
     [9,60],
     [10,61],

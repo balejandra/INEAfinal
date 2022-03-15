@@ -507,9 +507,9 @@ $(document).ready(function() {
             }
         }else{
 
-            if( $('#nombres').val()=="" ||  $('#apellidos').val()==""){
+            if( tipodoc=="NC" && ($('#nombres').val()=="" ||  $('#apellidos').val()=="") ){
 
-                msj.innerHTML='<div class="alert alert-danger">111Los campos nombres y apellidos son requeridos</div>' ;
+                msj.innerHTML='<div class="alert alert-danger">Los campos nombres y apellidos son requeridos</div>' ;
             }else{
                 if ($('#menor').prop('checked')) {
                     //si es venezolano menor de edad
@@ -518,7 +518,9 @@ $(document).ready(function() {
                         if(pasajeroExiste==null){
                             var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
                             pass.innerHTML+=html;
+                            msj.innerHTML="";
                             addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
+                            document.querySelector("#nc").remove();
                         }else{
                             msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
                         }
@@ -552,7 +554,7 @@ $(document).ready(function() {
                                         addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
 
                                     pass.innerHTML+=html;
-
+                                    msj.innerHTML="";
                                 }else{
                                     msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
 

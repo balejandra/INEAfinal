@@ -33,7 +33,7 @@
                 <div class="card">
 
 
-                    <div class="card-body">
+                    <div class="card-body" style="min-height: 200px;">
 
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -46,14 +46,14 @@
                             @endif
 
                             <div class="row">
-                                <div class="col-md-4"></div>
+                                <div class="col-md-1"></div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
 
                                         <div class="form-group">
                                             <label for="title">Tipo de navegación:</label>
 
-                                            <select id="tipozarpe" name="tipozarpe" class="form-control custom-select">
+                                            <select id="tipo_de_navegacion" name="tipo_de_navegacion" class="form-control custom-select">
                                             <option value="">Seleccione</option>
 
                                               @foreach ($TipoZarpes as $tz)
@@ -63,9 +63,44 @@
                                         </div>
 
                                     </div>
-                                <div class="col-md-4"></div>
+
+                                    <div class="col-md-4">
+
+                                        <div class="form-group">
+                                            <label for="title">Descripción de la navegación:</label>
+
+                                            <select id="descripcion_de_navegacion" name="descripcion_de_navegacion" class="form-control custom-select">
+                                            <option value="">Seleccione</option>
+                                            <option value="1">Dentro de una circunscripción</option>
+                                            <option value="2">Dentro de una circunscripción pero hacia una dependencia federal</option>
+                                            <option value="3">Entre circunscripciones</option>
+                                            <option value="4">Internacional</option>
+
+                                               
+                                        </select>
+                                        </div>
+
+                                    </div>
+                                
+                                <div class="col-md-3">
+
+                                        <div class="form-group">
+                                            <label for="title">Capitanía de origen:</label>
+
+                                            <select id="capitania" name="capitania" class="form-control custom-select">
+                                            <option value="">Seleccione</option>
+
+                                              @foreach ($capitanias as $capitania)
+                                                <option value="{{$capitania->id}}">{{$capitania->nombre}} </option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+
+                                    </div>
 
                             </div>
+                                <div class="col-md-1"></div>
+
 
                     </div>
 
