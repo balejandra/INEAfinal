@@ -632,15 +632,25 @@ class PermisoZarpeController extends Controller
             ->where('fecha_nacimiento', $newDate)
             ->get();
         if (is_null($data->first())) {
-            $data2 = "saimeNotFound";
+            $data2 = "saimeNotFound"; // no encontrado en saime
         } else {
-            $data2 = LicenciasTitulosGmar::where('ci', $cedula)->get();
+            $fechav=LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
+            
+            $data2 = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->get();
             if (is_null($data2->first())) {
-                $data2 = "gmarNotFound";
+                $data2 = "gmarNotFound"; // no encontrado en Gmar
             } else {
 
-                $vj = $this->validacionJerarquizacion($data2[0]->documento, $cap);
-                //  array_push($data2, json_encode($vj));
+                $fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
+                $fecha_vence = strtotime($data2[0]->fecha_vencimiento);
+                 
+                if($data2[0]->solicitud =='Licencia' && ($fecha_actual > $fecha_vence))
+                {
+                    $data2="FoundButDefeated"; //encontrado pero documento vencido
+                }else
+                {
+                    $vj = $this->validacionJerarquizacion($data2[0]->documento, $cap);
+                }
             }
 
         }

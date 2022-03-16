@@ -64,10 +64,12 @@
                                                     
                                                     @if(isset($tripulantes))
                                                         @php 
+
                                                             $texto='NO'; $checked=""; 
                                                         @endphp
-                                                        @if(is_int($tripulantes[0]))
+                                                        @if(is_int($tripulantes[0]) && $tripulantes[0]==0)
                                                             @php 
+                                                             
                                                                 $texto='SI';   
                                                                 $checked="checked"; 
                                                             @endphp
@@ -131,7 +133,7 @@
 
                                         <div class="row px-3">
                                             <div class="table-responsive">
-                                                <table class="table">
+                                                <table class="table" id="tableTripulantes">
                                                     <thead>
                                                     <tr>
                                                         <th>Capitan</th>
@@ -156,9 +158,7 @@
 
                                                         @endphp
                                                         <tr>
-                                                            <td colspan="6" class="text-center">
-                                                                Sin registros para mostrar
-                                                            </td>
+                                                            <td colspan="6" class="text-center" id="nodata">Sin registros para mostrar</td>
                                                         </tr>
                                                     @else
 

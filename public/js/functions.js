@@ -51,13 +51,15 @@ $(document).ready(function() {
     $('#TablePermissions').DataTable({
         responsive: true,
         fixedHeader: true,
+        ordering: false,
         language: {
             "url": "../assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+        ],
+         
     });
 
     $('#permisoZarpesdestino-table').DataTable({
@@ -857,6 +859,10 @@ function getMarinos() {
                             break;
                             case 'gmarNotFound':
                                 msj.innerHTML='<div class="alert alert-danger">La cédula suministrada no pertenece a ningun marino, por favor verifique</div>' ;
+
+                            break;
+                            case 'FoundButDefeated':
+                                msj.innerHTML='<div class="alert alert-danger">La vigencia de la licencia del tripulante C.I. '+cedula+' se encuentra vencida, por este motivo no puede tripular ninguna embarcación por el momento.</div>' ;
 
                             break;
                             default:

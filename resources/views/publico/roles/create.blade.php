@@ -67,7 +67,7 @@
 
                                                     <div class="form-check form-switch col-sm-4 ">
 
-                                                        <input class="form-check-input" type="checkbox" name="role" id='role' value="{{$id}}" style="margin-left: auto;">
+                                                        <input class="form-check-input" type="checkbox" name="permissions[]" id='{{$id}}' value="{{$id}}" style="margin-left: auto;">
                                                         <label class="form-check-label" for="flexSwitchCheckDefault" style="margin-inline-start: 30px;">{{$permission}}</label>
 
                                                     </div>
