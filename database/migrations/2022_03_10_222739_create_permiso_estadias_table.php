@@ -39,8 +39,8 @@ class CreatePermisoEstadiasTable extends Migration
                 ->onUpdate('cascade');
             $table->string('tiempo_estadia');
             $table->string('vigencia')->nullable();
-            $table->bigInteger('status_permiso_estadia_id');
-            $table->foreign('status_permiso_estadia_id')->references('id')->on('status_permiso_estadias')
+            $table->bigInteger('status_id');
+            $table->foreign('status_id')->references('id')->on('status')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();

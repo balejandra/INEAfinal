@@ -21,7 +21,7 @@
             <td>{{ $permisoEstadia->nacionalidad_buque }}</td>
             <td>{{ $permisoEstadia->puerto_origen }}</td>
             <td>{{ $permisoEstadia->capitania->nombre }}</td>
-            <td>{{ $permisoEstadia->status_permiso_estadia->nombre }}</td>
+            <td>{{ $permisoEstadia->status->nombre }}</td>
             <td>
                 <a class="btn btn-sm btn-success" href="  {{ route('permisosestadia.show', $permisoEstadia['id']) }}">
                     <i class="fa fa-search"></i>

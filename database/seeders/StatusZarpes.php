@@ -55,6 +55,16 @@ class StatusZarpes extends Seeder
                 'nombre'=>'Anulado SAR',
                 'created_at'=>now()
             ],
+            [
+                'id'=>9,
+                'nombre'=>'Visita asignada',
+                'created_at'=>now()
+            ],
+            [
+                'id'=>10,
+                'nombre'=>'Visita aprobada, recaudos faltantes',
+                'created_at'=>now()
+            ],
         ]);
     }
 }

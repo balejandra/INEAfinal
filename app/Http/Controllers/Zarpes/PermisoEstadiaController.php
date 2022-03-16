@@ -92,7 +92,7 @@ class PermisoEstadiaController extends AppBaseController
         $estadia->puerto_origen = $request->puerto_origen;
         $estadia->capitania_id = $request->capitania_id;
         $estadia->tiempo_estadia = $request->tiempo_estadia;
-        $estadia->status_permiso_estadia_id = 1;
+        $estadia->status_id = 3;
         $estadia->save();
 
 
@@ -235,18 +235,6 @@ class PermisoEstadiaController extends AppBaseController
      */
     public function destroy($id)
     {
-        $permisoEstadia = $this->permisoEstadiaRepository->find($id);
 
-        if (empty($permisoEstadia)) {
-            Flash::error('Permiso Estadia not found');
-
-            return redirect(route('permisoEstadias.index'));
-        }
-
-        $this->permisoEstadiaRepository->delete($id);
-
-        Flash::success('Permiso Estadia deleted successfully.');
-
-        return redirect(route('permisoEstadias.index'));
     }
 }

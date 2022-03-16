@@ -45,6 +45,31 @@ class StatusEstadiaSeeder extends Seeder
                 'nombre'=>'Anulada por Usuario',
                 'created_at'=>now()
             ],
+            [
+                'id'=>2,
+                'nombre'=>'Visita asignada',
+                'created_at'=>now()
+            ],
+            [
+                'id'=>3,
+                'nombre'=>'Visita aprobada, recaudos faltantes',
+                'created_at'=>now()
+            ],
+            [
+                'id'=>4,
+                'nombre'=>'Aprobada',
+                'created_at'=>now()
+            ],
+            [
+                'id'=>5,
+                'nombre'=>'Rechazada',
+                'created_at'=>now()
+            ],
+            [
+                'id'=>6,
+                'nombre'=>'Anulada por Usuario',
+                'created_at'=>now()
+            ],
         ]);
     }
 }

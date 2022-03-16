@@ -31,7 +31,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property unsignedBigInteger $establecimiento_nautico_destino
  * @property string $tiempo_estadia
  * @property string $vigencia
- * @property unsignedBigInteger $status_permiso_estadia_id
+ * @property unsignedBigInteger $status_id
  */
 class PermisoEstadia extends Model implements Auditable
 {
@@ -65,7 +65,7 @@ class PermisoEstadia extends Model implements Auditable
         'establecimiento_nautico_destino',
         'tiempo_estadia',
         'vigencia',
-        'status_permiso_estadia_id'
+        'status_id'
     ];
 
     /**
@@ -92,7 +92,7 @@ class PermisoEstadia extends Model implements Auditable
         'capitania_id' => 'integer',
         'tiempo_estadia' => 'string',
         'vigencia' => 'string',
-        'status_permiso_estadia_id' => 'integer'
+        'status_id' => 'integer'
     ];
 
     /**
@@ -130,9 +130,9 @@ class PermisoEstadia extends Model implements Auditable
         return $this->belongsTo(Capitania::class,'capitania_id','id');
     }
 
-    public function status_permiso_estadia()
+    public function status()
     {
-        return $this->belongsTo(StatusPermisoEstadia::class);
+        return $this->belongsTo(Status::class);
     }
 
 }
