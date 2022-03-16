@@ -3,6 +3,9 @@
     Estadias
 @endsection
 @section('content')
+    @push('scripts')
+        <script src="{{asset('js/estadia.js')}}"></script>
+    @endpush
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
          <a href="{!! route('permisosestadia.index') !!}">Permiso Estadia</a>
@@ -23,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                {!! Form::open(['route' => 'permisosestadia.store']) !!}
+                                {!! Form::open(['route' => 'permisosestadia.store', 'files' => true]) !!}
 
                                    @include('zarpes.permiso_estadias.fields')
 
