@@ -42,14 +42,14 @@ class PermisoZarpeController extends Controller
 
     public function index()
     {
-        if (auth()->user()->getRoleNames()[0] === "Super Admin" || auth()->user()->getRoleNames()[0] === "Admin") {
+        if (auth()->user()->hasPermissionTo('listar-zarpes-todos')) {
             $data = PermisoZarpe::all();
             return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
-        } elseif (auth()->user()->getRoleNames()[0] === "Usuario web") {
+        } elseif (auth()->user()->hasPermissionTo('listar-zarpes-generados')) {
             $user = auth()->id();
             $data = PermisoZarpe::where('user_id', $user)->get();
             return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
-        } elseif (auth()->user()->getRoleNames()[0] === "Capitán") {
+        } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
             $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
             $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id', $capitania)->get();
@@ -59,7 +59,7 @@ class PermisoZarpeController extends Controller
             return view('zarpes.permiso_zarpe.indexcapitan')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)
                 ->with('permisoDestinoZarpes', $datazarpedestino);
-        } elseif (auth()->user()->getRoleNames()[0] === "comodoro_aprobador") {
+        } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
             $establecimiento = EstablecimientoNauticoUser::select('establecimiento_nautico_id')->where('user_id', $user)->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->get();

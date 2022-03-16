@@ -2,228 +2,239 @@
 
 namespace App\Http\Controllers\Zarpes;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\Zarpes\CreatePermisoEstadiaRequest;
+use App\Http\Requests\Zarpes\UpdatePermisoEstadiaRequest;
+use App\Models\Publico\Capitania;
+use App\Models\Publico\CapitaniaUser;
+use App\Models\Zarpes\DocumentoPermisoEstadia;
+use App\Models\Zarpes\EstablecimientoNautico;
+use App\Models\Zarpes\PermisoEstadia;
+use App\Repositories\Zarpes\PermisoEstadiaRepository;
 use Illuminate\Http\Request;
 use Flash;
-use Faker\Factory as Faker;
-class PermisoEstadiaController extends Controller
+use Illuminate\Support\Facades\DB;
+
+class PermisoEstadiaController extends AppBaseController
 {
- public   $data=[
-     ['id' => 1,
-         'nombre_buque' => 'Camila',
-         'numero_registro' => 'VPEFMCZH',
-         'tipo_buque' => 'carga general',
-         'puerto_matricula' => 89583402,
-         'nacionalidad_buque' => 'Colombia',
-         'propietario' => 'Eli Smith',
-         'pasaporte_capitan' => '9610608684',
-         'nombrescompletos_capitan' => 'Seth Wintheiser',
-         'eslora' => 554,
-         'manga' => 186,
-         'puntal' => 228,
-         'arqueo_bruto' => 595,
-         'arqueo_neto' => 902,
-         'actividades' => 'recreativa',
-         'numero_tripulantes' => 99,
-         'puerto_origen' => 'Corkeryhaven',
-         'ultimo_puertovisitado' => 'South Hilbertfurt',
-         'tiempo_estadia' => '2 semanas',
-         'vigencia' => '',
-     ],
-     ['id' => 2,
-         'nombre_buque' => 'Trent',
-         'numero_registro' => 'WJBZNN9S',
-         'tipo_buque' => 'carga general',
-         'puerto_matricula' => 63901732,
-         'nacionalidad_buque' => 'Anguilla',
-         'propietario' => 'Sandrine Schowalter',
-         'pasaporte_capitan' => 9181091627,
-         'nombrescompletos_capitan' => 'Claude Pollich',
-         'eslora' => 753,
-         'manga' => 631,
-         'puntal' => 573,
-         'arqueo_bruto' => 781,
-         'arqueo_neto' => 856,
-         'actividades' => 'deportiva',
-         'numero_tripulantes' => 87,
-         'puerto_origen' => 'Lake Eldora',
-         'ultimo_puertovisitado' => 'South Leila',
-         'tiempo_estadia' => 8,
-         'vigencia' => '',
-     ],
-     [
-         'id' => 3,
-         'nombre_buque' => 'Clyde',
-         'numero_registro' => 'DVUOKF5W7SH',
-         'tipo_buque' => 'carga general',
-         'puerto_matricula' => 8489191,
-         'nacionalidad_buque' => 'Macao',
-         'propietario' => 'Sierra Johns',
-         'pasaporte_capitan' => '7279824321',
-         'nombrescompletos_capitan' => 'Sienna Heaney',
-         'eslora' => 161,
-         'manga' => 608,
-         'puntal' => 837,
-         'arqueo_bruto' => 326,
-         'arqueo_neto' => 194,
-         'actividades' => 'recreativa',
-         'numero_tripulantes' => '19',
-         'puerto_origen' => 'New Cynthia',
-         'ultimo_puertovisitado' => 'Jerdechester',
-         'tiempo_estadia' => '2',
-         'vigencia' => '',
-     ],
-     [
-         'id' => 4,
-         'nombre_buque' => 'Lavada',
-         'numero_registro' => 'QFSQKIXI',
-         'tipo_buque' => 'carga general',
-         'puerto_matricula' => 78418616,
-         'nacionalidad_buque' => 'Tonga',
-         'propietario' => 'Scotty Rutherford',
-         'pasaporte_capitan' => '3767787725',
-         'nombrescompletos_capitan' => 'Tomas Sauer',
-         'eslora' => 264,
-         'manga' => 965,
-         'puntal' => 834,
-         'arqueo_bruto' => 995,
-         'arqueo_neto' => 573,
-         'actividades' => 'recreativa',
-         'numero_tripulantes' => '30',
-         'puerto_origen' => 'Magalihaven',
-         'ultimo_puertovisitado' => 'East Breanamouth',
-         'tiempo_estadia' => '5',
-         'vigencia' => '',
-     ],
-     [
-         'id' => 5,
-         'nombre_buque' => 'Emmitt',
-         'numero_registro' => 'JUMLECX1',
-         'tipo_buque' => 'carga general',
-         'puerto_matricula' => '90775640',
-         'nacionalidad_buque' => 'Cuba',
-         'propietario' => 'Tanya Haag',
-         'pasaporte_capitan' => '4239617903',
-         'nombrescompletos_capitan' => 'Theresia Effertz',
-         'eslora' => 974,
-         'manga' => 062,
-         'puntal' => 728,
-         'arqueo_bruto' => 348,
-         'arqueo_neto' => 367,
-         'actividades' => 'deportiva',
-         'numero_tripulantes' => '52',
-         'puerto_origen' => 'Bechtelarfort',
-         'ultimo_puertovisitado' => 'Lake Vernie',
-         'tiempo_estadia' => '2',
-         'vigencia' => '',
-     ]
- ];
+    /** @var  PermisoEstadiaRepository */
+    private $permisoEstadiaRepository;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct(PermisoEstadiaRepository $permisoEstadiaRepo)
     {
-   $average=Collection::make($this->data);
-
-        $permisoEstadias = $average;
-
-        return view('zarpes.permiso_estadias.index')
-            ->with('permisoEstadias', $permisoEstadias);
+        $this->permisoEstadiaRepository = $permisoEstadiaRepo;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the PermisoEstadia.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function index(Request $request)
+    {
+        if (auth()->user()->hasPermissionTo('listar-estadia-todos')) {
+            $permisoEstadias = $this->permisoEstadiaRepository->all();
+            return view('zarpes.permiso_estadias.index')
+                ->with('permisoEstadias', $permisoEstadias);
+        } else if (auth()->user()->hasPermissionTo('listar-estadia-generados')) {
+            $user = auth()->id();
+            $permisoEstadias = PermisoEstadia::where('user_id', $user)->get();
+            return view('zarpes.permiso_estadias.index')
+                ->with('permisoEstadias', $permisoEstadias);
+        } else if (auth()->user()->hasPermissionTo('listar-estadia-capitania-destino')) {
+            $user = auth()->id();
+            $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $capitania)->get();
+            return view('zarpes.permiso_estadias.index')
+                ->with('permisoEstadias', $permisoEstadias);
+        }
+    }
+
+    /**
+     * Show the form for creating a new PermisoEstadia.
+     *
+     * @return Response
      */
     public function create()
     {
-        return view('zarpes.permiso_estadias.create');
+        $Establecimientos = EstablecimientoNautico::all();
+        $capitanias = Capitania::all();
+        return view('zarpes.permiso_estadias.create')
+            ->with('establecimientos', $Establecimientos)
+            ->with('capitanias', $capitanias);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created PermisoEstadia in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param CreatePermisoEstadiaRequest $request
+     *
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(CreatePermisoEstadiaRequest $request)
     {
-        $average=Collection::make($this->data);
+        $estadia = new PermisoEstadia();
+        $estadia->nro_solicitud = $this->codigo($request->capitania_id);
+        $estadia->user_id = auth()->user()->id;
+        $estadia->nombre_buque = $request->nombre_buque;
+        $estadia->nro_registro = $request->nro_registro;
+        $estadia->tipo_buque = $request->tipo_buque;
+        $estadia->nacionalidad_buque = $request->nacionalidad_buque;
+        $estadia->nombre_propietario = $request->nombre_propietario;
+        $estadia->pasaporte_capitan = $request->pasaporte_capitan;
+        $estadia->nombre_capitan = $request->nombre_capitan;
+        $estadia->cant_tripulantes = $request->cant_tripulantes;
+        $estadia->arqueo_bruto = $request->arqueo_bruto;
+        $estadia->actividades = $request->actividades;
+        $estadia->puerto_origen = $request->puerto_origen;
+        $estadia->capitania_id = $request->capitania_id;
+        $estadia->tiempo_estadia = $request->tiempo_estadia;
+        $estadia->status_id = 3;
+        $estadia->save();
 
-        $input = $request->all();
-        $concatenated = $average->concat([$input]);
-       // dd($concatenated);
-        Flash::success('Permiso Estadia Guardado Satisfactoriamente.');
 
-        return view('zarpes.permiso_estadias.index')
-            ->with('permisoEstadias', $concatenated);
+        if ($request->hasFile('zarpe_procedencia')) {
+            $documento1 = new DocumentoPermisoEstadia();
+            $procedencia = $request->file('zarpe_procedencia');
+            $filenamepro = date('dmYGi') . $procedencia->getClientOriginalName();
+            $avatar1 = $procedencia->move(public_path() . '/permisoestadia/documentos', $filenamepro);
+            $documento1->permiso_estadia_id = $estadia->id;
+            $documento1->documento = $filenamepro;
+            $documento1->recaudo = 'Zarpe de Procedencia';
+            $documento1->save();
+        }
+        if ($request->hasFile('registro_embarcacion')) {
+            $documento2 = new DocumentoPermisoEstadia();
+            $registro = $request->file('registro_embarcacion');
+            $filenamereg = date('dmYGi') . $registro->getClientOriginalName();
+            $avatar2 = $registro->move(public_path() . '/permisoestadia/documentos', $filenamereg);
+            $documento2->permiso_estadia_id = $estadia->id;
+            $documento2->documento = $filenamereg;
+            $documento2->recaudo = 'Registro de Embarcacion';
+            $documento2->save();
+        }
+        if ($request->hasFile('despacho_aduana_procedencia')) {
+            $documento3 = new DocumentoPermisoEstadia();
+            $migracion = $request->file('despacho_aduana_procedencia');
+            $filenamemig = date('dmYGi') . $migracion->getClientOriginalName();
+            $avatar3 = $migracion->move(public_path() . '/permisoestadia/documentos', $filenamemig);
+            $documento3->permiso_estadia_id = $estadia->id;
+            $documento3->documento = $filenamemig;
+            $documento3->recaudo = 'Despacho de Aduana de Procedencia';
+            $documento3->save();
+        }
+        if ($request->hasFile('pasaportes_tripulantes')) {
+            $documento4 = new DocumentoPermisoEstadia();
+            $pasaportes = $request->file('pasaportes_tripulantes');
+            $filenamepas = date('dmYGi') . $pasaportes->getClientOriginalName();
+            $avatar4 = $pasaportes->move(public_path() . '/permisoestadia/documentos', $filenamepas);
+            $documento4->permiso_estadia_id = $estadia->id;
+            $documento4->documento = $filenamepas;
+            $documento4->recaudo = 'Pasaportes de Tripulantes';
+            $documento4->save();
+        }
+
+        Flash::success('Solicitud de Permiso Estadia guardada satisfactoriamente.');
+
+        return redirect(route('permisosestadia.index'));
+    }
+
+    private function codigo($capitania_id)
+    {
+
+        $cantidadActual = PermisoEstadia::select(DB::raw('count(nro_solicitud) as cantidad'))
+            ->where(DB::raw("(SUBSTR(nro_solicitud,4,4) = '" . date('Y') . "')"), '=', true)
+            ->get();
+
+        $capitania = Capitania::find($capitania_id);
+
+        $correlativo = $cantidadActual[0]->cantidad + 1;
+        $codigo = $capitania->sigla . "-" . date('Y') . date('m') . "-" . $correlativo;
+        return $codigo;
+
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified PermisoEstadia.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     *
+     * @return Response
      */
     public function show($id)
     {
-        $average=Collection::make($this->data);
-        $data=$average->firstWhere('id', $id);
-
-        if (empty($data)) {
+        $permisoEstadia = $this->permisoEstadiaRepository->find($id);
+        $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
+        if (empty($permisoEstadia)) {
             Flash::error('Permiso Estadia not found');
 
             return redirect(route('permisoEstadias.index'));
         }
 
-        return view('zarpes.permiso_estadias.show')->with('permisoEstadia', $data);
+        return view('zarpes.permiso_estadias.show')
+            ->with('permisoEstadia', $permisoEstadia)
+            ->with('documentos', $documentos);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified PermisoEstadia.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     *
+     * @return Response
      */
     public function edit($id)
     {
-        $average=Collection::make($this->data);
-        $permisoEstadia=$average->firstWhere('id', $id);
+        $permisoEstadia = $this->permisoEstadiaRepository->find($id);
 
         if (empty($permisoEstadia)) {
             Flash::error('Permiso Estadia not found');
 
-            return redirect(route('permisosestadia.index'));
+            return redirect(route('permisoEstadias.index'));
         }
 
-        return view('zarpes.permiso_estadias.edit')->with('permisoEstadia', $permisoEstadia);
+        return view('permiso_estadias.edit')->with('permisoEstadia', $permisoEstadia);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified PermisoEstadia in storage.
      *
-     * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param UpdatePermisoEstadiaRequest $request
+     *
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update($id, UpdatePermisoEstadiaRequest $request)
     {
-        //
+        $permisoEstadia = $this->permisoEstadiaRepository->find($id);
+
+        if (empty($permisoEstadia)) {
+            Flash::error('Permiso Estadia not found');
+
+            return redirect(route('permisoEstadias.index'));
+        }
+
+        $permisoEstadia = $this->permisoEstadiaRepository->update($request->all(), $id);
+
+        Flash::success('Permiso Estadia updated successfully.');
+
+        return redirect(route('permisoEstadias.index'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified PermisoEstadia from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     *
+     * @return Response
+     * @throws \Exception
+     *
      */
     public function destroy($id)
     {
-        //
+
     }
 }

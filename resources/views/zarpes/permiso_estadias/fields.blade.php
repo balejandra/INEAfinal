@@ -2,159 +2,112 @@
 <!-- Nombre Buque Field -->
 <div class="row">
 <div class="form-group col-sm-6">
-    {!! Form::label('nombre_buque', 'Nombre Buque:') !!}
-    {!! Form::text('nombre_buque', null, ['class' => 'form-control']) !!}
+    {!! Form::label('nombre_buque', 'Nombre del Buque:') !!}
+    {!! Form::text('nombre_buque', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Numero Registro Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('numero_registro', 'Numero Registro:') !!}
-    {!! Form::text('numero_registro', null, ['class' => 'form-control']) !!}
+    {!! Form::label('nro_registro', 'Nro de Registro del Buque:') !!}
+    {!! Form::text('nro_registro', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Tipo Buque Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('tipo_buque', 'Tipo Buque:') !!}
-    {!! Form::text('tipo_buque', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Puerto Matricula Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('puerto_matricula', 'Puerto Matricula:') !!}
-    {!! Form::text('puerto_matricula', null, ['class' => 'form-control']) !!}
+    {!! Form::label('tipo_buque', 'Tipo de Buque:') !!}
+    <select name="tipo_buque" id="tipo_buque" class="form-control custom-select" placeholder='Seleccione' required>
+        <option value="deportivo">Deportivo</option>
+        <option value="recreativo">Recreativo</option>
+    </select>
 </div>
 
 <!-- Nacionalidad Buque Field -->
-<div class="form-group col-sm-6" onLoad='myOnLoad()'>
-    {!! Form::label('nacionalidad_buque', 'Nacionalidad Buque:') !!}
-    <div id="nacionalidad">
-    <select class="form-control" name="nacionalidad_buque" id="nacionalidad_buque">
-        <option value="">Seleccione</option>
+<div class="form-group col-sm-6" id="nacionalidad">
 
-    </select>
-    </div>
 </div>
 
 <!-- Propietario Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('propietario', 'Propietario:') !!}
-    {!! Form::text('propietario', null, ['class' => 'form-control']) !!}
+    {!! Form::label('nombre_propietario', 'Nombre del Propietario:') !!}
+    {!! Form::text('nombre_propietario', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Pasaporte Capitan Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('pasaporte_capitan', 'Pasaporte Capitan:') !!}
-    {!! Form::text('pasaporte_capitan', null, ['class' => 'form-control']) !!}
+    {!! Form::label('pasaporte_capitan', 'Nro. Pasaporte del Capitan:') !!}
+    {!! Form::text('pasaporte_capitan', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Nombrescompletos Capitan Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('nombrescompletos_capitan', 'Nombres completos Capitan:') !!}
-    {!! Form::text('nombrescompletos_capitan', null, ['class' => 'form-control']) !!}
+    {!! Form::label('nombre_capitan', 'Nombre y Apellido del Capitan:') !!}
+    {!! Form::text('nombre_capitan', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Eslora Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('eslora', 'Eslora:') !!}
-    {!! Form::number('eslora', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Manga Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('manga', 'Manga:') !!}
-    {!! Form::number('manga', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Puntal Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('puntal', 'Puntal:') !!}
-    {!! Form::number('puntal', null, ['class' => 'form-control']) !!}
+    {!! Form::label('cant_tripulantes', 'Cantidad de Tripulantes:') !!}
+    {!! Form::number('cant_tripulantes', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Arqueo Bruto Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('arqueo_bruto', 'Arqueo Bruto:') !!}
-    <input type="text" name="arqueo_bruto" id="arqueo_bruto" class="form-control" onblur="ochina($('#arqueo_bruto').val())">
-</div>
-
-<!-- Arqueo Neto Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('arqueo_neto', 'Arqueo Neto:') !!}
-    {!! Form::text('arqueo_neto', null, ['class' => 'form-control']) !!}
+    {!! Form::label('arqueo_bruto', 'Arqueo Bruto del Buque:') !!}
+    <input type="text" name="arqueo_bruto" id="arqueo_bruto" class="form-control" required onblur="ochina($('#arqueo_bruto').val())">
 </div>
 
 <!-- Actividades Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('actividades', 'Actividades:') !!}
-    {!! Form::text('actividades', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Numero Tripulantes Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('numero_tripulantes', 'Numero de Tripulantes:') !!}
-    {!! Form::number('numero_tripulantes', null, ['class' => 'form-control']) !!}
+    {!! Form::label('actividades', 'Actividades que realizara:') !!}
+    <select name="actividades" id="actividades" class="form-control custom-select" placeholder='Seleccione' required>
+        <option value="deportivo">Deportivo</option>
+        <option value="recreativo">Recreativo</option>
+        <option value="cambio de bandera">Cambio de Bandera</option>
+        <option value="mantenimiento">Mantenimiento</option>
+    </select>
 </div>
 
 <!-- Puerto Origen Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('puerto_origen', 'Puerto de Origen:') !!}
-    {!! Form::text('puerto_origen', null, ['class' => 'form-control']) !!}
+    {!! Form::text('puerto_origen', null, ['class' => 'form-control'], 'required') !!}
 </div>
 
 <!-- Ultimo Puertovisitado Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('ultimo_puertovisitado', 'Ultimo Puerto visitado:') !!}
-    {!! Form::text('ultimo_puertovisitado', null, ['class' => 'form-control']) !!}
+    {!! Form::label('capitania_id', 'Circunscripcion Acuatica de Arribo:') !!}
+    <select id="capitania_id" name="capitania_id"
+            class="form-control custom-select" required>
+        <option value="0">Seleccione</option>
+        @foreach ($capitanias as $capitania)
+            <option value="{{$capitania->id}}">{{$capitania->nombre}} </option>
+        @endforeach
+    </select>
 </div>
 
 <!-- Tiempo Estadia Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('tiempo_estadia', 'Tiempo de Estadia:') !!}
-    {!! Form::text('tiempo_estadia', null, ['class' => 'form-control']) !!}
+    {!! Form::text('tiempo_estadia', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('documento_1', 'Zarpe original de procedencia:') !!}
-    <input type="file" class="form-control" name="foto_final2" id="foto_final2">
+    <input type="file" class="form-control" name="zarpe_procedencia" id="zarpe_procedencia" required>
 </div>
     <div class="form-group col-sm-6">
         {!! Form::label('documento_1', 'Registro de la embarcación:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2">
+        <input type="file" class="form-control" name="registro_embarcacion" id="registro_embarcacion" required>
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('documento_1', 'Despacho de emigración:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2">
+        {!! Form::label('documento_1', 'Despacho de aduana de procedencia:') !!}
+        <input type="file" class="form-control" name="despacho_aduana_procedencia" id="despacho_aduana_procedencia" required>
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('documento_1', 'Pasaportes de los tripulantes:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2">
+        <input type="file" class="form-control" name="pasaportes_tripulantes" id="pasaporte_tripulantes" required>
     </div>
-    <div class="form-group col-sm-6">
-        {!! Form::label('documento_1', 'Comprobante de visita del SENIAT:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2" required>
-    </div>
-    <div class="form-group col-sm-6">
-        {!! Form::label('documento_1', 'Comprobante de pago de Alícuota:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2">
-    </div>
-    <div class="form-group col-sm-6">
-        {!! Form::label('documento_1', 'Inspección:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2">
-    </div>
-    <div class="form-group col-sm-6">
-        {!! Form::label('documento_1', 'Comprobante de visita SAIME:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2">
-    </div>
-    <div class="form-group col-sm-6">
-        {!! Form::label('documento_1', 'Comprobante de visita INSAI:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2">
-    </div>
-    <div class="form-group col-sm-6">
-        {!! Form::label('documento_1', 'Pago del Permiso Especial de Estadía:') !!}
-        <input type="file" class="form-control" name="foto_final2" id="foto_final2">
-    </div>
-    <div class="form-group col-sm-6" id="documentoOchina">
-    </div>
+
 </div>
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
