@@ -439,9 +439,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepSix(Request $request)
     {
-        /*   $product = $request->session()->get('product');
-
-           return view('products.create-step-three',compact('product'));*/
+        
         $passengers = $request->session()->get('pasajeros');
         $this->step = 6;
         return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers);
@@ -649,7 +647,23 @@ class PermisoZarpeController extends Controller
                     $data2="FoundButDefeated"; //encontrado pero documento vencido
                 }else
                 {
-                    $vj = $this->validacionJerarquizacion($data2[0]->documento, $cap);
+
+                    $marinoAsignado=PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id') 
+                    ->Join('tripulantes', 'permiso_zarpes.id', '=', 'tripulantes.permiso_zarpe_id')
+                    ->where('tripulantes.ctrl_documento_id', '=', $data2[0]->id)
+                    ->whereIn('permiso_zarpes.status_id', [1,3,5])
+                    ->get();
+
+                    
+
+                    if(count($marinoAsignado)>0){
+                        $data2="FoundButAssigned";
+                    }else{
+                        $vj = $this->validacionJerarquizacion($data2[0]->documento, $cap);
+
+                    }
+         
+
                 }
             }
 

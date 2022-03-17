@@ -647,8 +647,11 @@ function getMarinos() {
                             break;
                             case 'FoundButDefeated':
                                 msj.innerHTML='<div class="alert alert-danger">La vigencia de la licencia del tripulante C.I. '+cedula+' se encuentra vencida, por este motivo no puede tripular ninguna embarcación por el momento.</div>' ;
-
                             break;
+                            case 'FoundButAssigned':
+                                msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. '+cedula+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
+                            break;
+                            
                             default:
                             console.log(respuesta);
                             break;
