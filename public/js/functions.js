@@ -235,20 +235,6 @@ function eliminarCoordenadas(id, idcoord){
 //-----------------------------------------------------------------------------------------
 
 
-function ochina(data1){
-    if (data1>=40){
-        const ochina = document.querySelector("#documentoOchina");
-        ochina.innerHTML=" <div id=\"ochina\">" +
-            "<label for=\"documento1\">Comprobante de pago a OCHINA:</label>\n" +
-            "        <input type=\"file\" class=\"form-control\" name=\"foto_final2\" id=\"foto_final2\">" +
-            " </div>"
-
-    } else{
-        $("#ochina").remove();
-    }
-}
-
-
 //INICIO VALIDACIONES DE PERMISOS DE ZARPES
 
 

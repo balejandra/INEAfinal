@@ -8,6 +8,7 @@ use App\Models\Publico\Capitania;
 use App\Models\Renave\Renave_data;
 use App\Models\Transaccion;
 use App\Models\Zarpes\Pasajero;
+use App\Models\Zarpes\PermisoEstadia;
 use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\Tripulante;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -38,6 +39,14 @@ class PdfGeneratorController extends Controller
         $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->where('capitan',true)->get();
         $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
         $pdf=PDF::loadView('PDF.zarpes.permiso', compact('zarpe','buque','trip','capitania','cantPas','cantTrip'))->stream();
+        return $pdf;
+
+    }
+
+    public function correoEstadia($id){
+       $estadia=PermisoEstadia::find($id);
+        $capitania= Capitania::where('id',$estadia->capitania_id)->first();
+        $pdf=PDF::loadView('PDF.zarpes.permiso', compact('estadia','capitania'))->stream();
         return $pdf;
 
     }

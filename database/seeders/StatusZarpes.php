@@ -65,6 +65,11 @@ class StatusZarpes extends Seeder
                 'nombre'=>'Visita aprobada, recaudos faltantes',
                 'created_at'=>now()
             ],
+            [
+                'id'=>11,
+                'nombre'=>'Pendiente Aprobacion',
+                'created_at'=>now()
+            ],
         ]);
     }
 }

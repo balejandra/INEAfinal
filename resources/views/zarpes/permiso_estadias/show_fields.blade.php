@@ -65,9 +65,14 @@
     </tr>
     </tbody>
 </table>
+<div class="row">
 @foreach($documentos as $documento)
-    <div class="list-group">
-        <a href="{{asset('permisoestadia/documentos/'.$documento->documento)}}" target="_blank">
-            {{$documento->recaudo }}</a>
-    </div>
+
+        <div class="col-sm-6" >
+            <a class="link-info" href="{{asset('permisoestadia/documentos/'.$documento->documento)}}" target="_blank">
+                {{$documento->recaudo }}</a>
+        </div>
+
 @endforeach
+</div>
+<br>

@@ -20,4 +20,9 @@ class MailController extends Controller
         $file=$pdf->correo($data['id']);
         Mail::to($receiver)->send(new ZarpesPDFMail($subject,$data,$view,$file));
     }
+    public function mailEstadiaPDF($receiver,$subject,$data,$view){
+        $pdf=new PdfGeneratorController();
+        $file=$pdf->correoEstadia($data['id']);
+        Mail::to($receiver)->send(new ZarpesPDFMail($subject,$data,$view,$file));
+    }
 }
