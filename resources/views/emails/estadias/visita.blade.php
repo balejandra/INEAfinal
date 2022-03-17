@@ -2,22 +2,19 @@
 
     Saludos,
 
-    {{$mensaje}}
-
-    Detalles de la embarcación:
+    Su solicitud de Estadia se le ha asignado un visitador, con el siguiente detalle:
 
 @component('mail::panel')
     <b>Nro de Solicitud:</b> {{$solicitud}} <br>
-    <b>Buque Matricula Nro:</b>  {{$matricula}} <br>
+    <b>Buque Registro Nro:</b>  {{$matricula}} <br>
     <b>Solicitante:</b>  {{$nombres_solic}} {{$apellidos_solic}} <br>
-    <b>Fecha y hora de salida:</b>  {{$fecha_salida}} <br>
-    <b>Fecha y hora de regreso:</b>  {{$fecha_regreso}} <br>
+    <b>Visitador:</b>  {{$visitador}} <br>
+    <b>Visitador:</b>  {{$fecha_visita}} <br>
 
 @endcomponent
     Para más detalles ingrese a la página web:
-
 @component('mail::button', ['url' => env('APP_URL')])
-        INEA
+    INEA
 @endcomponent
 
     Sugerencia: Agregue {{$from}} a sus contactos de correo electrónico para así evitar recibir correo en spam.

@@ -110,7 +110,7 @@
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <p>Por favor indique el motivo del
-                                                                                    rechado de la
+                                                                                    rechazo de la
                                                                                     Solicitud
                                                                                     Nro.{{ $permisoOrigenZarpe->nro_solicitud }}</p>
                                                                                 <div class="col-sm-12">

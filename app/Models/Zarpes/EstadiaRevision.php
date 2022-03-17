@@ -5,6 +5,7 @@ namespace App\Models\Zarpes;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -24,7 +25,7 @@ class EstadiaRevision extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $connection = 'pgsql_zarpes_schema';
-    public $table = 'estadia_revisions';
+    public $table = 'estadia_revisiones';
 
 
     protected $dates = ['deleted_at'];
