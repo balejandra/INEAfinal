@@ -24,13 +24,13 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="pills-origen-tab" data-bs-toggle="pill"
                                             data-bs-target="#origen" type="button" role="tab" aria-controls="origen"
-                                            aria-selected="true">Origen
+                                            aria-selected="true">Solicitudes de zarpe
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="pills-destino-tab" data-bs-toggle="pill"
                                             data-bs-target="#destino" type="button" role="tab" aria-controls="destino"
-                                            aria-selected="false">Destino
+                                            aria-selected="false">Información de arribos en su jurisdicción
                                     </button>
                                 </li>
                             </ul>
@@ -79,7 +79,7 @@
                                                     @if(($permisoOrigenZarpe->status->id=='3'))
                                                         @can('aprobar-zarpe')
                                                             <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
-                                                               class="btn btn-primary btn-sm" title="Aprobar">
+                                                               class="btn btn-success btn-sm" title="Aprobar">
                                                                 <i class="fa fa-check"></i>
                                                             </a>
                                                         @endcan
@@ -145,7 +145,7 @@
                                                         @endcan
                                                     @endif
                                                     @can('consultar-zarpe')
-                                                        <a class="btn btn-sm btn-success"
+                                                        <a class="btn btn-sm btn-primary"
                                                            href=" {{route('permisoszarpes.show',$permisoOrigenZarpe->id)}}">
                                                             <i class="fa fa-search"></i>
                                                         </a>
@@ -225,7 +225,7 @@
                                                     @endif
                                                     <td>
                                                         @can('consultar-zarpe')
-                                                            <a class="btn btn-sm btn-success"
+                                                            <a class="btn btn-sm btn-primary"
                                                                href=" {{route('permisoszarpes.show',$permisoDestinoZarpe->id)}}">
                                                                 <i class="fa fa-search"></i>
                                                             </a>

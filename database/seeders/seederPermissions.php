@@ -62,7 +62,7 @@ class seederPermissions extends Seeder
             'anular-sar',
             'anular-zarpeUsuario',
             'listar-zarpes-todos', //admin
-            'listar-zarpesgenerados',//usuariosweb
+            'listar-zarpes-generados',//usuariosweb
             'listar-zarpes-capitania-origen',
             'listar-zarpes-establecimiento-origen',//comodoros
             'listar-zarpe-destino', //comodoro, capitan, comodoro_aprovador

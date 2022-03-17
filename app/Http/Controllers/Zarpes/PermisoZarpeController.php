@@ -24,7 +24,7 @@ use App\Models\Publico\Saime_cedula;
 use App\Models\Gmar\LicenciasTitulosGmar;
 use App\Models\Publico\CoordenadasCapitania;
 use App\Models\Publico\Capitania;
-
+use App\Models\Sgm\TiposCertificado;
 
 use Flash;
 use Illuminate\Support\Facades\Session;
@@ -154,9 +154,14 @@ class PermisoZarpeController extends Controller
             ], 200);*/
             echo "sinCoincidencias";
         } else {
+
             if (count($permisoZ) > 0) {
                 echo 'permisoPorCerrar';
             } else {
+
+
+
+
                 echo json_encode($data);
             }
         }

@@ -149,14 +149,14 @@
 </table>
 
 <!-- Submit Field -->
-<div class="form-group col-sm-12">
+<div class="form-group col-sm-12 text-center">
     @if ($capitania[0]->user_id==auth()->user()->id or $comodoro)
         @can('aprobar-zarpe')
             @if(($permisoZarpe->status->id=='3'))
                 <a href="{{route('status',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}"
-                   class="btn btn-primary" title="Aprobar">
+                   class="btn btn-success" title="Aprobar">
                     Aprobar
-                </a>
+                </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             @endif
         @endcan
         @can('rechazar-zarpe')

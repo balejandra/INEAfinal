@@ -37,7 +37,7 @@
             @endif
             <td>
                 @can('consultar-zarpe')
-                    <a class="btn btn-sm btn-success"
+                    <a class="btn btn-sm btn-primary"
                        href=" {{route('permisoszarpes.show',$permisoZarpe->id)}}">
                         <i class="fa fa-search"></i>
                     </a>
