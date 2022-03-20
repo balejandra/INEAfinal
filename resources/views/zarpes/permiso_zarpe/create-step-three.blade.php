@@ -74,9 +74,7 @@
                                             <option value="1">Dentro de una circunscripción</option>
                                             <option value="2">Dentro de una circunscripción pero hacia una dependencia federal</option>
                                             <option value="3">Entre circunscripciones</option>
-                                            <option value="4">Internacional</option>
-
-                                               
+                                             
                                         </select>
                                         </div>
 

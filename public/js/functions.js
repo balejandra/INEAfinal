@@ -271,8 +271,8 @@ function eliminarCoordenadas(id, idcoord){
                 let  pasajeroExiste=document.getElementById('pass'+cedula);
                 if(pasajeroExiste==null){
                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                    pass.innerHTML+=html;
-                    addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
+                   
+                    addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html);
                 }else{
                     msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
                 }
@@ -289,9 +289,9 @@ function eliminarCoordenadas(id, idcoord){
                         let  pasajeroExiste=document.getElementById('pass'+cedula);
                         if(pasajeroExiste==null){
                             var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                            pass.innerHTML+=html;
+                            
                             msj.innerHTML="";
-                            addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
+                            addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
                             document.querySelector("#nc").remove();
                         }else{
                             msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -323,9 +323,9 @@ function eliminarCoordenadas(id, idcoord){
                                     $('#apellidos').val(apellidos);
 
                                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                                        addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
+                                        addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
 
-                                    pass.innerHTML+=html;
+                                     
                                     msj.innerHTML="";
                                 }else{
                                     msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -511,69 +511,89 @@ $( "#tipodoc" )
   .change();
 
 
-function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos){
+function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html){
     console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
 
-    var div=document.getElementById("dataPassengers");
-    cantAct=parseInt(div.getAttribute("data-cant"));
-    let contenedor= document.createElement("div");
-    contenedor.id="content"+cantAct;
+    var cantPass= document.getElementById("cantPasajeros");
+    let cant=parseInt(cantPass.getAttribute("data-cantPass"));
+
+    if(cant > 0){
+
+        cant=cant-1;
+        cantPass.innerHTML=cant;
+        cantPass.setAttribute("data-cantPass", cant);
 
 
-    let inputMenor= document.createElement("input");
-    let inputTipodoc= document.createElement("input");
-    let inputNrodocc= document.createElement("input");
-    let inputFechanac= document.createElement("input");
-    let inputSexo= document.createElement("input");
-    let inputNombres= document.createElement("input");
-    let inputApellidos= document.createElement("input");
-
-     inputMenor.type="hidden";
-     inputTipodoc.type="hidden";
-     inputNrodocc.type="hidden";
-     inputFechanac.type="hidden";
-     inputSexo.type="hidden";
-     inputNombres.type="hidden";
-     inputApellidos.type="hidden";
-
-     inputMenor.name="menor[]";
-     inputTipodoc.name="tipodoc[]";
-     inputNrodocc.name="nrodoc[]";
-     inputFechanac.name="fechanac[]";
-     inputSexo.name="sexo[]";
-     inputNombres.name="nombres[]";
-     inputApellidos.name="apellidos[]";
-
-     inputMenor.value=menor;
-     inputTipodoc.value=tipodoc;
-     inputNrodocc.value=nrodoc;
-     inputFechanac.value=fechanac;
-     inputSexo.value=sexo;
-     inputNombres.value=nombres;
-     inputApellidos.value=apellidos;
-
-     contenedor.appendChild(inputMenor);
-     contenedor.appendChild(inputTipodoc);
-     contenedor.appendChild(inputNrodocc);
-     contenedor.appendChild(inputFechanac);
-     contenedor.appendChild(inputSexo);
-     contenedor.appendChild(inputNombres);
-     contenedor.appendChild(inputApellidos);
+        var pass=document.getElementById('pasajeros');
+            pass.innerHTML+=html;
 
 
+        var div=document.getElementById("dataPassengers");
+        cantAct=parseInt(div.getAttribute("data-cant"));
+        let contenedor= document.createElement("div");
+        contenedor.id="content"+cantAct;
 
-     div.appendChild(contenedor);
 
-     div.setAttribute("data-cant",cantAct+1);
-    console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
-    $("#menor").prop('checked', false);
-    $("#textoMenor").text('NO');
-    document.getElementById("numero_identificacion").value="";
-    document.getElementById("tipodoc").options.item(0).selected = 'selected';
-    document.getElementById("fecha_nacimiento").value="";
-    document.getElementById("sexo").options.item(0).selected = 'selected';
-    document.getElementById("nombres").value="";
-    document.getElementById("apellidos").value="";
+        let inputMenor= document.createElement("input");
+        let inputTipodoc= document.createElement("input");
+        let inputNrodocc= document.createElement("input");
+        let inputFechanac= document.createElement("input");
+        let inputSexo= document.createElement("input");
+        let inputNombres= document.createElement("input");
+        let inputApellidos= document.createElement("input");
+
+         inputMenor.type="hidden";
+         inputTipodoc.type="hidden";
+         inputNrodocc.type="hidden";
+         inputFechanac.type="hidden";
+         inputSexo.type="hidden";
+         inputNombres.type="hidden";
+         inputApellidos.type="hidden";
+
+         inputMenor.name="menor[]";
+         inputTipodoc.name="tipodoc[]";
+         inputNrodocc.name="nrodoc[]";
+         inputFechanac.name="fechanac[]";
+         inputSexo.name="sexo[]";
+         inputNombres.name="nombres[]";
+         inputApellidos.name="apellidos[]";
+
+         inputMenor.value=menor;
+         inputTipodoc.value=tipodoc;
+         inputNrodocc.value=nrodoc;
+         inputFechanac.value=fechanac;
+         inputSexo.value=sexo;
+         inputNombres.value=nombres;
+         inputApellidos.value=apellidos;
+
+         contenedor.appendChild(inputMenor);
+         contenedor.appendChild(inputTipodoc);
+         contenedor.appendChild(inputNrodocc);
+         contenedor.appendChild(inputFechanac);
+         contenedor.appendChild(inputSexo);
+         contenedor.appendChild(inputNombres);
+         contenedor.appendChild(inputApellidos);
+
+
+
+         div.appendChild(contenedor);
+
+         div.setAttribute("data-cant",cantAct+1);
+        console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
+        $("#menor").prop('checked', false);
+        $("#textoMenor").text('NO');
+        /*document.getElementById("numero_identificacion").value="";
+        document.getElementById("tipodoc").options.item(0).selected = 'selected';
+        document.getElementById("fecha_nacimiento").value="";
+        document.getElementById("sexo").options.item(0).selected = 'selected';
+        document.getElementById("nombres").value="";
+        document.getElementById("apellidos").value="";*/
+
+    }else{
+        var msj= document.getElementById('msj');
+        msj.innerHTML='<div class="alert alert-danger">Ha alcanzado la cantidad máxima de pasajeros para esta embarcación.</div>' ;
+    }
+
 }
 
 
@@ -650,7 +670,7 @@ function getMarinos() {
 
 
 
-                            let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
+                            let fecha=respuesta[0].fecha_emision.substr(0, 10);
                             //let vt=validarTripulante(respuesta[0].documento, cap);
                             if(validacion[0]){
                                 validarCapitan("");
@@ -736,7 +756,7 @@ function validarTripulante(documento, capitan) {
           //  alert(response);
             respuesta = JSON.parse(response);
 
-            alert(response);
+            //alert(response);
         })
 
         // This will be called on error
@@ -881,7 +901,34 @@ function compararFechas(){
 }
 
 
+function estNauticoDestinoSelect(idCapitania){
+    
 
+    $.ajax({
+        url: route('BuscaEstablecimientosNauticos'),
+        data: {idcap: idCapitania }
+
+    })// This will be called on success
+        .done(function (response) {
+          //  alert(response);
+            respuesta = JSON.parse(response);
+            let estabecimientos=respuesta[1];
+            document.getElementById('capiDestino').innerHTML=" <b>"+respuesta[0].nombre+" </b>";
+            let select=document.getElementById("estNautioDestino");
+            let options="<option value='0'>Seleccione</option>";
+            for (var i = 0; i < estabecimientos.length; i++) {
+                options+="<option value='"+estabecimientos[i].id+"'>"+estabecimientos[i].nombre+"</option>"
+            }
+            select.innerHTML=options;
+           // console.log(options);
+        })
+
+        // This will be called on error
+        .fail(function (response) {
+           // respuesta = JSON.parse(response);
+            console.log("fallo al buscar establecimientos nautico destino ");
+        });
+}
 
 
 //*FIN DE VALIDACIONES DE PASO 4 MAPA*//

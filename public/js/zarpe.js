@@ -8,7 +8,7 @@ function getmatricula(data1) {
             divError = document.getElementById("errorMat");
                 table = document.getElementById("table-buque");
               //  alert(response);
-
+//console.log(response);
             if(response=='permisoPorCerrar'){
                // alert('permiso por cerrar');
                 divError.innerHTML='<div class="alert alert-danger">La embarcación de matrícula <b>'+data1+'</b> posee un permiso de zarpe que no ha sido cerrado, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
@@ -18,31 +18,58 @@ function getmatricula(data1) {
                 divError.innerHTML='<div class="alert alert-danger">Su usuario no puede realizar solicitudes a nombre del Buque Matricula <b>'+data1+' </b> </div>';
                 table.style.display='none';
 
-            }else {
-                divError.innerHTML='';
-                table.style.display='block';
+            }else if(response=='noEncontradoSgm'){
+                 divError.innerHTML='<div class="alert alert-danger">Matrícula no encontrada en BD seguridad marítima </div>';
+                table.style.display='none';
+            }else{
+                
 
-                respuesta = JSON.parse(response);
-                matricula=(respuesta[0].matricula_actual);
-                $("#matricula").val(matricula);
-                nombrebuque=(respuesta[0].nombrebuque_actual);
-                $("#nombre").val(nombrebuque);
-                destinacion=(respuesta[0].destinacion);
-                $("#destinacion").val(destinacion);
-                UAB=(respuesta[0].UAB);
-                $("#UAB").val(UAB);
-                ESLORA=(respuesta[0].eslora);
-                $("#eslora").val(ESLORA);
-                nombre_propietario=(respuesta[0].nombre_propietario);
-                $("#nombre_propietario").val(nombre_propietario);
-                numero_identificacion=(respuesta[0].numero_identificacion);
-                $("#numero_identificacion").val(numero_identificacion);
-                manga=(respuesta[0].manga);
-                $("#manga").val(manga);
+                let resp= JSON.parse(response);
+                let valiacionSgm=resp.validacionSgm;
+                console.log(valiacionSgm);
+                let licencia=false;
+                let certificado=false;
 
+
+               if(valiacionSgm[0]==true && valiacionSgm[1]==true && valiacionSgm[2]==true){
+                    divError.innerHTML='';
+                    table.style.display='block';
+                    respuesta=resp.data;
+                    matricula=(respuesta[0].matricula_actual);
+                    $("#matricula").val(matricula);
+                    nombrebuque=(respuesta[0].nombrebuque_actual);
+                    $("#nombre").val(nombrebuque);
+                    destinacion=(respuesta[0].destinacion);
+                    $("#destinacion").val(destinacion);
+                    UAB=(respuesta[0].UAB);
+                    $("#UAB").val(UAB);
+                    ESLORA=(respuesta[0].eslora);
+                    $("#eslora").val(ESLORA);
+                    nombre_propietario=(respuesta[0].nombre_propietario);
+                    $("#nombre_propietario").val(nombre_propietario);
+                    numero_identificacion=(respuesta[0].numero_identificacion);
+                    $("#numero_identificacion").val(numero_identificacion);
+                    manga=(respuesta[0].manga);
+                    $("#manga").val(manga);
+               }else{
+                    if(valiacionSgm[0]!=true){
+                        divError.innerHTML='<div class="alert alert-danger"> '+valiacionSgm[0]+' </div>';
+                        table.style.display='none';
+                    }
+
+                    if(valiacionSgm[1]!=true){
+                        divError.innerHTML='<div class="alert alert-danger"> '+valiacionSgm[1]+' </div>';
+                        table.style.display='none';
+                    }
+
+                    if(valiacionSgm[2]!=true){
+                        divError.innerHTML='<div class="alert alert-danger"> '+valiacionSgm[2]+' </div>';
+                        table.style.display='none';
+                    }
+                    
+
+                }
             }
-
-           // alert(respuesta[0].manga);
         })
 
         // This will be called on error

@@ -55,7 +55,7 @@ console.log(capitanias);
         	offMapClick(dataLat,dataLong); //borro el marcador anterior del mapa
         } 
 
-        /*Asigno el valor del nuevo click a los imput latitud y longitud*/
+        /*Asigno el valor del nuevo click a los input latitud y longitud*/
         latInput.value=coordenada.lat;
         	longInput.value=coordenada.lng;
 
@@ -69,6 +69,9 @@ console.log(capitanias);
 
           if(idCapitania!=false){
           	document.getElementById('capitaniaDestino').value=idCapitania; 
+
+            estNauticoDestinoSelect(idCapitania);
+
           }else{
           	idCapitania=false;
           }

@@ -26,12 +26,12 @@
 
                              @include('zarpes.permiso_zarpe.stepsIndicator')
 
-                         	 <form action="{{ route('permisoszarpes.permissionCreateSteptwo') }}" method="POST">
+                         	 <form action="{{ route('permisoszarpes.permissionCreateSteptwoE') }}" method="POST">
 				                @csrf
 				  
 				                <div class="card">
 				  
-				                    <div class="card-body">
+				                    <div class="card-body" style="min-height: 250px;">
 				  
 				                            @if ($errors->any())
 				                                <div class="alert alert-danger">
@@ -42,11 +42,20 @@
 				                                    </ul>
 				                                </div>
 				                            @endif
-				  
-				                            <div class="form-group">
-				                                <label for="title">Permiso de estadia:</label>
-				                                <input type="text" class="form-control" id="permiso"  name="permiso">
-				                            </div>
+		
+
+                                           <div class="row gy-2 gx-3 justify-content-center">
+                                            <div class="col-auto">
+                                                <div class="form-group">
+                                                    <label for="title">Permiso de estadia:</label>
+                                                    <input type="text" class="form-control" name="permiso" id="permiso">
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <br>
+                                                <button type="button" class="btn btn-primary" onclick="getPermisoEstadia($('#permiso').val())">Verificar</button>
+                                            </div>
+                                        </div>
 				                          
 				                    </div>
 				  

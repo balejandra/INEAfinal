@@ -51,7 +51,7 @@
                                             
                                                     <select name="bandera" id="bandera" class="form-control custom-select" placeholder='Seleccione'>
                                                         <option value="nacional">NACIONAL</option>
-                                                        <option value="extranjera" disabled>EXTRANJERA</option>
+                                                        <option value="extranjera" >EXTRANJERA</option>
                                                         
                                                     </select>
                                                 </div>

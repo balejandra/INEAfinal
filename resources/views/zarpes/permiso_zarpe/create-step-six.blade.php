@@ -113,6 +113,15 @@
                                         </div>
 
                                         <div class="row px-3">
+                                            
+
+                                            <div class="col-md-12 py-2">
+                                                <b>Cantidad de pasajeros disponible para esta embarcación:</b> 
+                                                <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
+                                                    {{ $cantPasajeros ?? '' }}
+                                                </span>
+                                            </div>
+
                                             <div class="table-responsive">
                                                 <table class="table table-bordered">
                                                     <thead>
