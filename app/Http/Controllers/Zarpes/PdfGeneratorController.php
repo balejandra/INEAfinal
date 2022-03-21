@@ -28,6 +28,12 @@ class PdfGeneratorController extends Controller
         $pdf=PDF::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip'));
         return $pdf->stream('zarpes.pdf');
     }
+    public function imprimirEstadia($id){
+        $estadia=PermisoEstadia::find($id);
+        $capitania= Capitania::where('id',$estadia->capitania_id)->first();
+        $pdf=PDF::loadView('PDF.estadias.permiso',compact('estadia','capitania'));
+        return $pdf->stream('estadia.pdf');
+    }
 
     public function correo($id){
         $trans= PermisoZarpe::all();
@@ -46,7 +52,7 @@ class PdfGeneratorController extends Controller
     public function correoEstadia($id){
        $estadia=PermisoEstadia::find($id);
         $capitania= Capitania::where('id',$estadia->capitania_id)->first();
-        $pdf=PDF::loadView('PDF.zarpes.permiso', compact('estadia','capitania'))->stream();
+        $pdf=PDF::loadView('PDF.estadias.permiso', compact('estadia','capitania'))->stream();
         return $pdf;
 
     }

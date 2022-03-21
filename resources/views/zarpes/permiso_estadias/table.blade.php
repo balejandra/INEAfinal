@@ -185,8 +185,17 @@
                                 </form>
                             </div>
                         @endif
-
                     @endcan
+
+                    @if ($permisoEstadia->status_id===1)
+                        <a class="btn btn-sm btn-dark"
+                           href="{{route('estadiapdf',$permisoEstadia->id)}}"
+                           target="_blank" data-toggle="tooltip"
+                           data-bs-placement="bottom"
+                           title="Descargar PDF">
+                            <i class="fas fa-file-pdf"></i>
+                        </a>
+                    @endif
             </td>
         </tr>
     @endforeach
