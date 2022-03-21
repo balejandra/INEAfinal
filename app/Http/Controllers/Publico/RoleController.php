@@ -55,13 +55,10 @@ class RoleController extends Controller
             'name' => 'required',
             
         ]);
+        
         $role= Role::create($request->only('name'));
         $role->permissions()->sync($request->input('permissions', [] ));
-       // ($role=new Role($request->input()))->saveOrFail();
-    
-         return redirect()->route('roles')->with('success','Rol creado con exito.');
-        
-       
+        return redirect()->route('roles')->with('success','Rol creado con exito.');
     }
 
     /**

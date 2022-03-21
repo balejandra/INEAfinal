@@ -24,13 +24,13 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="pills-origen-tab" data-bs-toggle="pill"
                                             data-bs-target="#origen" type="button" role="tab" aria-controls="origen"
-                                            aria-selected="true">Origen
+                                            aria-selected="true">Solicitudes de zarpe
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="pills-destino-tab" data-bs-toggle="pill"
                                             data-bs-target="#destino" type="button" role="tab" aria-controls="destino"
-                                            aria-selected="false">Destino
+                                            aria-selected="false">Información de arribos en su jurisdicción
                                     </button>
                                 </li>
                             </ul>
@@ -66,6 +66,12 @@
                                                     <td class="text-warning">{{ $permisoOrigenZarpe->status->nombre}} </td>
                                                 @elseif($permisoOrigenZarpe->status->id==4)
                                                     <td class="text-muted">{{ $permisoOrigenZarpe->status->nombre}} </td>
+                                                @elseif($permisoOrigenZarpe->status->id==5)
+                                                    <td class="text-primary">{{ $permisoOrigenZarpe->status->nombre}} </td>
+                                                @elseif($permisoOrigenZarpe->status->id==7)
+                                                    <td><span class="text-danger bg-dark">{{$permisoOrigenZarpe->status->nombre}}</span></td>
+                                                @elseif($permisoOrigenZarpe->status->id==6)
+                                                    <td style="color: #fd7e14">{{$permisoOrigenZarpe->status->nombre}}</td>
                                                 @else
                                                     <td>{{ $permisoOrigenZarpe->status->nombre}} </td>
                                                 @endif
@@ -73,7 +79,7 @@
                                                     @if(($permisoOrigenZarpe->status->id=='3'))
                                                         @can('aprobar-zarpe')
                                                             <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
-                                                               class="btn btn-primary btn-sm" title="Aprobar">
+                                                               class="btn btn-success btn-sm" title="Aprobar">
                                                                 <i class="fa fa-check"></i>
                                                             </a>
                                                         @endcan
@@ -104,7 +110,7 @@
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <p>Por favor indique el motivo del
-                                                                                    rechado de la
+                                                                                    rechazo de la
                                                                                     Solicitud
                                                                                     Nro.{{ $permisoOrigenZarpe->nro_solicitud }}</p>
                                                                                 <div class="col-sm-12">
@@ -139,11 +145,33 @@
                                                         @endcan
                                                     @endif
                                                     @can('consultar-zarpe')
-                                                        <a class="btn btn-sm btn-success"
+                                                        <a class="btn btn-sm btn-primary"
                                                            href=" {{route('permisoszarpes.show',$permisoOrigenZarpe->id)}}">
                                                             <i class="fa fa-search"></i>
                                                         </a>
-                                                        @if (($permisoOrigenZarpe->status->id==1)||($permisoOrigenZarpe->status->id==4))
+                                                        @endcan
+                                                            @if(($permisoOrigenZarpe->status->id=='1'))
+                                                                @can('informar-navegacion')
+                                                                    <a class="btn btn-sm btn-warning"
+                                                                       href=" {{route('status',[$permisoOrigenZarpe->id,'navegando',$permisoOrigenZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip"
+                                                                       data-bs-placement="bottom"
+                                                                       title="Informar Navegacion">
+                                                                        <i class="fas fa-water"></i>
+                                                                    </a>
+                                                                @endcan
+                                                            @endif
+                                                        @if(($permisoOrigenZarpe->status->id=='5'))
+                                                            @can('anular-sar')
+                                                                <a class="btn btn-sm btn-outline-danger"
+                                                                   href=" {{route('status',[$permisoOrigenZarpe->id,'anulado_sar',$permisoOrigenZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip"
+                                                                   data-bs-placement="bottom"
+                                                                   title="Anular por SAR">
+                                                                    <i class="fas fa-briefcase-medical"></i>
+                                                                </a>
+                                                            @endcan
+                                                        @endif
+
+                                                        @if (($permisoOrigenZarpe->status->id==1)||($permisoOrigenZarpe->status->id==4)||($permisoOrigenZarpe->status->id==5))
                                                             <a class="btn btn-sm btn-dark"
                                                                href="{{route('zarpepdf',$permisoOrigenZarpe->id)}}"
                                                                target="_blank" data-toggle="tooltip"
@@ -152,7 +180,6 @@
                                                                 <i class="fas fa-file-pdf"></i>
                                                             </a>
                                                         @endif
-                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -198,11 +225,11 @@
                                                     @endif
                                                     <td>
                                                         @can('consultar-zarpe')
-                                                            <a class="btn btn-sm btn-success"
+                                                            <a class="btn btn-sm btn-primary"
                                                                href=" {{route('permisoszarpes.show',$permisoDestinoZarpe->id)}}">
                                                                 <i class="fa fa-search"></i>
                                                             </a>
-                                                            @if (($permisoDestinoZarpe->status->id==1)||($permisoDestinoZarpe->status->id==4))
+                                                            @if (($permisoDestinoZarpe->status->id==1)||($permisoDestinoZarpe->status->id==4) ||($permisoDestinoZarpe->status->id==5))
                                                                 <a class="btn btn-sm btn-dark"
                                                                    href="{{route('zarpepdf',$permisoDestinoZarpe->id)}}"
                                                                    target="_blank" data-toggle="tooltip"

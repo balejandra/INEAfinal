@@ -104,7 +104,7 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            'schema' => 'seguridad_maritima',
+            'schema' => 'sgm',
             'sslmode' => 'prefer',
         ],
 

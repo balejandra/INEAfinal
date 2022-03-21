@@ -1,9 +1,9 @@
 @component('mail::message')
 
-    Saludos, 
+    Saludos,
 
     {{$mensaje}}
- 	
+
     Detalles de la embarcación:
 
 @component('mail::panel')

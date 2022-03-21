@@ -31,6 +31,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
 
     Route::resource('permisosestadia', \App\Http\Controllers\Zarpes\PermisoEstadiaController::class);
+    Route::get('updateStatus/{id}/{status}', [\App\Http\Controllers\Zarpes\PermisoEstadiaController::class,'updateStatus'])->name('statusEstadia');
+
     //Route::resource('permisoszarpes', \App\Http\Controllers\Zarpes\PermisoZarpeController::class);
     Route::get('update/{id}/{status}/{capitania}', [\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'updateStatus'])->name('status');
     Route::get('/permisozarpepdf/{id}',[\App\Http\Controllers\Zarpes\PdfGeneratorController::class,'imprimir'])->name('zarpepdf');
@@ -77,5 +79,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('validarMarino',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validarMarino'])->name('validarMarino');
 
     Route::get('validacionJerarquizacion',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validacionJerarquizacion'])->name('validacionJerarquizacion');
+
+    Route::get('BuscaEstablecimientosNauticos',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'BuscaEstablecimientosNauticos'])->name('BuscaEstablecimientosNauticos');
+
+    
 
 });
