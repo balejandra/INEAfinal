@@ -670,12 +670,13 @@ function getMarinos() {
 
 
 
-                            let fecha=respuesta[0].fecha_emision.substr(0, 10);
+                            let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
+                            let fechaemision=respuesta[0].fecha_emision.substr(0, 10);
                             //let vt=validarTripulante(respuesta[0].documento, cap);
                             if(validacion[0]){
                                 validarCapitan("");
                                 console.log(respuesta);
-                                var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fecha+"</td> <td>"+respuesta[0].documento+"</td> </tr>";
+                                var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fechaemision+"</td> <td>"+respuesta[0].documento+"</td> </tr>";
                                 cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
                                 if(cantAct==0){
                                     tabla.innerHTML="";
@@ -683,7 +684,7 @@ function getMarinos() {
                                 tabla.innerHTML+=html;
                                 document.getElementById('cedula').value="";
                                 document.getElementById('fecha_nacimiento').value="";
-                                addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento);
+                                addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento, fechaemision);
 
                             }else{
 
@@ -769,7 +770,7 @@ function validarTripulante(documento, capitan) {
 
 
 
-function addMarino(ids, cap, ci, nombreape, fechav, doc){
+function addMarino(ids, cap, ci, nombreape, fechav, doc,fechaemision){
 
     var div=document.getElementById("dataMarinos");
     cantAct=parseInt(div.getAttribute("data-cantMar"));
@@ -783,6 +784,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
     let nombre= document.createElement("input");
     let fechaVence= document.createElement("input");
     let documento= document.createElement("input");
+    let fechaEmi= document.createElement("input");
 
 
 
@@ -792,6 +794,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
      nombre.type="hidden";
      fechaVence.type="hidden";
      documento.type="hidden";
+     fechaEmi.type="hidden";
 
 
      idmar.name="ids[]";
@@ -800,6 +803,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
      nombre.name="nombre[]";
      fechaVence.name="fechaVence[]";
      documento.name="documento[]";
+     fechaEmi.name="fechaEmision[]";
 
 
      idmar.value=ids;
@@ -808,6 +812,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
      nombre.value=nombreape;
      fechaVence.value=fechav;
      documento.value=doc;
+     fechaEmi.value=fechaemision;
 
 
      contenedor.appendChild(idmar);
@@ -816,6 +821,7 @@ function addMarino(ids, cap, ci, nombreape, fechav, doc){
      contenedor.appendChild(nombre);
      contenedor.appendChild(fechaVence);
      contenedor.appendChild(documento);
+     contenedor.appendChild(fechaEmi);
 
 
      div.appendChild(contenedor);

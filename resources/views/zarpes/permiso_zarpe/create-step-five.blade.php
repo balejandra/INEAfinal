@@ -216,8 +216,10 @@
                                                         <input type="hidden" name="nombre[]"
                                                                value="{{$trip['nombre']}}">
                                                         <input type="hidden" name="fechaVence[]"
-                                                               value="{{$trip['fecha_emision']}}">
-                                                        <input type="hidden" name="documento[]"
+                                                               value="{{$trip['fecha_vencimiento']}}">
+                                                        <input type="hidden" name="fechaEmision[]"  value="{{$trip['fecha_emision']}}">
+                                                        
+                                                       <input type="hidden" name="documento[]"
                                                                value="{{$trip['documento']}}">
                                                     </div>
 

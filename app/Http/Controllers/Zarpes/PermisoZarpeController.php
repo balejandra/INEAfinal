@@ -475,6 +475,7 @@ class PermisoZarpeController extends Controller
             "nombre" => '',
             "cedula" => '',
             "fecha_vencimiento" => '',
+            "fecha_emision" => '',
             "documento" => ''
         ];
         $ctrldocumento = $request->input('ids', []);
@@ -482,6 +483,7 @@ class PermisoZarpeController extends Controller
         $nombre = $request->input('nombre', []);
         $cedula = $request->input('cedula', []);
         $fecha_vencimiento = $request->input('fechaVence', []);
+        $fecha_emision = $request->input('fechaEmision', []);
         $documento = $request->input('documento', []);
 
 
@@ -503,6 +505,7 @@ class PermisoZarpeController extends Controller
                 $trip["nombre"] = $nombre[$i];
                 $trip["cedula"] = $cedula[$i];
                 $trip["fecha_vencimiento"] = $fecha_vencimiento[$i];
+                $trip["fecha_emision"] = $fecha_emision[$i];
                 $trip["documento"] = $documento[$i];
 
 
@@ -611,19 +614,21 @@ class PermisoZarpeController extends Controller
             return redirect()->route('permisoszarpes.createStepSeven');
         } else {
             $solicitud = json_decode($request->session()->get('solicitud'), true);
+            print_r($solicitud);
 
             $codigo = $this->codigo($solicitud);
 
             $solicitud['nro_solicitud'] = $codigo;
              $saveSolicitud = PermisoZarpe::create($solicitud);
 
-            $tripulantes = $request->session()->get('tripulantes');
+           $tripulantes = $request->session()->get('tripulantes');
             for ($i = 0; $i < count($tripulantes); $i++) {
                 $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
                 $trip = Tripulante::create($tripulantes[$i]);
-                //  print_r($tripulantes[$i]); echo "<br>";
-
+                
             }
+            
+        
 
             $pasajeros = $request->session()->get('pasajeros');
             //print_r( $pasajeros);
@@ -723,12 +728,13 @@ class PermisoZarpeController extends Controller
         $data = Saime_cedula::where('cedula', $cedula)
             ->where('fecha_nacimiento', $newDate)
             ->get();
+            
         if (is_null($data->first())) {
             $data2 = "saimeNotFound"; // no encontrado en saime
         } else {
             $fechav=LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
             
-            $data2 = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->get();
+            $data2 = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
             if (is_null($data2->first())) {
                 $data2 = "gmarNotFound"; // no encontrado en Gmar
             } else {
