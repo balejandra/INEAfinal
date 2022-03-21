@@ -68,6 +68,7 @@ return array(
     'App\\Models\\Zarpes\\Equipo' => $baseDir . '/app/Models/Zarpes/Equipo.php',
     'App\\Models\\Zarpes\\EquipoPermisoZarpe' => $baseDir . '/app/Models/Zarpes/EquipoPermisoZarpe.php',
     'App\\Models\\Zarpes\\EstablecimientoNautico' => $baseDir . '/app/Models/Zarpes/EstablecimientoNautico.php',
+    'App\\Models\\Zarpes\\EstablecimientoNauticoUser' => $baseDir . '/app/Models/Zarpes/EstablecimientoNauticoUser.php',
     'App\\Models\\Zarpes\\Pasajero' => $baseDir . '/app/Models/Zarpes/Pasajero.php',
     'App\\Models\\Zarpes\\PermisoZarpe' => $baseDir . '/app/Models/Zarpes/PermisoZarpe.php',
     'App\\Models\\Zarpes\\Status' => $baseDir . '/app/Models/Zarpes/Status.php',

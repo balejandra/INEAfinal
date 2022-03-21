@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateZarpeRevisionsTable extends Migration
+class CreateEstablecimientoNauticoUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateZarpeRevisionsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_zarpes_schema')->create('zarpe_revisions', function (Blueprint $table) {
+        Schema::connection('pgsql_zarpes_schema')->create('establecimiento_nautico_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('public.users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->unsignedBigInteger('permiso_zarpe_id');
-            $table->foreign('permiso_zarpe_id')->references('id')->on('permiso_zarpes')
+            $table->unsignedBigInteger('establecimiento_nautico_id');
+            $table->foreign('establecimiento_nautico_id')->references('id')->on('establecimiento_nauticos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->string('accion');
-            $table->string('motivo');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -36,6 +34,6 @@ class CreateZarpeRevisionsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('pgsql_zarpes_schema')->dropIfExists('zarpe_revisions');
+        Schema::connection('pgsql_zarpes_schema')->dropIfExists('establecimiento_nautico_user');
     }
 }

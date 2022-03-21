@@ -127,18 +127,18 @@
     <tbody>
     <thead>
     <tr>
+        <th>Nombre y Apellido</th>
         <th>Accion</th>
         <th>Motivo</th>
+        <th>Fecha</th>
     </tr>
     </thead>
     @forelse($revisiones as $revision)
         <tr>
-            <td>
-            {{$revision->accion}}
-
-            <td>
-                {{$revision->motivo}}
-            </td>
+            <td>{{$revision->user->nombres}} {{$revision->user->apellidos}}</td>
+            <td>{{$revision->accion}}</td>
+            <td>{{$revision->motivo}}</td>
+            <td>{{$revision->created_at}}</td>
         </tr>
     @empty
         <tr>
@@ -150,21 +150,93 @@
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    @if ($capitania[0]->user_id==auth()->user()->id)
+    @if ($capitania[0]->user_id==auth()->user()->id or $comodoro)
         @can('aprobar-zarpe')
-            @if(($permisoZarpe->status->id=='2') || ($permisoZarpe->status->id=='3'))
-                <a href="{{route('status',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}" class="btn btn-primary" title="Aprobar">
+            @if(($permisoZarpe->status->id=='3'))
+                <a href="{{route('status',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}"
+                   class="btn btn-primary" title="Aprobar">
                     Aprobar
                 </a>
             @endif
         @endcan
         @can('rechazar-zarpe')
             @if ($permisoZarpe->status->id=='3')
-                <a href="{{route('status',[$permisoZarpe->id,'rechazado',$permisoZarpe->establecimiento_nautico_id])}}" class="btn btn-danger" title="Rechazar">
+                <a class="btn btn-danger" title="Rechazar" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Rechazar
                 </a>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop"
+                     data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="staticBackdropLabel"
+                     aria-hidden="true">
+                    <form
+                        action="{{route('status',[$permisoZarpe->id,'rechazado',$permisoZarpe->establecimiento_nautico_id])}}">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        id="staticBackdropLabel">Rechazar
+                                        Solicitud
+                                        Zarpe</h5>
+                                    <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Por favor indique el motivo del
+                                        rechado de la
+                                        Solicitud
+                                        Nro.{{ $permisoZarpe->nro_solicitud }}</p>
+                                    <div class="col-sm-12">
+                                        <div class="input-group mb-3">
+                                            <select class="form-select" aria-label="motivo" id="motivo1" name="motivo" onchange="motivoRechazo();" required>
+                                                <option value="">Seleccione un motivo</option>
+                                                <option value="Disposiciones del Ejecutivo Nacional">Disposiciones del Ejecutivo Nacional.</option>
+                                                <option value="Instrucciones especiales de la autoridad acuática">Instrucciones especiales de la autoridad acuática.</option>
+                                                <option value="Condiciones meteorológicas adversas">Condiciones meteorológicas adversas.</option>
+                                                <option value="4">Observaciones en los documentos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group"
+                                         style="display: none"
+                                         id="inputmotivo">
+                                        <input type="text"
+                                               class="form-control"
+                                               name="motivo" id="motivo2">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cerrar
+                                    </button>
+                                    <button type="submit"
+                                            class="btn btn-primary">
+                                        Rechazar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             @endif
         @endcan
+            @if(($permisoZarpe->status->id=='1'))
+                @can('informar-navegacion')
+                    <a class="btn btn-warning"
+                       href=" {{route('status',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip">
+                        Navegando
+                    </a>
+                @endcan
+            @endif
+            @if(($permisoZarpe->status->id=='5'))
+                @can('anular-sar')
+                    <a class="btn btn-outline-danger"
+                       href=" {{route('status',[$permisoZarpe->id,'anulado_sar',$permisoZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip">
+                        Anular por SAR
+                    </a>
+                @endcan
+            @endif
     @endif
 </div>
-

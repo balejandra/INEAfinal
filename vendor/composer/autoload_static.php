@@ -689,6 +689,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'App\\Models\\Zarpes\\Equipo' => __DIR__ . '/../..' . '/app/Models/Zarpes/Equipo.php',
         'App\\Models\\Zarpes\\EquipoPermisoZarpe' => __DIR__ . '/../..' . '/app/Models/Zarpes/EquipoPermisoZarpe.php',
         'App\\Models\\Zarpes\\EstablecimientoNautico' => __DIR__ . '/../..' . '/app/Models/Zarpes/EstablecimientoNautico.php',
+        'App\\Models\\Zarpes\\EstablecimientoNauticoUser' => __DIR__ . '/../..' . '/app/Models/Zarpes/EstablecimientoNauticoUser.php',
         'App\\Models\\Zarpes\\Pasajero' => __DIR__ . '/../..' . '/app/Models/Zarpes/Pasajero.php',
         'App\\Models\\Zarpes\\PermisoZarpe' => __DIR__ . '/../..' . '/app/Models/Zarpes/PermisoZarpe.php',
         'App\\Models\\Zarpes\\Status' => __DIR__ . '/../..' . '/app/Models/Zarpes/Status.php',
