@@ -64,10 +64,12 @@
                                                     
                                                     @if(isset($tripulantes))
                                                         @php 
+
                                                             $texto='NO'; $checked=""; 
                                                         @endphp
-                                                        @if(is_int($tripulantes[0]))
+                                                        @if(is_int($tripulantes[0]) && $tripulantes[0]==0)
                                                             @php 
+                                                             
                                                                 $texto='SI';   
                                                                 $checked="checked"; 
                                                             @endphp
@@ -131,13 +133,13 @@
 
                                         <div class="row px-3">
                                             <div class="table-responsive">
-                                                <table class="table">
+                                                <table class="table" id="tableTripulantes">
                                                     <thead>
                                                     <tr>
                                                         <th>Capitan</th>
                                                         <th>Cédula</th>
                                                         <th>Nombres y Apellidos</th>
-                                                        <th>fecha vencimiento</th>
+                                                        <th>fecha emisión</th>
                                                         <th>Documento</th>
 
 
@@ -156,9 +158,7 @@
 
                                                         @endphp
                                                         <tr>
-                                                            <td colspan="6" class="text-center">
-                                                                Sin registros para mostrar
-                                                            </td>
+                                                            <td colspan="6" class="text-center" id="nodata">Sin registros para mostrar</td>
                                                         </tr>
                                                     @else
 
@@ -176,7 +176,7 @@
                                                                 @endif
                                                                 <td>{{$trip["cedula"]}}</td>
                                                                 <td>{{$trip["nombre"]}}</td>
-                                                                <td>{{$trip["fecha_vencimiento"]}}</td>
+                                                                <td>{{$trip["fecha_emision"]}}</td>
                                                                 <td>{{$trip["documento"]}}</td>
 
 
@@ -216,7 +216,7 @@
                                                         <input type="hidden" name="nombre[]"
                                                                value="{{$trip['nombre']}}">
                                                         <input type="hidden" name="fechaVence[]"
-                                                               value="{{$trip['fecha_vencimiento']}}">
+                                                               value="{{$trip['fecha_emision']}}">
                                                         <input type="hidden" name="documento[]"
                                                                value="{{$trip['documento']}}">
                                                     </div>

@@ -149,14 +149,22 @@
 </table>
 
 <!-- Submit Field -->
+<<<<<<< HEAD
 <div class="form-group col-sm-12">
+=======
+<div class="form-group col-sm-12 text-center">
+>>>>>>> 054054cdcff265680a5de5661faed5db09131663
     @if ($capitania[0]->user_id==auth()->user()->id or $comodoro)
         @can('aprobar-zarpe')
             @if(($permisoZarpe->status->id=='3'))
                 <a href="{{route('status',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}"
+<<<<<<< HEAD
                    class="btn btn-primary" title="Aprobar">
+=======
+                   class="btn btn-success" title="Aprobar">
+>>>>>>> 054054cdcff265680a5de5661faed5db09131663
                     Aprobar
-                </a>
+                </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             @endif
         @endcan
         @can('rechazar-zarpe')

@@ -113,16 +113,25 @@
                                         </div>
 
                                         <div class="row px-3">
+                                            
+
+                                            <div class="col-md-12 py-2">
+                                                <b>Cantidad de pasajeros disponible para esta embarcación:</b> 
+                                                <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
+                                                    {{ $cantPasajeros ?? '' }}
+                                                </span>
+                                            </div>
+
                                             <div class="table-responsive">
-                                                <table class="table">
+                                                <table class="table table-bordered">
                                                     <thead>
                                                     <tr>
-                                                        <th>Cédula</th>
+                                                        <th width="18%">Cédula</th>
                                                         <th>Nombres</th>
                                                         <th>Apellidos</th>
-                                                        <th>sexo</th>
+                                                        <th width="5%">sexo</th>
                                                         <th>Fecha nac.</th>
-                                                        <th>Menor</th>
+                                                        <th width="5%">Menor</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody id="pasajeros">
@@ -145,12 +154,12 @@
                                                                     -{{$position["nro_doc"]}} </td>
                                                                 <td>{{$position["nombres"]}}</td>
                                                                 <td>{{$position["apellidos"]}}</td>
-                                                                <td>{{$position["sexo"]}}</td>
+                                                                <td class="text-center">{{$position["sexo"]}}</td>
                                                                 <td>{{$position["fecha_nacimiento"]}}</td>
                                                                 @if($position["menor_edad"]==1)
-                                                                    <td>SI</td>
+                                                                    <td class="text-center">SI</td>
                                                                 @else
-                                                                    <td>NO</td>
+                                                                    <td class="text-center">NO</td>
                                                                 @endif
                                                             </tr>
                                                         @endforeach

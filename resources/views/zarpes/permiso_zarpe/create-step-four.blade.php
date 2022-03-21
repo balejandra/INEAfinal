@@ -10,6 +10,15 @@
         <div class="animated fadeIn">
             @include('flash::message')
             <div class="row">
+                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
@@ -22,6 +31,8 @@
                             </div>
 
                         </div>
+
+
                         <div class="card-body" style="min-height: 350px;">
 
                             @include('zarpes.permiso_zarpe.stepsIndicator')
@@ -31,34 +42,39 @@
                                   method="POST">
                                 @csrf
 
+                                
                                 <div class="card">
-
 
                                     <div class="card-body">
 
-                                        @if ($errors->any())
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
+                                        
 
                                         <div id="msjRuta">
 
                                         </div>
 
-                                        <div class="row">
+                                        <div class="row px-1">
 
-                                            <div class="col-md-4">
+                                            <div class="col-9 px-0">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <label>Coordenadas del punto de escala:</label>
+                                                        @include('zarpes.permiso_zarpe.map')
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-3 px-0 bg-light rounded">
+                                               
+
+                                            <div class="col-md-12 px-0 py-2">
 
 
                                                 <div class="form-group col-sm-12">
-                                                    {!! Form::label('0', 'Origen:') !!}
+                                                    {!! Form::label('', 'Establecimiento náutico origen:') !!}
 
-                                                    <select id="origen" name="origen"
+                                                    <select id="origen" name="establecimientoNáuticoOrigen"
                                                             class="form-control custom-select">
                                                         <option value="0">Seleccione</option>
                                                         @foreach ($EstNauticos as $en)
@@ -71,7 +87,7 @@
 
                                             </div>
 
-                                            <div class="col-md-4"> 
+                                            <div class="col-md-12 py-2"> 
                                                 @php
                                                 $fechaActual=new DateTime();
                                                 $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
@@ -84,50 +100,68 @@
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-12 py-2">
 
-                                                {!! Form::label('regreso', 'Fecha/hora regreso:') !!}
+                                                {!! Form::label('regreso', 'Fecha/hora llegada:') !!}
                                                 <input type="datetime-local" id="regreso" name="regreso"
                                                        class="form-control" onblur="compararFechas()">
 
                                             </div>
 
+                                            <div class="col-md-12 px-0">
+                                                <div class="form-group col-sm-12 py-2">
+                                                    {!! Form::label('0', 'Establecimiento náutico destino:') !!}
 
-                                        </div>
+                                                    <select id="estNautioDestino" name="establecimientoNáuticoDestino" title="Selección el punto de escala en el mapa para visualizar los establecimientos náuticos de la circunscripción de destino" 
+                                                            class="form-control custom-select">
+                                                        <option value="">Seleccione</option>
+                                                         
+                                                    </select>
+                                                </div>
 
-                                        <div class="row px-3">
-                                            <div class="col-md-5">
+                                            </div>
+
+                                            <div  class="col-md-12 py-2">
+                                                {!! Form::label('0', 'Circunscripción acuática de destino:') !!}
+                                                <div class="col-md-12 p-0 text-center" id="capiDestino"></div>
+
+                                            </div>                         
+
+                                         
+                                            <div class="col-md-12 py-2">
 
                                                 <div class="form-group">
-                                                    <label for="title">Latitud:</label>
+                                                    <label for="title">Latitud punto de escala:</label>
                                                     <input type="text" class="form-control" id="latitud" readonly
                                                            name="latitud" data-lat="">
 
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-5">
+                                            <div class="col-md-12 py-2">
 
                                                 <div class="form-group">
-                                                    <label for="title">Longitud:</label>
+                                                    <label for="title">Longitud punto de escala:</label>
                                                     <input type="text" class="form-control" id="longitud" readonly
                                                            name="longitud" data-long="">
 
                                                 </div>
 
                                             </div>
-                                            <input type="hidden" class="form-control" id="capitaniaDestino"
-                                                   name="coordenadasDestino">
+                                            <input type="hidden" class="form-control" id="capitaniaDestino"  name="coordenadasDestino">
 
+ 
 
-                                        </div>
+                                            
+                                         
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label>Coordenadas destino:</label>
-                                                @include('zarpes.permiso_zarpe.map')
                                             </div>
+                                            
                                         </div>
+
+                                        
+
+                                        
 
 
                                     </div>

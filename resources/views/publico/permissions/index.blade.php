@@ -32,6 +32,7 @@
                             </div>
                             @endcan
                         </div>
+                         
                         <div class="card-body">
                             <table class="table table-responsive-sm table-bordered table-striped" id="TablePermissions">
                                 <thead>

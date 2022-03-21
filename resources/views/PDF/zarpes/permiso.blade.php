@@ -141,8 +141,8 @@
 
 <header class="cid-sYSK2SiKvy">
 
-    <div style="position:absolute; left:200pt; width:1400pt;">
-        <img class="img-rounded" height="1400px" src="{{ public_path('images/venezuela.svg') }}">
+    <div style="padding-top: 20pt; position:absolute; left:200pt; width:100pt;">
+        <img class="img-rounded" height="100px" src="{{ public_path('images/venezuela.jpeg') }}">
     </div>
 
     <div style="position:fixed;padding-top: 40pt; left: 420pt;">
@@ -159,7 +159,7 @@
 
         <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate($QR)) !!} ">
     </div>
-    <div style="padding-top:100pt; padding-left:130pt;">
+    <div style="padding-top:120pt; padding-left:130pt;">
         <p class=" text-center mbr-text display-5">
             República Bolivariana de Venezuela<br>
             Ministerio del Poder Popular para el Transporte<br>

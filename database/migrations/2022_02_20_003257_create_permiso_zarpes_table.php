@@ -35,7 +35,7 @@ class CreatePermisoZarpesTable extends Migration
                 ->onUpdate('cascade');
             $table->dateTime('fecha_hora_salida');
             $table->dateTime('fecha_hora_regreso');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('status')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

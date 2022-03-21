@@ -24,13 +24,21 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="pills-origen-tab" data-bs-toggle="pill"
                                             data-bs-target="#origen" type="button" role="tab" aria-controls="origen"
+<<<<<<< HEAD
                                             aria-selected="true">Origen
+=======
+                                            aria-selected="true">Solicitudes de zarpe
+>>>>>>> 054054cdcff265680a5de5661faed5db09131663
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="pills-destino-tab" data-bs-toggle="pill"
                                             data-bs-target="#destino" type="button" role="tab" aria-controls="destino"
+<<<<<<< HEAD
                                             aria-selected="false">Destino
+=======
+                                            aria-selected="false">Información de arribos en su jurisdicción
+>>>>>>> 054054cdcff265680a5de5661faed5db09131663
                                     </button>
                                 </li>
                             </ul>
@@ -79,7 +87,11 @@
                                                     @if(($permisoOrigenZarpe->status->id=='3'))
                                                         @can('aprobar-zarpe')
                                                             <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
+<<<<<<< HEAD
                                                                class="btn btn-primary btn-sm" title="Aprobar">
+=======
+                                                               class="btn btn-success btn-sm" title="Aprobar">
+>>>>>>> 054054cdcff265680a5de5661faed5db09131663
                                                                 <i class="fa fa-check"></i>
                                                             </a>
                                                         @endcan
@@ -110,7 +122,11 @@
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <p>Por favor indique el motivo del
+<<<<<<< HEAD
                                                                                     rechado de la
+=======
+                                                                                    rechazo de la
+>>>>>>> 054054cdcff265680a5de5661faed5db09131663
                                                                                     Solicitud
                                                                                     Nro.{{ $permisoOrigenZarpe->nro_solicitud }}</p>
                                                                                 <div class="col-sm-12">
@@ -145,7 +161,11 @@
                                                         @endcan
                                                     @endif
                                                     @can('consultar-zarpe')
+<<<<<<< HEAD
                                                         <a class="btn btn-sm btn-success"
+=======
+                                                        <a class="btn btn-sm btn-primary"
+>>>>>>> 054054cdcff265680a5de5661faed5db09131663
                                                            href=" {{route('permisoszarpes.show',$permisoOrigenZarpe->id)}}">
                                                             <i class="fa fa-search"></i>
                                                         </a>
@@ -225,7 +245,11 @@
                                                     @endif
                                                     <td>
                                                         @can('consultar-zarpe')
+<<<<<<< HEAD
                                                             <a class="btn btn-sm btn-success"
+=======
+                                                            <a class="btn btn-sm btn-primary"
+>>>>>>> 054054cdcff265680a5de5661faed5db09131663
                                                                href=" {{route('permisoszarpes.show',$permisoDestinoZarpe->id)}}">
                                                                 <i class="fa fa-search"></i>
                                                             </a>
