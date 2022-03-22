@@ -38,21 +38,21 @@ class PermisoEstadiaController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $user = auth()->id();
         if (auth()->user()->hasPermissionTo('listar-estadia-todos')) {
             $permisoEstadias = $this->permisoEstadiaRepository->all();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
         } else if (auth()->user()->hasPermissionTo('listar-estadia-generados')) {
-            $user = auth()->id();
             $permisoEstadias = PermisoEstadia::where('user_id', $user)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
         } else if (auth()->user()->hasPermissionTo('listar-estadia-coordinador')) {
-            $permisoEstadias = $this->permisoEstadiaRepository->all();
+            $coordinador = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $coordinador)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
         } else if (auth()->user()->hasPermissionTo('listar-estadia-capitania-destino')) {
-            $user = auth()->id();
             $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
             $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $capitania)->get();
             return view('zarpes.permiso_estadias.index')
@@ -96,7 +96,10 @@ class PermisoEstadiaController extends AppBaseController
         $estadia->pasaporte_capitan = $request->pasaporte_capitan;
         $estadia->nombre_capitan = $request->nombre_capitan;
         $estadia->cant_tripulantes = $request->cant_tripulantes;
+        $estadia->cant_pasajeros = $request->cant_pasajeros;
         $estadia->arqueo_bruto = $request->arqueo_bruto;
+        $estadia->eslora = $request->eslora;
+        $estadia->potencia_kw = $request->potencia_kw;
         $estadia->actividades = $request->actividades;
         $estadia->puerto_origen = $request->puerto_origen;
         $estadia->capitania_id = $request->capitania_id;

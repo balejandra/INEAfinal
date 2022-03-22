@@ -50,12 +50,26 @@
     {!! Form::number('cant_tripulantes', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
+    <div class="form-group col-sm-6">
+        {!! Form::label('cant_pasajeros', 'Cantidad de Pasajeros:') !!}
+        {!! Form::number('cant_pasajeros', null, ['class' => 'form-control', 'required']) !!}
+    </div>
+
 <!-- Arqueo Bruto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('arqueo_bruto', 'Arqueo Bruto del Buque:') !!}
     <input type="text" name="arqueo_bruto" id="arqueo_bruto" class="form-control" required onblur="ochina($('#arqueo_bruto').val())">
 </div>
+    <!-- Eslora Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('eslora', 'Eslora:') !!}
+        {!! Form::text('eslora', null, ['class' => 'form-control', 'required']) !!}
+    </div>
 
+    <div class="form-group col-sm-6">
+        {!! Form::label('potencia_kw', 'Potencia KW:') !!}
+        {!! Form::text('potencia_kw', null, ['class' => 'form-control', 'required']) !!}
+    </div>
 <!-- Actividades Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('actividades', 'Actividades que realizara:') !!}

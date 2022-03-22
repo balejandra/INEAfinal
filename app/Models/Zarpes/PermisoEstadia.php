@@ -21,10 +21,13 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $tipo_buque
  * @property string $nacionalidad_buque
  * @property string $arqueo_bruto
+ * @property string $eslora
+ * @property string $potencia_kw
  * @property string $nombre_propietario
  * @property string $nombre_capitan
  * @property string $pasaporte_capitan
  * @property integer $cant_tripulantes
+ * @property integer $cant_pasajeros
  * @property string $actividades
  * @property string $puerto_origen
  * @property unsignedBigInteger $capitania_id
@@ -55,10 +58,13 @@ class PermisoEstadia extends Model implements Auditable
         'tipo_buque',
         'nacionalidad_buque',
         'arqueo_bruto',
+        'eslora',
+        'potencia_kw',
         'nombre_propietario',
         'nombre_capitan',
         'pasaporte_capitan',
         'cant_tripulantes',
+        'cant_pasajeros',
         'actividades',
         'puerto_origen',
         'capitania_id',
@@ -82,10 +88,13 @@ class PermisoEstadia extends Model implements Auditable
         'tipo_buque' => 'string',
         'nacionalidad_buque' => 'string',
         'arqueo_bruto' => 'string',
+        'eslora'=>'string',
+        'potencia_kw'=>'string',
         'nombre_propietario' => 'string',
         'nombre_capitan' => 'string',
         'pasaporte_capitan' => 'string',
         'cant_tripulantes' => 'integer',
+        'cant_pasajeros' => 'integer',
         'actividades' => 'string',
         'puerto_origen' => 'string',
         'establecimiento_nautico_destino' => 'integer',
@@ -106,10 +115,13 @@ class PermisoEstadia extends Model implements Auditable
         'tipo_buque' => 'required',
         'nacionalidad_buque' => 'required',
         'arqueo_bruto' => 'required',
+        'eslora'=>'required',
+        'potencia_kw'=>'required',
         'nombre_propietario' => 'required',
         'nombre_capitan' => 'required',
         'pasaporte_capitan' => 'required',
         'cant_tripulantes' => 'required',
+        'cant_pasajeros' => 'required',
         'actividades' => 'required',
         'puerto_origen' => 'required',
         'capitania_id' => 'required',
