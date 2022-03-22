@@ -85,3 +85,44 @@ function getmatricula(data1) {
         });
 
 }
+
+
+function getPermisoEstadia(data) {
+    divError = document.getElementById("errorPermiso");
+    tableEstadiaVAl = document.getElementById("tableEstadiaVAl");
+
+
+    $.ajax({
+        url: route('validationStepTwoE'),
+        data: {permiso: data}
+
+    })// This will be called on success
+    .done(function (response) {
+        let resp=JSON.parse(response);
+          
+            if(resp=="sinCoincidencias"){
+                divError.innerHTML='<div class="alert alert-danger"> Número de permiso de estadía no encontrado. </div>';
+                    tableEstadiaVAl.style.display='none';
+                
+            }else{
+                document.getElementById("solicitud").innerHTML=resp[0].nro_solicitud;
+                document.getElementById("nombre").innerHTML=resp[0].nombre_buque;
+                document.getElementById("nacionalidad").innerHTML=resp[0].nacionalidad_buque;
+                document.getElementById("tipo").innerHTML=resp[0].tipo_buque;
+                document.getElementById("permiso_de_estadia").value=resp[0].id;
+
+
+                    tableEstadiaVAl.style.display='';
+
+            }
+
+            console.log(resp);
+    })
+
+        // This will be called on error
+    .fail(function (response) {
+            console.log(response);
+             
+    });
+
+}

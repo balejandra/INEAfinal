@@ -9,6 +9,10 @@
     <div class="container-fluid">
         <div class="animated fadeIn">
              @include('flash::message')
+             <div class="col-md-12" id="errorPermiso">
+          
+
+            </div>
              <div class="row">
                  <div class="col-lg-12">
                      <div class="card">
@@ -55,6 +59,33 @@
                                                 <br>
                                                 <button type="button" class="btn btn-primary" onclick="getPermisoEstadia($('#permiso').val())">Verificar</button>
                                             </div>
+                                        </div>
+
+                                        <div class="row justify-content-center">
+                                        	<div class="table-responsive col-md-8" id="tableEstadiaVAl" style="display:none;" >
+                                        		<table  class="table table-bordered"  >
+                                        			<tr>
+                                        				<th class="bg-light" width="40%">Nro. solicitud</th>
+                                        				<td id="solicitud"></td>
+                                        			</tr>
+                                        			<tr>
+                                        				<th class="bg-light">Nombre de embarcación</th>
+                                        				<td id="nombre"></td>
+                                        			</tr>
+                                        			<tr>
+                                        				<th class="bg-light">Tipo</th>
+                                        				<td id="tipo"></td>
+                                        			</tr>
+                                        			<tr>
+                                        				<th class="bg-light">Nacionalidad</th>
+                                        				<td id="nacionalidad"></td>
+                                        			</tr>
+
+                                        		</table>
+
+                                        		<input type="hidden" id="permiso_de_estadia" name="permiso_de_estadia" value="">
+
+                                        	</div>
                                         </div>
 				                          
 				                    </div>

@@ -54,7 +54,7 @@
                     @endif
                     @can('informar-arribo')
                         @if ($permisoZarpe->status->id==5)
-                            <a class="btn btn-sm btn-primary"
+                            <a class="btn btn-sm btn-warning"
                                href="{{route('status',[$permisoZarpe->id,'cerrado',0])}}" data-toggle="tooltip"
                                data-bs-placement="bottom" title="Informar Arribo">
                                 <i class="fas fa-anchor"></i>

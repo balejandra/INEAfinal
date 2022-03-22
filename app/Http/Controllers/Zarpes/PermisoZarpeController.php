@@ -25,6 +25,7 @@ use App\Models\Gmar\LicenciasTitulosGmar;
 use App\Models\Publico\CoordenadasCapitania;
 use App\Models\Publico\Capitania;
 use App\Models\Sgm\TiposCertificado;
+use App\Models\Zarpes\PermisoEstadia;
 
 use Flash;
 use Illuminate\Support\Facades\Session;
@@ -310,16 +311,38 @@ class PermisoZarpeController extends Controller
 
     }
 
+    public function validationStepTwoE(Request $request){
+        $permiso = $_REQUEST['permiso'];
+
+        $permisoEstadia= PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
+
+
+        if (is_null($permisoEstadia->first())) {
+             
+            echo json_encode("sinCoincidencias");
+        } else {
+            echo json_encode($permisoEstadia);
+
+        }
+        //$solicitud = json_decode($request->session()->get('solicitud'), true);
+        ///$solicitud['permiso_estadia_id'] = $perisoEstadia;
+    }
+
 
     public function permissionCreateSteptwoE(Request $request)
     {
-        
+        $permiso=$request->input('permiso');
         $validatedData = $request->validate([
             'permiso' => 'required',
+            'permiso_de_estadia'=> 'required'
         ]);
+        $idpermiso = $_REQUEST['permiso_de_estadia'];
 
+        $permisoEstadia= PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
+         
+        print_r( $request->input('permiso_de_estadia'));
+       // return redirect()->route('permisoszarpes.createStepThree');
 
-        return redirect()->route('permisoszarpes.createStepThree');
 
     }
 
@@ -793,8 +816,8 @@ class PermisoZarpeController extends Controller
 
 
     public function updateStatus($id, $status, $establecimiento)
-    {
-        if ((auth()->user()->getRoleNames()[0] === "Capitán") or (auth()->user()->getRoleNames()[0] === "comodoro_aprobador"))  {
+    {  
+       // if ((auth()->user()->getRoleNames()[0] === "Capitán") or (auth()->user()->getRoleNames()[0] === "comodoro_aprobador"))  {
             if ($status === 'aprobado') {
                 $transaccion = PermisoZarpe::find($id);
                 $idstatus = Status::find(1);
@@ -897,7 +920,7 @@ class PermisoZarpeController extends Controller
             }
 
 
-        } elseif (auth()->user()->getRoleNames()[0] === "Usuario web") {
+      //  } elseif (auth()->user()->getRoleNames()[0] === "Usuario web") {
             if ($status === 'cerrado') {
                 $transaccion = PermisoZarpe::find($id);
                 $idstatus = Status::find(4);
@@ -937,7 +960,7 @@ class PermisoZarpeController extends Controller
                 return redirect(route('permisoszarpes.index'));
             }
 
-        }
+        //}
     }
 
     /**
