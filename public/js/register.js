@@ -9,10 +9,14 @@ function showContent() {
         $("#apellidosdivint").remove();
         $("#nombres").val("");
         $('#btonregister').prop('disabled', false);
+
     var sel = document.getElementById('tipo_identificacion');
     $("#tipo_identificacion").empty()
     sel.options[0] = new Option('RIF', 'rif');
     $("#tipo_identificacion").val("rif");
+
+    pref=document.getElementById('pref_rif')
+    pref.style.display='block';
 }
 
 function showContentNatural() {
@@ -47,6 +51,8 @@ function showContentNatural() {
     $("#tipo_identificacion").empty()
     sel.options[0] = new Option('Cedula', 'cedula');
     sel.options[1] = new Option('Pasaporte', 'pasaporte');
+    pref=document.getElementById('pref_rif')
+    pref.style.display='none';
 }
 
 function changetipodocumento() {
