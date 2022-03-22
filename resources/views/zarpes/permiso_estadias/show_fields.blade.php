@@ -43,8 +43,20 @@
         <td>{{ $permisoEstadia->cant_tripulantes }}</td>
     </tr>
     <tr>
+        <th class="bg-light">Numero Pasajeros</th>
+        <td>{{ $permisoEstadia->cant_pasajeros }}</td>
+    </tr>
+    <tr>
         <th class="bg-light">Arqueo Bruto</th>
         <td>{{ $permisoEstadia->arqueo_bruto }}</td>
+    </tr>
+    <tr>
+        <th class="bg-light">Eslora</th>
+        <td>{{ $permisoEstadia->eslora }}</td>
+    </tr>
+    <tr>
+        <th class="bg-light">Potencia KW</th>
+        <td>{{ $permisoEstadia->potencia_kw }}</td>
     </tr>
     <tr>
         <th class="bg-light">Actividades</th>
