@@ -75,6 +75,8 @@ function getmatricula(data1) {
         // This will be called on error
         .fail(function (response) {
             console.log(response);
+             divError.innerHTML='<div class="alert alert-danger"> Error en la Matricula</div>';
+            table.style.display='none';
             alert('Error en la Matricula');
             table = document.getElementById("table-buque");
             table.style.display='none';
@@ -104,15 +106,22 @@ function getPermisoEstadia(data) {
                 divError.innerHTML='<div class="alert alert-danger"> Número de permiso de estadía no encontrado. </div>';
                     tableEstadiaVAl.style.display='none';
                 
+            }else if(resp=='permisoPorCerrar'){
+                divError.innerHTML='<div class="alert alert-danger">La embarcación con el número de registro <b>'+resp[0].nro_registro+'</b> posee una solicitud de permiso de zarpe que no ha sido cerrada, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
+
+                    tableEstadiaVAl.style.display='none';
             }else{
+
+
                 document.getElementById("solicitud").innerHTML=resp[0].nro_solicitud;
                 document.getElementById("nombre").innerHTML=resp[0].nombre_buque;
                 document.getElementById("nacionalidad").innerHTML=resp[0].nacionalidad_buque;
                 document.getElementById("tipo").innerHTML=resp[0].tipo_buque;
+                document.getElementById("nro_registro").innerHTML=resp[0].nro_registro;
+
                 document.getElementById("permiso_de_estadia").value=resp[0].id;
                 document.getElementById("numero_registro").value=resp[0].nro_registro;
-                document.getElementById("nro_registro").value=resp[0].nro_registro;
-
+                 
 
                     tableEstadiaVAl.style.display='';
 
@@ -124,7 +133,8 @@ function getPermisoEstadia(data) {
         // This will be called on error
     .fail(function (response) {
             console.log(response);
-             
+             divError.innerHTML='<div class="alert alert-danger"> Ha ocurrido un error durante la búsqueda de la información de la embarcación.</div>';
+            table.style.display='none';
     });
 
 }
