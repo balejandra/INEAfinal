@@ -52,6 +52,8 @@ class PermisoZarpe extends Model implements Auditable
         'fecha_hora_salida',
         'fecha_hora_regreso',
         'status_id',
+        'establecimiento_nautico_destino_id',
+        'descripcion_navegacion_id',
     ];
 
     /**
@@ -67,7 +69,9 @@ class PermisoZarpe extends Model implements Auditable
         'coordenadas' => 'string',
         'fecha_hora_salida' => 'datetime',
         'fecha_hora_regreso' => 'datetime',
-         'user_id' => 'integer'
+         'user_id' => 'integer',
+         'establecimiento_nautico_destino_id'=> 'integer',
+        'descripcion_navegacion_id'=> 'integer'
     ];
 
     /**
@@ -87,6 +91,9 @@ class PermisoZarpe extends Model implements Auditable
         'fecha_hora_salida' => 'required',
         'fecha_hora_regreso' => 'required',
         'status_id' => 'required',
+        'establecimiento_nautico_destino_id'=> 'integer',
+        'descripcion_navegacion_id'=> 'integer'
+
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -129,4 +136,10 @@ class PermisoZarpe extends Model implements Auditable
     public function zarperevisions(){
         return $this->hasMany(ZarpeRevision::class);
     }
+
+    public function descripcion_navegacion():\Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(DescripcionNavegacion::class);
+    }
+
 }

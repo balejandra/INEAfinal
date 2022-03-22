@@ -1,21 +1,34 @@
-
+ 
 <table class="table table-bordered">
     <tbody>
         <tr>
-            <th class="bg-light">Nombre</th>
-            <td>{{ $capitania->nombre }}</td>
+            <th width="30%" class="bg-light">Nombre</th>
+            <td> {{$capitania->nombre}} </td>
         </tr>
         <tr>
             <th class="bg-light">Siglas</th>
-            <td>{{ $capitania->sigla }}</td>
+            <td> {{$capitania->sigla}}</td>
+        </tr>
+        <tr>
+            <th class="bg-light">Capitan asignado</th>
+            <td> 
+                
+                @if(count($capitan)>0)
+                       {{$capitan[0]->nombres}} {{$capitan[0]->apellidos}}
+
+                 @endif
+
+                </td>
         </tr>
         <tr>
             <th class="bg-light">Correo Capitan asignado</th>
-            <td>{{ $capitan->email }}</td>
+            <td> 
+                @if(count($capitan)>0)
+                    {{$capitan[0]->email}}
+                 @endif
+                  </td>
         </tr>
-
-
-
+         
     </tbody>
 </table>
 

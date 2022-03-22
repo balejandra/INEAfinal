@@ -109,21 +109,21 @@ class CapitaniaController extends AppBaseController
     public function show($id)
     {
         $capitania = $this->capitaniaRepository->find($id);
-        $capitania_user=CapitaniaUser::where('capitania_id',$id)->first()->user_id;
-       $datoscapitan=User::find($capitania_user);
-       $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
+        
+        $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
+        
+        $capitan=CapitaniaUser::where('capitania_id', $id)->join('users',  'users.id', '=','capitania_user.user_id',)->get();
         if (empty($capitania)) {
             //Flash::error('Capitania no encontrada');
 
             return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada');
         }
 
-
-
+        
         return view('publico.capitanias.show')
             ->with('capitania', $capitania)
             ->with('coords', $coords)
-            ->with('capitan',$datoscapitan);
+            ->with('capitan',$capitan);
     }
 
     /**

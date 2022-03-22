@@ -11,8 +11,8 @@ class TiposCertificado extends Model
     use SoftDeletes;
     use HasFactory;
 
-    protected $connection = 'pgsql_sgm_schema';
-    public $table = 'tipos_certificados';
+    protected $connection = 'pgsql_seguridad_maritima';
+    public $table = 'sgm.tipos_certificados';
 
     protected $dates = ['deleted_at'];
 

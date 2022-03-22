@@ -139,7 +139,7 @@
                                                         <th>Capitan</th>
                                                         <th>Cédula</th>
                                                         <th>Nombres y Apellidos</th>
-                                                        <th>fecha vencimiento</th>
+                                                        <th>fecha emisión</th>
                                                         <th>Documento</th>
 
 
@@ -176,7 +176,7 @@
                                                                 @endif
                                                                 <td>{{$trip["cedula"]}}</td>
                                                                 <td>{{$trip["nombre"]}}</td>
-                                                                <td>{{$trip["fecha_vencimiento"]}}</td>
+                                                                <td>{{$trip["fecha_emision"]}}</td>
                                                                 <td>{{$trip["documento"]}}</td>
 
 
@@ -217,7 +217,9 @@
                                                                value="{{$trip['nombre']}}">
                                                         <input type="hidden" name="fechaVence[]"
                                                                value="{{$trip['fecha_vencimiento']}}">
-                                                        <input type="hidden" name="documento[]"
+                                                        <input type="hidden" name="fechaEmision[]"  value="{{$trip['fecha_emision']}}">
+                                                        
+                                                       <input type="hidden" name="documento[]"
                                                                value="{{$trip['documento']}}">
                                                     </div>
 
