@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vageneral\AgenciaNavieraVigente;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -95,20 +96,44 @@ class RegisterController extends Controller
         event(new Registered($user));
         return $user;
         }else if($input['tipo_persona']=="juridica"){
-            $user = User::create([
-                'nombres' => $input['nombres'],
-                'tipo_identificacion' => $input['tipo_identificacion'],
-                'numero_identificacion' => $input['numero_identificacion'],
-                'telefono' => $input['telefono'],
-                'direccion' => $input['direccion'],
-                'email' => $input['email'],
-                'password' => Hash::make($input['password']),
-                'tipo_usuario' => 'Usuario web'
-            ]);
-            $role = Role::where('name', 'Usuario web')->first();
-            $user->roles()->sync($role->id);
-            event(new Registered($user));
-            return $user;
+            $rif=$input['prefijo']."-".$input['numero_identificacion'];
+            //dd($rif);
+            $naviera=AgenciaNavieraVigente::where('rifemp',$rif)->get()->last();
+           // $naviera=AgenciaNavieraVigente::all();
+           // dd($naviera);
+                if (is_null($naviera)) {
+                    $user = User::create([
+                        'nombres' => $input['nombres'],
+                        'tipo_identificacion' => $input['tipo_identificacion'],
+                        'numero_identificacion' => $input['prefijo']."-".$input['numero_identificacion'],
+                        'telefono' => $input['telefono'],
+                        'direccion' => $input['direccion'],
+                        'email' => $input['email'],
+                        'password' => Hash::make($input['password']),
+                        'tipo_usuario' => 'Usuario web'
+                    ]);
+                    $role = Role::where('name', 'Usuario web')->first();
+                    $user->roles()->sync($role->id);
+                    event(new Registered($user));
+                    return $user;
+                }else {
+                    $user = User::create([
+                        'nombres' => $input['nombres'],
+                        'tipo_identificacion' => $input['tipo_identificacion'],
+                        'numero_identificacion' => $input['prefijo']."-".$input['numero_identificacion'],
+                        'telefono' => $input['telefono'],
+                        'direccion' => $input['direccion'],
+                        'email' => $input['email'],
+                        'password' => Hash::make($input['password']),
+                        'tipo_usuario' => 'Usuario web'
+                    ]);
+                    $role = Role::where('id', 11)->first();
+                    $user->roles()->sync($role->id);
+                    event(new Registered($user));
+                    return $user;
+                }
+
+
         }
     }
 

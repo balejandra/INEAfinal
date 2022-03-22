@@ -110,6 +110,8 @@ function getPermisoEstadia(data) {
                 document.getElementById("nacionalidad").innerHTML=resp[0].nacionalidad_buque;
                 document.getElementById("tipo").innerHTML=resp[0].tipo_buque;
                 document.getElementById("permiso_de_estadia").value=resp[0].id;
+                document.getElementById("numero_registro").value=resp[0].nro_registro;
+                document.getElementById("nro_registro").value=resp[0].nro_registro;
 
 
                     tableEstadiaVAl.style.display='';

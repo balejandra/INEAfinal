@@ -39,38 +39,49 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <!--- ////// TIPO DOCUMENTO ///// -->
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-passport"></i></span>
+                                                </div>
+                                                <select class="form-select" aria-label="tipo_identificacion" id="tipo_identificacion"
+                                                        name="tipo_identificacion" onchange="changetipodocumento();" required>
+                                                    <option value="cedula">Cedula</option>
+                                                    <option value="pasaporte">Pasaporte</option>
+                                                </select>
+                                                @if ($errors->has('tipo_identificacion'))
+                                                    <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('tipo_identificacion') }}</strong>
+                                            </span>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
-                                <!--- ////// TIPO DOCUMENTO ///// -->
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-passport"></i></span>
-                                        </div>
-                                        <select class="form-select" aria-label="tipo_identificacion" id="tipo_identificacion"
-                                                name="tipo_identificacion" onchange="changetipodocumento();" required>
-                                            <option value="cedula">Cedula</option>
-                                            <option value="pasaporte">Pasaporte</option>
-                                        </select>
-                                        @if ($errors->has('tipo_identificacion'))
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $errors->first('tipo_identificacion') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
+
+
                                 <!--- /////// NUMERO DE IDENTIFICACION /////// -->
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="input-group mb-3">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="input-group mb-4">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-id-card"></i></span>
                                         </div>
+                                        <div style="width: 25%; display: none" id="pref_rif">
+                                            <select class="form-select "  aria-label="prefijo" id="prefijo" name="prefijo">
+                                                <option value="J">J</option>
+                                                <option value="G">G</option>
+                                                <option value="V">V</option>
+                                            </select>
+                                        </div>
+
                                         <input type="text"
                                                class="form-control {{ $errors->has("numero_identificacion")?"is-invalid":"" }}"
                                                name="numero_identificacion" value="{{ old('numero_identificacion') }}"
                                                placeholder="Numero de identificacion" id="numero_identificacion" required>
-                                    </div>
+                                        </div>
+
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
                                 <!-- /////// FECHA DE NACIMIENTO ///// -->

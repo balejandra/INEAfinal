@@ -9,7 +9,7 @@
     <b>Buque Registro Nro:</b>  {{$matricula}} <br>
     <b>Solicitante:</b>  {{$nombres_solic}} {{$apellidos_solic}} <br>
     <b>Visitador:</b>  {{$visitador}} <br>
-    <b>Visitador:</b>  {{$fecha_visita}} <br>
+    <b>Fecha de Visita:</b>  {{$fecha_visita}} <br>
 
 @endcomponent
     Para más detalles ingrese a la página web:

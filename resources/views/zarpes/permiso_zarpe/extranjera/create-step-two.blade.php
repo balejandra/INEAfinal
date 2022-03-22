@@ -80,10 +80,15 @@
                                         				<th class="bg-light">Nacionalidad</th>
                                         				<td id="nacionalidad"></td>
                                         			</tr>
+													<tr>
+                                        				<th class="bg-light">Número de registro</th>
+                                        				<td id="nro_registro"></td>
+                                        			</tr>
 
                                         		</table>
 
                                         		<input type="hidden" id="permiso_de_estadia" name="permiso_de_estadia" value="">
+                                        		<input type="hidden" id="numero_registro" name="numero_de_registro" value="">
 
                                         	</div>
                                         </div>
