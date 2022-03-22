@@ -58,6 +58,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::delete('/coordenadasCapitania/{coordenadasCapitania}', [App\Http\Controllers\Publico\CoordenadasCapitaniaController::class, 'destroy'])->name('coordenadasCapitania.destroy');
 
+    Route::resource('dependenciasfederales', \App\Http\Controllers\Publico\DependenciaFederalController::class);
 
 });
 

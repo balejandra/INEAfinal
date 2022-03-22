@@ -13,10 +13,13 @@ class CreateDependenciasFederalesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_zarpes_schema')->create('dependencias_federales', function (Blueprint $table) {
+        Schema::create('dependencias_federales', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->bigInteger('capitanias_id');
+            $table->bigInteger('capitania_id');
+            $table->foreign('capitania_id')->references('id')->on('capitanias')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->timestamps();
             $table->softDeletes();
         });
