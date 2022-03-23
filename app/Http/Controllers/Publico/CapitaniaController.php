@@ -16,6 +16,7 @@ use App\Models\Publico\CoordenadasCapitania;
 use DateTime;
 use Flash;
 use Response;
+use Spatie\Permission\Models\Role;
 
 class CapitaniaController extends AppBaseController
 {
@@ -72,8 +73,9 @@ class CapitaniaController extends AppBaseController
         $input = $request->all();
 
         $capitania = $this->capitaniaRepository->create($input);
+        $rolecapitan= Role::find(4);
         $capitan_user=new CapitaniaUser();
-        $capitan_user->cargo='Capitan';
+        $capitan_user->cargo=$rolecapitan->name;
         $capitan_user->user_id=$request->capitanes;
         $capitan_user->capitania_id=$capitania['id'];
         $capitan_user->save();
@@ -109,9 +111,9 @@ class CapitaniaController extends AppBaseController
     public function show($id)
     {
         $capitania = $this->capitaniaRepository->find($id);
-        
+
         $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
-        
+
         $capitan=CapitaniaUser::where('capitania_id', $id)->join('users',  'users.id', '=','capitania_user.user_id',)->get();
         if (empty($capitania)) {
             //Flash::error('Capitania no encontrada');
@@ -119,7 +121,7 @@ class CapitaniaController extends AppBaseController
             return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada');
         }
 
-        
+
         return view('publico.capitanias.show')
             ->with('capitania', $capitania)
             ->with('coords', $coords)

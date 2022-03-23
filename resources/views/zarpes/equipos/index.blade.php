@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section("titulo")
-    Estadias
+    Equipos
 @endsection
 @section('content')
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Estadia</li>
+        <li class="breadcrumb-item">Equipos</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
@@ -13,16 +13,15 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
-                             Permisos de estadia
-                             @can('crear-estadia')
-                                 <div class="card-header-actions">
-                                     <a class="btn btn-primary btn-sm"  href="{{ route('permisosestadia.create') }}">Nuevo</a>
-                                 </div>
-                             @endcan
+                             <i class="fa fa-plus-square-o fa-lg"></i>
+                             <strong>Equipos</strong>
+
+                             <div class="card-header-actions">
+                                 <a class="btn btn-primary btn-sm"  href="{{ route('equipos.create') }}">Nuevo</a>
+                             </div>
                          </div>
                          <div class="card-body">
-                             @include('zarpes.permiso_estadias.table')
+                             @include('zarpes.equipos.table')
                          </div>
                      </div>
                   </div>

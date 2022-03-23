@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Publico\CreateUserRequest;
 use App\Http\Requests\Publico\UpdateUserRequest;
+use App\Models\Publico\Capitania;
+use App\Models\Publico\CapitaniaUser;
 use App\Models\Publico\Saime_cedula;
 use App\Models\User;
 use App\Repositories\Publico\UserRepository;
@@ -54,7 +56,10 @@ class UserController extends Controller
     public function create()
     {
         $roles=Role::pluck('name','id');
-        return view('publico.users.create')->with('roles',$roles);
+        $capitanias=Capitania::pluck('nombre','id');
+        return view('publico.users.create')
+            ->with('roles',$roles)
+            ->with('capitanias',$capitanias);
     }
 
     /**
@@ -66,6 +71,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
+      //  dd($request);
         $data= new User();
         $data->email= $request->email;
         $data->nombres = $request->nombres;
@@ -77,6 +83,13 @@ class UserController extends Controller
 
         $roles=$request->input('roles', []);
         $data->roles()->sync($roles);
+        $rol=Role::select('name')->where('id',$request->roles)->get();
+
+        $cap_user= new CapitaniaUser();
+        $cap_user->cargo=$rol[0]->name;
+        $cap_user->user_id=$data->id;
+        $cap_user->capitania_id=$request->capitanias;
+        $cap_user->save();
         Flash::success('Usuario guardado exitosamente.');
 
         return redirect(route('users.index'));
@@ -112,6 +125,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $roles=Role::pluck('name','id');
+        $capitanias=Capitania::pluck('nombre','id');
         $user = $this->userRepository->find($id);
 
         if (empty($user)) {
@@ -122,7 +136,8 @@ class UserController extends Controller
 
         return view('publico.users.edit')
             ->with('user', $user)
-            ->with('roles',$roles);
+            ->with('roles',$roles)
+            ->with('capitanias',$capitanias);
     }
 
     /**
@@ -146,6 +161,13 @@ class UserController extends Controller
         $user = $this->userRepository->update($request->all(), $id);
         $roles=$request->roles ;
         $user->roles()->sync($roles);
+        $rol=Role::select('name')->where('id',$request->roles)->get();
+
+        $cap_user= new CapitaniaUser();
+        $cap_user->cargo=$rol[0]->name;
+        $cap_user->user_id=$id;
+        $cap_user->capitania_id=$request->capitanias;
+        $cap_user->save();
 
         Flash::success('Usuario actualizado con éxito.');
 
