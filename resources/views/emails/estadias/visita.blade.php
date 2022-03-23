@@ -2,7 +2,7 @@
 
     Saludos,
 
-    Su solicitud de Estadia se le ha asignado un visitador, con el siguiente detalle:
+    Su solicitud de Permiso de Estadia se le ha asignado un visitador, con el siguiente detalle:
 
 @component('mail::panel')
     <b>Nro de Solicitud:</b> {{$solicitud}} <br>
@@ -16,6 +16,7 @@
 @component('mail::button', ['url' => env('APP_URL')])
     INEA
 @endcomponent
+    Instituto Nacional de Los Espacios Acuáticos - INEA. Síguenos en: <a href="http://twitter.com/#!/INEA200">http://twitter.com/#!/INEA200</a>
 
     Sugerencia: Agregue {{$from}} a sus contactos de correo electrónico para así evitar recibir correo en spam.
     Gracias,

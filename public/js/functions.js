@@ -1,3 +1,11 @@
+function inputcant() {
+    if($("#cantidad").is(':checked')){
+        $("#cantidad").attr('value', 'true');
+    }else{
+        $("#cantidad").attr('value', 'false');
+    }
+}
+
 //-------------------Tooltips----------------------------
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
@@ -59,7 +67,7 @@ $(document).ready(function() {
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ],
-         
+
     });
 
     $('#permisoZarpesdestino-table').DataTable({
@@ -172,7 +180,6 @@ $(document).ready(function() {
 } );
 
 
-
 //-------------------------------------------------------------------------------
 
 function agregarCoordenadas(){
@@ -271,7 +278,7 @@ function eliminarCoordenadas(id, idcoord){
                 let  pasajeroExiste=document.getElementById('pass'+cedula);
                 if(pasajeroExiste==null){
                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                   
+
                     addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html);
                 }else{
                     msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -289,7 +296,7 @@ function eliminarCoordenadas(id, idcoord){
                         let  pasajeroExiste=document.getElementById('pass'+cedula);
                         if(pasajeroExiste==null){
                             var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                            
+
                             msj.innerHTML="";
                             addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
                             document.querySelector("#nc").remove();
@@ -325,7 +332,7 @@ function eliminarCoordenadas(id, idcoord){
                                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
                                         addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
 
-                                     
+
                                     msj.innerHTML="";
                                 }else{
                                     msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -657,7 +664,7 @@ function getMarinos() {
                             case 'FoundButAssigned':
                                 msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. '+cedula+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
                             break;
-                            
+
                             default:
                             console.log(respuesta);
                             break;
@@ -908,7 +915,7 @@ function compararFechas(){
 
 
 function estNauticoDestinoSelect(idCapitania){
-    
+
 
     $.ajax({
         url: route('BuscaEstablecimientosNauticos'),
@@ -940,6 +947,4 @@ function estNauticoDestinoSelect(idCapitania){
 //*FIN DE VALIDACIONES DE PASO 4 MAPA*//
 
 //FIN DE VALIDACION DE PERMISOS DE ZARPES
-
-
 

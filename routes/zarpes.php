@@ -83,6 +83,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::get('BuscaEstablecimientosNauticos',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'BuscaEstablecimientosNauticos'])->name('BuscaEstablecimientosNauticos');
 
-    
+    Route::resource('status', \App\Http\Controllers\Zarpes\StatusController::class);
+
+    Route::resource('equipos', \App\Http\Controllers\Zarpes\EquipoController::class);
+
 
 });

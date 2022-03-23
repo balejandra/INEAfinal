@@ -174,9 +174,10 @@
 
     <div style="position:fixed;padding-top: 40pt; left: 420pt;">
         @php
-
             $QR =
+                "Nro Solicitud: ".$estadia->nro_registro."\n".
                 "Nombre Embarcacion: ".$estadia->nombre_buque."\n".
+                "Numero de Registro: ".$estadia->nro_registro."\n".
                 "Destino: " .$estadia->capitania->nombre."\n".
                 "Fecha Emision: " .$estadia->updated_at."\n"
         @endphp
@@ -188,7 +189,7 @@
             REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
             MINISTERIO DEL PODER POPULAR PARA EL TRANSPORTE<br>
             INSTITUTO NACIONAL DE LOS ESPACIOS ACUATICOS<br>
-            CAPITANÍA DE PUERTO DE {{$estadia->capitania->nombre}} <br>
+            CAPITANÍA DE PUERTO DE <u>{{$estadia->capitania->nombre}}</u>  <br>
             <br>
             <span style="font-size: 20px; font-weight: bold">PERMISO DE ESTADÍA</span><br>
             <span class="display-7">TEMPORAL PERMANENCY AUTHORIZATION</span><br>
@@ -206,7 +207,7 @@
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
             Vista la solicitud correspondiente y previa consignación en este despacho de la documentación pertinente, el
             Capitán de Puerto de
-            {{$estadia->capitania->nombre}} concede autorización a la embarcación abajo identificadapara permanecer en
+            <u>{{$estadia->capitania->nombre}}</u> concede autorización a la embarcación abajo identificadapara permanecer en
             aguas venezolanas durante el lapso de dieciocho (18) meses. Finalizado
             este lapso el buque deberá salir de aguas venezolanas durante cuarenta y cinco (45) días continuos antes de
             poder ingresar nuevamente, so pena de
@@ -222,7 +223,7 @@
             compete.
             <br>
             According to the corresponding request and previous fulfilment of the necessary documentation,
-            the {{$estadia->capitania->nombre}} Harbour Master admits the ship described
+            the <u>{{$estadia->capitania->nombre}}</u> Harbour Master admits the ship described
             below to remain in Venezuelan waters of the lapse of eighteen (18) months. Once this lapse has expired, the
             ship must leave Venezuelan waters for at least forty five
             (45) days before entering again, under penalty of being submitted to Custom’s law regulations about
@@ -242,6 +243,7 @@
                 <th>TIPO DE BUQUE <br>Type of ship</th>
                 <th>NACIONALIDAD DEL BUQUE <br>Ship flag</th>
                 <th>PROPIETARIO <br>Ship Owner</th>
+                <th>ARQUEO <br>Tonnage</th>
             </tr>
             </thead>
             <tbody>
@@ -251,28 +253,33 @@
                 <td>{{$estadia->tipo_buque}}</td>
                 <td>{{$estadia->nacionalidad_buque}}</td>
                 <td>{{$estadia->nombre_propietario}}</td>
+                <td>{{$estadia->arqueo_bruto}}</td>
             </tr>
             <tr>
-                <th>ARQUEO <br>Tonnage</th>
+                <th>ESLORA <br>Lenght</th>
+                <th>POTENCIA KW <br>KW Power</th>
                 <th>CAPITAN <br>Capitain</th>
                 <th>Pasaporte <br>Passport Nro</th>
                 <th>NUMERO DE TRIPULANTES <br>Number of Crew members</th>
-                <th>ACTIVIDADES A REALIZAR EN EL PAÍS <br>Ship’spurpose</th>
+                <th>NUMERO DE PASAJEROS <br>Number of Passengers</th>
             </tr>
             <tr>
-                <td>{{$estadia->arqueo_bruto}}</td>
+                <td>{{$estadia->eslora}}</td>
+                <td>{{$estadia->potencia_kw}}</td>
                 <td>{{$estadia->nombre_capitan}}</td>
                 <td>{{$estadia->pasaporte_capitan}}</td>
                 <td>{{$estadia->cant_tripulantes}}</td>
-                <td>{{$estadia->actividades}}</td>
+                <td>{{$estadia->cant_pasajeros}}</td>
             </tr>
             <tr>
+                <th>ACTIVIDADES A REALIZAR<br>Ship’spurpose</th>
                 <th colspan="2">PROCEDENCIA <br>Port of origin</th>
                 <th>DESTINO <br>Port of destination</th>
                 <th>TIEMPO DE ESTADIA <br>Permanency</th>
                 <th>VALIDO HASTA <br>Valid until</th>
             </tr>
             <tr>
+                <td>{{$estadia->actividades}}</td>
                 <td colspan="2">{{$estadia->puerto_origen}}</td>
                 <td>{{$estadia->capitania->nombre}}</td>
                 <td>{{$estadia->tiempo_estadia}}</td>
@@ -283,9 +290,7 @@
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">Lugar y fecha
             <u> {{$estadia->updated_at}} </u><br>
-
                 PLACE AND DATE <u> {{$estadia->updated_at}} </u>
-
         </p>
         <br>
         <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto<br>

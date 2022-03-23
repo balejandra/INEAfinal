@@ -83,7 +83,7 @@
 
 <!-- Puerto Origen Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('puerto_origen', 'Puerto de Origen:') !!}
+    {!! Form::label('puerto_origen', 'Puerto de Origen / País:') !!}
     {!! Form::text('puerto_origen', null, ['class' => 'form-control'], 'required') !!}
 </div>
 
@@ -107,19 +107,19 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('documento_1', 'Zarpe original de procedencia:') !!}
-    <input type="file" class="form-control" name="zarpe_procedencia" id="zarpe_procedencia" required>
+    <input type="file" class="form-control" name="zarpe_procedencia" id="zarpe_procedencia" accept="application/pdf" required>
 </div>
     <div class="form-group col-sm-6">
         {!! Form::label('documento_1', 'Registro de la embarcación:') !!}
-        <input type="file" class="form-control" name="registro_embarcacion" id="registro_embarcacion" required>
+        <input type="file" class="form-control" name="registro_embarcacion" id="registro_embarcacion" accept="application/pdf" required>
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('documento_1', 'Despacho de aduana de procedencia:') !!}
-        <input type="file" class="form-control" name="despacho_aduana_procedencia" id="despacho_aduana_procedencia" required>
+        <input type="file" class="form-control" name="despacho_aduana_procedencia" id="despacho_aduana_procedencia" accept="application/pdf" required>
     </div>
     <div class="form-group col-sm-6">
         {!! Form::label('documento_1', 'Pasaportes de los tripulantes:') !!}
-        <input type="file" class="form-control" name="pasaportes_tripulantes" id="pasaporte_tripulantes" required>
+        <input type="file" class="form-control" name="pasaportes_tripulantes" id="pasaporte_tripulantes" accept="application/pdf" required>
     </div>
 
 </div>

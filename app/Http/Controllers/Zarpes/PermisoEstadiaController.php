@@ -18,6 +18,7 @@ use App\Repositories\Zarpes\PermisoEstadiaRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class PermisoEstadiaController extends AppBaseController
 {
@@ -85,6 +86,7 @@ class PermisoEstadiaController extends AppBaseController
      */
     public function store(CreatePermisoEstadiaRequest $request)
     {
+
         $estadia = new PermisoEstadia();
         $estadia->nro_solicitud = $this->codigo($request->capitania_id);
         $estadia->user_id = auth()->user()->id;
@@ -149,6 +151,8 @@ class PermisoEstadiaController extends AppBaseController
             $documento4->save();
         }
 
+        $this->SendMail($estadia->id, 1);
+        $this->SendMail($estadia->id, 0);
         Flash::success('Solicitud de Permiso Estadia guardada satisfactoriamente.');
 
         return redirect(route('permisosestadia.index'));
@@ -156,9 +160,8 @@ class PermisoEstadiaController extends AppBaseController
 
     private function codigo($capitania_id)
     {
-
         $cantidadActual = PermisoEstadia::select(DB::raw('count(nro_solicitud) as cantidad'))
-            ->where(DB::raw("(SUBSTR(nro_solicitud,4,4) = '" . date('Y') . "')"), '=', true)
+            ->where(DB::raw("(SUBSTR(nro_solicitud,6,4) = '" . date('Y') . "')"), '=', true)
             ->get();
 
         $capitania = Capitania::find($capitania_id);
@@ -166,7 +169,6 @@ class PermisoEstadiaController extends AppBaseController
         $correlativo = $cantidadActual[0]->cantidad + 1;
         $codigo = $capitania->sigla . "-" . date('Y') . date('m') . "-" . $correlativo;
         return $codigo;
-
     }
 
     /**
@@ -396,7 +398,7 @@ class PermisoEstadiaController extends AppBaseController
                 ];
                 $view = 'emails.estadias.revision';
                 $subject = 'Solicitud de Estadia ' . $estadia->nro_solicitud;
-                $email->mailZarpe($solicitante->email, $subject, $data, $view);
+                $email->mailEstadiaPDF($solicitante->email, $subject, $data, $view);
 
                 Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
                 return redirect(route('permisosestadia.index'));
@@ -431,6 +433,54 @@ class PermisoEstadiaController extends AppBaseController
            }
     }
 
+    public function SendMail($idsolicitud, $tipo)
+    {
+        $solicitud = PermisoEstadia::find($idsolicitud);
+        $solicitante = User::find($solicitud->user_id);
+        $rolecapitan=Role::find(4);
+        $rolecoordinador=Role::find(10);
+        $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
+            ->Join('users', 'users.id', '=', 'user_id')
+            ->where('capitania_id', '=', $solicitud->capitania_id)
+            ->where('cargo', $rolecapitan->name)
+            ->get();
+
+
+        $coordinador = CapitaniaUser::select('capitania_id', 'email')
+            ->Join('users', 'users.id', '=', 'user_id')
+            ->where('capitania_id', '=', $solicitud->capitania_id)
+            ->where('cargo', $rolecoordinador->name)
+            ->get();
+      //  dd($coordinador);
+
+        if ($tipo == 1) {
+            //mensaje para capitania origen
+            $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
+    de Estadia en su jurisdicción que espera por su asignación de visita.";
+            $mailTo = $coordinador[0]->email;
+            $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+        } else {
+            //mensaje para capitania destino
+            $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que
+    la siguiente embarcación Internacional tiene una solicitud para arribar a su jurisdicción.";
+            $mailTo = $capitanDestino[0]->email;
+            $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;
+        }
+
+        $data = [
+            'solicitud' => $solicitud->nro_solicitud,
+            'matricula' => $solicitud->nro_registro,
+            'nombre_buque' => $solicitud->nombre_buque,
+            'nombres_solic' => $solicitante->nombres,
+            'apellidos_solic' => $solicitante->apellidos,
+            'mensaje' => $mensaje,
+        ];
+
+        $email=new MailController();
+        $view = 'emails.estadias.solicitud';
+
+        $email->mailZarpe($mailTo, $subject, $data, $view);
+    }
     /**
      * Remove the specified PermisoEstadia from storage.
      *
