@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\Controller;
 use App\Models\Publico\DependenciaFederal;
 use Illuminate\Http\Request;
+use App\Models\Publico\Capitania;
+use App\Models\Publico\CoordenadasDependenciasFederales;
+
+
+
 use Flash;
 use Response;
 
@@ -17,10 +22,11 @@ class DependenciaFederalController extends Controller
      */
     public function index()
     {
-        $dependenciaFederals = DependenciaFederal::all();
+        $dependenciaFederals = DependenciaFederal::select("dependencias_federales.*", "capitanias.nombre as capitania")->join('capitanias','capitanias.id','=', 'dependencias_federales.capitania_id')->get();
 
-        return view('publico.dependencias_federales.index')
-            ->with('dependenciaFederals', $dependenciaFederals);
+         
+
+       return view('publico.dependencias_federales.index')->with('dependenciaFederals', $dependenciaFederals);
     }
 
     /**
@@ -30,7 +36,12 @@ class DependenciaFederalController extends Controller
      */
     public function create()
     {
-        return view('publico.dependencias_federales.create');
+        $capitania=Capitania::all();
+                $capitania=$capitania->pluck('nombre','id')->toArray();
+
+        $coords=[];
+
+        return view('publico.dependencias_federales.create')->with('capitanias', $capitania)->with('coordenadas',$coords);
     }
 
     /**
@@ -41,11 +52,40 @@ class DependenciaFederalController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'capitania' => 'required',
+        ]);
+         
+        $input = [
+            'nombre' => $request->input('nombre'),
+            'capitania_id' => $request->input('capitania'),
+        ];
 
         $dependenciaFederal = DependenciaFederal::create($input);
 
-        Flash::success('Dependencia Federal guardado satisfactoriamente.');
+        $lat=$request->input('latitud', []);
+        $long=$request->input('longitud', []);
+        $c = count($lat);
+        $c2= count($long);
+
+        if($c==$c2){
+            for( $i=0;$i<$c;$i++ )
+            {
+                $coordenadas= [
+                    'dependencias_federales_id' => $dependenciaFederal->id,
+                    'latitud'      => $lat[$i],
+                    'longitud'     => $long[$i],
+                ];
+
+                 
+                CoordenadasDependenciasFederales::create($coordenadas);
+            }
+        }
+
+       
+
+        Flash::success('Dependencia Federal guardada satisfactoriamente.');
 
         return redirect(route('dependenciasfederales.index'));
     }
@@ -53,20 +93,21 @@ class DependenciaFederalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  $id
+     * @param  $idd
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $dependenciaFederal = DependenciaFederal::find($id);
-
+        $capitania=Capitania::find($dependenciaFederal['capitania_id']);
+       
         if (empty($dependenciaFederal)) {
             Flash::error('Dependencia Federal no encontrada');
 
             return redirect(route('dependenciasfederales.index'));
         }
 
-        return view('publico.dependencias_federales.show')->with('dependenciaFederal', $dependenciaFederal);
+        return view('publico.dependencias_federales.show')->with('dependenciaFederal', $dependenciaFederal)->with('capitania',  $capitania['nombre']);
     }
 
     /**
@@ -77,7 +118,14 @@ class DependenciaFederalController extends Controller
      */
     public function edit($id)
     {
+
+
         $dependenciaFederal = DependenciaFederal::find($id);
+                $capitania=Capitania::all();
+                $capitania=$capitania->pluck('nombre','id')->toArray();
+
+        $coords=CoordenadasDependenciasFederales::select(['id','dependencias_federales_id', 'latitud', 'longitud'])->where('coordenadas_dependencias_federales.dependencias_federales_id', '=', $id)->get();
+
 
         if (empty($dependenciaFederal)) {
             Flash::error('Dependencia Federal no encontrada');
@@ -85,7 +133,9 @@ class DependenciaFederalController extends Controller
             return redirect(route('dependenciasfederales.index'));
         }
 
-        return view('publico.dependencias_federales.edit')->with('dependenciaFederal', $dependenciaFederal);
+
+
+       return view('publico.dependencias_federales.edit')->with('dependenciaFederal', $dependenciaFederal)->with('capitanias',  $capitania)->with('coordenadas',$coords);
     }
 
     /**
@@ -97,17 +147,64 @@ class DependenciaFederalController extends Controller
      */
     public function update($id, Request $request)
     {
+
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'capitania' => 'required',
+        ]);
+
         $dependenciaFederal = DependenciaFederal::find($id);
 
         if (empty($dependenciaFederal)) {
             Flash::error('Dependencia Federal no encontrada');
-
             return redirect(route('dependenciasfederales.index'));
         }
 
         $dependenciaFederal->nombre=$request->input('nombre');
-        $dependenciaFederal->capitania_id=$request->input('capitania_id');
+        $dependenciaFederal->capitania_id=$request->input('capitania');
         $dependenciaFederal->save();
+
+
+        $ids=$request->input('ids', []);
+        $lat=$request->input('latitud', []);
+        $long=$request->input('longitud', []);
+        $deletes=$request->input('deletes', []);
+
+        foreach ($deletes as $k => $val) {
+
+           if($val!=""){
+            $coorDel=CoordenadasDependenciasFederales::find($val);
+            $coorDel->delete($val);
+           }
+
+        }
+
+        if(count($lat)==count($long)){
+            for( $i=0;$i<count($lat);$i++ )
+            {
+                $coordenadas[]= [
+                    'dependencias_federales_id' => $id,
+                    'latitud'      => $lat[$i],
+                    'longitud'     => $long[$i],
+                ];
+            }
+
+            foreach ($coordenadas as $key => $value) {
+               
+                if($ids[$key]==""){
+                    $coordenadas= [
+                        'dependencias_federales_id' => $id,
+                        'latitud'      => $lat[$key],
+                        'longitud'     => $long[$key],
+                    ];
+                    
+                    CoordenadasDependenciasFederales::create($coordenadas);
+                }else{
+                    $coord=CoordenadasDependenciasFederales::find($ids[$key]);
+                    $coord->update($value);
+                }
+            }
+        } 
 
         Flash::success('Dependencia Federal actualizada satisfactoriamente.');
 

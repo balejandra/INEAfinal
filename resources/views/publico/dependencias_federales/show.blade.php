@@ -17,9 +17,12 @@
                          <div class="card">
                              <div class="card-header">
                                  <strong>Details</strong>
-                                  <a href="{{ route('dependenciasfederales.index') }}" class="btn btn-light">Back</a>
+                                   
+                                  <div class="card-header-actions">
+                                    <a href= "{{route('dependenciasfederales.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                </div>
                              </div>
-                             <div class="card-body">
+                             <div class="card-body" style="min-height:200px;">
                                  @include('publico.dependencias_federales.show_fields')
                              </div>
                          </div>

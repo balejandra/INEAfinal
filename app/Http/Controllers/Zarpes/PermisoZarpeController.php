@@ -102,9 +102,9 @@ class PermisoZarpeController extends Controller
         ]);
 
         $valida = [
-            "UAB" => '',
-            "cant_tripulantes" => '',
-            "cant_pasajeros" => '',
+            "UAB" => ' ',
+            "cant_tripulantes" => ' ',
+            "cant_pasajeros" => ' ',
             "potencia_kw" => '',
             "cargos" => [
                 "cargo_desempena" => '',
@@ -210,7 +210,7 @@ class PermisoZarpeController extends Controller
                                 }else{
                                     $val1=true;
 
-                                    $valida=json_decode($request->session()->get('validacion'), true);
+                                    $valida=$request->session()->get('validacion');
                                     $valida["potencia_kw"]=$validacionSgm[$i]->potencia_kw;
                                     $valida["cant_pasajeros"]=$validacionSgm[$i]->capacidad_personas;
                                     $request->session()->put('validacion', $valida);
