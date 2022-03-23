@@ -196,11 +196,11 @@
                             <i class="fas fa-file-pdf"></i>
                         </a>
                         @can('renovar-estadia')
-                            <a class="btn btn-sm btn-ghost-info"
+                            <a class="btn btn-sm" style="background-color: #bf0063"
                                href="{{route('createrenovacion',$permisoEstadia->id)}}" data-toggle="tooltip"
                                data-bs-placement="bottom"
-                               title="Descargar PDF">
-                                <i class="fas fa-file-pdf"></i>
+                               title="Renovar Permiso de Estadia">
+                                <i class="fas fa-file-import"></i>
                             </a>
                         @endcan
                     @endif
