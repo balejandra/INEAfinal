@@ -47,7 +47,7 @@ class EquipoController extends Controller
 
         $equipo = Equipo::create($input);
 
-        Flash::success('Equipo saved successfully.');
+        Flash::success('Equipo guardado satisfactoriamente.');
 
         return redirect(route('equipos.index'));
     }
@@ -64,7 +64,7 @@ class EquipoController extends Controller
         $equipo = Equipo::find($id);
 
         if (empty($equipo)) {
-            Flash::error('Equipo not found');
+            Flash::error('Equipo no encontrado');
 
             return redirect(route('equipos.index'));
         }
@@ -84,7 +84,7 @@ class EquipoController extends Controller
         $equipo = Equipo::find($id);
 
         if (empty($equipo)) {
-            Flash::error('Equipo not found');
+            Flash::error('Equipo no encontrado');
 
             return redirect(route('equipos.index'));
         }
@@ -105,7 +105,7 @@ class EquipoController extends Controller
         $equipo = Equipo::find($id);
 
         if (empty($equipo)) {
-            Flash::error('Equipo not found');
+            Flash::error('Equipo no encontrado');
 
             return redirect(route('equipos.index'));
         }
@@ -120,7 +120,7 @@ class EquipoController extends Controller
         $equipo->otros=$request->input('otros');
         $equipo->save();
 
-        Flash::success('Equipo updated successfully.');
+        Flash::success('Equipo actualizado satisfactoriamente.');
 
         return redirect(route('equipos.index'));
     }
@@ -139,14 +139,14 @@ class EquipoController extends Controller
         $equipo = Equipo::find($id);
 
         if (empty($equipo)) {
-            Flash::error('Equipo not found');
+            Flash::error('Equipo no encontrado');
 
             return redirect(route('equipos.index'));
         }
 
         $equipo->delete($id);
 
-        Flash::success('Equipo deleted successfully.');
+        Flash::success('Equipo eliminado satisfactoriamente.');
 
         return redirect(route('equipos.index'));
     }
