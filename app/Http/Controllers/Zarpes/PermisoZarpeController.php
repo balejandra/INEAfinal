@@ -422,7 +422,9 @@ class PermisoZarpeController extends Controller
             break;
             case 2://Dentro de una circunscripcion pero a una dependencia federal
                 $coordCaps=CoordenadasCapitania::where('capitania_id',$solicitud['origen_capitania_id'])->get();
-                $coordsDependencias=DependenciaFedeal::select('*')->where('capitania_id',$solicitud['origen_capitania_id'])->get();
+            //    $coordsDependencias=DependenciaFedeal::select('*')->where('capitania_id',$solicitud['origen_capitania_id'])->get();
+            $coordsDependencias=[];
+            
             break;
             case 3: // entre circunsctipciones
                 //$coordCaps=CoordenadasCapitania::all();
