@@ -51,7 +51,7 @@
 </div>
 
     <div class="form-group col-sm-6">
-        {!! Form::label('cant_pasajeros', 'Cantidad de Pasajeros:') !!}
+        {!! Form::label('cant_pasajeros', 'Cantidad máxima  de personas a bordo:') !!}
         {!! Form::number('cant_pasajeros', null, ['class' => 'form-control', 'required']) !!}
     </div>
 
@@ -101,8 +101,8 @@
 
 <!-- Tiempo Estadia Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('tiempo_estadia', 'Tiempo de Estadia:') !!}
-    {!! Form::text('tiempo_estadia', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::label('tiempo_estadia', 'Vigencia:') !!}
+    <input type="text" name="tiempo_estadia" readonly value="90 días" id="tiempo_estadia" class="form-control">
 </div>
 
 <div class="form-group col-sm-6">

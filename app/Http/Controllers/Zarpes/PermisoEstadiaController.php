@@ -235,14 +235,14 @@ class PermisoEstadiaController extends AppBaseController
             return redirect(route('permisoEstadias.index'));
         }
 
-        if ($request->hasFile('comprobante_seniat')) {
+        if ($request->hasFile('permiso_seniat')) {
             $documento1 = new DocumentoPermisoEstadia();
-            $seniat = $request->file('comprobante_seniat');
+            $seniat = $request->file('permiso_seniat');
             $filenamesen = date('dmYGi') . $seniat->getClientOriginalName();
             $avatar1 = $seniat->move(public_path() . '/permisoestadia/documentos', $filenamesen);
             $documento1->permiso_estadia_id = $id;
             $documento1->documento = $filenamesen;
-            $documento1->recaudo = 'Comprobante de visita del SENIAT';
+            $documento1->recaudo = 'Permiso de Admisión Temporal emitida por el SENIAT';
             $documento1->save();
         }
         if ($request->hasFile('comprobante_alicuota')) {

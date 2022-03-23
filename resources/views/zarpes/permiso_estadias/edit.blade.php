@@ -28,9 +28,9 @@
                             @include('zarpes.permiso_estadias.show_fields')
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    {!! Form::label('comprobante_seniat', 'Comprobante de visita del SENIAT:') !!}
-                                    <input type="file" class="form-control" name="comprobante_seniat"
-                                           id="comprobante_seniat" accept="application/pdf" required>
+                                    {!! Form::label('permiso_seniat', 'Permiso de Admisión Temporal emitida por el SENIAT:') !!}
+                                    <input type="file" class="form-control" name="permiso_seniat"
+                                           id="permiso_seniat" accept="application/pdf" required>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     {!! Form::label('comprobante_alicuota', 'Comprobante de pago de Alícuota:') !!}
