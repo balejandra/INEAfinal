@@ -1020,3 +1020,29 @@ function estNauticoDestinoSelect(idCapitania){
 
 //FIN DE VALIDACION DE PERMISOS DE ZARPES
 
+function getCapitania(){
+  
+    data=document.getElementById('descripcion_de_navegacion').value;
+    
+    $.ajax({
+        url: route('FindCapitania'),
+        data: {descripcion_de_navegacion: data}
+
+    })// This will be called on success
+    .done(function (response) {
+        let resp=JSON.parse(response);
+        let options="<option value='0'>Seleccione</option>";
+        for (var i = 0; i < resp.length; i++) {
+            options+="<option value='"+resp[i].id+"'>"+resp[i].nombre+"</option>"
+        }
+        select=document.getElementById('capitania');
+        select.innerHTML=options;
+       // console.log(options);
+    })
+        // This will be called on error
+    .fail(function (response) {
+            console.log(response);
+             divError.innerHTML='<div class="alert alert-danger"> Ha ocurrido un error durante la búsqueda de la información.</div>';
+            
+    });
+}

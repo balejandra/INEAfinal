@@ -26,6 +26,11 @@ use App\Models\Publico\CoordenadasCapitania;
 use App\Models\Publico\Capitania;
 use App\Models\Sgm\TiposCertificado;
 use App\Models\Zarpes\PermisoEstadia;
+use App\Models\Zarpes\CoordenadasDependenciasFederales;
+use App\Models\Publico\DependenciaFederal;
+use App\Models\Zarpes\DescripcionNavegacion;
+
+
 
 use Flash;
 use Illuminate\Support\Facades\Session;
@@ -373,10 +378,12 @@ class PermisoZarpeController extends Controller
       
         $TipoZarpes = TipoZarpe::all();
         $capitania=Capitania::all();
+        $descripcionNavegacion=DescripcionNavegacion::all();
+
 
         $this->step=3;
 
-        return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania);
+        return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('descripcionNavegacion', $descripcionNavegacion);
 
     }
 
@@ -1296,6 +1303,20 @@ class PermisoZarpeController extends Controller
          $cap=Capitania::find($idcap);
          $resp=[$cap,$EstNauticos];
         echo json_encode($resp);
+    }
+
+    public function FindCapitania(Request $request){
+        $descripcion = $_REQUEST['descripcion_de_navegacion'];
+
+        if($descripcion==2){
+            $CapDependencias=DependenciaFederal::selectRaw('distinct(capitania_id)')->get();
+            $capitania=Capitania::whereIn('id',$CapDependencias)->get();
+        }else{
+            $capitania=Capitania::all();
+        }
+
+        echo json_encode($capitania);
+        
     }
 
 

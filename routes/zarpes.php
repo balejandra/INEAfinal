@@ -87,5 +87,6 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('equipos', \App\Http\Controllers\Zarpes\EquipoController::class);
 
+    Route::get('FindCapitania',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'FindCapitania'])->name('FindCapitania');
 
 });

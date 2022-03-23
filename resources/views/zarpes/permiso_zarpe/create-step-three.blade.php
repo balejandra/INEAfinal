@@ -69,11 +69,14 @@
                                         <div class="form-group">
                                             <label for="title">Descripción de la navegación:</label>
 
-                                            <select id="descripcion_de_navegacion" name="descripcion_de_navegacion" class="form-control custom-select">
+                                            <select id="descripcion_de_navegacion" name="descripcion_de_navegacion" class="form-control custom-select" onchange="getCapitania();">
                                             <option value="">Seleccione</option>
-                                            <option value="1">Dentro de una circunscripción</option>
-                                            <option value="2">Dentro de una circunscripción pero hacia una dependencia federal</option>
-                                            <option value="3">Entre circunscripciones</option>
+                                            @foreach($descripcionNavegacion as $dn)
+                                                @if($dn->id!=4)
+                                                <option value="{{$dn->id}}">{{$dn->descripcion}}</option>
+                                                @endif
+                                            @endforeach
+                                             
                                              
                                         </select>
                                         </div>
