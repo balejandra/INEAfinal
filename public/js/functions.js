@@ -97,6 +97,23 @@ $(document).ready(function() {
 } );
 
 $(document).ready(function() {
+    $('#dependenciaFederals-table').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+} );
+
+
+
+
+$(document).ready(function() {
     $('#users-table').DataTable({
         responsive: true,
         fixedHeader: true,
@@ -238,6 +255,61 @@ function eliminarCoordenadas(id, idcoord){
 
 
 
+//-------------------------------------------------------------------------------
+
+function agregarCoordenadasDF(){
+
+var coords=document.getElementById('coords');
+let cantAct=coords.getAttribute('data-cant');
+cantAct<=0 ? cantAct=1 : cantAct++;
+
+
+const divrow= document.createElement("div");
+divrow.classList.add("row");
+divrow.id="coordenadas"+cantAct;
+
+const divids=document.createElement("div");
+divids.innerHTML=`<input class="form-control" name="ids[]" type="hidden" >`;
+
+const divlat=document.createElement("div");
+divlat.classList.add("form-group", "col-sm-5");
+divlat.innerHTML=`
+            <input class="form-control" name="latitud[]" id="lat`+cantAct+`" type="text">`;
+
+
+const divlon=document.createElement("div");
+divlon.classList.add("form-group", "col-sm-5");
+divlon.innerHTML=`
+            <input class="form-control" name="longitud[]" id="lon`+cantAct+`"  type="text">`;
+
+const divbtn=document.createElement("div");
+divbtn.classList.add("form-group", "col-sm-2");
+divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">borrar</button>`;
+
+divrow.appendChild(divids);
+divrow.appendChild(divlat);
+divrow.appendChild(divlon);
+divrow.appendChild(divbtn);
+
+coords.appendChild(divrow);
+
+coords.setAttribute('data-cant', cantAct);
+//coords.innerHTML=  coords.innerHTML+campos;
+
+}
+
+function eliminarCoordenadasDF(id, idcoord){
+
+    if(id!=""){
+        const div = document.querySelector("#coordenadas"+id);
+        div.remove();
+    }
+    if(idcoord!=""){
+       const del = document.querySelector("#deletes"+id);
+        del.value=idcoord;
+    }
+
+}
 
 //-----------------------------------------------------------------------------------------
 

@@ -79,7 +79,7 @@ class PermisoZarpeController extends Controller
 
         $request->session()->put('pasajeros', ['']);
         $request->session()->put('tripulantes', [0]);
-        $request->session()->put('validaciones', '');
+        $request->session()->put('validacion', '');
         $request->session()->put('validacionesSgm', '');
 
 
@@ -102,9 +102,9 @@ class PermisoZarpeController extends Controller
         ]);
 
         $valida = [
-            "UAB" => '',
-            "cant_tripulantes" => '',
-            "cant_pasajeros" => '',
+            "UAB" => ' ',
+            "cant_tripulantes" => ' ',
+            "cant_pasajeros" => ' ',
             "potencia_kw" => '',
             "cargos" => [
                 "cargo_desempena" => '',
@@ -113,7 +113,7 @@ class PermisoZarpeController extends Controller
             ]
         ];
 
-        $request->session()->put('validaciones', $valida);
+        $request->session()->put('validacion', $valida);
 
         $this->step = 1;
 
@@ -210,7 +210,7 @@ class PermisoZarpeController extends Controller
                                 }else{
                                     $val1=true;
 
-                                    $valida=json_decode($request->session()->get('validacion'), true);
+                                    $valida=$request->session()->get('validacion');
                                     $valida["potencia_kw"]=$validacionSgm[$i]->potencia_kw;
                                     $valida["cant_pasajeros"]=$validacionSgm[$i]->capacidad_personas;
                                     $request->session()->put('validacion', $valida);
@@ -315,19 +315,23 @@ class PermisoZarpeController extends Controller
 
     public function validationStepTwoE(Request $request){
         $permiso = $_REQUEST['permiso'];
-
+        
         $permisoEstadia= PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
-
 
         if (is_null($permisoEstadia->first())) {
 
             echo json_encode("sinCoincidencias");
         } else {
-            echo json_encode($permisoEstadia);
+            $permisoZ = PermisoZarpe::select("matricula")->where('user_id', auth()->id())->where('matricula', $permisoEstadia[0]->nro_registro)->whereIn('status_id', [1, 3, 5])->get();
+
+            if (count($permisoZ) > 0) {
+                echo json_encode('permisoPorCerrar');
+            } else {
+                echo json_encode($permisoEstadia);
+            }
 
         }
-        //$solicitud = json_decode($request->session()->get('solicitud'), true);
-        ///$solicitud['permiso_estadia_id'] = $perisoEstadia;
+        
     }
 
 
@@ -336,15 +340,25 @@ class PermisoZarpeController extends Controller
         $permiso=$request->input('permiso');
         $validatedData = $request->validate([
             'permiso' => 'required',
-            'permiso_de_estadia'=> 'required'
+            'permiso_de_estadia'=> 'required',
+            'numero_de_registro'=> 'required',
         ]);
         $idpermiso = $_REQUEST['permiso_de_estadia'];
+        $matricula = $_REQUEST['numero_de_registro'];
 
         $permisoEstadia= PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
+         
+        $solicitud = json_decode($request->session()->get('solicitud'), true);
+        $solicitud['matricula'] = $matricula;
+        $solicitud['permiso_estadias_id'] =$idpermiso;
+        $request->session()->put('solicitud', json_encode($solicitud));
+        $valida= json_decode($request->session()->get('validacion'), true);
 
-        print_r( $request->input('permiso_de_estadia'));
-       // return redirect()->route('permisoszarpes.createStepThree');
+        $valida["cant_tripulantes"]=$permisoEstadia[0]->cant_tripulantes;
+        $valida["UAB"]=$permisoEstadia[0]->arqueo_bruto;
+        $request->session()->put('validacion', json_encode($valida));
 
+        return redirect()->route('permisoszarpes.createStepThree');
 
     }
 
@@ -476,13 +490,9 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
-        //print_r(json_decode($request->session()->get('solicitud'), true));
-
-
+    
         $validation = json_decode($request->session()->get('validacion'), true);
-        //print_r($validation);
         $tripulantes=$request->session()->get('tripulantes');
-       // print_r($tripulantes);
 
         $this->step = 5;
         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation);
@@ -1270,7 +1280,7 @@ class PermisoZarpeController extends Controller
 
         Session::forget('pasajeros');
         Session::forget('tripulantes');
-        Session::forget('validaciones');
+        Session::forget('validacion');
         Session::forget('solicitud');
         $this->step = 1;
     }

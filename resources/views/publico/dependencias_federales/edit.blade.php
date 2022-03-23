@@ -16,8 +16,11 @@
                  <div class="col-lg-12">
                       <div class="card">
                           <div class="card-header">
-                              <i class="fa fa-edit fa-lg"></i>
-                              <strong>Edit Dependencia Federal</strong>
+                              <i class="fa fa-map" aria-hidden="true"></i>
+                              <strong>Editar Dependencia Federal</strong>
+                              <div class="card-header-actions">
+                                    <a href= "{{route('dependenciasfederales.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                </div>
                           </div>
                           <div class="card-body">
                               {!! Form::model($dependenciaFederal, ['route' => ['dependenciasfederales.update', $dependenciaFederal->id], 'method' => 'patch']) !!}

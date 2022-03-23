@@ -13,9 +13,14 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
-                             DependenciaFederals
-                             <a class="pull-right" href="{{ route('dependenciasfederales.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
+                             <i class="fa fa-map" aria-hidden="true"></i>
+
+                             Dependencias Federales
+                              
+
+                             <div class="card-header-actions">
+                                 <a class="btn btn-primary btn-sm"  href="{{ route('dependenciasfederales.create') }}">Nuevo</a>
+                             </div>
                          </div>
                          <div class="card-body">
                              @include('publico.dependencias_federales.table')
