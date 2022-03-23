@@ -352,9 +352,13 @@ class PermisoZarpeController extends Controller
         $solicitud['matricula'] = $matricula;
         $solicitud['permiso_estadias_id'] =$idpermiso;
         $request->session()->put('solicitud', json_encode($solicitud));
-        $valida= json_decode($request->session()->get('validacion'), true);
+        $valida= $request->session()->get('validacion');
 
         $valida["cant_tripulantes"]=$permisoEstadia[0]->cant_tripulantes;
+        $valida["cant_pasajeros"]=$permisoEstadia[0]->cant_pasajeros;
+        $valida["potencia_kw"]=$permisoEstadia[0]->potencia_kw;
+
+
         $valida["UAB"]=$permisoEstadia[0]->arqueo_bruto;
         $request->session()->put('validacion', json_encode($valida));
 
@@ -366,7 +370,7 @@ class PermisoZarpeController extends Controller
     public function createStepThree(Request $request)
     {
 
-        //print_r(json_decode($request->session()->get('validacion'), true));
+      
         $TipoZarpes = TipoZarpe::all();
         $capitania=Capitania::all();
 
@@ -490,7 +494,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
-    
+        
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes=$request->session()->get('tripulantes');
 
@@ -569,7 +573,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepSix(Request $request)
     {
-
+        
         $passengers = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
         $cantPasajeros= $validation['cant_pasajeros'] - $validation['cant_tripulantes'];

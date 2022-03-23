@@ -438,13 +438,13 @@ class PermisoEstadiaController extends AppBaseController
         $solicitud = PermisoEstadia::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
         $rolecapitan=Role::find(4);
-        $rolecoordinador=Role::find(10);
+        $rolecoordinador=Role::find(7);
         $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
             ->where('cargo', $rolecapitan->name)
             ->get();
-
+        //dd($capitanDestino);-
 
         $coordinador = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')

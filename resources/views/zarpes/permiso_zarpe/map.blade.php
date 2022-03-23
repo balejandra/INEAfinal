@@ -93,7 +93,7 @@ console.log(capitanias);
     		//Creo la nueva marca en el mapa
 
     		 marca=L.marker([lat, long]).addTo(mymap)
-	    .bindPopup('Destino de la navegación')
+	    .bindPopup('Punto de escala de la navegación')
 	    .openPopup();
     }
 
