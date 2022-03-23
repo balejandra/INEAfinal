@@ -418,16 +418,21 @@ class PermisoZarpeController extends Controller
          switch ($solicitud['descripcion_navegacion_id']) {
             case 1: //dentro de una circunscripción
                $coordCaps=CoordenadasCapitania::where('capitania_id',$solicitud['origen_capitania_id'])->get();
+                $coordsDependencias=[];
             break;
             case 2://Dentro de una circunscripcion pero a una dependencia federal
                 $coordCaps=CoordenadasCapitania::where('capitania_id',$solicitud['origen_capitania_id'])->get();
+                $coordsDependencias=DependenciaFedeal::select('*')->where('capitania_id',$solicitud['origen_capitania_id'])->get();
             break;
             case 3: // entre circunsctipciones
                 //$coordCaps=CoordenadasCapitania::all();
                  $coordCaps=CoordenadasCapitania::where('capitania_id','!=',$solicitud['origen_capitania_id'])->get();
+                 $coordsDependencias=[];
             break;
             case 4: // internacional
                 $coordCaps=[];
+                $coordsDependencias=[];
+
             break;
 
         }
@@ -454,7 +459,7 @@ class PermisoZarpeController extends Controller
         }
 
         $this->step = 4;
-        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas));
+        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias',$coordsDependencias);
 
  }
 

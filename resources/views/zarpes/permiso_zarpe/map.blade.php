@@ -1,4 +1,4 @@
-<div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}">
+<div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}" data-coordsDep="{{$coordsDependencias}}">
 
 <x-maps-leaflet style='height: 400px' :centerPoint="['lat' => 10.4806, 'long' => -66.9036]"   :zoomLevel="5"></x-maps-leaflet>
 
