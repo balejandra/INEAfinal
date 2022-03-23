@@ -11,6 +11,10 @@ use App\Models\Zarpes\Pasajero;
 use App\Models\Zarpes\PermisoEstadia;
 use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\Tripulante;
+use App\Models\Zarpes\EstablecimientoNautico;
+use App\Models\Zarpes\DescripcionNavegacion;
+
+
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
@@ -25,7 +29,9 @@ class PdfGeneratorController extends Controller
         $cantPas=Pasajero::where('permiso_zarpe_id',$id)->get()->count();
         $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->where('capitan',true)->get();
         $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
-        $pdf=PDF::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip'));
+        $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
+        $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
+        $pdf=PDF::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip','estnauticoDestino','DescripcionNavegacion'));
         return $pdf->stream('zarpes.pdf');
     }
     public function imprimirEstadia($id){
