@@ -1,18 +1,18 @@
 <?php
 
 namespace App\Models\Zarpes;
-use App\Models\Zarpes\PermisoZarpe;
+ 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
+ 
 
 class DescripcionNavegacion extends Model
 {
     
     use SoftDeletes;
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
+     
 
     protected $connection = 'pgsql_zarpes_schema';
     public $table = 'descripcion_navegacion';
