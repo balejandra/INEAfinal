@@ -15,6 +15,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @version March 10, 2022, 10:25 pm UTC
  *
  * @property string $nro_solicitud
+ * @property string $cantidad_solicitud
  * @property unsignedBigInteger $user_id
  * @property string $nombre_buque
  * @property string $nro_registro
@@ -34,6 +35,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property unsignedBigInteger $establecimiento_nautico_destino
  * @property string $tiempo_estadia
  * @property string $vigencia
+ * @property date $vencimiento
  * @property unsignedBigInteger $status_id
  */
 class PermisoEstadia extends Model implements Auditable
@@ -52,6 +54,7 @@ class PermisoEstadia extends Model implements Auditable
 
     public $fillable = [
         'nro_solicitud',
+        'cantidad_solicitud',
         'user_id',
         'nombre_buque',
         'nro_registro',
@@ -71,6 +74,7 @@ class PermisoEstadia extends Model implements Auditable
         'establecimiento_nautico_destino',
         'tiempo_estadia',
         'vigencia',
+        'vencimiento',
         'status_id'
     ];
 
@@ -82,6 +86,7 @@ class PermisoEstadia extends Model implements Auditable
     protected $casts = [
         'id' => 'integer',
         'nro_solicitud' => 'string',
+        'cantidad_solicitud'=>'string',
         'user_id' => 'integer',
         'nombre_buque' => 'string',
         'nro_registro' => 'string',
@@ -101,6 +106,7 @@ class PermisoEstadia extends Model implements Auditable
         'capitania_id' => 'integer',
         'tiempo_estadia' => 'string',
         'vigencia' => 'string',
+        'vencimiento'=>'date',
         'status_id' => 'integer'
     ];
 

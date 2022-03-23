@@ -195,6 +195,14 @@
                            title="Descargar PDF">
                             <i class="fas fa-file-pdf"></i>
                         </a>
+                        @can('renovar-estadia')
+                            <a class="btn btn-sm btn-ghost-info"
+                               href="{{route('createrenovacion',$permisoEstadia->id)}}" data-toggle="tooltip"
+                               data-bs-placement="bottom"
+                               title="Descargar PDF">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+                        @endcan
                     @endif
             </td>
         </tr>

@@ -89,6 +89,7 @@ class PermisoEstadiaController extends AppBaseController
 
         $estadia = new PermisoEstadia();
         $estadia->nro_solicitud = $this->codigo($request->capitania_id);
+        $estadia->cantidad_solicitud='1';
         $estadia->user_id = auth()->user()->id;
         $estadia->nombre_buque = $request->nombre_buque;
         $estadia->nro_registro = $request->nro_registro;
@@ -378,8 +379,14 @@ class PermisoEstadiaController extends AppBaseController
                 return redirect(route('permisosestadia.index'));
            } if ($status==='1') {
                 $estadia= PermisoEstadia::find($id);
+
                 $idstatus = Status::find(1);
                 $estadia->status_id = $idstatus->id;
+                $date = date("d-m-Y");
+
+                $vencimiento = strtotime($date."+ 90 days");
+                $vencimiento= date("Y-m-d",$vencimiento);
+                $estadia->vencimiento = $vencimiento;
                 $estadia->update();
                 $solicitante = User::find($estadia->user_id);
                 EstadiaRevision::create([
@@ -480,6 +487,14 @@ class PermisoEstadiaController extends AppBaseController
         $view = 'emails.estadias.solicitud';
 
         $email->mailZarpe($mailTo, $subject, $data, $view);
+    }
+
+    public function CreateRenovacionEstadia ($id) {
+        $capitanias = Capitania::all();
+        $permiso= PermisoEstadia::find($id);
+        return view('zarpes.permiso_estadias.renovacion.create')
+            ->with('capitanias', $capitanias)
+            ->with('permiso',$permiso);
     }
     /**
      * Remove the specified PermisoEstadia from storage.
