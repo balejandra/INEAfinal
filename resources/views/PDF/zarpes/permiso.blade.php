@@ -170,13 +170,13 @@
 
         <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate($QR)) !!} ">
     </div>
-    <div style="padding-top:100pt; padding-left:130pt; padding-bottom:10pt;">
+    <div style="padding-top:100pt; padding-left:150pt; padding-bottom:10pt;">
         
-        <p class=" text-center mbr-text display-5">
-            República Bolivariana de Venezuela<br>
+        <p class=" text-center mbr-text display-5" style="color:#000;">
+            <b>  República Bolivariana de Venezuela<br>
             Ministerio del Poder Popular para el Transporte<br>
-            INSTITUTO NACIONAL DE LOS ESPACIOS ACUATICOS<br>
-            
+            Instituto Nacional de los Espacios Acuáticos<br>
+            </b>
         <br>
              
         </p>
