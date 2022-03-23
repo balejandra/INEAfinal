@@ -13,7 +13,7 @@ class CreateTiposCertificadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipos_certificados', function (Blueprint $table) {
+        Schema::connection('pgsql_seguridad_maritima')->create('tipos_certificados', function (Blueprint $table) {
             $table->id();
             $table->string('responsable')->nullable();
             $table->string('nro_correlativo');
