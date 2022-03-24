@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class PermisoEstadiaController extends AppBaseController
 {
@@ -465,20 +467,28 @@ class PermisoEstadiaController extends AppBaseController
             ->where('capitania_id', '=', $solicitud->capitania_id)
             ->where('cargo', $rolecoordinador->name)
             ->get();
-      //  dd($coordinador);
-
+        //dd($coordinador);
+        $mensaje = "";
+        $mailTo="";
+        $subject="";
         if ($tipo == 1) {
-            //mensaje para capitania origen
-            $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
+          if ( isset($coordinador[0]->email)) {
+              $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
     de Estadia en su jurisdicción que espera por su asignación de visita.";
-            $mailTo = $coordinador[0]->email;
-            $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+              $mailTo = $coordinador[0]->email;
+              $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+          }else{
+          }
+
         } else {
-            //mensaje para capitania destino
-            $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que
+            if ( isset($capitanDestino[0]->email)) {
+                $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que
     la siguiente embarcación Internacional tiene una solicitud para arribar a su jurisdicción.";
-            $mailTo = $capitanDestino[0]->email;
-            $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;
+                $mailTo = $capitanDestino[0]->email;
+                $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;
+            }else {
+            
+            }
         }
 
         $data = [
