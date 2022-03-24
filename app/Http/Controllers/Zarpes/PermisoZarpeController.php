@@ -194,8 +194,8 @@ class PermisoZarpeController extends Controller
             $validacionSgm=TiposCertificado::select('*')->where('matricula', $matricula)->get();
                $val1="LICENCIA DE NAVEGACIÓN no encontrada";
                $val2="CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA no encontrado";
-               //$val3="ASIGNACIÓN DE NÚMERO ISMM no encontrado";
-               $val3=true;
+               $val3="ASIGNACIÓN DE NÚMERO ISMM no encontrado";
+              // $val3=true;
                 $data2=[
                         "data"=>$data,
                         "validacionSgm"=>[$val1,$val2,$val3] ,

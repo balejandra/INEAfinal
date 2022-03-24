@@ -20,7 +20,7 @@
                 {{ Auth::user()->email }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownMenuLink">
-                <li>
+               <!-- <li>
                 <a class="dropdown-item" href="#">
                     <i class="fa fa-user"></i> Perfil</a>
                 </li>
@@ -28,7 +28,7 @@
                     <a class="dropdown-item" href="#">
                     <i class="fa fa-wrench"></i> Configuracion</a>
                 </li>
-                <li><hr class="dropdown-divider"></li>
+                <li><hr class="dropdown-divider"></li>-->
                 <li>
                     <a href="#" class="dropdown-item btn btn-default btn-flat"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
