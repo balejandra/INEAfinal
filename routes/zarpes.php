@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Auth;
 Route::get('error', function (){
     return view('auth.error'); //seccion de validacion de autehticación de usuario
 })->name('error');
-Route::get('/consultazarpe/{id}',[\App\Http\Controllers\QrCodeController::class,'show'])->name('consultazarpe');
 
 Route::middleware(['auth' , 'verified'])->group(function () {
 //seccion para incorporación de rutas por módulo
@@ -31,8 +30,14 @@ Route::middleware(['auth' , 'verified'])->group(function () {
      Route::get('validationStepTwoE',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validationStepTwoE'])->name('validationStepTwoE');
 
     Route::resource('permisosestadia', \App\Http\Controllers\Zarpes\PermisoEstadiaController::class);
+
+    Route::resource('permisosestadiarenovacion', \App\Http\Controllers\Zarpes\PermisoEstadiaRenovacionController::class);
+
+
     Route::get('updateStatus/{id}/{status}', [\App\Http\Controllers\Zarpes\PermisoEstadiaController::class,'updateStatus'])->name('statusEstadia');
     Route::get('/permisoestadiapdf/{id}',[\App\Http\Controllers\Zarpes\PdfGeneratorController::class,'imprimirEstadia'])->name('estadiapdf');
+    Route::get('/permisosestadiarenovacion.create/{id}',[\App\Http\Controllers\Zarpes\PermisoEstadiaRenovacionController::class,'create'])->name('createrenovacion');
+    Route::match(['put', 'patch'],'permisosestadiarenovacion.store/{id}', [\App\Http\Controllers\Zarpes\PermisoEstadiaRenovacionController::class,'store'])->name('storerenovacion');
 
     //Route::resource('permisoszarpes', \App\Http\Controllers\Zarpes\PermisoZarpeController::class);
     Route::get('update/{id}/{status}/{capitania}', [\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'updateStatus'])->name('status');

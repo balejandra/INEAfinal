@@ -73,7 +73,7 @@ class PermisoZarpeController extends Controller
             return view('zarpes.permiso_zarpe.indexcomodoro')
                 ->with('permisoOrigenZarpes', $datazarpeorigen);
         } else{
-            return redirect(route(home));
+            return redirect(route('home'));
         }
     }
 
@@ -320,7 +320,7 @@ class PermisoZarpeController extends Controller
 
     public function validationStepTwoE(Request $request){
         $permiso = $_REQUEST['permiso'];
-        
+
         $permisoEstadia= PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
 
         if (is_null($permisoEstadia->first())) {
@@ -336,7 +336,7 @@ class PermisoZarpeController extends Controller
             }
 
         }
-        
+
     }
 
 
@@ -352,7 +352,7 @@ class PermisoZarpeController extends Controller
         $matricula = $_REQUEST['numero_de_registro'];
 
         $permisoEstadia= PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
-         
+
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $solicitud['matricula'] = $matricula;
         $solicitud['permiso_estadias_id'] =$idpermiso;
@@ -536,7 +536,6 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
-        
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes=$request->session()->get('tripulantes');
 
