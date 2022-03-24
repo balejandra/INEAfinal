@@ -25,6 +25,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $fecha_hora_salida
  * @property string $fecha_hora_regreso
  * @property unsignedBigInteger $status_id
+ * @property unsignedBigInteger $permiso_estadia_id
  */
 class PermisoZarpe extends Model implements Auditable
 {
@@ -54,6 +55,7 @@ class PermisoZarpe extends Model implements Auditable
         'status_id',
         'establecimiento_nautico_destino_id',
         'descripcion_navegacion_id',
+        'permiso_estadia_id'
     ];
 
     /**
@@ -71,7 +73,8 @@ class PermisoZarpe extends Model implements Auditable
         'fecha_hora_regreso' => 'datetime',
          'user_id' => 'integer',
          'establecimiento_nautico_destino_id'=> 'integer',
-        'descripcion_navegacion_id'=> 'integer'
+        'descripcion_navegacion_id'=> 'integer',
+        'permiso_estadia_id'=>'integer'
     ];
 
     /**
