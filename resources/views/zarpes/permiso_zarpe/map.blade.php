@@ -30,12 +30,13 @@ var polygon=[];
  	 
  });
  console.log(dependencias);
-
+ var circles=[];
+ let j=0;
  dependencias.forEach(function(dep){
     if(activarDep==true){
         let idcapi2=dep.capitania;
         console.log(dep.coords[0]);
-      var circle = L.circle(dep.coords[0], 10000, {
+        circles[j++] = L.circle(dep.coords[0], 10000, {
            color: 'red',
            fillColor: '#f03',
            fillOpacity: 0.5,
@@ -100,19 +101,32 @@ var circle = L.circle(dep.coords, 25000, {
      	longInput.setAttribute('data-long',coordenada.lng);
          newMarker(coordenada.lat, coordenada.lng); //Creo la nueva marca en el mapa
          let idCapitania;
-         polygon.forEach(function(pol){
-          idCapitania=isMarkerInsidePolygon(marca, pol);
+         
 
-          if(idCapitania!=false){
-          	document.getElementById('capitaniaDestino').value=idCapitania; 
 
-            estNauticoDestinoSelect(idCapitania);
+          if(activarDep){
+            circles.forEach(function(cir){
+                idCapitania=isMarkerInsidePolygon(marca, cir);
+                if(idCapitania!=false){
+                    document.getElementById('capitaniaDestino').value=idCapitania; 
+                    estNauticoDestinoSelect(idCapitania);
+                }else{
+                    idCapitania=false;
+                }
 
+             });
           }else{
-          	idCapitania=false;
-          }
+            polygon.forEach(function(pol){
+                idCapitania=isMarkerInsidePolygon(marca, pol);
+                if(idCapitania!=false){
+                    document.getElementById('capitaniaDestino').value=idCapitania; 
+                    estNauticoDestinoSelect(idCapitania);
+                }else{
+                    idCapitania=false;
+                }
 
-         });
+             });
+          }
          
         //alert("Acabas de hacer clic en: \n latitud: " + latitud + "\n longitud: " + longitud);
     };
@@ -137,7 +151,7 @@ var circle = L.circle(dep.coords, 25000, {
 
 
 
-    var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
+   // var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
 
 
 
