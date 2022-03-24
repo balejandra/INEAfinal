@@ -2,8 +2,7 @@
 
     Estimado Ciudadano
 
-    Su solicitud de Permiso de Estadia N°: {{$solicitud}} registrada ha sido {{$status}}.
-    @if ($idstatus==1)Puede verificar su documento de autorización de estadia en el archivo adjunto a este correo.@endif
+    {{$mensaje}}
 
 @component('mail::panel')
     <h2>Nombre Embarcacion: {{$nombre_buque}} </h2>

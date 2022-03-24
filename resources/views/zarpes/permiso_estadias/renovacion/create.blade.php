@@ -20,13 +20,14 @@
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-plus-square-o fa-lg"></i>
-                                <strong>Crear Permiso de Estadia</strong>
+                                <strong>Renovar Permiso de Estadia</strong>
                                 <div class="card-header-actions">
                                     <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Listado de Permisos de Estadia</a>
                                 </div>
                             </div>
                             <div class="card-body">
-                                {!! Form::open(['route' => 'permisosestadia.store', 'files' => true]) !!}
+                                @include('zarpes.permiso_estadias.renovacion.renovacionIndicator')
+                                {!! Form::model($permiso, ['route' => ['storerenovacion', $permiso->id], 'method' => 'patch','files' => true]) !!}
 
                                    @include('zarpes.permiso_estadias.renovacion.fields')
 

@@ -127,7 +127,7 @@ class RegisterController extends Controller
                         'password' => Hash::make($input['password']),
                         'tipo_usuario' => 'Usuario web'
                     ]);
-                    $role = Role::where('id', 11)->first();
+                    $role = Role::where('id', 8)->first();
                     $user->roles()->sync($role->id);
                     event(new Registered($user));
                     return $user;

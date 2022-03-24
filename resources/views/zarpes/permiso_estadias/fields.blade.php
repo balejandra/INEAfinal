@@ -1,4 +1,3 @@
-<input type="text" name="id" value="6" hidden>
 <!-- Nombre Buque Field -->
 <div class="row">
 <div class="form-group col-sm-6">
