@@ -84,6 +84,10 @@
                                         				<th class="bg-light">Número de registro</th>
                                         				<td id="nro_registro"></td>
                                         			</tr>
+													<tr>
+                                        				<th class="bg-light">Vigencia hasta</th>
+                                        				<td id="vigencia"></td>
+                                        			</tr>
 
                                         		</table>
 

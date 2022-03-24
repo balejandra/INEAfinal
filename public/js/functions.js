@@ -661,12 +661,12 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
         console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
         $("#menor").prop('checked', false);
         $("#textoMenor").text('NO');
-        /*document.getElementById("numero_identificacion").value="";
+        document.getElementById("numero_identificacion").value="";
         document.getElementById("tipodoc").options.item(0).selected = 'selected';
         document.getElementById("fecha_nacimiento").value="";
         document.getElementById("sexo").options.item(0).selected = 'selected';
         document.getElementById("nombres").value="";
-        document.getElementById("apellidos").value="";*/
+        document.getElementById("apellidos").value="";
 
     }else{
         var msj= document.getElementById('msj');

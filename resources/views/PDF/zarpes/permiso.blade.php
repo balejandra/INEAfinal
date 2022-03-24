@@ -206,11 +206,11 @@
             <b>
             El Buque
                 @if($zarpe->bandera=='extranjera')
-                           <u>({{$buque->nombre_buque}})</u>
+                           <u>{{$buque->nombre_buque}}</u>
                 @else
-                    <u>({{$buque->nombrebuque_actual}})</u>
+                    <u>{{$buque->nombrebuque_actual}}</u>
                 @endif
-                , matrícula ({{$zarpe->matricula}}), de bandera
+                , matrícula {{$zarpe->matricula}}, de bandera
             @if ($zarpe->bandera=='nacional')
                     <u>Venezolana</u>
                 @elseif ($zarpe->bandera=='extranjera')
@@ -223,7 +223,7 @@
                     <u>{{$buque->UAB}}</u>
                 @endif
                  unidades de arqueo bruto y <u>{{$buque->eslora}}</u> metros de eslora,
-            procedente de <u>({{$zarpe->establecimiento_nautico->nombre}})  </u>
+            procedente de <u>{{$zarpe->establecimiento_nautico->nombre}}  </u>
             ubicado en la circunscripción acuática de <u>{{$capitania->nombre}}</u>,
             al mando del Capitán <u>{{$trip->nombre}} {{$trip->apellido}}</u>, con <u> {{$cantTrip}} </u> tripulantes y <u> {{$cantPas}} </u> pasajeros,
             ha cumplido con todos los requisitos de seguridad marítima y legales para hacerse a la mar,
@@ -234,11 +234,11 @@
             <i>
                 The Vessel
                 @if($zarpe->bandera=='extranjera')
-                    <u>({{$buque->nombre_buque}})</u>
+                    <u>{{$buque->nombre_buque}}</u>
                 @else
-                    <u>({{$buque->nombrebuque_actual}})</u>
+                    <u>{{$buque->nombrebuque_actual}}</u>
                 @endif
-                , registration number <u>({{$zarpe->matricula}})</u>, under the
+                , registration number <u>{{$zarpe->matricula}}</u>, under the
                 @if ($zarpe->bandera=='nacional')
                         <u>Venezuelan</u>
                     @elseif ($zarpe->bandera=='extranjera')
@@ -251,7 +251,7 @@
                     <u>{{$buque->UAB}}</u>
                 @endif
                 gross tonnage units
-                and <u>{{$buque->eslora}}</u> meters in length, coming from <u>({{$zarpe->establecimiento_nautico->nombre}})  </u> located in the
+                and <u>{{$buque->eslora}}</u> meters in length, coming from <u>{{$zarpe->establecimiento_nautico->nombre}}</u> located in the
                 aquatic district of <u>{{$capitania->nombre}}</u>, under the command of Captain  <u> {{$trip->nombre}} {{$trip->apellido}} </u>, with <u> {{$cantTrip}} </u> crew members and <u> {{$cantPas}} </u> passenger,
                 has complied with all maritime safety and legal requirements to go to sea, in accordance with what is established in Articles 38 and 39 of the General Law of the Navy and Related Activities and the provisions issued by the Aquatic Authority.
             </i>
@@ -263,23 +263,23 @@
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
             <b>
         El suscrito Capitán de Puerto valida su notificación y lo autoriza para zarpar
-        desde el lugar de procedencia, a partir del <u>({{$zarpe->fecha_hora_salida}})</u>, teniendo como punto de escala lat <u>{{ json_decode($zarpe->coordenadas)[0]}}</u>,
+        desde el lugar de procedencia, a partir del <u>{{$zarpe->fecha_hora_salida}}</u>, teniendo como punto de escala lat <u>{{ json_decode($zarpe->coordenadas)[0]}}</u>,
         long <u>{{ json_decode($zarpe->coordenadas)[1]}}</u>, estimando arribar a la escala el
-        <u>({{$zarpe->fecha_hora_regreso}})</u>,
+        <u>{{$zarpe->fecha_llegada_escala}}</u>,
         con destino a {{$zarpe->capitania->nombre}},
         con el propósito de efectuar navegación <u> {{ $DescripcionNavegacion->descripcion }}</u>,
-        estimando arribar al destino seleccionado el <u>({{$zarpe->fecha_hora_regreso}})</u>
+        estimando arribar al destino seleccionado el <u>{{$zarpe->fecha_hora_regreso}}</u>
             </b>
 
             <br>
             <i>
                 The undersigned Port Captain validates his notification and authorizes
-                him to set sail from the place of origin, as of <u>({{$zarpe->fecha_hora_salida}})</u>,
+                him to set sail from the place of origin, as of <u>{{$zarpe->fecha_hora_salida}}</u>,
                 having lat <u>{{ json_decode($zarpe->coordenadas)[0]}}</u>, long <u>{{ json_decode($zarpe->coordenadas)[1]}}</u> as the stopover point,
-                estimating to arrive at the stopover on (date and time reported for arrival at the stopover point 2022-03-24 08:00:00 hours),
+                estimating to arrive at the stopover on <u>{{$zarpe->fecha_llegada_escala}}</u>,
                 bound for {{$zarpe->capitania->nombre}},
                 for the purpose of navigation <u>{{ $DescripcionNavegacion->descripcion }}</u>, estimating to arrive on the selected destination
-                <u>({{$zarpe->fecha_hora_regreso}})</u>
+                <u>{{$zarpe->fecha_hora_regreso}}</u>
             </i>
         </p>
 
@@ -307,11 +307,11 @@
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
             <b>
-            Lugar y fecha de emisión: <u>{{$zarpe->updated_at}}</u>
+            Lugar y fecha de emisión:   <u>{{$capitania->nombre}}, {{$zarpe->updated_at}}</u>
             </b>
             <br>
             <i>
-            Place and date of issue:  {{$capitania->nombre}}, {{$zarpe->updated_at}}
+            Place and date of issue: <u>{{$capitania->nombre}}, {{$zarpe->updated_at}}</u>
             </i>
 
         </p>
@@ -330,7 +330,7 @@
             <i>Remember to notify the departure and arrival in the system.</i>
         </p>
 
-
+       
     </div>
 </main>
 </body>

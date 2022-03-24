@@ -123,7 +123,7 @@
 
                                             <div class="col-md-12 px-0">
                                                 <div class="form-group col-sm-12 py-2">
-                                                    {!! Form::label('0', 'Establecimiento náutico destino:') !!}
+                                                    {!! Form::label('0', 'Establecimiento náutico de retorno final:') !!}
 
                                                     <select id="estNautioDestino" name="establecimientoNáuticoDestino" title="Selección el punto de escala en el mapa para visualizar los establecimientos náuticos de la circunscripción de destino" 
                                                             class="form-control custom-select">

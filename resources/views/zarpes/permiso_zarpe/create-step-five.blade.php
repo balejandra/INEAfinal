@@ -95,7 +95,7 @@
                                                 <div class="form-group">
                                                     <label for="title">Cédula:</label>
                                                     <input type="number" class="form-control" id="cedula" name="cedula"
-                                                           maxlength="10">
+                                                           maxlength="10" onKeyDown="return soloNumeros(event)">
 
                                                 </div>
 
