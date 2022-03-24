@@ -36,8 +36,6 @@ class PdfGeneratorController extends Controller
         $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
         $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
         $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
-        //dd('kdld');
-        //dd($zarpe);
         $pdf=PDF::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip','estnauticoDestino','DescripcionNavegacion'));
         return $pdf->stream('zarpes.pdf');
     }
@@ -55,13 +53,16 @@ class PdfGeneratorController extends Controller
         }else {
             $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
         }
-        $zarpe= PermisoZarpe::find($id);
+        $trans= PermisoZarpe::all();
+        $zarpe= $trans->find($id);
         $capitania= Capitania::where('id',$zarpe->establecimiento_nautico->capitania_id)->first();
         $cantTrip=Tripulante::where('permiso_zarpe_id',$id)->get()->count();
         $cantPas=Pasajero::where('permiso_zarpe_id',$id)->get()->count();
         $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->where('capitan',true)->get();
         $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
-        $pdf=PDF::loadView('PDF.zarpes.permiso', compact('zarpe','buque','trip','capitania','cantPas','cantTrip'))->stream();
+        $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
+        $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
+        $pdf=PDF::loadView('PDF.zarpes.permiso', compact('zarpe','buque','trip','capitania','cantPas','cantTrip','estnauticoDestino','DescripcionNavegacion'))->stream();
         return $pdf;
 
     }
