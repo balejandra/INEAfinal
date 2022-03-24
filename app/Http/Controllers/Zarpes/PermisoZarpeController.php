@@ -413,7 +413,10 @@ class PermisoZarpeController extends Controller
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $EstNauticos = EstablecimientoNautico::where('capitania_id',$solicitud['origen_capitania_id'])->get();
          $coordenadas=[];
+         $coordenadasDep=[];
          $arr=["capitania"=> 0,"coords"=> [] ];
+         $arrDep=["capitania"=> 0,"coords"=> [] ];
+         $activaDependencias=false;
 
          switch ($solicitud['descripcion_navegacion_id']) {
             case 1: //dentro de una circunscripción
@@ -422,9 +425,9 @@ class PermisoZarpeController extends Controller
             break;
             case 2://Dentro de una circunscripcion pero a una dependencia federal
                 $coordCaps=CoordenadasCapitania::where('capitania_id',$solicitud['origen_capitania_id'])->get();
-            //    $coordsDependencias=DependenciaFedeal::select('*')->where('capitania_id',$solicitud['origen_capitania_id'])->get();
-            $coordsDependencias=[];
-            
+                $coordsDependencias=DependenciaFederal::select('latitud','longitud','capitania_id','dependencias_federales.id','dependencias_federales.nombre')->join('coordenadas_dependencias_federales','coordenadas_dependencias_federales.dependencias_federales_id','=','dependencias_federales.id')->where('capitania_id',$solicitud['origen_capitania_id'])->get();
+                
+                $activaDependencias=true;
             break;
             case 3: // entre circunsctipciones
                 //$coordCaps=CoordenadasCapitania::all();
@@ -460,8 +463,33 @@ class PermisoZarpeController extends Controller
 
         }
 
+        if(count($coordsDependencias)>0){
+            $capi2="";
+            foreach ($coordsDependencias as $coordDep) {
+                 if($capi2=="" || $capi2!=$coordDep->id){
+                    if($capi2!=""){
+                        array_push($coordenadasDep,$arrDep);
+                        $arrDep= ["capitania"=> 0,"coords"=> [] ];
+                    }
+                    $capi2 = $coordDep->capitania_id;
+                    $arrDep["capitania"] = $coordDep->capitania_id;      
+                 }
+                array_push($arrDep["coords"], [$coordDep->latitud, $coordDep->longitud]);
+               
+            }
+
+            if($arrDep["capitania"]!=0){
+                array_push($coordenadasDep,$arrDep);
+       // print_r($coordenadasDep);
+
+            }
+
+
+        }
+
+
         $this->step = 4;
-        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias',$coordsDependencias);
+        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias',json_encode($coordenadasDep))->with('activaDependencias', $activaDependencias);
 
  }
 

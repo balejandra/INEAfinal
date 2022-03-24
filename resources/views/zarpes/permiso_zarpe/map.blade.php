@@ -1,4 +1,4 @@
-<div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}" >
+<div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}" data-coordDepencencias="{{$coordsDependencias}}" data-activarDep="{{$activaDependencias}}">
 
 <x-maps-leaflet style='height: 400px' :centerPoint="['lat' => 10.4806, 'long' => -66.9036]"   :zoomLevel="5"></x-maps-leaflet>
 
@@ -7,19 +7,55 @@
 </div>
 
 <script type="text/javascript">
+var divMap=document.getElementById("map");
+var activarDep=divMap.getAttribute('data-activarDep');
+
+var dependencias=divMap.getAttribute('data-coordDepencencias');
+ dependencias=JSON.parse(dependencias);
+
 
 var capitanias=document.getElementById("map").getAttribute('data-coordCaps');
+
+
 capitanias=JSON.parse(capitanias);
 var polygon=[];
-console.log(capitanias);
  var coordenadasCapitanias=[];
  let i=0;
  capitanias.forEach(function(capitania){
  	let idcapi=capitania.capitania;
  	console.log(idcapi);
+    if(!activarDep){
  	 polygon[i++] = L.polygon(capitania.coords, {color: 'blue', capitaniaid:idcapi}).addTo(mymap);
+    }
  	 
  });
+ console.log(dependencias);
+
+ dependencias.forEach(function(dep){
+    if(activarDep==true){
+        let idcapi2=dep.capitania;
+        console.log(dep.coords[0]);
+      var circle = L.circle(dep.coords[0], 10000, {
+           color: 'red',
+           fillColor: '#f03',
+           fillOpacity: 0.5,
+           capitaniaid: idcapi2
+        }).addTo(mymap);    
+    }
+    
+ });
+
+
+
+/*
+var circle = L.circle(dep.coords, 25000, {
+           color: 'red',
+           fillColor: '#f03',
+           fillOpacity: 0.5,
+           capitaniaid: idcapi
+        }).addTo(mymap);
+*/
+
 
    /* let cordXX=[[7,58],
     [8,59],
