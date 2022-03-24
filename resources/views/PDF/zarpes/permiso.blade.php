@@ -158,23 +158,28 @@
     </div>
     <div style="position:fixed;padding-top: 550pt; left: 400pt;">
         @php
-        if($zarpe->bandera=='extranjera'){
- $vencimiento = strtotime ( '+24 hour' , strtotime ($zarpe->fecha_hora_salida) ) ;
-    $vencimiento = date ( 'Y-m-d H:i:s' , $vencimiento);
-                $QR =
-                    "Nombre Embarcacion: ".$buque->nombrebuque_actual."\n".
-                    "Destino: " .$zarpe->capitania->nombre."\n".
-                    "Fecha Emision: " .$zarpe->updated_at."\n".
-                    "Fecha Vencimiento: " .$vencimiento
-}
-    $vencimiento = strtotime ( '+24 hour' , strtotime ($zarpe->fecha_hora_salida) ) ;
-    $vencimiento = date ( 'Y-m-d H:i:s' , $vencimiento);
-                $QR =
-                    "Nombre Embarcacion: ".$buque->nombrebuque_actual."\n".
-                    "Destino: " .$zarpe->capitania->nombre."\n".
-                    "Fecha Emision: " .$zarpe->updated_at."\n".
-                    "Fecha Vencimiento: " .$vencimiento
+            $vencimiento = strtotime ( '+24 hour' , strtotime ($zarpe->fecha_hora_salida) ) ;
+            $vencimiento = date ( 'Y-m-d H:i:s' , $vencimiento);
         @endphp
+            @if($zarpe->bandera=='extranjera')
+            @php
+                    $QR =
+                        "Nombre Embarcacion: ".$buque->nombre_buque."\n".
+                        "Destino: " .$zarpe->capitania->nombre."\n".
+                        "Fecha Emision: " .$zarpe->updated_at."\n".
+                        "Fecha Vencimiento: " .$vencimiento
+                        @endphp
+    @else
+            @php
+                    $QR =
+                        "Nombre Embarcacion: ".$buque->nombrebuque_actual."\n".
+                        "Destino: " .$zarpe->capitania->nombre."\n".
+                        "Fecha Emision: " .$zarpe->updated_at."\n".
+                        "Fecha Vencimiento: " .$vencimiento
+            @endphp
+        @endif
+
+
 
         <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate($QR)) !!} ">
     </div>
@@ -199,13 +204,25 @@
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph text-justify">
             <b>
-            El Buque <u>({{$buque->nombrebuque_actual}})</u>, matrícula ({{$zarpe->matricula}}), de bandera
+            El Buque
+                @if($zarpe->bandera=='extranjera')
+                           <u>({{$buque->nombre_buque}})</u>
+                @else
+                    <u>({{$buque->nombrebuque_actual}})</u>
+                @endif
+                , matrícula ({{$zarpe->matricula}}), de bandera
             @if ($zarpe->bandera=='nacional')
                     <u>Venezolana</u>
                 @elseif ($zarpe->bandera=='extranjera')
                     <u>Extranjera</u>
                 @endif
-            , del porte de {{$buque->UAB}} unidades de arqueo bruto y <u>{{$buque->eslora}}</u> metros de eslora,
+            , del porte de
+                @if($zarpe->bandera=='extranjera')
+                    <u>{{$buque->arqueo_bruto}}</u>
+                @else
+                    <u>{{$buque->UAB}}</u>
+                @endif
+                 unidades de arqueo bruto y <u>{{$buque->eslora}}</u> metros de eslora,
             procedente de <u>({{$zarpe->establecimiento_nautico->nombre}})  </u>
             ubicado en la circunscripción acuática de <u>{{$capitania->nombre}}</u>,
             al mando del Capitán <u>{{$trip->nombre}} {{$trip->apellido}}</u>, con <u> {{$cantTrip}} </u> tripulantes y <u> {{$cantPas}} </u> pasajeros,
@@ -215,13 +232,25 @@
             </b>
             <br>
             <i>
-                The Vessel  <u>({{$buque->nombrebuque_actual}})</u>, registration number <u>({{$zarpe->matricula}})</u>, under the
+                The Vessel
+                @if($zarpe->bandera=='extranjera')
+                    <u>({{$buque->nombre_buque}})</u>
+                @else
+                    <u>({{$buque->nombrebuque_actual}})</u>
+                @endif
+                , registration number <u>({{$zarpe->matricula}})</u>, under the
                 @if ($zarpe->bandera=='nacional')
                         <u>Venezuelan</u>
                     @elseif ($zarpe->bandera=='extranjera')
                         <u>foreign</u>
                     @endif
-                flag, with a size of {{$buque->UAB}} gross tonnage units
+                flag, with a size of
+                @if($zarpe->bandera=='extranjera')
+                    <u>{{$buque->arqueo_bruto}}</u>
+                @else
+                    <u>{{$buque->UAB}}</u>
+                @endif
+                gross tonnage units
                 and <u>{{$buque->eslora}}</u> meters in length, coming from <u>({{$zarpe->establecimiento_nautico->nombre}})  </u> located in the
                 aquatic district of <u>{{$capitania->nombre}}</u>, under the command of Captain  <u> {{$trip->nombre}} {{$trip->apellido}} </u>, with <u> {{$cantTrip}} </u> crew members and <u> {{$cantPas}} </u> passenger,
                 has complied with all maritime safety and legal requirements to go to sea, in accordance with what is established in Articles 38 and 39 of the General Law of the Navy and Related Activities and the provisions issued by the Aquatic Authority.

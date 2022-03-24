@@ -21,9 +21,14 @@ use Illuminate\Http\Request;
 class PdfGeneratorController extends Controller
 {
     public function imprimir($id){
+        $zarpe= PermisoZarpe::find($id);
+        if ($zarpe->bandera=='extranjera') {
+            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+        }else {
+            $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
+        }
         $trans= PermisoZarpe::all();
         $zarpe= $trans->find($id);
-        $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
         $capitania= Capitania::where('id',$zarpe->establecimiento_nautico->capitania_id)->first();
         $cantTrip=Tripulante::where('permiso_zarpe_id',$id)->get()->count();
         $cantPas=Pasajero::where('permiso_zarpe_id',$id)->get()->count();
@@ -31,6 +36,8 @@ class PdfGeneratorController extends Controller
         $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
         $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
         $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
+        //dd('kdld');
+        //dd($zarpe);
         $pdf=PDF::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip','estnauticoDestino','DescripcionNavegacion'));
         return $pdf->stream('zarpes.pdf');
     }
@@ -42,9 +49,13 @@ class PdfGeneratorController extends Controller
     }
 
     public function correo($id){
-        $trans= PermisoZarpe::all();
-        $zarpe= $trans->find($id);
-        $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
+        $zarpe= PermisoZarpe::find($id);
+        if ($zarpe->bandera=='extranjera') {
+            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+        }else {
+            $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
+        }
+        $zarpe= PermisoZarpe::find($id);
         $capitania= Capitania::where('id',$zarpe->establecimiento_nautico->capitania_id)->first();
         $cantTrip=Tripulante::where('permiso_zarpe_id',$id)->get()->count();
         $cantPas=Pasajero::where('permiso_zarpe_id',$id)->get()->count();
