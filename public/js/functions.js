@@ -982,9 +982,36 @@ function compararFechas(){
         regreso.value="";
     }
 
-
+    compararFechasEscala();
 }
 
+
+function compararFechasEscala(){
+    var salida =document.getElementById('salida').value;
+    var regreso =document.getElementById('regreso');
+    var escala =document.getElementById('llegada_escala');
+     
+    escala.setAttribute("min",salida);
+    escala.setAttribute("max",regreso);
+
+    var date1 = new Date(salida);
+    var date2 = new Date(escala.value);
+
+    if(date1>date2){
+
+        document.getElementById("msjRuta").innerHTML="<div class='alert alert-danger'>La fecha y hora de salida no pueden ser menores que la de llegada al punto de escala, por favor verifique.</div>"
+        escala.value="";
+    }
+
+    let date3=new Date(regreso.value);
+
+    if(regreso.value!="" && date2>date3){
+        document.getElementById("msjRuta").innerHTML="<div class='alert alert-danger'>La fecha y hora de llegada al punto de escala no pueden ser menores que la fecha de regreso, por favor verifique.</div>"
+        regreso.value="";
+    }
+
+
+}
 
 function estNauticoDestinoSelect(idCapitania){
 

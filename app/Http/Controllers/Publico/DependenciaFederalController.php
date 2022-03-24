@@ -106,8 +106,9 @@ class DependenciaFederalController extends Controller
 
             return redirect(route('dependenciasfederales.index'));
         }
+        $coords=CoordenadasDependenciasFederales::select(['id','dependencias_federales_id', 'latitud', 'longitud'])->where('coordenadas_dependencias_federales.dependencias_federales_id', '=', $id)->get();
 
-        return view('publico.dependencias_federales.show')->with('dependenciaFederal', $dependenciaFederal)->with('capitania',  $capitania['nombre']);
+        return view('publico.dependencias_federales.show')->with('dependenciaFederal', $dependenciaFederal)->with('capitania',  $capitania['nombre'])->with('coordenadas',$coords);
     }
 
     /**

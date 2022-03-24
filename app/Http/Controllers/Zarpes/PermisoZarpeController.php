@@ -104,6 +104,8 @@ class PermisoZarpeController extends Controller
             "fecha_hora_regreso"=> '',
             "status_id"=> 3,
             "permiso_estadias_id"=> '',
+            "fecha_llegada_escala"=> '',
+
         ]);
 
         $valida = [
@@ -501,6 +503,7 @@ class PermisoZarpeController extends Controller
             $validatedData = $request->validate([
                 'establecimientoNáuticoOrigen' => 'required',
                 'salida' => 'required',
+                'fecha_llegada_escala' => 'required',
                 'regreso' => 'required',
                 'latitud'=> 'required',
                 'longitud'=> 'required',
@@ -511,6 +514,7 @@ class PermisoZarpeController extends Controller
                 'establecimientoNáuticoOrigen' => 'required',
                 'salida' => 'required',
                 'regreso' => 'required',
+                'fecha_llegada_escala' => 'required',
                 'latitud'=> 'required',
                 'longitud'=> 'required',
                 'coordenadasDestino'=> 'required',
@@ -525,6 +529,7 @@ class PermisoZarpeController extends Controller
         $solicitud['fecha_hora_regreso'] = $request->input('regreso');
         $solicitud['coordenadas'] = json_encode([$request->input('latitud'), $request->input('longitud')]);
         $solicitud['destino_capitania_id'] = $request->input('coordenadasDestino');
+        $solicitud['fecha_llegada_escala'] = $request->input('fecha_llegada_escala');
 
 
         $request->session()->put('solicitud', json_encode($solicitud));
@@ -536,6 +541,8 @@ class PermisoZarpeController extends Controller
 
     public function createStepFive(Request $request)
     {
+        $solicitud = json_decode($request->session()->get('solicitud'), true);
+print_r($solicitud);
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes=$request->session()->get('tripulantes');
 

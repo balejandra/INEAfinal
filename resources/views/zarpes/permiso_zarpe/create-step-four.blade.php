@@ -100,9 +100,22 @@
 
                                             </div>
 
+                                            <div class="col-md-12 py-2"> 
+                                                @php
+                                                $fechaActual=new DateTime();
+                                                $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
+                                                $fechaActual=$fechaActual->format('Y-m-d')."T".$fechaActual->format('h:i');
+                                                @endphp
+                                                {!! Form::label('llegada_escala', 'Fecha/hora llegada a punto de escala:') !!}
+                                                <input type="datetime-local" id="llegada_escala" name="fecha_llegada_escala"
+                                                       min="{{$fechaActual}}" class="form-control"
+                                                       onblur="compararFechasEscala()">
+
+                                            </div>
+
                                             <div class="col-md-12 py-2">
 
-                                                {!! Form::label('regreso', 'Fecha/hora llegada:') !!}
+                                                {!! Form::label('regreso', 'Fecha/hora llegada a destino:') !!}
                                                 <input type="datetime-local" id="regreso" name="regreso"
                                                        class="form-control" onblur="compararFechas()">
 

@@ -13,7 +13,16 @@
              <td class="bg-light">Capitanía</td>
              <td>{{ $capitania }}</td>
          </tr>
+         <tr>
+             <td class="bg-light">Latitud</td>
+             <td>{{$coordenadas[0]->latitud}}</td>
+         </tr>
+         <tr>
+             <td class="bg-light">Longitud</td>
+             <td>{{$coordenadas[0]->longitud}}</td>
+         </tr>
      </table>
+ 
 
  </div>
 </div>
