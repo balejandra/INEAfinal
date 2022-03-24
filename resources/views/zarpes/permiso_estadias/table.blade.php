@@ -36,7 +36,7 @@
             @elseif($permisoEstadia->status->id==11)
                 <td style="color: #770bba">{{ $permisoEstadia->status->nombre}} </td>
             @else
-                <td>{{ $permisoOrigenZarpe->status->nombre}} </td>
+                <td>{{ $permisoEstadia->status->nombre}} </td>
             @endif
             <td>
                 @can('consultar-estadia')
@@ -48,19 +48,18 @@
                     @if ($permisoEstadia->status_id===3)
                             <!-- Button trigger modal -->
                                 <a class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                   data-bs-target="#staticBackdrop" data-toggle="tooltip"
-                                   data-bs-placement="bottom"
+                                   data-bs-target="#visitamodal" data-toggle="tooltip"
+                                   data-bs-placement="bottom" data-bs-whatever="{{$permisoEstadia->id}}"
                                    title="Asignar Visitador">
                                     <i class="fas fa-user-clock"></i>
                                 </a>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="staticBackdrop"
+                                <div class="modal fade" id="visitamodal"
                                      data-bs-backdrop="static" data-bs-keyboard="false"
                                      tabindex="-1" aria-labelledby="staticBackdropLabel"
                                      aria-hidden="true">
-                                    <form
-                                        action="{{route('statusEstadia',[$permisoEstadia->id,9])}}">
+                                    <form action="{{route('statusEstadia',[$permisoEstadia->id,9])}}">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -139,12 +138,12 @@
                         @if (($permisoEstadia->status_id===3) || ($permisoEstadia->status_id===9) || ($permisoEstadia->status_id===11)  )
                         <!-- Button trigger modal -->
                             <a class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                               data-bs-target="#staticBackdrop">
+                               data-bs-target="#rechazarmodal">
                                 <i class="fa fa-ban"></i>
                             </a>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop"
+                            <div class="modal fade" id="rechazarmodal"
                                  data-bs-backdrop="static" data-bs-keyboard="false"
                                  tabindex="-1" aria-labelledby="staticBackdropLabel"
                                  aria-hidden="true">

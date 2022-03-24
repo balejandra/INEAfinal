@@ -487,7 +487,7 @@ class PermisoEstadiaController extends AppBaseController
                 $mailTo = $capitanDestino[0]->email;
                 $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;
             }else {
-            
+
             }
         }
 
