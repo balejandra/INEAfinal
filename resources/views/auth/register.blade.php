@@ -12,6 +12,9 @@
                 <span>
                     <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">
                 </span>
+                <div id="errorRegister">
+
+                </div>
                 <div class="card mx-4">
                     <div class="card-body p-4">
 

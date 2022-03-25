@@ -110,7 +110,9 @@ function changetipodocumento() {
         // This will be called on error
         .fail(function (response) {
             datosbasicos(JSON.parse(0));
-            alert('No se ha encontrado la cedula o la fecha de nacimiento');
+            let error=document.getElementById('errorRegister');
+            error.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias en el SAIME con los datos suministrados</div>';
+           // alert('No se ha encontrado la cedula o la fecha de nacimiento');
         });
 
 }

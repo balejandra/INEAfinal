@@ -1113,6 +1113,11 @@ function EstablecimientoUser(){
             .fail(function (response) {
                 console.log("fallo al buscar establecimientos nautico ");
             });
+    }else{
+        let select=document.getElementById("establecimiento");
+        let options="<option value='0'>Puede asignar un Establecimiento...</option>";
+        select.innerHTML=options;
+
     }
 
 }
