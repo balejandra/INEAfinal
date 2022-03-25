@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Models\Publico\Capitania;
+use App\Models\Zarpes\EstablecimientoNautico;
 use App\Models\Zarpes\PermisoZarpe;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,13 +66,17 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      * @var array
      */
     public static $rules = [
-        'email' => 'required|unique:users',
+        'email' => 'required',
         'nombres' => 'required',
         'password' => 'required'
     ];
     public function capitanias()
     {
         return $this->belongsToMany(Capitania::class);
+    }
+    public function establecimientos()
+    {
+        return $this->belongsToMany(EstablecimientoNautico::class);
     }
 
     public function permisozarpes()

@@ -31,10 +31,8 @@
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('0', 'Establecimiento náutico asignado:') !!}
-
-    {!! Form::select('capitanias', $capitanias, null, ['id'=>'capitanias','class' => ' form-control custom-select','placeholder' => 'Puede asignar una Capitania...','onchange="EstablecimientoUser();"']) !!}
-
+    {!! Form::label('capitania_id', 'Establecimiento náutico asignado:') !!}
+    {!! Form::select('establecimientos',$establecimientos, null, ['id'=>'establecimientos','class' => ' form-control custom-select','placeholder' => 'Esta...']) !!}
 </div>
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

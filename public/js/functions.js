@@ -990,7 +990,7 @@ function compararFechasEscala(){
     var salida =document.getElementById('salida').value;
     var regreso =document.getElementById('regreso');
     var escala =document.getElementById('llegada_escala');
-     
+
     escala.setAttribute("min",salida);
     escala.setAttribute("max",regreso);
 
@@ -1100,7 +1100,7 @@ function EstablecimientoUser(){
                 //  alert(response);
                 respuesta = JSON.parse(response);
                 let establecimientos=respuesta[0];
-                let select=document.getElementById("establecimiento");
+                let select=document.getElementById("establecimientos");
                 let options="<option value='0'>Puede asignar un Establecimiento...</option>";
                 for (var i = 0; i < establecimientos.length; i++) {
                     options+="<option value='"+establecimientos[i].id+"'>"+establecimientos[i].nombre+"</option>"
@@ -1114,7 +1114,7 @@ function EstablecimientoUser(){
                 console.log("fallo al buscar establecimientos nautico ");
             });
     }else{
-        let select=document.getElementById("establecimiento");
+        let select=document.getElementById("establecimientos");
         let options="<option value='0'>Puede asignar un Establecimiento...</option>";
         select.innerHTML=options;
 
