@@ -2,6 +2,8 @@
 
 namespace App\Models\Zarpes;
 
+use App\Models\Publico\Capitania;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -59,5 +61,13 @@ class EstablecimientoNautico extends Model implements Auditable
     public function permisozarpe()
     {
         return $this->hasMany(PermisoZarpe::class);
+    }
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
+    public function capitania()
+    {
+        return $this->hasMany(Capitania::class);
     }
 }

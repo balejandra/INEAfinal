@@ -15,6 +15,7 @@ use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Response;
 use Spatie\Permission\Models\Role;
 
@@ -73,6 +74,15 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
+        $validated= $request->validate([
+            'nombres' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ],
+            [
+                'email.unique'=>'Email ya registrado',
+            ]);
+
         $data= new User();
         $data->email= $request->email;
         $data->nombres = $request->nombres;
@@ -142,6 +152,7 @@ class UserController extends Controller
         $roles=Role::pluck('name','id');
         $capitanias=Capitania::pluck('nombre','id');
         $user = $this->userRepository->find($id);
+        $establecimientos=EstablecimientoNautico::pluck('nombre','id');
 
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
@@ -152,7 +163,8 @@ class UserController extends Controller
         return view('publico.users.edit')
             ->with('user', $user)
             ->with('roles',$roles)
-            ->with('capitanias',$capitanias);
+            ->with('capitanias',$capitanias)
+            ->with('establecimientos',$establecimientos);
     }
 
     /**
@@ -165,8 +177,16 @@ class UserController extends Controller
      */
     public function update($id, UpdateUserRequest $request)
     {
-        $user = $this->userRepository->find($id);
-
+        $user= User::find($id);
+        $user->email= $request->email;
+        $user->nombres = $request->nombres;
+        $user->password = Hash::make($request->password);
+        $user->tipo_usuario=$request->tipo_usuario;
+        $user->email_verified_at= now();
+        $user->save();
+        $roles=$request->roles ;
+        $user->roles()->sync($roles);
+        $rol=Role::select('name')->where('id',$request->roles)->get();
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
 
@@ -174,11 +194,6 @@ class UserController extends Controller
         }
 
         if (($request->roles==5)||($request->roles==6)) {
-            $user = $this->userRepository->update($request->all(), $id);
-            $roles=$request->roles ;
-            $user->roles()->sync($roles);
-            $rol=Role::select('name')->where('id',$request->roles)->get();
-
             $cap_user= new CapitaniaUser();
             $cap_user->cargo=$rol[0]->name;
             $cap_user->user_id=$id;
@@ -187,26 +202,16 @@ class UserController extends Controller
 
             $est_user= new EstablecimientoNauticoUser();
             $est_user->user_id=$id;
-            $est_user->establecimiento_nautico_id=$request->establecimiento;
+            $est_user->establecimiento_nautico_id=$request->establecimientos;
             $est_user->save();
         } elseif (($request->roles==4)||($request->roles==7)||($request->roles==8)){
-            $user = $this->userRepository->update($request->all(), $id);
-            $roles=$request->roles ;
-            $user->roles()->sync($roles);
-            $rol=Role::select('name')->where('id',$request->roles)->get();
 
             $cap_user= new CapitaniaUser();
             $cap_user->cargo=$rol[0]->name;
             $cap_user->user_id=$id;
             $cap_user->capitania_id=$request->capitanias;
             $cap_user->save();
-        } else{
-            $user = $this->userRepository->update($request->all(), $id);
-            $roles=$request->roles ;
-            $user->roles()->sync($roles);
-            $rol=Role::select('name')->where('id',$request->roles)->get();
         }
-
 
         Flash::success('Usuario actualizado con éxito.');
 
