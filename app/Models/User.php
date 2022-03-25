@@ -65,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      * @var array
      */
     public static $rules = [
-        'email' => 'required',
+        'email' => 'required|unique:users',
         'nombres' => 'required',
         'password' => 'required'
     ];
