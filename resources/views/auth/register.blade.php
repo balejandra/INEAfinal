@@ -83,6 +83,9 @@
                                                class="form-control {{ $errors->has("numero_identificacion")?"is-invalid":"" }}"
                                                name="numero_identificacion" value="{{ old('numero_identificacion') }}"
                                                placeholder="Numero de identificacion" id="numero_identificacion" required>
+                                        @error('numero_identificacion')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                         </div>
 
                                 </div>
@@ -166,9 +169,12 @@
                                             <span class="input-group-text"><i class="fas fa-at"></i></span>
                                         </div>
                                         <input type="email"
-                                               class="form-control"
+                                               class="form-control {{ $errors->has("email")?"is-invalid":"" }}"
                                                name="email"
                                                value="{{ old('email') }}" placeholder="Email" required>
+                                        @error('email')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <!--////////// PASSWORD //////////////-->

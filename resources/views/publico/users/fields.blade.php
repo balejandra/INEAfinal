@@ -33,10 +33,8 @@
 <div class="form-group col-sm-6">
     {!! Form::label('0', 'Establecimiento náutico asignado:') !!}
 
-    <select id="establecimiento" name="establecimiento" title="" class="form-control custom-select">
-        <option value="">Puede asignar un Establecimiento...</option>
+    {!! Form::select('capitanias', $capitanias, null, ['id'=>'capitanias','class' => ' form-control custom-select','placeholder' => 'Puede asignar una Capitania...','onchange="EstablecimientoUser();"']) !!}
 
-    </select>
 </div>
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

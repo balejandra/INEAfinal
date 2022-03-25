@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Spatie\Permission\Models\Role;
+use Flash;
 
 
 class RegisterController extends Controller
@@ -57,16 +58,20 @@ class RegisterController extends Controller
 
         return Validator::make($data, [
             'nombres' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:users'],
             'apellidos' => ['string', 'max:255'],
             'tipo_identificacion' => ['required','string', 'max:20'],
-            'numero_identificacion' => ['required','string', 'max:20'],
+            'numero_identificacion' => ['required','string', 'max:20','unique:users'],
             'fecha_nacimiento' => ['date', 'max:50'],
             'telefono' => ['required', 'string', 'max:20'],
             'direccion' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'tipo_usuario' => ['string', 'max:20'],
-        ]);
+        ],
+            [
+                'email.unique'=>'Email ya registrado',
+                'numero_identificacion.unique'=>'Numero de Identificacion ya registrado',
+            ]);
     }
 
 
@@ -78,6 +83,7 @@ class RegisterController extends Controller
      */
     protected function create(array $input)
     {
+
         if ($input['tipo_persona']=="natural"){
         $user = User::create([
             'nombres' => $input['nombres'],
