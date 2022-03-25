@@ -107,9 +107,16 @@
 
                     <div class="card-footer text-right">
                         <div class="row">
-				            <div class="col-md-6 text-left">
+                            @if($bandera=='extranjera')
+                            <div class="col-md-6 text-left">
+				                <a href="{{ route('permisoszarpes.CreateStepTwoE') }}" class="btn btn-primary pull-right">Anterior</a>
+				            </div>
+                            @else
+                            <div class="col-md-6 text-left">
 				                <a href="{{ route('permisoszarpes.CreateStepTwo') }}" class="btn btn-primary pull-right">Anterior</a>
 				            </div>
+                            @endif
+				            
 				            <div class="col-md-6 text-right">
 				                <button type="submit" class="btn btn-primary">Siguiente</button>
 				            </div>

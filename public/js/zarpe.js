@@ -1,12 +1,13 @@
 function getmatricula(data1) {
+    let divError = document.getElementById("errorMat");
+    let table = document.getElementById("table-buque");
     $.ajax({
         url: route('validationStepTwo'),
         data: {matricula: data1}
 
     })// This will be called on success
         .done(function (response) {
-            let divError = document.getElementById("errorMat");
-               let table = document.getElementById("table-buque");
+          
               //  alert(response);
 //console.log(response);
             if(response=='permisoPorCerrar'){
@@ -111,19 +112,32 @@ function getPermisoEstadia(data) {
 
                     tableEstadiaVAl.style.display='none';
             }else{
+//console.log(resp[0].vencimiento);
 
+    let date1 = new Date();
+    let date2 = new Date(resp[0].vencimiento);
 
-                document.getElementById("solicitud").innerHTML=resp[0].nro_solicitud;
-                document.getElementById("nombre").innerHTML=resp[0].nombre_buque;
-                document.getElementById("nacionalidad").innerHTML=resp[0].nacionalidad_buque;
-                document.getElementById("tipo").innerHTML=resp[0].tipo_buque;
-                document.getElementById("nro_registro").innerHTML=resp[0].nro_registro;
+                if(date1>date2){
 
-                document.getElementById("permiso_de_estadia").value=resp[0].id;
-                document.getElementById("numero_registro").value=resp[0].nro_registro;
-                 
+                    divError.innerHTML="<div class='alert alert-danger'>El permiso de estadía se encuentra vencido</div>"
+                    
+                }else{
+                    document.getElementById("solicitud").innerHTML=resp[0].nro_solicitud;
+                    document.getElementById("nombre").innerHTML=resp[0].nombre_buque;
+                    document.getElementById("nacionalidad").innerHTML=resp[0].nacionalidad_buque;
+                    document.getElementById("tipo").innerHTML=resp[0].tipo_buque;
+                    document.getElementById("nro_registro").innerHTML=resp[0].nro_registro;
+                    var date = new Date(resp[0].vencimiento);
+                    vence = date.toLocaleString();
+                    document.getElementById("vigencia").innerHTML=vence;
 
-                    tableEstadiaVAl.style.display='';
+                    document.getElementById("permiso_de_estadia").value=resp[0].id;
+                    document.getElementById("numero_registro").value=resp[0].nro_registro;
+                    
+                        tableEstadiaVAl.style.display='';
+                }
+
+                
 
             }
 
@@ -139,5 +153,10 @@ function getPermisoEstadia(data) {
 
 }
  
-
+function soloNumeros(event){
+    if((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !==190  && event.keyCode !==110 && event.keyCode !==8 && event.keyCode !==9  ){
+        return false;
+    }
+}
+ 
  

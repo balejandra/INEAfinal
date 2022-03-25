@@ -55,7 +55,8 @@ class PermisoZarpe extends Model implements Auditable
         'status_id',
         'establecimiento_nautico_destino_id',
         'descripcion_navegacion_id',
-        'permiso_estadia_id'
+        'permiso_estadia_id',
+        'fecha_llegada_escala'
     ];
 
     /**
@@ -74,7 +75,8 @@ class PermisoZarpe extends Model implements Auditable
          'user_id' => 'integer',
          'establecimiento_nautico_destino_id'=> 'integer',
         'descripcion_navegacion_id'=> 'integer',
-        'permiso_estadia_id'=>'integer'
+        'permiso_estadia_id'=>'integer',
+        'fecha_llegada_escala'=>'datetime'
     ];
 
     /**

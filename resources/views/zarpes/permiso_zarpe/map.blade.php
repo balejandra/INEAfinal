@@ -30,12 +30,13 @@ var polygon=[];
  	 
  });
  console.log(dependencias);
-
+ var circles=[];
+ let j=0;
  dependencias.forEach(function(dep){
     if(activarDep==true){
         let idcapi2=dep.capitania;
         console.log(dep.coords[0]);
-      var circle = L.circle(dep.coords[0], 10000, {
+        circles[j++] = L.circle(dep.coords[0], 10000, {
            color: 'red',
            fillColor: '#f03',
            fillOpacity: 0.5,
@@ -100,19 +101,38 @@ var circle = L.circle(dep.coords, 25000, {
      	longInput.setAttribute('data-long',coordenada.lng);
          newMarker(coordenada.lat, coordenada.lng); //Creo la nueva marca en el mapa
          let idCapitania;
-         polygon.forEach(function(pol){
-          idCapitania=isMarkerInsidePolygon(marca, pol);
+         
 
-          if(idCapitania!=false){
-          	document.getElementById('capitaniaDestino').value=idCapitania; 
 
-            estNauticoDestinoSelect(idCapitania);
+          if(activarDep){
+            circles.forEach(function(cir){
+                 
+              var distancia= getKilometros(marca ,cir._latlng.lat, cir._latlng.lng);
 
+                  if(distancia<10){
+                    // si la distancia es menor a diez km es porque esta dentro del citculo
+                    console.log("distancia",distancia, cir.options.capitaniaid);
+                    idCapitania=cir.options.capitaniaid;
+                     document.getElementById('capitaniaDestino').value=idCapitania; 
+                    estNauticoDestinoSelect(idCapitania);
+                    
+                  }else{
+                    idCapitania=false;
+                  }
+
+             });
           }else{
-          	idCapitania=false;
-          }
+            polygon.forEach(function(pol){
+                idCapitania=isMarkerInsidePolygon(marca, pol);
+                if(idCapitania!=false){
+                    document.getElementById('capitaniaDestino').value=idCapitania; 
+                    estNauticoDestinoSelect(idCapitania);
+                }else{
+                    idCapitania=false;
+                }
 
-         });
+             });
+          }
          
         //alert("Acabas de hacer clic en: \n latitud: " + latitud + "\n longitud: " + longitud);
     };
@@ -137,7 +157,7 @@ var circle = L.circle(dep.coords, 25000, {
 
 
 
-    var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
+   // var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
 
 
 
@@ -168,6 +188,22 @@ function isMarkerInsidePolygon(marker, campus) {
 
         }
     }
+
+
+    function getKilometros(marker,lat2,lon2)
+     {
+        var lat1 = marker.getLatLng().lat;
+        var lon1 = marker.getLatLng().lng;
+
+        rad = function(x) {return x*Math.PI/180;}
+        var R = 6378.137; //Radio de la tierra en km
+        var dLat = rad( lat2 - lat1 );
+        var dLong = rad( lon2 - lon1 );
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat1)) * Math.cos(rad(lat2)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c;
+        return d.toFixed(3); //Retorna tres decimales
+     }
 
  //var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community' });
 

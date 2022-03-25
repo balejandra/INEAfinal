@@ -36,6 +36,7 @@ class PdfGeneratorController extends Controller
         $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
         $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
         $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
+        
         $pdf=PDF::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip','estnauticoDestino','DescripcionNavegacion'));
         return $pdf->stream('zarpes.pdf');
     }

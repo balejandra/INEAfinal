@@ -15,7 +15,7 @@
 
 
 
-{!! Form::label('coordenadas', 'Coordenas:') !!}
+{!! Form::label('coordenadas', 'Coordenadas:') !!}
 @php($var=0)
 
 @forelse($coordenadas as $key =>$coord)
@@ -28,20 +28,20 @@
         {!! Form::hidden('ids[]',  $coord->id, ['class' => 'form-control']) !!}
     </div>
 
-    <div class="form-group col-sm-5">
+    <div class="form-group col-sm-6">
         @if ($var==0)
         {!! Form::label('Latitud', 'Latitud:') !!}
          @endif
         {!! Form::text('latitud[]', $coord->latitud, ['class' => 'form-control']) !!}
     </div>
     <!-- longitud Field -->
-    <div class="form-group col-sm-5">
+    <div class="form-group col-sm-6">
         @if ($var==0)
         {!! Form::label('longitud', 'Longitud:') !!}
          @endif
         {!! Form::text('longitud[]', $coord->longitud , ['class' => 'form-control']) !!}
     </div>
-
+<!--
     @if ($var==0)
         @php($var++)
         <div class="form-group col-sm-2 pt-4">
@@ -54,6 +54,7 @@
 
         </div>
     @endif
+-->
 </div>
 
 @empty
@@ -70,7 +71,7 @@
         {!! Form::text('longitud[]', null , ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-2 pt-4">
-        {!! Form::button('Agregar otras', ['class' => 'btn btn-success', 'onclick' => 'agregarCoordenadasDF()']) !!}
+     <!--   {!! Form::button('Agregar otras', ['class' => 'btn btn-success', 'onclick' => 'agregarCoordenadasDF()']) !!}-->
     </div>
 
 </div>

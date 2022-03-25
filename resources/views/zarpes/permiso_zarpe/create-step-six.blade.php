@@ -63,7 +63,7 @@
                                                 <div class="form-group">
                                                     <label for="title">Cédula/Pasaporte:</label>
                                                     <input type="text" class="form-control" id="numero_identificacion"
-                                                           name="numero_identificacion"
+                                                           name="numero_identificacion" onKeyDown="return soloNumeros(event)"
                                                            title="En caso de ser menor venezolano no cedulado, agregue la cédula del representante.">
                                                 </div>
                                             </div>
