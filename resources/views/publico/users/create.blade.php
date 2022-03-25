@@ -50,7 +50,7 @@
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('role id', 'Rol asignado:') !!}
 
-                                        {!! Form::select('roles', $roles, null, ['class' => 'roles form-control custom-select','placeholder' => 'Puede asignar un Rol...','onchange="requeridos();"','required']) !!}
+                                        {!! Form::select('roles', $roles, null, ['class' => 'roles form-control custom-select','placeholder' => 'Puede asignar un Rol...','onchange="requeridos(); EstablecimientoUser();"','required']) !!}
                                     </div>
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('capitania_id', 'Capitania Asignada:') !!}
