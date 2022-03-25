@@ -134,7 +134,6 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
            //'password' => env('DB_PASSWORD', '123456'),
-
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,

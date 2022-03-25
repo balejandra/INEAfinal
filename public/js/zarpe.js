@@ -1,12 +1,13 @@
 function getmatricula(data1) {
+    let divError = document.getElementById("errorMat");
+    let table = document.getElementById("table-buque");
     $.ajax({
         url: route('validationStepTwo'),
         data: {matricula: data1}
 
     })// This will be called on success
         .done(function (response) {
-            let divError = document.getElementById("errorMat");
-               let table = document.getElementById("table-buque");
+          
               //  alert(response);
 //console.log(response);
             if(response=='permisoPorCerrar'){
