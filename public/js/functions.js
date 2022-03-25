@@ -1021,9 +1021,9 @@ function estNauticoDestinoSelect(idCapitania){
 //FIN DE VALIDACION DE PERMISOS DE ZARPES
 
 function getCapitania(){
-  
+
     data=document.getElementById('descripcion_de_navegacion').value;
-    
+
     $.ajax({
         url: route('FindCapitania'),
         data: {descripcion_de_navegacion: data}
@@ -1043,6 +1043,49 @@ function getCapitania(){
     .fail(function (response) {
             console.log(response);
              divError.innerHTML='<div class="alert alert-danger"> Ha ocurrido un error durante la búsqueda de la información.</div>';
-            
+
     });
+}
+function requeridos() {
+    var roles = $(".roles").val();
+    if ((roles==5) || (roles==6) ){
+        $("#capitanias").prop('required', true);
+        $("#establecimiento").prop('required', true);
+    } else if ((roles==4) || (roles==7) || (roles==8) ){
+        $("#capitanias").prop('required', true);
+        $("#establecimiento").prop('required', false);
+    } else {
+        $("#capitanias").prop('required', false);
+        $("#establecimiento").prop('required', false);
+    }
+}
+function EstablecimientoUser(){
+    var estado = $(".roles").val();
+    if ((estado==5) || (estado==6) ){
+        var idCapitania = $("#capitanias").val();
+
+        $.ajax({
+            url: route('AsignarEstablecimiento'),
+            data: {idcap: idCapitania }
+
+        })// This will be called on success
+            .done(function (response) {
+                //  alert(response);
+                respuesta = JSON.parse(response);
+                let establecimientos=respuesta[0];
+                let select=document.getElementById("establecimiento");
+                let options="<option value='0'>Puede asignar un Establecimiento...</option>";
+                for (var i = 0; i < establecimientos.length; i++) {
+                    options+="<option value='"+establecimientos[i].id+"'>"+establecimientos[i].nombre+"</option>"
+                }
+                select.innerHTML=options;
+                // console.log(options);
+            })
+
+            // This will be called on error
+            .fail(function (response) {
+                console.log("fallo al buscar establecimientos nautico ");
+            });
+    }
+
 }

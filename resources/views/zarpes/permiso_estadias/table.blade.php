@@ -4,11 +4,12 @@
         <th>Nro Solicitud</th>
         <th>Solicitante</th>
         <th>Nombre Buque</th>
-        <th>Nacionalidad Buque</th>
+        <th>Nro Registro Buque</th>
         <th>Puerto Origen</th>
         <th>Puerto Destino</th>
+        <th style="font-size: 12px; width: 5%">Dias de Estadia aprobada en el Pais</th>
         <th>Status</th>
-        <th>Acciones</th>
+        <th style="width: max-content">Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -18,9 +19,15 @@
             <td>{{ $permisoEstadia->nro_solicitud }}</td>
             <td>{{ $permisoEstadia->user->nombres }} {{ $permisoEstadia->user->apellidos }}</td>
             <td>{{ $permisoEstadia->nombre_buque }}</td>
-            <td>{{ $permisoEstadia->nacionalidad_buque }}</td>
+            <td>{{ $permisoEstadia->nro_registro }}</td>
             <td>{{ $permisoEstadia->puerto_origen }}</td>
             <td>{{ $permisoEstadia->capitania->nombre }}</td>
+            @if (($permisoEstadia->status->id==1) or ($permisoEstadia->status->id==12))
+                <td>{{$permisoEstadia->cantidad_solicitud*90}} días</td>
+            @else
+                <td></td>
+            @endif
+
             @if ($permisoEstadia->status->id==1)
                 <td class="text-success">{{ $permisoEstadia->status->nombre}} </td>
             @elseif($permisoEstadia->status->id==2)
@@ -35,6 +42,8 @@
                 <td class="text-primary">{{ $permisoEstadia->status->nombre}} </td>
             @elseif($permisoEstadia->status->id==11)
                 <td style="color: #770bba">{{ $permisoEstadia->status->nombre}} </td>
+            @elseif($permisoEstadia->status->id==12)
+                <td class="text-muted">{{ $permisoEstadia->status->nombre}} </td>
             @else
                 <td>{{ $permisoEstadia->status->nombre}} </td>
             @endif
@@ -48,14 +57,14 @@
                     @if ($permisoEstadia->status_id===3)
                             <!-- Button trigger modal -->
                                 <a class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                   data-bs-target="#visitamodal" data-toggle="tooltip"
+                                   data-bs-target="#visitamodal{{$permisoEstadia->id}}" data-toggle="tooltip"
                                    data-bs-placement="bottom" data-bs-whatever="{{$permisoEstadia->id}}"
                                    title="Asignar Visitador">
                                     <i class="fas fa-user-clock"></i>
                                 </a>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="visitamodal"
+                                <div class="modal fade" id="visitamodal{{$permisoEstadia->id}}"
                                      data-bs-backdrop="static" data-bs-keyboard="false"
                                      tabindex="-1" aria-labelledby="staticBackdropLabel"
                                      aria-hidden="true">
@@ -138,12 +147,12 @@
                         @if (($permisoEstadia->status_id===3) || ($permisoEstadia->status_id===9) || ($permisoEstadia->status_id===11)  )
                         <!-- Button trigger modal -->
                             <a class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                               data-bs-target="#rechazarmodal">
+                               data-bs-target="#rechazarmodal{{$permisoEstadia->id}}">
                                 <i class="fa fa-ban"></i>
                             </a>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="rechazarmodal"
+                            <div class="modal fade" id="rechazarmodal{{$permisoEstadia->id}}"
                                  data-bs-backdrop="static" data-bs-keyboard="false"
                                  tabindex="-1" aria-labelledby="staticBackdropLabel"
                                  aria-hidden="true">
@@ -194,7 +203,8 @@
                            title="Descargar PDF">
                             <i class="fas fa-file-pdf"></i>
                         </a>
-                    @if ($permisoEstadia->cantidad_solicitud==1)
+
+                    @if (($permisoEstadia->vencimiento->subDay(15)>date('Y-m-d')) and ($permisoEstadia->vencimento<date('Y-m-d')))
                             @can('renovar-estadia')
                                 <a class="btn btn-sm" style="background-color: #bf0063"
                                    href="{{route('createrenovacion',$permisoEstadia->id)}}" data-toggle="tooltip"

@@ -9,6 +9,8 @@ use App\Models\Publico\Capitania;
 use App\Models\Publico\CapitaniaUser;
 use App\Models\Publico\Saime_cedula;
 use App\Models\User;
+use App\Models\Zarpes\EstablecimientoNautico;
+use App\Models\Zarpes\EstablecimientoNauticoUser;
 use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -71,7 +73,6 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-      //  dd($request);
         $data= new User();
         $data->email= $request->email;
         $data->nombres = $request->nombres;
@@ -79,17 +80,31 @@ class UserController extends Controller
         $data->tipo_usuario=$request->tipo_usuario;
         $data->email_verified_at= now();
         $data->save();
-        $input = $request->all();
 
         $roles=$request->input('roles', []);
         $data->roles()->sync($roles);
         $rol=Role::select('name')->where('id',$request->roles)->get();
 
-        $cap_user= new CapitaniaUser();
-        $cap_user->cargo=$rol[0]->name;
-        $cap_user->user_id=$data->id;
-        $cap_user->capitania_id=$request->capitanias;
-        $cap_user->save();
+        if (($request->roles==5)||($request->roles==6)) {
+            $cap_user= new CapitaniaUser();
+            $cap_user->cargo=$rol[0]->name;
+            $cap_user->user_id=$data->id;
+            $cap_user->capitania_id=$request->capitanias;
+            $cap_user->save();
+
+            $est_user= new EstablecimientoNauticoUser();
+            $est_user->user_id=$data->id;
+            $est_user->establecimiento_nautico_id=$request->establecimiento;
+            $est_user->save();
+        } elseif (($request->roles==4)||($request->roles==7)||($request->roles==8)){
+
+            $cap_user= new CapitaniaUser();
+            $cap_user->cargo=$rol[0]->name;
+            $cap_user->user_id=$data->id;
+            $cap_user->capitania_id=$request->capitanias;
+            $cap_user->save();
+        }
+
         Flash::success('Usuario guardado exitosamente.');
 
         return redirect(route('users.index'));
@@ -158,16 +173,40 @@ class UserController extends Controller
             return redirect(route('users.index'));
         }
 
-        $user = $this->userRepository->update($request->all(), $id);
-        $roles=$request->roles ;
-        $user->roles()->sync($roles);
-        $rol=Role::select('name')->where('id',$request->roles)->get();
+        if (($request->roles==5)||($request->roles==6)) {
+            $user = $this->userRepository->update($request->all(), $id);
+            $roles=$request->roles ;
+            $user->roles()->sync($roles);
+            $rol=Role::select('name')->where('id',$request->roles)->get();
 
-        $cap_user= new CapitaniaUser();
-        $cap_user->cargo=$rol[0]->name;
-        $cap_user->user_id=$id;
-        $cap_user->capitania_id=$request->capitanias;
-        $cap_user->save();
+            $cap_user= new CapitaniaUser();
+            $cap_user->cargo=$rol[0]->name;
+            $cap_user->user_id=$id;
+            $cap_user->capitania_id=$request->capitanias;
+            $cap_user->save();
+
+            $est_user= new EstablecimientoNauticoUser();
+            $est_user->user_id=$id;
+            $est_user->establecimiento_nautico_id=$request->establecimiento;
+            $est_user->save();
+        } elseif (($request->roles==4)||($request->roles==7)||($request->roles==8)){
+            $user = $this->userRepository->update($request->all(), $id);
+            $roles=$request->roles ;
+            $user->roles()->sync($roles);
+            $rol=Role::select('name')->where('id',$request->roles)->get();
+
+            $cap_user= new CapitaniaUser();
+            $cap_user->cargo=$rol[0]->name;
+            $cap_user->user_id=$id;
+            $cap_user->capitania_id=$request->capitanias;
+            $cap_user->save();
+        } else{
+            $user = $this->userRepository->update($request->all(), $id);
+            $roles=$request->roles ;
+            $user->roles()->sync($roles);
+            $rol=Role::select('name')->where('id',$request->roles)->get();
+        }
+
 
         Flash::success('Usuario actualizado con éxito.');
 
@@ -217,4 +256,12 @@ class UserController extends Controller
         }
             echo json_encode($data);
     }
+
+    public function EstablecimientoUser(Request $request){
+        $idcap= $_REQUEST['idcap'];
+        $EstNauticos = EstablecimientoNautico::where('capitania_id', $idcap)->get();
+        $resp=[$EstNauticos];
+        echo json_encode($resp);
+    }
+
 }

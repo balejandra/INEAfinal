@@ -50,11 +50,13 @@ class PermisoEstadiaRenovacionController extends AppBaseController
     public function create($id)
     {
         $permiso= PermisoEstadia::find($id);
-
+        $nro=substr($permiso->nro_solicitud,0,13);
         $count=PermisoEstadia::where('nro_registro',$permiso->nro_registro)
+            ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)
             ->where('status_id',1)
+            ->orWhere('status_id',12)
             ->count();
-        //dd($count);
+       // dd($count);
         $cantidadpermisos=$count+1;
         if ($cantidadpermisos==5) {
             Flash::error('Usted ha alcanzado el limite de sus renovaciones');
@@ -80,15 +82,26 @@ class PermisoEstadiaRenovacionController extends AppBaseController
     public function store($id, Request $request)
     {
         $permiso=PermisoEstadia::find($id);
-
+        $nro=substr($permiso->nro_solicitud,0,13);
+        //dd($nro_solicitud);
         $count=PermisoEstadia::where('nro_registro',$permiso->nro_registro)
+            ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)
             ->count();
+      // dd($count);
         $cantidadpermisos=$count+1;
+
+        $aprobados=PermisoEstadia::where('nro_registro',$permiso->nro_registro)
+            ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)
+            ->where('status_id',1)
+            ->orWhere('status_id',12)
+            ->count();
+       //dd($aprobados);
+        $cantaprobados=$aprobados+1;
         //dd($permiso->id);
-//dd($permiso->nro_solicitud.".".$cantidadpermisos);
+//dd($nro.".".$cantidadpermisos);
         $estadia = new PermisoEstadia();
-        $estadia->nro_solicitud = $permiso->nro_solicitud.".$cantidadpermisos";
-        $estadia->cantidad_solicitud=$cantidadpermisos;
+        $estadia->nro_solicitud = $nro.".$cantidadpermisos";
+        $estadia->cantidad_solicitud=$cantaprobados;
         $estadia->user_id = auth()->user()->id;
         $estadia->nombre_buque = $request->nombre_buque;
         $estadia->nro_registro = $request->nro_registro;
@@ -159,19 +172,6 @@ class PermisoEstadiaRenovacionController extends AppBaseController
 
     }
 
-    private function codigo($capitania_id)
-    {
-        $cantidadActual = PermisoEstadia::select(DB::raw('count(nro_solicitud) as cantidad'))
-            ->where(DB::raw("(SUBSTR(nro_solicitud,6,4) = '" . date('Y') . "')"), '=', true)
-            ->get();
-
-        $capitania = Capitania::find($capitania_id);
-
-        $correlativo = $cantidadActual[0]->cantidad + 1;
-        $codigo = $capitania->sigla . "-" . date('Y') . date('m') . "-" . $correlativo;
-        return $codigo;
-    }
-
     /**
      * Display the specified PermisoEstadia.
      *
@@ -181,17 +181,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
      */
     public function show($id)
     {
-        $permisoEstadia = $this->permisoEstadiaRepository->find($id);
-        $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
-        if (empty($permisoEstadia)) {
-            Flash::error('Permiso Estadia not found');
 
-            return redirect(route('permisoEstadias.index'));
-        }
-
-        return view('zarpes.permiso_estadias.show')
-            ->with('permisoEstadia', $permisoEstadia)
-            ->with('documentos', $documentos);
     }
 
     /**
@@ -203,19 +193,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
      */
     public function edit($id)
     {
-        $permisoEstadia = $this->permisoEstadiaRepository->find($id);
-        $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
-        $capitanias = Capitania::all();
-        if (empty($permisoEstadia)) {
-            Flash::error('Permiso Estadia not found');
 
-            return redirect(route('permisoEstadias.index'));
-        }
-
-        return view('zarpes.permiso_estadias.edit')
-            ->with('permisoEstadia', $permisoEstadia)
-            ->with('documentos',$documentos)
-            ->with('capitanias',$capitanias);
     }
 
     /**

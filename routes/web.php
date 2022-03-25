@@ -34,6 +34,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::resource('menuRols', \App\Http\Controllers\Publico\Menu_rolController::class);
 
     Route::resource('users', \App\Http\Controllers\Publico\UserController::class);
+    Route::get('EstablecimientoUser',[\App\Http\Controllers\Publico\UserController::class,'EstablecimientoUser'])->name('AsignarEstablecimiento');
 
     Route::get('/permissions', [App\Http\Controllers\Publico\PermissionController::class, 'index'])->name('permissions')->middleware('auth');
     Route::get('/permissions/create', [App\Http\Controllers\Publico\PermissionController::class, 'create'])->name('permissions.create');
