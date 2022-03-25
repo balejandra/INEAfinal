@@ -179,7 +179,8 @@
                 "Nombre Embarcacion: ".$estadia->nombre_buque."\n".
                 "Numero de Registro: ".$estadia->nro_registro."\n".
                 "Destino: " .$estadia->capitania->nombre."\n".
-                "Fecha Emision: " .$estadia->updated_at."\n"
+                "Fecha Emision: " .$estadia->updated_at."\n".
+                "Fecha Vencimiento: " .$estadia->vencimiento."\n"
         @endphp
 
         <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate($QR)) !!} ">
@@ -283,7 +284,7 @@
                 <td colspan="2">{{$estadia->puerto_origen}}</td>
                 <td>{{$estadia->capitania->nombre}}</td>
                 <td>{{$estadia->tiempo_estadia}}</td>
-                <td>{{$estadia->vigencia}}</td>
+                <td>{{date_format($estadia->vencimiento,'Y-m-d')}}</td>
             </tr>
             </tbody>
         </table>

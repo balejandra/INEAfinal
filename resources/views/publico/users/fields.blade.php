@@ -22,11 +22,21 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('role id', 'Rol asignado:') !!}
-    {!! Form::select('roles', $roles, null, ['class' => 'form-control custom-select','placeholder' => 'Puede asignar un Rol...']) !!}
+
+    {!! Form::select('roles', $roles, null, ['class' => 'roles form-control custom-select','placeholder' => 'Puede asignar un Rol...','onchange="requeridos();"']) !!}
 </div>
 <div class="form-group col-sm-6">
     {!! Form::label('capitania_id', 'Capitania Asignada:') !!}
-    {!! Form::select('capitanias', $capitanias, null, ['class' => 'form-control custom-select','placeholder' => 'Puede asignar una capitania...']) !!}
+    {!! Form::select('capitanias', $capitanias, null, ['id'=>'capitanias','class' => ' form-control custom-select','placeholder' => 'Puede asignar una Capitania...','onchange="EstablecimientoUser();"']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('0', 'Establecimiento náutico asignado:') !!}
+
+    <select id="establecimiento" name="establecimiento" title="" class="form-control custom-select">
+        <option value="">Puede asignar un Establecimiento...</option>
+
+    </select>
 </div>
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

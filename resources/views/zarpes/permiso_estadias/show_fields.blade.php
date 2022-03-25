@@ -21,11 +21,11 @@
     <tr>
         <th class="bg-light">Propietario</th>
         <td>{{ $permisoEstadia->nombre_propietario }}</td>
-        <th class="bg-light">Pasaporte Capitan</th>
+        <th class="bg-light">Pasaporte del Capitán</th>
         <td>{{ $permisoEstadia->pasaporte_capitan }}</td>
     </tr>
     <tr>
-        <th class="bg-light">Nombres completos Capitan</th>
+        <th class="bg-light">Nombres completos del Capitán</th>
         <td>{{ $permisoEstadia->nombre_capitan }}</td>
         <th class="bg-light">Numero Tripulantes</th>
         <td>{{ $permisoEstadia->cant_tripulantes }}</td>
@@ -43,17 +43,24 @@
         <td>{{ $permisoEstadia->potencia_kw }}</td>
     </tr>
     <tr>
-        <th class="bg-light">Actividades</th>
+        <th class="bg-light">Actividades que realizará</th>
         <td>{{ $permisoEstadia->actividades }}</td>
-        <th class="bg-light">Puerto Origen</th>
+        <th class="bg-light">Puerto de Origen / País</th>
         <td>{{ $permisoEstadia->puerto_origen }}</td>
     </tr>
 
     <tr>
-        <th class="bg-light">Puerto Destino</th>
+        <th class="bg-light">Circunscripción Acuática de Arribo</th>
         <td>{{ $permisoEstadia->capitania->nombre }}</td>
         <th class="bg-light">Tiempo Estadia</th>
         <td>{{ $permisoEstadia->tiempo_estadia }}</td>
+    </tr>
+
+    <tr>
+        <th class="bg-light">Fecha de Vencimiento</th>
+        <td>{{ $permisoEstadia->vencimiento }}</td>
+        <th class="bg-light">Cantidad de Solicitudes</th>
+        <td>{{ $permisoEstadia->cantidad_solicitud }} vez</td>
     </tr>
     </tbody>
 </table>

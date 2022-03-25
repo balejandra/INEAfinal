@@ -48,6 +48,7 @@ class PermisoEstadiaController extends AppBaseController
                 ->with('permisoEstadias', $permisoEstadias);
         } else if (auth()->user()->hasPermissionTo('listar-estadia-generados')) {
             $permisoEstadias = PermisoEstadia::where('user_id', $user)->get();
+
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
         } else if (auth()->user()->hasPermissionTo('listar-estadia-coordinador')) {
@@ -164,6 +165,7 @@ class PermisoEstadiaController extends AppBaseController
     private function codigo($capitania_id)
     {
         $cantidadActual = PermisoEstadia::select(DB::raw('count(nro_solicitud) as cantidad'))
+            ->where('cantidad_solicitud',1)
             ->where(DB::raw("(SUBSTR(nro_solicitud,6,4) = '" . date('Y') . "')"), '=', true)
             ->get();
 
@@ -171,6 +173,7 @@ class PermisoEstadiaController extends AppBaseController
 
         $correlativo = $cantidadActual[0]->cantidad + 1;
         $codigo = $capitania->sigla . "-" . date('Y') . date('m') . "-" . $correlativo;
+       // dd($codigo);
         return $codigo;
     }
 
@@ -185,6 +188,7 @@ class PermisoEstadiaController extends AppBaseController
     {
         $permisoEstadia = $this->permisoEstadiaRepository->find($id);
         $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
+        $revisiones=EstadiaRevision::where('permiso_estadia_id',$id)->get();
         if (empty($permisoEstadia)) {
             Flash::error('Permiso Estadia not found');
 
@@ -193,7 +197,8 @@ class PermisoEstadiaController extends AppBaseController
 
         return view('zarpes.permiso_estadias.show')
             ->with('permisoEstadia', $permisoEstadia)
-            ->with('documentos', $documentos);
+            ->with('documentos', $documentos)
+            ->with('revisiones',$revisiones);
     }
 
     /**
@@ -382,7 +387,26 @@ class PermisoEstadiaController extends AppBaseController
            } if ($status==='1') {
 
                 $estadia= PermisoEstadia::find($id);
+                if ($estadia->cantidad_solicitud>1) {
+                   // dd($estadia->cantidad_solicitud);
+                    $ant=($estadia->cantidad_solicitud-1);
+                    $nro=substr($estadia->nro_solicitud,0,13);
+                    //dd($nro);
+                    $status = Status::find(12);
+                    $anterior=PermisoEstadia::where('cantidad_solicitud',$ant)
+                        ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)
+                        ->update(['status_id' => $status->id]);
+                    $query=PermisoEstadia::where('cantidad_solicitud',$ant)
+                        ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)->get()->last();
+                   // dd($query->id);
+                    EstadiaRevision::create([
+                        'user_id' => auth()->user()->id,
+                        'permiso_estadia_id' => $query->id,
+                        'accion' => $status->nombre,
+                        'motivo' => 'Renovacion'
+                    ]);
 
+                }
                 $idstatus = Status::find(1);
                 $estadia->status_id = $idstatus->id;
                 $date = date("d-m-Y");
@@ -421,6 +445,7 @@ class PermisoEstadiaController extends AppBaseController
                 $estadia= PermisoEstadia::find($id);
                 $idstatus = Status::find(2);
                 $estadia->status_id = $idstatus->id;
+                $estadia->cantidad_solicitud = 0;
                 $estadia->update();
                 $solicitante = User::find($estadia->user_id);
                 EstadiaRevision::create([
