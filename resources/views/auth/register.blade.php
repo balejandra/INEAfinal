@@ -188,6 +188,9 @@
                                         <input type="password"
                                                class="form-control {{ $errors->has('password')?'is-invalid':''}}"
                                                name="password" placeholder="Contraseña" required>
+                                        @error('password')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <!--////////// PASSWORD CONFIRMATION //////////////-->

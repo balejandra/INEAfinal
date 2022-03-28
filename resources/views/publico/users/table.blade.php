@@ -3,7 +3,7 @@
         <th>Id</th>
         <th>Email</th>
         <th>Nombres</th>
-        <th>Iniciales</th>
+        <th>Tipo de Usuario</th>
         <th>Acciones</th>
     </thead>
     <tbody>
@@ -12,7 +12,7 @@
             <td>{{ $user->id }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->nombres }}</td>
-            <td>{{ $user->iniciales }}</td>
+            <td>{{ $user->tipo_usuario }}</td>
             <td>
                 @can('consultar-usuario')
                     <a class="btn btn-sm btn-success" href="  {{ route('users.show', [$user->id]) }}">
