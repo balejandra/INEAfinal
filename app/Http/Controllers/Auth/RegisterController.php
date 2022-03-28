@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\Rules\Password;
 use Spatie\Permission\Models\Role;
 use Flash;
 
@@ -65,12 +66,22 @@ class RegisterController extends Controller
             'fecha_nacimiento' => ['date', 'max:50'],
             'telefono' => ['required', 'string', 'max:20'],
             'direccion' => ['required', 'string', 'max:20'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'max:50',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->uncompromised(),
+            ],
             'tipo_usuario' => ['string', 'max:20'],
         ],
             [
                 'email.unique'=>'Email ya registrado',
                 'numero_identificacion.unique'=>'Numero de Identificacion ya registrado',
+                'password.'
             ]);
     }
 
