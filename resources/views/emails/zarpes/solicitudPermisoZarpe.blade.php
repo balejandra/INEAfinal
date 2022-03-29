@@ -14,12 +14,12 @@
     <b>Fecha y hora de regreso:</b>  {{$fecha_regreso}} <br>
 
 @endcomponent
-    Para más detalles ingrese a la página web:
+@component('mail::subcopy')
+    Instituto Nacional de Los Espacios Acuáticos - INEA. Síguenos en: <a href="http://twitter.com/#!/INEA200">http://twitter.com/#!/INEA200</a>
 
-@component('mail::button', ['url' => env('APP_URL')])
-        INEA
 @endcomponent
-
+@component('mail::footer')
     Sugerencia: Agregue {{$from}} a sus contactos de correo electrónico para así evitar recibir correo en spam.
     Gracias,
+@endcomponent
 @endcomponent

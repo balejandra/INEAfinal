@@ -1,7 +1,7 @@
 /* Base */
 
 body,
-body *:not(html):not(style):not(br):not(tr):not(code) {
+body * {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     position: relative;

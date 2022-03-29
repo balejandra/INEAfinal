@@ -10,13 +10,12 @@
     <h2>Buque Registro Nro: {{$matricula}} </h2>
     <h2>Solicitante: {{$nombres_solic}} {{$apellidos_solic}}</h2>
 @endcomponent
-    Para más detalles ingrese a la página web:
+@component('mail::subcopy')
+    Instituto Nacional de Los Espacios Acuáticos - INEA. Síguenos en: <a href="http://twitter.com/#!/INEA200">http://twitter.com/#!/INEA200</a>
 
-@component('mail::button', ['url' => env('APP_URL')])
-    INEA
 @endcomponent
-    Instituto Nacional de Los Espacios Acuáticos - INEA. Síguenos en: http://twitter.com/#!/INEA200
-
+@component('mail::footer')
     Sugerencia: Agregue {{$from}} a sus contactos de correo electrónico para así evitar recibir correo en spam.
     Gracias,
+@endcomponent
 @endcomponent
