@@ -104,7 +104,7 @@ class UserController extends Controller
 
             $est_user= new EstablecimientoNauticoUser();
             $est_user->user_id=$data->id;
-            $est_user->establecimiento_nautico_id=$request->establecimiento;
+            $est_user->establecimiento_nautico_id=$request->establecimientos;
             $est_user->save();
         } elseif (($request->roles==4)||($request->roles==7)||($request->roles==8)){
 

@@ -60,7 +60,7 @@
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('0', 'Establecimiento náutico asignado:') !!}
 
-                                        <select id="establecimiento" name="establecimiento" title="" class="form-control custom-select">
+                                        <select id="establecimientos" name="establecimientos" title="" class="form-control custom-select">
                                             <option value="">Puede asignar un Establecimiento...</option>
 
                                         </select>
