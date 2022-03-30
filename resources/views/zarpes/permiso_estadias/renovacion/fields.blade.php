@@ -84,7 +84,7 @@
 <!-- Puerto Origen Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('puerto_origen', 'Puerto de Origen / País:') !!}
-    {!! Form::text('puerto_origen', null, ['class' => 'form-control'], 'required') !!}
+    {!! Form::text('puerto_origen', null, ['class' => 'form-control', 'required','readonly']) !!}
 </div>
 
 <!-- Ultimo Puertovisitado Field -->
