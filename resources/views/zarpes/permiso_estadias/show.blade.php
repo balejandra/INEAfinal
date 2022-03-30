@@ -194,8 +194,8 @@
                                          <i class="fas fa-file-pdf"></i>
                                      </a>
 
-                                     @if (($permisoEstadia->vencimiento->subDay(15)>date('Y-m-d')) and ($permisoEstadia->vencimento<date('Y-m-d')))
-                                         @can('renovar-estadia')
+                                     @if ((date_format($permisoEstadia->vencimiento->subDay(15),'Y-m-d')<=date('Y-m-d')) and ($permisoEstadia->vencimiento>date('Y-m-d')) )
+                                        @can('renovar-estadia')
                                              <a class="btn" style="background-color: #bf0063"
                                                 href="{{route('createrenovacion',$permisoEstadia->id)}}" data-toggle="tooltip"
                                                 data-bs-placement="bottom"

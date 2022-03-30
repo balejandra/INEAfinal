@@ -445,7 +445,11 @@ class PermisoEstadiaController extends AppBaseController
                 $estadia= PermisoEstadia::find($id);
                 $idstatus = Status::find(2);
                 $estadia->status_id = $idstatus->id;
-                $estadia->cantidad_solicitud = 0;
+                if ($estadia->cantidad_solicitud==1) {
+                    $estadia->cantidad_solicitud = 1;
+                } else{
+                    $estadia->cantidad_solicitud = 0;
+                }
                 $estadia->update();
                 $solicitante = User::find($estadia->user_id);
                 EstadiaRevision::create([

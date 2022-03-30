@@ -89,7 +89,7 @@
                                                     </div>
                                                     <div class="form-group col-sm-6">
                                                         {!! Form::label('fecha_visita', 'Fecha de Visita:') !!}
-                                                        {!! Form::date('fecha_visita', null, ['class' => 'form-control']) !!}
+                                                        <input type="date" name="fecha_visita" class="form-control" min="{{date('Y-m-d')}}" >
 
                                                     </div>
                                                     </div>
@@ -204,7 +204,8 @@
                             <i class="fas fa-file-pdf"></i>
                         </a>
 
-                    @if (($permisoEstadia->vencimiento->subDay(15)>date('Y-m-d')) and ($permisoEstadia->vencimento<date('Y-m-d')))
+
+                    @if ((date_format($permisoEstadia->vencimiento->subDay(15),'Y-m-d')<=date('Y-m-d')) and ($permisoEstadia->vencimiento>date('Y-m-d')) )
                             @can('renovar-estadia')
                                 <a class="btn btn-sm" style="background-color: #bf0063"
                                    href="{{route('createrenovacion',$permisoEstadia->id)}}" data-toggle="tooltip"
