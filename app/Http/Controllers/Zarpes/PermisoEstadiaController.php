@@ -90,76 +90,87 @@ class PermisoEstadiaController extends AppBaseController
     public function store(CreatePermisoEstadiaRequest $request)
     {
 
-        $estadia = new PermisoEstadia();
-        $estadia->nro_solicitud = $this->codigo($request->capitania_id);
-        $estadia->cantidad_solicitud='1';
-        $estadia->user_id = auth()->user()->id;
-        $estadia->nombre_buque = $request->nombre_buque;
-        $estadia->nro_registro = $request->nro_registro;
-        $estadia->tipo_buque = $request->tipo_buque;
-        $estadia->nacionalidad_buque = $request->nacionalidad_buque;
-        $estadia->nombre_propietario = $request->nombre_propietario;
-        $estadia->pasaporte_capitan = $request->pasaporte_capitan;
-        $estadia->nombre_capitan = $request->nombre_capitan;
-        $estadia->cant_tripulantes = $request->cant_tripulantes;
-        $estadia->cant_pasajeros = $request->cant_pasajeros;
-        $estadia->arqueo_bruto = $request->arqueo_bruto;
-        $estadia->eslora = $request->eslora;
-        $estadia->potencia_kw = $request->potencia_kw;
-        $estadia->actividades = $request->actividades;
-        $estadia->puerto_origen = $request->puerto_origen;
-        $estadia->capitania_id = $request->capitania_id;
-        $estadia->tiempo_estadia = $request->tiempo_estadia;
-        $estadia->status_id = 3;
-        $estadia->save();
+        $matriculaexis=PermisoEstadia::where('nro_registro',$request->nro_registro)
+            ->where('status_id',1)
+            ->first();
+        if ($matriculaexis) {
+            Flash::error('Este Nro de Registro del Buque ya tiene una solicitud aprobada.');
+
+            return redirect()->back();
+        }else {
+            dd('no existe');
+
+            $estadia = new PermisoEstadia();
+            $estadia->nro_solicitud = $this->codigo($request->capitania_id);
+            $estadia->cantidad_solicitud = '1';
+            $estadia->user_id = auth()->user()->id;
+            $estadia->nombre_buque = $request->nombre_buque;
+            $estadia->nro_registro = $request->nro_registro;
+            $estadia->tipo_buque = $request->tipo_buque;
+            $estadia->nacionalidad_buque = $request->nacionalidad_buque;
+            $estadia->nombre_propietario = $request->nombre_propietario;
+            $estadia->pasaporte_capitan = $request->pasaporte_capitan;
+            $estadia->nombre_capitan = $request->nombre_capitan;
+            $estadia->cant_tripulantes = $request->cant_tripulantes;
+            $estadia->cant_pasajeros = $request->cant_pasajeros;
+            $estadia->arqueo_bruto = $request->arqueo_bruto;
+            $estadia->eslora = $request->eslora;
+            $estadia->potencia_kw = $request->potencia_kw;
+            $estadia->actividades = $request->actividades;
+            $estadia->puerto_origen = $request->puerto_origen;
+            $estadia->capitania_id = $request->capitania_id;
+            $estadia->tiempo_estadia = $request->tiempo_estadia;
+            $estadia->status_id = 3;
+            $estadia->save();
 
 
-        if ($request->hasFile('zarpe_procedencia')) {
-            $documento1 = new DocumentoPermisoEstadia();
-            $procedencia = $request->file('zarpe_procedencia');
-            $filenamepro = date('dmYGi') . $procedencia->getClientOriginalName();
-            $avatar1 = $procedencia->move(public_path() . '/permisoestadia/documentos', $filenamepro);
-            $documento1->permiso_estadia_id = $estadia->id;
-            $documento1->documento = $filenamepro;
-            $documento1->recaudo = 'Zarpe de Procedencia';
-            $documento1->save();
-        }
-        if ($request->hasFile('registro_embarcacion')) {
-            $documento2 = new DocumentoPermisoEstadia();
-            $registro = $request->file('registro_embarcacion');
-            $filenamereg = date('dmYGi') . $registro->getClientOriginalName();
-            $avatar2 = $registro->move(public_path() . '/permisoestadia/documentos', $filenamereg);
-            $documento2->permiso_estadia_id = $estadia->id;
-            $documento2->documento = $filenamereg;
-            $documento2->recaudo = 'Registro de Embarcacion';
-            $documento2->save();
-        }
-        if ($request->hasFile('despacho_aduana_procedencia')) {
-            $documento3 = new DocumentoPermisoEstadia();
-            $migracion = $request->file('despacho_aduana_procedencia');
-            $filenamemig = date('dmYGi') . $migracion->getClientOriginalName();
-            $avatar3 = $migracion->move(public_path() . '/permisoestadia/documentos', $filenamemig);
-            $documento3->permiso_estadia_id = $estadia->id;
-            $documento3->documento = $filenamemig;
-            $documento3->recaudo = 'Despacho de Aduana de Procedencia';
-            $documento3->save();
-        }
-        if ($request->hasFile('pasaportes_tripulantes')) {
-            $documento4 = new DocumentoPermisoEstadia();
-            $pasaportes = $request->file('pasaportes_tripulantes');
-            $filenamepas = date('dmYGi') . $pasaportes->getClientOriginalName();
-            $avatar4 = $pasaportes->move(public_path() . '/permisoestadia/documentos', $filenamepas);
-            $documento4->permiso_estadia_id = $estadia->id;
-            $documento4->documento = $filenamepas;
-            $documento4->recaudo = 'Pasaportes de Tripulantes';
-            $documento4->save();
-        }
+            if ($request->hasFile('zarpe_procedencia')) {
+                $documento1 = new DocumentoPermisoEstadia();
+                $procedencia = $request->file('zarpe_procedencia');
+                $filenamepro = date('dmYGi') . $procedencia->getClientOriginalName();
+                $avatar1 = $procedencia->move(public_path() . '/permisoestadia/documentos', $filenamepro);
+                $documento1->permiso_estadia_id = $estadia->id;
+                $documento1->documento = $filenamepro;
+                $documento1->recaudo = 'Zarpe de Procedencia';
+                $documento1->save();
+            }
+            if ($request->hasFile('registro_embarcacion')) {
+                $documento2 = new DocumentoPermisoEstadia();
+                $registro = $request->file('registro_embarcacion');
+                $filenamereg = date('dmYGi') . $registro->getClientOriginalName();
+                $avatar2 = $registro->move(public_path() . '/permisoestadia/documentos', $filenamereg);
+                $documento2->permiso_estadia_id = $estadia->id;
+                $documento2->documento = $filenamereg;
+                $documento2->recaudo = 'Registro de Embarcacion';
+                $documento2->save();
+            }
+            if ($request->hasFile('despacho_aduana_procedencia')) {
+                $documento3 = new DocumentoPermisoEstadia();
+                $migracion = $request->file('despacho_aduana_procedencia');
+                $filenamemig = date('dmYGi') . $migracion->getClientOriginalName();
+                $avatar3 = $migracion->move(public_path() . '/permisoestadia/documentos', $filenamemig);
+                $documento3->permiso_estadia_id = $estadia->id;
+                $documento3->documento = $filenamemig;
+                $documento3->recaudo = 'Despacho de Aduana de Procedencia';
+                $documento3->save();
+            }
+            if ($request->hasFile('pasaportes_tripulantes')) {
+                $documento4 = new DocumentoPermisoEstadia();
+                $pasaportes = $request->file('pasaportes_tripulantes');
+                $filenamepas = date('dmYGi') . $pasaportes->getClientOriginalName();
+                $avatar4 = $pasaportes->move(public_path() . '/permisoestadia/documentos', $filenamepas);
+                $documento4->permiso_estadia_id = $estadia->id;
+                $documento4->documento = $filenamepas;
+                $documento4->recaudo = 'Pasaportes de Tripulantes';
+                $documento4->save();
+            }
 
-        $this->SendMail($estadia->id, 1);
-        $this->SendMail($estadia->id, 0);
-        Flash::success('Solicitud de Permiso Estadia guardada satisfactoriamente.');
+            $this->SendMail($estadia->id, 1);
+            $this->SendMail($estadia->id, 0);
+            Flash::success('Solicitud de Permiso Estadia guardada satisfactoriamente.');
 
-        return redirect(route('permisosestadia.index'));
+            return redirect(route('permisosestadia.index'));
+        }
     }
 
     private function codigo($capitania_id)
