@@ -78,7 +78,7 @@ function getmatricula(data1) {
             console.log(response);
              divError.innerHTML='<div class="alert alert-danger"> Error en la Matricula</div>';
             table.style.display='none';
-            alert('Error en la Matricula');
+           // alert('Error en la Matricula');
             table = document.getElementById("table-buque");
             table.style.display='none';
             document.getElementById("matricula").value = "";

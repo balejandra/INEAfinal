@@ -685,7 +685,7 @@ class PermisoZarpeController extends Controller
             }
 
             $pasajeros = $request->session()->get('pasajeros');
-            print_r($pasajeros);
+           // print_r($pasajeros);
 
             if ($pasajeros[0] != 0) {
                 for ($i = 0; $i < count($pasajeros); $i++) {
