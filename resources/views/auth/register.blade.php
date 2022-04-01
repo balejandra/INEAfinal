@@ -99,7 +99,7 @@
                                         <input type="date"
                                                class="form-control "
                                                name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" id="fecha_nacimiento"
-                                               placeholder="fecha_nacimiento" required onblur="getEmployees($('#numero_identificacion').val(),$('#fecha_nacimiento').val())" >
+                                               placeholder="fecha_nacimiento" required onchange="getEmployees($('#numero_identificacion').val(),$('#fecha_nacimiento').val())" >
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>

@@ -402,7 +402,8 @@ function eliminarCoordenadasDF(id, idcoord){
                                     $('#apellidos').val(apellidos);
 
                                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                                        addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
+                                      
+                                    addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
 
 
                                     msj.innerHTML="";
@@ -592,7 +593,7 @@ $( "#tipodoc" )
 
 function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html){
     console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
-
+    console.log("incio", html, "aqui");
     var cantPass= document.getElementById("cantPasajeros");
     let cant=parseInt(cantPass.getAttribute("data-cantPass"));
 
@@ -604,9 +605,10 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
 
 
         var pass=document.getElementById('pasajeros');
+        if(tipodoc!='V'){
             pass.innerHTML+=html;
-
-
+        }   
+        
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));
         let contenedor= document.createElement("div");

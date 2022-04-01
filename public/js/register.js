@@ -92,9 +92,9 @@ function changetipodocumento() {
     function getEmployees(data1,data2) {
     $.ajax({
         url: route('consultasaime'),
-        data: {cedula: data1, fecha:data2 }
-
+        data: {cedula: data1, fecha:data2 },
     })// This will be called on success
+        
         .done(function (response) {
           //  alert(response);
             respuesta = JSON.parse(response);
@@ -115,6 +115,10 @@ function changetipodocumento() {
            // alert('No se ha encontrado la cedula o la fecha de nacimiento');
         });
 
+}
+
+function showLoad(){
+    return '';
 }
 
 function datosbasicos(response) {
