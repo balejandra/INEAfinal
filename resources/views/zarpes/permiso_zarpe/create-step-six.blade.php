@@ -3,9 +3,15 @@
     Zarpes
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Zarpe</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Permisos de Zarpe</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -113,10 +119,10 @@
                                         </div>
 
                                         <div class="row px-3">
-                                            
+
 
                                             <div class="col-md-12 py-2">
-                                                <b>Cantidad de pasajeros disponible para esta embarcación:</b> 
+                                                <b>Cantidad de pasajeros disponible para esta embarcación:</b>
                                                 <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
                                                     {{ $cantPasajeros ?? '' }}
                                                 </span>
@@ -198,11 +204,11 @@
                                 </div>
                                 <div class="card-footer text-right">
                                     <div class="row">
-                                        <div class="col-md-6 text-left">
+                                        <div class="col text-left">
                                             <a href="{{ route('permisoszarpes.createStepFive') }}"
                                                class="btn btn-primary pull-right">Anterior</a>
                                         </div>
-                                        <div class="col-md-6 text-right">
+                                        <div class="col text-right">
                                             <button type="submit" class="btn btn-primary">Siguiente</button>
                                         </div>
                                     </div>

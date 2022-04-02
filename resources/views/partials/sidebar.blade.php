@@ -1,10 +1,14 @@
-<div class="sidebar">
 
-    <nav class="navbar-collapse">
-        <ul class="nav nav-pills flex-column" id="menu">
-            @include('partials.menu.menu')
-        </ul>
-    </nav>
-</div>
+    <div class="sidebar-brand d-none d-md-flex">
+        <img class="sidebar-brand-full" src="{{asset("images/inea.png")}}" width="30" height="30"
+             alt="INEA Logo">
+        <img class="sidebar-brand-narrow" src="{{asset("images/inea.png")}}" width="30" height="30"
+             alt="INEA Logo">
+
+    </div>
+    <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
+        @include('partials.menu.menu')
+    </ul>
+    <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
 
 

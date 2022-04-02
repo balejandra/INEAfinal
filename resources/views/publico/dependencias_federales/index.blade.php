@@ -3,9 +3,15 @@
     Dependencias Federales
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Dependencias Federales</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Dependencias Federales</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
              @include('flash::message')
@@ -16,7 +22,7 @@
                              <i class="fa fa-map" aria-hidden="true"></i>
 
                              Dependencias Federales
-                              
+
 
                              <div class="card-header-actions">
                                  <a class="btn btn-primary btn-sm"  href="{{ route('dependenciasfederales.create') }}">Nuevo</a>

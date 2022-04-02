@@ -3,9 +3,15 @@
     Zarpes
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Zarpe</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Permisos de Zarpe</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -88,8 +94,8 @@
 
                                                         <td>
                                                             @if($equipo->otros!='ninguno')
-                                                           
-                                                                
+
+
                                                                     <div class=" form-inline">
                                                                         <label for="inputEmail4" class="col-sm-5" style="text-transform: uppercase;">
                                                                             @if($equipo->otros=="fecha_ultima_inspeccion")
@@ -108,13 +114,13 @@
                                                                                 @endphp
 
                                                                             @endif
-                                                                            
+
 
                                                                         </label>
                                                                         <input type="{{$type}}" class="form-control col-sm-7" id="{{$equipo->id}}valores_otros" name="{{$equipo->id}}valores_otros" {{$max}} >
                                                                         <input type="text" class="form-control col-sm-7" id="otros" name="{{$equipo->id}}otros" value="{{$equipo->otros}}" hidden>
                                                                     </div>
-                                                                 
+
                                                             @endif
                                                         </td>
                                                     </tr>

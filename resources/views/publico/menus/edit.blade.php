@@ -3,12 +3,18 @@
     Menus
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="{!! route('menus.index') !!}">Menu</a>
-          </li>
-          <li class="breadcrumb-item">Editar</li>
-        </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('menus.index') !!}">Menu</a>
+                </li>
+                <li class="breadcrumb-item">Editar</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
          <div class="animated fadeIn">
              @include('coreui-templates::common.errors')
@@ -20,7 +26,7 @@
                               <strong>Editar Menu</strong>
 
                               <div class="card-header-actions">
-                                  <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
+                                  <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado</a>
                               </div>
                           </div>
                           <div class="card-body">

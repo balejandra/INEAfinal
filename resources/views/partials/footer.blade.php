@@ -1,3 +1,3 @@
-<div class="ml-auto">
-    <span>&copy; 2022 INEA.</span>
-</div>
+
+
+<div class="ms-auto">&copy; {{date('Y')}} INEA.</div>

@@ -3,9 +3,16 @@
     Zarpes
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Zarpe</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Permisos de Zarpe</li>
+
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -68,59 +75,11 @@
                                                 @endcan
                                                 @can('rechazar-zarpe')
                                                 <!-- Button trigger modal -->
-                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                       data-bs-target="#staticBackdrop">
+                                                    <a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-rechazo"
+                                                       onclick="modalrechazarzarpe({{$permisoOrigenZarpe->id}},'{{$permisoOrigenZarpe->nro_solicitud}}')">
                                                         <i class="fa fa-ban"></i>
                                                     </a>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="staticBackdrop"
-                                                         data-bs-backdrop="static" data-bs-keyboard="false"
-                                                         tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                                         aria-hidden="true">
-                                                        <form
-                                                            action="{{route('status',[$permisoOrigenZarpe->id,'rechazado',$permisoOrigenZarpe->establecimiento_nautico_id])}}">
-                                                            <div class="modal-dialog modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="staticBackdropLabel">Rechazar Solicitud
-                                                                            Zarpe</h5>
-                                                                        <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p>Por favor indique el motivo del rechado de la
-                                                                            Solicitud
-                                                                            Nro.{{ $permisoOrigenZarpe->nro_solicitud }}</p>
-                                                                        <div class="col-sm-12">
-                                                                            <div class="input-group mb-3">
-                                                                                <select class="form-select" aria-label="motivo" id="motivo1" name="motivo" onchange="motivoRechazo();" required>
-                                                                                    <option value="">Seleccione un motivo</option>
-                                                                                    <option value="Disposiciones del Ejecutivo Nacional">Disposiciones del Ejecutivo Nacional.</option>
-                                                                                    <option value="Instrucciones especiales de la autoridad acuática">Instrucciones especiales de la autoridad acuática.</option>
-                                                                                    <option value="Condiciones meteorológicas adversas">Condiciones meteorológicas adversas.</option>
-                                                                                    <option value="Observaciones en los documentos">Observaciones en los documentos</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12 form-group" style="display: none" id="inputmotivo">
-                                                                            <input type="text" class="form-control" name="motivo" id="motivo2">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal">Cerrar
-                                                                        </button>
-                                                                        <button type="submit" class="btn btn-primary">
-                                                                            Rechazar
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
                                                 @endcan
                                             @endif
                                             @can('consultar-zarpe')
@@ -162,10 +121,48 @@
                                 @endforeach
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modal-rechazo"
+                 data-bs-backdrop="static" data-bs-keyboard="false"
+                 tabindex="-1" aria-labelledby="staticBackdropLabel"
+                 aria-hidden="true">
+                <form id="rechazar-zarpe" action="">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"
+                                    id="staticBackdropLabel">Rechazar Solicitud
+                                    Zarpe</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Por favor indique el motivo del rechado de la Solicitud Nro. <span id="solicitudzarpe"></span></p>
+                                <div class="col-sm-12">
+                                    <div class="input-group mb-3">
+                                        <select class="form-select" aria-label="motivo" id="motivo1" name="motivo" onchange="motivoRechazo();" required>
+                                            <option value="">Seleccione un motivo</option>
+                                            <option value="Disposiciones del Ejecutivo Nacional">Disposiciones del Ejecutivo Nacional.</option>
+                                            <option value="Instrucciones especiales de la autoridad acuática">Instrucciones especiales de la autoridad acuática.</option>
+                                            <option value="Condiciones meteorológicas adversas">Condiciones meteorológicas adversas.</option>
+                                            <option value="Observaciones en los documentos">Observaciones en los documentos</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 form-group" style="display: none" id="inputmotivo">
+                                    <input type="text" class="form-control" name="motivo" id="motivo2">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Rechazar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

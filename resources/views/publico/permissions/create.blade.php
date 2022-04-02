@@ -3,12 +3,18 @@
     Permisos
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{!! route('permissions') !!}">Permisos</a>
-        </li>
-        <li class="breadcrumb-item">Crear</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('permissions') !!}">Permisos</a>
+                </li>
+                <li class="breadcrumb-item">Crear</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('coreui-templates::common.errors')
@@ -21,8 +27,7 @@
                             <strong>Crear Permiso</strong>
 
                             <div class="card-header-actions">
-                                <a href="{{route('permissions')}} " class="btn btn-primary btn-sm">Listado de
-                                    permisos</a>
+                                <a href="{{route('permissions')}} " class="btn btn-primary btn-sm">Listado</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -30,7 +35,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-8 border rounded">
-                                   
+
                                 <form action="{{route('permissions.store')}} " method="post" class="needs-validation "
                                   novalidate>
                                 @csrf
@@ -58,7 +63,7 @@
                                 <div class="col-md-2"></div>
                             </div>
 
-                            
+
                         </div>
                     </div>
                 </div>

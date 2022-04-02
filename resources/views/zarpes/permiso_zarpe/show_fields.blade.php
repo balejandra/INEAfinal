@@ -1,4 +1,5 @@
 <strong>Detalle del Zarpe</strong>
+<div class="table-responsive">
 <table class="table">
     <tbody>
     <tr>
@@ -147,11 +148,12 @@
         @endforelse
         </tbody>
 </table>
-
+</div>
+<br>
 <!-- Submit Field -->
 <div class="form-group col-sm-12 text-center">
     @can('aprobar-zarpe')
-        @if(($permisoZarpe->status->id=='3'))
+        @if(($permisoZarpe->status->id==3))
             <a href="{{route('status',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}"
                class="btn btn-success" title="Aprobar">
                 Aprobar
@@ -159,7 +161,7 @@
         @endif
     @endcan
     @can('rechazar-zarpe')
-        @if ($permisoZarpe->status->id=='3')
+        @if ($permisoZarpe->status->id==3)
             <a class="btn btn-danger" title="Rechazar" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Rechazar
             </a>
@@ -228,7 +230,7 @@
             </div>
         @endif
     @endcan
-    @if(($permisoZarpe->status->id=='1'))
+    @if(($permisoZarpe->status->id==1))
         @can('informar-navegacion')
             <a class="btn btn-warning"
                href=" {{route('status',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}"
@@ -237,7 +239,7 @@
             </a>
         @endcan
     @endif
-    @if(($permisoZarpe->status->id=='5'))
+    @if(($permisoZarpe->status->id==5))
         @can('anular-sar')
             <a class="btn btn-outline-danger"
                href=" {{route('status',[$permisoZarpe->id,'anulado_sar',$permisoZarpe->establecimiento_nautico_id])}}"
@@ -246,4 +248,13 @@
             </a>
         @endcan
     @endif
+        @if (($permisoZarpe->status->id==1)||($permisoZarpe->status->id==4) ||($permisoZarpe->status->id==5))
+            <a class="btn btn-dark"
+               href="{{route('zarpepdf',$permisoZarpe->id)}}"
+               target="_blank" data-toggle="tooltip"
+               data-bs-placement="bottom"
+               title="Descargar PDF">Descargar PDF
+                <i class="fas fa-file-pdf"></i>
+            </a>
+        @endif
 </div>

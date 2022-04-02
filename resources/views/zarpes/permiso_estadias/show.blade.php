@@ -3,12 +3,18 @@
     Estadias
 @endsection
 @section('content')
-     <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="{{ route('permisosestadia.index') }}">Permisos de Estadia</a>
-            </li>
-            <li class="breadcrumb-item ">Consulta</li>
-     </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{{ route('permisosestadia.index') }}">Permisos de Estadia</a>
+                </li>
+                <li class="breadcrumb-item ">Consulta</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
      <div class="container-fluid">
           <div class="animated fadeIn">
                  @include('coreui-templates::common.errors')
@@ -18,7 +24,7 @@
                              <div class="card-header">
                                  <strong>Consultar Permiso de Estadia</strong>
                                  <div class="card-header-actions">
-                                     <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Listado de Permisos de Estadia</a>
+                                     <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Listado</a>
                                  </div>
                              </div>
                              <div class="card-body">

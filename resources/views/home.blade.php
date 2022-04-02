@@ -3,11 +3,15 @@
     Dashboard
 @endsection
 @section('content')
-  <div class="container-fluid">
-        <div class="animated fadeIn">
-             <div class="row">
-            </div>
-        </div>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    Home
+                </li>
+            </ol>
+        </nav>
     </div>
-</div>
+    </header>
 @endsection

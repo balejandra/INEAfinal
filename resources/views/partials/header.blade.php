@@ -1,44 +1,35 @@
-<header class="app-header navbar">
-    <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">
-        <img class="navbar-brand-full" src="{{asset("images/inea.png")}}" width="30" height="30"
-             alt="INEA Logo">
-        <img class="navbar-brand-minimized" src="{{asset("images/inea.png")}}" width="30"
-             height="30" alt="INEA Logo">
-    </a>
-    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="nav navbar-nav ml-auto">
-    <h3><strong>SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</strong></h3>
-    </div>
-    <ul class="nav navbar-nav ml-auto">
-        <div class="dropdown">
-            <a class="nav-link  dropdown-toggle" style="margin-right: 50px" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ Auth::user()->email }}
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownMenuLink">
-               <!-- <li>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-user"></i> Perfil</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">
-                    <i class="fa fa-wrench"></i> Configuracion</a>
-                </li>
-                <li><hr class="dropdown-divider"></li>-->
-                <li>
-                    <a href="#" class="dropdown-item btn btn-default btn-flat"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="fa fa-lock"></i>Cerrar Sesion
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+ <div class="container-fluid">
+            <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+                <svg class="icon icon-lg">
+                    <use xlink:href="{{asset('assets/@coreui/icons/svg/free.svg')}}#cil-menu"></use>
+                </svg>
+            </button>
+     <a class="header-brand d-md-none" href="#">
+         <img width="118" height="46" src="{{asset('images/logo-inea.svg')}}" alt="">
+     </a>
+            <ul class="header-nav d-none d-md-flex">
+                <strong class="titulo-princ">SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</strong>
+            </ul>
+
+            <ul class="header-nav ms-3">
+                <li class="nav-item dropdown">
+                    <a class="nav-link py-0" data-coreui-toggle="dropdown" style="margin-right: 50px" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="avatar avatar-md">
+                        {{ Auth::user()->email }}
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end pt-0">
+
+                       <a class="dropdown-item" href="#">
+                           <a href="#" class="dropdown-item btn btn-default btn-flat"
+                              onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                               <i class="fa fa-lock"></i> Cerrar Sesion
+                           </a>
+                           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                               @csrf
+                           </form>
+                       </a>
+                    </div>
                 </li>
             </ul>
         </div>
-    </ul>
-</header>

@@ -46,3 +46,7 @@ li.w-100.active {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.titulo-princ{
+    font-size: 15px ;
+}
