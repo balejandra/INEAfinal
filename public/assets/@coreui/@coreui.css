@@ -757,9 +757,12 @@ a.btn.disabled, fieldset:disabled a.btn {
     color: #23282c;
     text-decoration: none
 }
-
-.sidebar .nav-item{
+.sidebar .nav-link-padre{
     padding-left: 1rem;
+}
+
+.sidebar .nav-link-hijo{
+    padding: .75rem 5rem !important;
 }
 
 .table {
@@ -2005,7 +2008,12 @@ a.close.disabled {
 }
 
 .bg-primary {
-    background-color: #084f84 !important
+    background-color: #003B74 !important
+}
+a {
+    color: #20a8d8;
+    text-decoration: none;
+    background-color: transparent;
 }
 
 a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover {
@@ -3648,4 +3656,17 @@ a.badge-dark.focus, a.badge-dark:focus {
     .text-xl-center {
         text-align: center !important
     }
+}
+.page-link:hover {
+    z-index: 2;
+    color: #167495;
+    text-decoration: none;
+    background-color: #e4e7ea;
+    border-color: #c8ced3
+}
+
+.page-link:focus {
+    z-index: 2;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(32, 168, 216, .25)
 }

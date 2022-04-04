@@ -14,17 +14,26 @@ img.nav-avatar {
     flex-direction: column;
     padding: 0;
     color: #fff;
-    background: #042350 !important;
+    background: #003B74 !important;
 }
 .sidebar .nav-item.active {
     color: #fff;
-    background: #042350 !important;
+    background: #003B74 !important;
 }
 
-li.w-100.active {
-    background-color: #1c549a;
+.sidebar-brand {
+    background: #003B74;
+}
+.sidebar-toggler {
+    background: #003B74;
+}
+.sidebar-nav .nav-link:hover {
+    background-color: var(--cui-sidebar-toggler-hover-bg, rgba(0, 0, 0, 0.3));
 }
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: var(--cui-sidebar-toggler-hover-bg, rgba(0, 0, 0, 0.3));
+}
 .btn-secondary, .btn-secondary:active {
     background-color: #20a8d8 !important;
     border-color: #20a8d8 !important;
@@ -49,4 +58,13 @@ li.w-100.active {
 
 .titulo-princ{
     font-size: 15px ;
+}
+
+.page-item.active .page-link{
+    background-color: #20a8d8;
+    border-color: #20a8d8;
+}
+
+.page-link {
+    color: #20a8d8;
 }

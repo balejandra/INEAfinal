@@ -6,7 +6,7 @@
              alt="INEA Logo">
 
     </div>
-    <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
+    <ul class="sidebar-nav nav-pills" data-coreui="navigation" data-simplebar="">
         @include('partials.menu.menu')
     </ul>
     <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
