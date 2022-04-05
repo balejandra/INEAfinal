@@ -22,7 +22,7 @@ class AgenciaNavieraVigente extends Model
     use HasFactory;
 
     protected $connection = 'pgsql_vageneral_schema';
-    public $table = 'Agencias Navieras vigentes';
+    public $table = 'agencias_navieras_vigentes';
 
 
     protected $primaryKey = 'vasolicitude_id';

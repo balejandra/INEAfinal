@@ -22,7 +22,7 @@
                         <div class="card-header">
                             <i class="fa fa-plus-square-o fa-lg"></i>
                             <strong>Tabla de Mandos</strong>
-                            @can('crear-mandos')
+                            @can('crear-mando')
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm"  href="{{ route('tablaMandos.create') }}">Nuevo</a>
                             </div>
