@@ -18,10 +18,10 @@
         <th class="bg-light">Tipo de Navegacion</th>
         <td>{{ $permisoZarpe->tipo_zarpe->nombre }}</td>
         <th class="bg-light">Origen</th>
-        <td>{{ $permisoZarpe->establecimiento_nautico->nombre }}</td>
+        <td>{{$capitaniaOrigen->nombre}} <br> {{ $permisoZarpe->establecimiento_nautico->nombre }}</td>
     </tr>
     <tr>
-        <th class="bg-light">Coordenadas</th>
+        <th class="bg-light">Coordenadas (escala)</th>
         @php $coords=json_decode($permisoZarpe->coordenadas); @endphp
         <td>Latitud: {{ $coords[0]}} <br> Longitud: {{ $coords[1]}}</td>
         <th class="bg-light">Destino</th>

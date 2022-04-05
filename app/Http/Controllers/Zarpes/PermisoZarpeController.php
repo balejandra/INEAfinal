@@ -1026,6 +1026,7 @@ class PermisoZarpeController extends Controller
         $establecimiento_destino = EstablecimientoNautico::find($permisoZarpe->establecimiento_nautico_destino_id);
         $capitania_user = CapitaniaUser::select('user_id')->whereIn('capitania_id', $establecimiento)->get();
         $descipcionNavegacion=DescripcionNavegacion::find($permisoZarpe->descripcion_navegacion_id);
+        $capitaniaOrigen=Capitania::find($establecimiento);
         if (empty($permisoZarpe)) {
             Flash::error('Permiso Zarpe not found');
 
@@ -1041,7 +1042,8 @@ class PermisoZarpeController extends Controller
             ->with('capitania', $capitania_user)
             ->with('comodoro', $establecimiento_user)
             ->with('descripcionNavegacion', $descipcionNavegacion)
-            ->with('establecimientoDestino', $establecimiento_destino);
+            ->with('establecimientoDestino', $establecimiento_destino)
+            ->with('capitaniaOrigen', $capitaniaOrigen[0]);
     }
 
     public function SendMail($idsolicitud, $tipo)
