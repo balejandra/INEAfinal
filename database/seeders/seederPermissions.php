@@ -52,6 +52,34 @@ class seederPermissions extends Seeder
             'consultar-capitania',
             'eliminar-capitania',
 
+            //Permisos para dependencias federales
+            'listar-dependencia',
+            'crear-dependencia',
+            'editar-dependencia',
+            'consultar-dependencia',
+            'eliminar-dependencia',
+
+            //Permisos para Equipos
+            'listar-equipo',
+            'crear-equipo',
+            'editar-equipo',
+            'consultar-equipo',
+            'eliminar-equipo',
+
+            //Permisos para Status
+            'listar-status',
+            'crear-status',
+            'editar-status',
+            'consultar-status',
+            'eliminar-status',
+
+            //Permisos para tabla de mandos
+            'listar-mando',
+            'crear-mando',
+            'editar-mando',
+            'consultar-mando',
+            'eliminar-mando',
+
             //Permisos para permisos de zarpes
             'consultar-zarpe',
             'eliminar-zarpe',
@@ -79,7 +107,8 @@ class seederPermissions extends Seeder
             'listar-estadia-generados',
             'listar-estadia-coordinador',
             'listar-estadia-capitania-destino',
-             
+            'renovar-estadia'
+
         ];
 
         foreach ($permissions as $permission) {

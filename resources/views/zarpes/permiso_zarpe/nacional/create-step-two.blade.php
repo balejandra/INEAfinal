@@ -3,16 +3,21 @@
     Zarpes
 @endsection
 @section('content')
-
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Zarpe</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Permisos de Zarpe</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
 
             <div class="col-md-12" id="errorMat">
-          
+
 
             </div>
 
@@ -64,14 +69,14 @@
                                                     <div class="text-center">
                                                         <h4>Datos de la embarcación</h4>
                                                     </div>
-                                                     
 
+                                                    <div class="table-responsive">
                                                         <table class="table table-bordered" id="">
                                                         <tr>
-                                                            <th width="25%" class="bg-light">MATRÍCULA</th>
-                                                            <td width="25%"><input type="text" id="matricula" name="matricula" readonly></td>
-                                                            <th width="25%" class="bg-light">NOMBRE</th>
-                                                            <td width="25%"><input type="text" id="nombre" name="nombre" readonly></td>
+                                                            <th class="bg-light">MATRÍCULA</th>
+                                                            <td><input type="text" id="matricula" name="matricula" readonly></td>
+                                                            <th class="bg-light">NOMBRE</th>
+                                                            <td><input type="text" id="nombre" name="nombre" readonly></td>
                                                         </tr>
 
                                                         <tr>
@@ -98,7 +103,7 @@
                                                             <td> <input type="text" name="manga" id="manga" readonly></td>
                                                         </tr>
                                                     </table>
-
+                                                    </div>
 
 
                                                 </div>
@@ -108,11 +113,11 @@
                                     </div>
                                     <div class="card-footer text-right">
                                         <div class="row">
-                                            <div class="col-md-6 text-left">
+                                            <div class="col text-left">
                                                 <a href="{{ route('permisoszarpes.createStepOne') }}"
                                                    class="btn btn-primary pull-right">Anterior</a>
                                             </div>
-                                            <div class="col-md-6 text-right">
+                                            <div class="col text-right">
                                                 <button type="submit" class="btn btn-primary">Siguiente</button>
                                             </div>
                                         </div>

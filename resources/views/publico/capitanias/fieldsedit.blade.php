@@ -15,7 +15,7 @@
     <!-- Nombre Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('capitanes', 'Capitan:') !!}
-        {!! Form::select('capitanes',$capitanes, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un capitan']) !!}
+        {!! Form::select('user',$user, null, ['class' => 'form-control custom-select']) !!}
     </div>
 </div>
 

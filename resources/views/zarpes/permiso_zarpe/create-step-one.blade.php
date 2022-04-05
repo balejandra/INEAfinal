@@ -3,9 +3,15 @@
     Zarpes
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Zarpe</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Permisos de Zarpe</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -44,15 +50,15 @@
                                         @endif
 
                                         <div class="row">
-                                            <div class="col-md-4 text-right"><label for="title">Bandera:</label></div>
+                                            <div class="col-md-4 text-right"></div>
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                            
+                                                    <label for="title">Bandera:</label>
                                                     <select name="bandera" id="bandera" class="form-control custom-select" placeholder='Seleccione'>
                                                         <option value="nacional">NACIONAL</option>
                                                         <option value="extranjera" >EXTRANJERA</option>
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>

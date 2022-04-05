@@ -3,12 +3,18 @@
     Tabla Mando
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{{ route('tablaMandos.index') }}">Tabla Mando</a>
-        </li>
-        <li class="breadcrumb-item active">Consulta</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{{ route('tablaMandos.index') }}">Tabla Mando</a>
+                </li>
+                <li class="breadcrumb-item active">Consulta</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('coreui-templates::common.errors')
@@ -18,7 +24,7 @@
                         <div class="card-header">
                             <strong>Consulta</strong>
                             <div class="card-header-actions">
-                                <a href= "{{route('tablaMandos.index')}} " class="btn btn-primary btn-sm">Listado de Tabla de Mandos</a>
+                                <a href= "{{route('tablaMandos.index')}} " class="btn btn-primary btn-sm">Listado</a>
                             </div>
                         </div>
                         <div class="card-body">

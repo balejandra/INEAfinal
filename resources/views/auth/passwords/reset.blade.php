@@ -31,7 +31,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text">
-                                <i class="icon-lock"></i>
+                                <i class="fas fa-lock"></i>
                               </span>
                             </div>
                             <input type="password" class="form-control {{ $errors->has('password')?'is-invalid':''}}" name="password" placeholder="{{__('Password')}}">
@@ -44,7 +44,7 @@
                         <div class="input-group mb-4">
                             <div class="input-group-prepend">
                               <span class="input-group-text">
-                                <i class="icon-lock"></i>
+                                <i class="fas fa-lock"></i>
                               </span>
                             </div>
                             <input type="password" name="password_confirmation" class="form-control"
@@ -56,7 +56,7 @@
                             @endif
                         </div>
                         <button type="submit" class="btn btn-block btn-primary btn-block btn-flat">
-                            <i class="fa fa-btn fa-refresh"></i> {{__('Reset')}}
+                            <i class="fa fa-btn fas fa-redo"></i> {{__('Reset')}}
                         </button>
                     </form>
                 </div>

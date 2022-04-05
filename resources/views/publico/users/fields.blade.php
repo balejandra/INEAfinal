@@ -10,10 +10,20 @@
     {!! Form::text('nombres', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Password Field -->
 <div class="form-group col-sm-6">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="password_change" id="password_change" value="password"
+               onclick="cambiar()">
+        <label class="form-check-label" for="natural">
+            Cambiar Contraseña
+        </label>
+    </div>
+
+</div>
+<!-- Password Field -->
+<div class="form-group col-sm-6" id="password-div" style="display: none">
     {!! Form::label('password', 'Contraseña:') !!}
-    <input type="password" class="form-control" id="password" name="password" value="{{$user->password}}">
+    <input type="password" class="form-control" id="password" name="password">
     {!! Form::label('password', 'Confirmar Contraseña:') !!}
     <input type="password" name="password_confirmation" class="form-control"
            placeholder={{ __('Confirm Password') }}>

@@ -3,9 +3,15 @@
     Permisos
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Permisos</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -32,7 +38,7 @@
                             </div>
                             @endcan
                         </div>
-                         
+
                         <div class="card-body">
                             <table class="table table-responsive-sm table-bordered table-striped" id="TablePermissions">
                                 <thead>
@@ -40,7 +46,7 @@
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Guard</th>
-                                    <th>Created_at</th>
+                                    <th>Creado</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
@@ -52,24 +58,26 @@
                                         <td>{{$permission->guard_name}} </td>
                                         <td>{{$permission->created_at}} </td>
                                         <td>
-                                            {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete']) !!}
-                                            <div class='btn-group'>
-                                            <!-- <a href="{{ route('permissions.show', [$permission->id]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a> -->
-                                                @can('editar-permiso')
-                                                    <a href="{{ route('permissions.edit', [$permission->id]) }}"
-                                                       class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
-                                                @endcan
-                                                @can('eliminar-permiso')
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Realmente desera eliminar este permiso?')"]) !!}
+                                            @can('editar-menu')
+                                                <a class="btn btn-sm btn-info" href="{{ route('permissions.edit', [$permission->id]) }}">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            @endcan
+                                            @can('eliminar-menu')
+                                                <div class='btn-group'>
+                                                    {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete']) !!}
+
+                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar este permiso?')"]) !!}
+
                                                     {!! Form::close() !!}
-                                                @endcan
-                                            </div>
+                                                </div>
+                                            @endcan
 
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center"> No existen registros para mostrar</td>
+                                         No existen registros para mostrar
                                     </tr>
                                 @endforelse
                                 </tbody>

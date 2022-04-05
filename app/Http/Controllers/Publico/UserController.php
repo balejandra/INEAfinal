@@ -175,15 +175,18 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function update($id, UpdateUserRequest $request)
+    public function update($id, Request $request)
     {
+
         $user= User::find($id);
         $user->email= $request->email;
         $user->nombres = $request->nombres;
-        $user->password = Hash::make($request->password);
+        if ($request->password_change) {
+            $user->password = Hash::make($request->password);
+        }
         $user->tipo_usuario=$request->tipo_usuario;
         $user->email_verified_at= now();
-        $user->save();
+        $user->update();
         $roles=$request->roles ;
         $user->roles()->sync($roles);
         $rol=Role::select('name')->where('id',$request->roles)->get();

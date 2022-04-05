@@ -6,12 +6,18 @@
     @push('scripts')
         <script src="{{asset('js/estadia.js')}}"></script>
     @endpush
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-         <a href="{!! route('permisosestadia.index') !!}">Permiso Estadia</a>
-      </li>
-      <li class="breadcrumb-item">Crear</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('permisosestadia.index') !!}">Permiso Estadia</a>
+                </li>
+                <li class="breadcrumb-item">Crear Renovacion</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
      <div class="container-fluid">
           <div class="animated fadeIn">
               @include('flash::message')
@@ -22,7 +28,7 @@
                                 <i class="fa fa-plus-square-o fa-lg"></i>
                                 <strong>Renovar Permiso de Estadia</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Listado de Permisos de Estadia</a>
+                                    <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Listado</a>
                                 </div>
                             </div>
                             <div class="card-body">

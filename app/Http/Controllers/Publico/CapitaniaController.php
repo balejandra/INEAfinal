@@ -96,7 +96,7 @@ class CapitaniaController extends AppBaseController
             }
         }
 
-        //Flash::success('Capitanía guardado con éxito.');
+        Flash::success('Capitanía guardado con éxito.');
 
         return redirect(route('capitanias.index'))->with('success','Capitanía guardado con éxito.');
     }
@@ -141,18 +141,21 @@ class CapitaniaController extends AppBaseController
         //$coords=Coordenas_capitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenas_capitania.capitania_id', '=', $id)->get();
         $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
         $user=User::role('Capitán')->get();
+        $noparent=['0' => 'Sin Capitán'];
+        $parents2=$user->pluck('email','id')->toArray();
+        $parent=$noparent+$parents2;
         $capitanes=$user->pluck('email','id')->toArray();
         //dd($capitanes);
         if (empty($capitania)) {
             Flash::error('Capitania no encontrada');
 
-            return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada');
+            return redirect(route('capitanias.index'));
         }
 
         return view('publico.capitanias.edit')
             ->with('capitania', $capitania)
             ->with('coordenadas',$coords)
-            ->with('capitanes',$capitanes);
+            ->with('user',$parent);
     }
 
     /**
@@ -163,15 +166,34 @@ class CapitaniaController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateCapitaniaRequest $request, Capitania $cap)
+    public function update($id, Request $request, Capitania $cap)
     {
         $capi = $this->capitaniaRepository->update($request->all(), $id);
+        $rolecapitan=Role::find(4);
+       if ($request->user==0) {
+         $capitan=CapitaniaUser::where('capitania_id',$id)
+             ->where('cargo',$rolecapitan->name)
+             ->delete();
+       } else{
+           $capitan=CapitaniaUser::where('capitania_id',$id)
+               ->where('cargo',$rolecapitan->name)
+               ->first();
+          // dd($capitan);
+            if (is_null($capitan)) {
+                $capitan= new CapitaniaUser();
+                $capitan->cargo=$rolecapitan->name;
+                $capitan->user_id=$request->user;
+                $capitan->capitania_id=$id;
+                $capitan->save();
+            }else {
+                $capitan->cargo=$rolecapitan->name;
+                $capitan->user_id=$request->user;
+                $capitan->capitania_id=$id;
+                $capitan->update();
+            }
 
-        $capitan_user=new CapitaniaUser();
-        $capitan_user->cargo='Capitan';
-        $capitan_user->user_id=$request->capitanes;
-        $capitan_user->capitania_id=$id;
-        $capitan_user->save();
+       }
+
         $ids=$request->input('ids', []);
         $lat=$request->input('latitud', []);
         $long=$request->input('longitud', []);
@@ -213,7 +235,8 @@ class CapitaniaController extends AppBaseController
               //  $capi->CoordenadasCapitania()->update($value,$ids[$key]);
             }
         }
-       return redirect(route('capitanias.index'))->with('success','Capitanía modificada con éxito.');
+        Flash::success('Capitanía modificada con éxito.');
+       return redirect(route('capitanias.index'));
 
     }
 

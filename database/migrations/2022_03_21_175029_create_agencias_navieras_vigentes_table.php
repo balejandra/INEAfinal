@@ -13,7 +13,7 @@ class CreateAgenciasNavierasVigentesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_vageneral_schema')->create('Agencias Navieras vigentes', function (Blueprint $table) {
+        Schema::connection('pgsql_vageneral_schema')->create('agencias_navieras_vigentes', function (Blueprint $table) {
             $table->increments('vasolicitude_id');
             $table->string('nomactv');
             $table->string('rifemp');

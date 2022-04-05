@@ -157,6 +157,17 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
+    $('#equipos').DataTable({
+        responsive: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+    });
+} );
+
+
+
+$(document).ready(function() {
     $('#menusroles-table').DataTable({
         responsive: true,
         fixedHeader: true,
@@ -1127,4 +1138,33 @@ function EstablecimientoUser(){
 
     }
 
+}
+
+function modalvisita(id,solicitud) {
+    var soli = document.getElementById('solicitud');
+    soli.textContent = solicitud
+    let frm1 = document.getElementById('visita');
+    frm1.setAttribute('action',  route('statusEstadia', {id:id,status:9}));
+}
+function modalrechazarestadia(id,solicitud) {
+    var soli = document.getElementById('solicitudrechazo');
+    soli.textContent = solicitud
+    let frm1 = document.getElementById('rechazar-estadia');
+    frm1.setAttribute('action',  route('statusEstadia', {id:id,status:2}));
+}
+
+function modalrechazarzarpe(id,solicitud) {
+    var soli = document.getElementById('solicitudzarpe');
+    soli.textContent = solicitud
+    let frm1 = document.getElementById('rechazar-zarpe');
+    frm1.setAttribute('action',  route('status', {id:id,status:'rechazado', capitania: 0}));
+}
+
+function cambiar() {
+    password1=document.getElementById('password-div')
+    if($("#password_change").is(':checked')){
+        password1.style.display='block';
+    }else {
+        password1.style.display='none';
+    }
 }

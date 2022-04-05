@@ -3,15 +3,19 @@
     Zarpes
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Zarpe</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Permisos de Zarpe</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
              @include('flash::message')
              <div class="col-md-12" id="errorPermiso">
-          
-
             </div>
              <div class="row">
                  <div class="col-lg-12">
@@ -19,10 +23,8 @@
                          <div class="card-header">
                              <i class="fas fa-ship"></i>
                              <strong>Solicitud de Permisos de Zarpe</strong>
-
                              <div class="card-header-actions">
                                  <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Listado</a>
-
                              </div>
 
                          </div>
@@ -32,11 +34,9 @@
 
                          	 <form action="{{ route('permisoszarpes.permissionCreateSteptwoE') }}" method="POST">
 				                @csrf
-				  
+
 				                <div class="card">
-				  
 				                    <div class="card-body" style="min-height: 250px;">
-				  
 				                            @if ($errors->any())
 				                                <div class="alert alert-danger">
 				                                    <ul>
@@ -46,7 +46,6 @@
 				                                    </ul>
 				                                </div>
 				                            @endif
-		
 
                                            <div class="row gy-2 gx-3 justify-content-center">
                                             <div class="col-auto">
@@ -88,27 +87,23 @@
                                         				<th class="bg-light">Vigencia hasta</th>
                                         				<td id="vigencia"></td>
                                         			</tr>
-
                                         		</table>
 
                                         		<input type="hidden" id="permiso_de_estadia" name="permiso_de_estadia" value="">
                                         		<input type="hidden" id="numero_registro" name="numero_de_registro" value="">
-
                                         	</div>
                                         </div>
-				                          
 				                    </div>
-				  
+
 				                    <div class="card-footer text-right">
 				                    	<div class="row">
-				                    		<div class="col-md-6 text-left">
-				                                <a href="{{ route('permisoszarpes.createStepOne') }}" class="btn btn-primary pull-right">Previous</a>
+				                    		<div class="col text-left">
+				                                <a href="{{ route('permisoszarpes.createStepOne') }}" class="btn btn-primary pull-right">Anterior</a>
 				                            </div>
-				                            <div class="col-md-6 text-right">
-				                                <button type="submit" class="btn btn-primary">Next</button>
+				                            <div class="col text-right">
+				                                <button type="submit" class="btn btn-primary">Siguiente</button>
 				                            </div>
 				                    	</div>
-				                        	
 				                    </div>
 				                </div>
 				            </form>

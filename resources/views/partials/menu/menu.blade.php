@@ -1,5 +1,4 @@
 <div>
-<ul class="nav" id="menu">
     @foreach ($menus as $key => $item)
         @if ($item['parent'] != 0)
             @break

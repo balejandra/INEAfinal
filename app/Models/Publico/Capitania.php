@@ -72,7 +72,9 @@ class Capitania extends Model implements Auditable
         return $this->hasMany(CoordenadasCapitania::class);
     }
 
-
+public function capitan(){
+    return $this->hasMany(CapitaniaUser::class,'capitania_user','capitania_id','id');
+}
     public function user()
     {
         return $this->belongsToMany(User::class);

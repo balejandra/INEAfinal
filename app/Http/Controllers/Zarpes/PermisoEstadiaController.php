@@ -98,8 +98,6 @@ class PermisoEstadiaController extends AppBaseController
 
             return redirect()->back();
         }else {
-            dd('no existe');
-
             $estadia = new PermisoEstadia();
             $estadia->nro_solicitud = $this->codigo($request->capitania_id);
             $estadia->cantidad_solicitud = '1';
