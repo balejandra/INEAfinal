@@ -198,6 +198,7 @@ class PermisoEstadiaController extends AppBaseController
         $permisoEstadia = $this->permisoEstadiaRepository->find($id);
         $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
         $revisiones=EstadiaRevision::where('permiso_estadia_id',$id)->get();
+        $visita=VisitaPermisoEstadia::where('permiso_estadia_id',$id)->get();
         if (empty($permisoEstadia)) {
             Flash::error('Permiso Estadia not found');
 
@@ -207,7 +208,8 @@ class PermisoEstadiaController extends AppBaseController
         return view('zarpes.permiso_estadias.show')
             ->with('permisoEstadia', $permisoEstadia)
             ->with('documentos', $documentos)
-            ->with('revisiones',$revisiones);
+            ->with('revisiones',$revisiones)
+            ->with('visitas',$visita);
     }
 
     /**

@@ -29,6 +29,28 @@
                              </div>
                              <div class="card-body">
                                  @include('zarpes.permiso_estadias.show_fields')
+                                 <strong>Asignación de Inspeccion</strong>
+                                 <table class="table">
+                                     <tbody>
+                                     <thead>
+                                     <tr>
+                                         <th>Nombre del Visitador</th>
+                                         <th>Fecha de Visita</th>
+                                     </tr>
+                                     </thead>
+                                     @forelse($visitas as $visita)
+                                         <tr>
+                                             <td>{{$visita->nombre_visitador}}</td>
+                                             <td>{{date_format($visita->fecha_visita,'Y-m-d')}}</td>
+                                         </tr>
+                                     @empty
+                                         <tr>
+                                             <td colspan="5" class="text-center"> No existen registros para mostrar</td>
+                                         </tr>
+                                         @endforelse
+                                         </tbody>
+                                 </table>
+                                 <br>
                                  <strong>Historial de revisiones</strong>
                                  <table class="table">
                                      <tbody>

@@ -15,7 +15,6 @@ use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Response;
 use Spatie\Permission\Models\Role;
@@ -106,16 +105,22 @@ class UserController extends Controller
         $rol=Role::select('name')->where('id',$request->roles)->get();
 
         if (($request->roles==5)||($request->roles==6)) {
-            $cap_user= new CapitaniaUser();
-            $cap_user->cargo=$rol[0]->name;
-            $cap_user->user_id=$data->id;
-            $cap_user->capitania_id=$request->capitanias;
-            $cap_user->save();
+            if ($request->establecimientos) {
+                $cap_user= new CapitaniaUser();
+                $cap_user->cargo=$rol[0]->name;
+                $cap_user->user_id=$data->id;
+                $cap_user->capitania_id=$request->capitanias;
+                $cap_user->save();
 
-            $est_user= new EstablecimientoNauticoUser();
-            $est_user->user_id=$data->id;
-            $est_user->establecimiento_nautico_id=$request->establecimientos;
-            $est_user->save();
+                $est_user= new EstablecimientoNauticoUser();
+                $est_user->user_id=$data->id;
+                $est_user->establecimiento_nautico_id=$request->establecimientos;
+                $est_user->save();
+            }else {
+                Flash::error('Debe seleccionar un establecimiento nautico.');
+                return redirect()->back();
+            }
+
         } elseif (($request->roles==4)||($request->roles==7)||($request->roles==8)){
 
             $cap_user= new CapitaniaUser();
@@ -190,16 +195,6 @@ class UserController extends Controller
         $validated= $request->validate([
             'nombres' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => [
-                'required',
-                'max:50',
-                'confirmed',
-                Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->uncompromised(),
-            ],
         ]);
 
 
@@ -207,6 +202,20 @@ class UserController extends Controller
         $user->email= $request->email;
         $user->nombres = $request->nombres;
         if ($request->password_change) {
+            $validated= $request->validate([
+                'nombres' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'password' => [
+                    'required',
+                    'max:50',
+                    'confirmed',
+                    Password::min(8)
+                        ->mixedCase()
+                        ->letters()
+                        ->numbers()
+                        ->uncompromised(),
+                ],
+            ]);
             $user->password = Hash::make($request->password);
         }
         $user->tipo_usuario=$request->tipo_usuario;
@@ -222,16 +231,22 @@ class UserController extends Controller
         }
 
         if (($request->roles==5)||($request->roles==6)) {
-            $cap_user= new CapitaniaUser();
-            $cap_user->cargo=$rol[0]->name;
-            $cap_user->user_id=$id;
-            $cap_user->capitania_id=$request->capitanias;
-            $cap_user->save();
+            if ($request->establecimientos) {
+                $cap_user= new CapitaniaUser();
+                $cap_user->cargo=$rol[0]->name;
+                $cap_user->user_id=$id;
+                $cap_user->capitania_id=$request->capitanias;
+                $cap_user->save();
 
-            $est_user= new EstablecimientoNauticoUser();
-            $est_user->user_id=$id;
-            $est_user->establecimiento_nautico_id=$request->establecimientos;
-            $est_user->save();
+                $est_user= new EstablecimientoNauticoUser();
+                $est_user->user_id=$id;
+                $est_user->establecimiento_nautico_id=$request->establecimientos;
+                $est_user->save();
+            }else {
+                Flash::error('Debe seleccionar un establecimiento nautico.');
+                return redirect()->back();
+            }
+
         } elseif (($request->roles==4)||($request->roles==7)||($request->roles==8)){
 
             $cap_user= new CapitaniaUser();
