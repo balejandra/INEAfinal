@@ -276,11 +276,13 @@ class UserController extends Controller
         $cedula=$_REQUEST['cedula'];
         $fecha=$_REQUEST['fecha'];
         $newDate = date("d/m/Y", strtotime($fecha));
+        $newDate2 = date("d-m-Y", strtotime($fecha));
+        $newDate3 = date("Y-m-d", strtotime($fecha));
         $data= Saime_cedula::where('cedula',$cedula)
-            ->where('fecha_nacimiento',$newDate)
+            ->whereIn('fecha_nacimiento',[$newDate,$newDate2,$newDate3])
             ->get();
         if (is_null($data->first())) {
-            dd('error');
+           // dd('error');
             $data=response()->json([
                 'status'=>3,
                 'msg' => $exception->getMessage(),

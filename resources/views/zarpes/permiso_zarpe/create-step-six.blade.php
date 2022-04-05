@@ -44,7 +44,7 @@
                                                 </ul>
                                             </div>
                                         @endif
-                                        <div class="row px-5" id="msj">
+                                        <div class="row px-5" id="msj"  data-asset="{{asset('images')}}">
                                         </div>
                                         <div class="row" id="VE">
 
@@ -69,7 +69,7 @@
                                                 <div class="form-group">
                                                     <label for="title">Cédula/Pasaporte:</label>
                                                     <input type="text" class="form-control" id="numero_identificacion"
-                                                           name="numero_identificacion" onKeyDown="return soloNumeros(event)"
+                                                           name="numero_identificacion" maxlength="10"
                                                            title="En caso de ser menor venezolano no cedulado, agregue la cédula del representante.">
                                                 </div>
                                             </div>

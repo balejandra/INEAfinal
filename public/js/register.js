@@ -90,13 +90,17 @@ function changetipodocumento() {
 
 }
     function getEmployees(data1,data2) {
+        let msj=document.getElementById('errorRegister');
+        const asset=msj.getAttribute('data-asset');
+        msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='35px' class='mr-2'> Comparando datos con registros existentes en SAIME, por favor espere...</div>";
     $.ajax({
         url: route('consultasaime'),
-        data: {cedula: data1, fecha:data2 }
-
+        data: {cedula: data1, fecha:data2 },
     })// This will be called on success
+        
         .done(function (response) {
-          //  alert(response);
+          console.log(response,'bien');
+          msj.innerHTML="";
             respuesta = JSON.parse(response);
             let tamano = respuesta.length;
             if (tamano == 0) {
@@ -108,7 +112,7 @@ function changetipodocumento() {
         })
 
         // This will be called on error
-        .fail(function (response) {
+        .fail(function (response) { console.log(response,'error');
             datosbasicos(JSON.parse(0));
             let error=document.getElementById('errorRegister');
             error.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias en el SAIME con los datos suministrados</div>';

@@ -337,9 +337,10 @@ function eliminarCoordenadasDF(id, idcoord){
     let men='';
     var msj= document.getElementById('msj');
     var pass=document.getElementById('pasajeros');
+    const asset=msj.getAttribute('data-asset');
 
-
-
+    msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con resgitros existentes en SAIME, por favor espere...</div>";
+   
     var div=document.getElementById("dataPassengers");
     cantAct=parseInt(div.getAttribute("data-cant"));
 
@@ -363,6 +364,7 @@ function eliminarCoordenadasDF(id, idcoord){
                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
 
                     addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html);
+                    msj.innerHTML="";
                 }else{
                     msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
                 }
@@ -413,7 +415,8 @@ function eliminarCoordenadasDF(id, idcoord){
                                     $('#apellidos').val(apellidos);
 
                                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                                        addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
+                                      
+                                    addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
 
 
                                     msj.innerHTML="";
@@ -464,7 +467,7 @@ function eliminarCoordenadasDF(id, idcoord){
 
                                 pass.innerHTML+=html;
                                 addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val());
-
+                                msj.innerHTML="";
                             }else{
                                 msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
 
@@ -603,7 +606,7 @@ $( "#tipodoc" )
 
 function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html){
     console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
-
+    console.log("incio", html, "aqui");
     var cantPass= document.getElementById("cantPasajeros");
     let cant=parseInt(cantPass.getAttribute("data-cantPass"));
 
@@ -615,9 +618,10 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
 
 
         var pass=document.getElementById('pasajeros');
+        if(tipodoc!='V'){
             pass.innerHTML+=html;
-
-
+        }   
+        
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));
         let contenedor= document.createElement("div");
@@ -695,6 +699,9 @@ function getMarinos() {
         let fechanac= document.getElementById('fecha_nacimiento').value;
         let msj=document.getElementById('msjMarino');
         msj.innerHTML="";
+        const asset=msj.getAttribute('data-asset');
+        msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif'   width='35px'> &nbsp; Comparando datos con resgitros existentes en SAIME y gente de mar, por favor espere...</div>";
+   
 
         let tabla=document.getElementById('marinos');
         let divMarinos=document.getElementById('dataMarinos');
@@ -749,7 +756,7 @@ function getMarinos() {
                             break;
 
                             default:
-                            console.log(respuesta);
+                            console.log(respuesta);  msj.innerHTML="";
                             break;
                         }
 
@@ -775,7 +782,7 @@ function getMarinos() {
                                 document.getElementById('cedula').value="";
                                 document.getElementById('fecha_nacimiento').value="";
                                 addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento, fechaemision);
-
+                                msj.innerHTML="";
                             }else{
 
 
