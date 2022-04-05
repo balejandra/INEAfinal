@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 use Response;
 use Spatie\Permission\Models\Role;
 
@@ -77,7 +78,16 @@ class UserController extends Controller
         $validated= $request->validate([
             'nombres' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255','unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'max:50',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->uncompromised(),
+            ],
         ],
             [
                 'email.unique'=>'Email ya registrado',
@@ -177,6 +187,21 @@ class UserController extends Controller
      */
     public function update($id, Request $request)
     {
+        $validated= $request->validate([
+            'nombres' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => [
+                'required',
+                'max:50',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->uncompromised(),
+            ],
+        ]);
+
 
         $user= User::find($id);
         $user->email= $request->email;
