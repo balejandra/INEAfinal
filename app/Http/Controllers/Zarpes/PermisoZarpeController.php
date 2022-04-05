@@ -266,31 +266,37 @@ class PermisoZarpeController extends Controller
         $tabla = new TablaMando();
         $mando = $tabla->where([
             ['UAB_minimo', '<', $UAB],
-            ['UAB_maximo', '>', $UAB]
+            ['UAB_maximo', '>=', $UAB]
         ])->get()->toArray();
-        $validation['UAB'] = $request->input('UAB', []);
-        $validation['eslora'] = $request->input('eslora', []);
-        $validation['cant_tripulantes'] = $mando[0]["cant_tripulantes"];
+        if(count($mando)==0){
+            Flash::error('No se ha podido comparar las especificaciones de la embarcación ('.$matricula.') respecto a la tabla de mandos actual, comuniquese con el administrador del sitema.');
+            return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', 2);
+        }else{
+            $validation['UAB'] = $request->input('UAB', []);
+            $validation['eslora'] = $request->input('eslora', []);
+            $validation['cant_tripulantes'] = $mando[0]["cant_tripulantes"];
 
-        $idtablamando = $mando[0]["id"];
-        $cargos = CargoTablaMando::where('tabla_mando_id', $idtablamando)->get()->toArray();
-        foreach ($cargos as $clave => $valor) {
-            $cargo["cargo_desempena"] = $valor['cargo_desempena'];
-            $cargo["titulacion_aceptada_minima"] = $valor['titulacion_aceptada_minima'];
-            $cargo["titulacion_aceptada_maxima"] = $valor['titulacion_aceptada_maxima'];
-            $validation[$clave] = $cargo;
+            $idtablamando = $mando[0]["id"];
+            $cargos = CargoTablaMando::where('tabla_mando_id', $idtablamando)->get()->toArray();
+            foreach ($cargos as $clave => $valor) {
+                $cargo["cargo_desempena"] = $valor['cargo_desempena'];
+                $cargo["titulacion_aceptada_minima"] = $valor['titulacion_aceptada_minima'];
+                $cargo["titulacion_aceptada_maxima"] = $valor['titulacion_aceptada_maxima'];
+                $validation[$clave] = $cargo;
+            }
+
+
+            $request->session()->put('validacion', json_encode($validation));
+            // dd($request->session()->get('validacion'));
+
+            $solicitud = json_decode($request->session()->get('solicitud'), true);
+            $solicitud['matricula'] = $request->input('matricula', []);
+            $solicitud['permiso_estadia_id'] = null;
+            $request->session()->put('solicitud', json_encode($solicitud));
+            // dd($solicitud);
+            return redirect()->route('permisoszarpes.createStepThree');
         }
-
-
-        $request->session()->put('validacion', json_encode($validation));
-        // dd($request->session()->get('validacion'));
-
-        $solicitud = json_decode($request->session()->get('solicitud'), true);
-        $solicitud['matricula'] = $request->input('matricula', []);
-        $solicitud['permiso_estadia_id'] = null;
-        $request->session()->put('solicitud', json_encode($solicitud));
-        // dd($solicitud);
-        return redirect()->route('permisoszarpes.createStepThree');
+        
 
     }
 
@@ -764,9 +770,11 @@ class PermisoZarpeController extends Controller
         $sexo = $_REQUEST['sexo'];
 
         $newDate = date("d/m/Y", strtotime($fecha));
+        $newDate2 = date("d-m-Y", strtotime($fecha));
+        $newDate3 = date("Y-d-m", strtotime($fecha));
         $data = Saime_cedula::where('cedula', $cedula)
-            ->where('fecha_nacimiento', $newDate)
-            ->where('sexo', $sexo)
+            ->whereIn('fecha_nacimiento', [$newDate,$newDate2,$newDate3])
+           // ->where('sexo', $sexo)
             ->get();
         if (is_null($data->first())) {
             dd('error');
@@ -786,11 +794,13 @@ class PermisoZarpeController extends Controller
         $cedula = $_REQUEST['cedula'];
         $fecha = $_REQUEST['fecha'];
         $cap = $_REQUEST['cap'];
-
+       
         $vj = [];
         $newDate = date("d/m/Y", strtotime($fecha));
+        $newDate2 = date("d-m-Y", strtotime($fecha));
+        $newDate3 = date("Y-d-m", strtotime($fecha));
         $data = Saime_cedula::where('cedula', $cedula)
-            ->where('fecha_nacimiento', $newDate)
+            ->whereIn('fecha_nacimiento', [$newDate,$newDate2,$newDate3])
             ->get();
 
         if (is_null($data->first())) {
@@ -1013,8 +1023,9 @@ class PermisoZarpeController extends Controller
         $establecimiento_user = EstablecimientoNauticoUser::select('user_id')
             ->where('establecimiento_nautico_id', $permisoZarpe->establecimiento_nautico_id)
             ->get();
+        $establecimiento_destino = EstablecimientoNautico::find($permisoZarpe->establecimiento_nautico_destino_id);
         $capitania_user = CapitaniaUser::select('user_id')->whereIn('capitania_id', $establecimiento)->get();
-
+        $descipcionNavegacion=DescripcionNavegacion::find($permisoZarpe->descripcion_navegacion_id);
         if (empty($permisoZarpe)) {
             Flash::error('Permiso Zarpe not found');
 
@@ -1028,7 +1039,9 @@ class PermisoZarpeController extends Controller
             ->with('equipos', $equipos)
             ->with('revisiones', $revisiones)
             ->with('capitania', $capitania_user)
-            ->with('comodoro', $establecimiento_user);
+            ->with('comodoro', $establecimiento_user)
+            ->with('descripcionNavegacion', $descipcionNavegacion)
+            ->with('establecimientoDestino', $establecimiento_destino);
     }
 
     public function SendMail($idsolicitud, $tipo)

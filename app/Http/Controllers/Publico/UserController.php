@@ -254,7 +254,7 @@ class UserController extends Controller
             ->whereIn('fecha_nacimiento',[$newDate,$newDate2,$newDate3])
             ->get();
         if (is_null($data->first())) {
-            dd('error');
+           // dd('error');
             $data=response()->json([
                 'status'=>3,
                 'msg' => $exception->getMessage(),

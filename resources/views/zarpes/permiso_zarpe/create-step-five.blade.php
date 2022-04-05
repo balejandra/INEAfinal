@@ -52,7 +52,7 @@
                                         @endif
 
                                         <div class="row">
-                                            <div class="row px-5" id="msjMarino">
+                                            <div class="row px-5" id="msjMarino"  data-asset="{{asset('images')}}">
 
                                             </div>
                                             <div class="col-md-2">

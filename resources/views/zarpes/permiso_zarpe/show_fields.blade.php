@@ -1,10 +1,11 @@
 <strong>Detalle del Zarpe</strong>
+
 <table class="table">
     <tbody>
     <tr>
-        <th class="bg-light">Nro de Solicitud</th>
+        <th width='25%' class="bg-light">Nro de Solicitud</th>
         <td>{{ $permisoZarpe->nro_solicitud }}</td>
-        <th class="bg-light">Nombre Solicitante</th>
+        <th width='25%' class="bg-light">Nombre Solicitante</th>
         <td>{{ $permisoZarpe->user->nombres}} {{ $permisoZarpe->user->apellidos}}</td>
     </tr>
     <tr>
@@ -22,9 +23,9 @@
     <tr>
         <th class="bg-light">Coordenadas</th>
         @php $coords=json_decode($permisoZarpe->coordenadas); @endphp
-        <td>Latitud: {{ $coords[0]}} , Longitud: {{ $coords[1]}}</td>
+        <td>Latitud: {{ $coords[0]}} <br> Longitud: {{ $coords[1]}}</td>
         <th class="bg-light">Destino</th>
-        <td>{{ $permisoZarpe->capitania->nombre }}</td>
+        <td>{{ $permisoZarpe->capitania->nombre }} <br> {{$establecimientoDestino->nombre}}</td>
     </tr>
     <tr>
         <th class="bg-light">Fecha y Hora Salida</th>
@@ -35,6 +36,8 @@
     <tr>
         <th class="bg-light">Status</th>
         <td>{{ $permisoZarpe->status->nombre }}</td>
+        <th class="bg-light">Descripcion de Navegación</th>
+        <td>{{$descripcionNavegacion->descripcion}}</td>
     </tr>
     </tbody>
 </table>
