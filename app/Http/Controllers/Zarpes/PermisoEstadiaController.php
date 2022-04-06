@@ -87,8 +87,29 @@ class PermisoEstadiaController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreatePermisoEstadiaRequest $request)
+    public function store(Request $request)
     {
+        $validated= $request->validate([
+            'nombre_buque' => ['required', 'string', 'max:255'],
+            'nro_registro' => ['required', 'string', 'max:255'],
+            'tipo_buque' => ['required', 'string', 'max:255'],
+            'nacionalidad_buque' => ['required', 'string', 'max:255'],
+            'nombre_propietario' => ['required', 'string', 'max:255'],
+            'pasaporte_capitan' => ['required', 'string', 'max:255'],
+            'nombre_capitan' => ['required', 'string', 'max:255'],
+            'cant_tripulantes' => ['required', 'integer', 'max:255'],
+            'cant_pasajeros' => ['required', 'integer', 'max:255'],
+            'arqueo_bruto' => ['required', 'string', 'max:255'],
+            'eslora' => ['required', 'string', 'max:255'],
+            'potencia_kw' => ['required', 'string', 'max:255'],
+            'actividades' => ['required', 'string', 'max:255'],
+            'puerto_origen' => ['required', 'string', 'max:255'],
+            'capitania_id' => ['required', 'string', 'max:255'],
+            'tiempo_estadia' => ['required', 'string', 'max:255'],
+            [
+                'capitania_id.required'=>'El campo Circunscripcion Acuatica es requerido',]
+
+            ]);
 
         $matriculaexis=PermisoEstadia::where('nro_registro',$request->nro_registro)
             ->where('status_id',1)
@@ -98,6 +119,7 @@ class PermisoEstadiaController extends AppBaseController
 
             return redirect()->back();
         }else {
+
             $estadia = new PermisoEstadia();
             $estadia->nro_solicitud = $this->codigo($request->capitania_id);
             $estadia->cantidad_solicitud = '1';
