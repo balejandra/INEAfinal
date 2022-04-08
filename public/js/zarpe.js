@@ -16,7 +16,7 @@ function getmatricula(data1) {
                 table.style.display='none';
 
             }else if(response=='sinCoincidencias'){
-                divError.innerHTML='<div class="alert alert-danger">Su usuario no puede realizar solicitudes a nombre del Buque Matricula <b>'+data1+' </b> </div>';
+                divError.innerHTML='<div class="alert alert-danger"> La matricula indicada <b>'+data1+'</b> no existe en RENAVE, por favor verificar </div>';
                 table.style.display='none';
 
             }else if(response=='noEncontradoSgm'){

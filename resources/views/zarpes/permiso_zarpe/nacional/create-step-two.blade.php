@@ -33,6 +33,10 @@
                             </div>
 
                         </div>
+@php
+     $solicitud= json_decode(session('solicitud'));
+
+@endphp
                         <div class="card-body" style="min-height: 350px;">
                             @include('zarpes.permiso_zarpe.stepsIndicator')
 
@@ -54,7 +58,16 @@
                                             <div class="col-auto">
                                                 <div class="form-group">
                                                     <label for="title">Matricula:</label>
-                                                    <input type="text" class="form-control" id="matricula1">
+                                                                @if($solicitud->matricula!="")
+                                                                    @php
+                                                                        $matricula="$solicitud->matricula";
+                                                                    @endphp
+                                                                @else
+                                                                    @php
+                                                                        $matricula='';
+                                                                    @endphp
+                                                                @endif
+                                                    <input type="text" class="form-control" id="matricula1" value="{{$matricula}}">
                                                 </div>
                                             </div>
                                             <div class="col-auto">

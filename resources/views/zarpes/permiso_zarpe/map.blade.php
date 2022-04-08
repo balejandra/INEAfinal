@@ -1,4 +1,18 @@
-<div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}" data-coordDepencencias="{{$coordsDependencias}}" data-activarDep="{{$activaDependencias}}">
+@if($solicitud->coordenadas!='')
+    @php  
+        $sol= json_decode($solicitud->coordenadas);
+        $lat=$sol[0];
+        $lon=$sol[1];
+    @endphp
+@else
+    @php 
+        $lat='';
+        $lon='';
+    @endphp
+@endif
+ 
+
+<div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}" data-coordDepencencias="{{$coordsDependencias}}" data-activarDep="{{$activaDependencias}}" data-coordSelected='' data-coordLatSel='{{$lat}}' data-coordLongSel='{{$lon}}' >
 
 <x-maps-leaflet style='height: 400px' :centerPoint="['lat' => 10.4806, 'long' => -66.9036]"   :zoomLevel="5"></x-maps-leaflet>
 
@@ -46,7 +60,20 @@ var polygon=[];
     
  });
 
+/*Seccion de codigo para marcar en el mapa para marcar cuando se regresa del paso cinco al cuatro*/
 
+let latSel= divMap.getAttribute('data-coordLatSel');
+let longSel=divMap.getAttribute('data-coordLongSel');
+ 
+if(latSel!='' && longSel!=''){
+    newMarker(latSel, longSel); 
+} 
+
+let idcapDestino=divMap.getAttribute("data-idcapdestino");
+
+
+
+/*FIN de seccion en el mapa para marcar cuando se regresa del paso cinco al cuatro*/
 
 /*
 var circle = L.circle(dep.coords, 25000, {
@@ -81,11 +108,11 @@ var circle = L.circle(dep.coords, 25000, {
 	 var marca; /*variable que guarda la marca que se vera en pantalla al hacer click*/
     function onMapClick(click){
         var coordenada = click.latlng; //capturo las coordenadas latitud y longitud
-        /*Busco los imput para agregar el valor seleccionado correspondiente latitud y longitud*/
+        /*Busco los input para agregar el valor seleccionado correspondiente latitud y longitud*/
         var latInput=document.getElementById('latitud'); 
         var longInput=document.getElementById('longitud'); 
         /*Busco el atributo data-lat y data-long que guardan la coordenada anterior para eliminar el marcador si es la segunda vez que dan click*/
-        let dataLat=latInput.getAttribute("data-lat")
+        let dataLat=latInput.getAttribute("data-lat");
         let dataLong=longInput.getAttribute('data-long');
         /*pregunto si no estan en blanco, porque si tienen informacion es porque ya existe un marcador en el mapa y lo debo eliminar para crear el nuevo*/
         if(dataLat!="" && dataLong!=""){

@@ -38,7 +38,17 @@
 
                 <div class="card">
 
+@php
+    $solicitud= json_decode(session('solicitud'));
+    
+    $tipozarpes=$solicitud->tipo_zarpe_id;
+    $descripcion=$solicitud->descripcion_navegacion_id;
+    $capitaniaOrigen=$solicitud->origen_capitania_id;
+    $selectedcap='';
+    $selectedtz='';
+    $selecteddn="";
 
+@endphp
                     <div class="card-body" style="min-height: 200px;">
 
                             @if ($errors->any())
@@ -63,7 +73,16 @@
                                             <option value="">Seleccione</option>
 
                                               @foreach ($TipoZarpes as $tz)
-                                                <option value="{{$tz->id}}">{{$tz->nombre}} </option>
+                                                @if($tipozarpes==$tz->id)
+                                                    @php
+                                                    $selectedtz="selected='selected'";
+                                                    @endphp
+                                                @else
+                                                    @php
+                                                    $selectedtz='';
+                                                    @endphp
+                                                @endif
+                                                <option value="{{$tz->id}}" {{$selectedtz}} >{{$tz->nombre}} </option>
                                             @endforeach
                                         </select>
                                         </div>
@@ -78,8 +97,18 @@
                                             <select id="descripcion_de_navegacion" name="descripcion_de_navegacion" class="form-control custom-select" onchange="getCapitania();">
                                             <option value="">Seleccione</option>
                                             @foreach($descripcionNavegacion as $dn)
+                                                @if($descripcion==$dn->id)
+                                                    @php
+                                                    $selecteddn="selected='selected'";
+                                                    @endphp
+                                                @else
+                                                    @php
+                                                    $selecteddn='';
+                                                    @endphp
+                                                @endif
+
                                                 @if($dn->id!=4)
-                                                <option value="{{$dn->id}}">{{$dn->descripcion}}</option>
+                                                <option value="{{$dn->id}}" {{$selecteddn}} >{{$dn->descripcion}}</option>
                                                 @endif
                                             @endforeach
 
@@ -98,7 +127,16 @@
                                             <option value="">Seleccione</option>
 
                                               @foreach ($capitanias as $capitania)
-                                                <option value="{{$capitania->id}}">{{$capitania->nombre}} </option>
+                                                @if($capitaniaOrigen==$capitania->id)
+                                                    @php
+                                                    $selectedcap="selected='selected'";
+                                                    @endphp
+                                                @else
+                                                    @php
+                                                    $selectedcap='';
+                                                    @endphp
+                                                @endif
+                                                <option value="{{$capitania->id}}" {{$selectedcap}} >{{$capitania->nombre}} </option>
                                             @endforeach
                                         </select>
                                         </div>

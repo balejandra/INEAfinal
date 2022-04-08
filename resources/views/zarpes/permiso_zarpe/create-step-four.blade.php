@@ -42,7 +42,10 @@
                             <form action="{{ route('permisoszarpes.permissionCreateStepFour') }}" id="formStepFour"
                                   method="POST">
                                 @csrf
+@php
+     $solicitud= json_decode(session('solicitud'));
 
+@endphp
                                 <div class="card">
                                     <div class="card-body">
                                         <div id="msjRuta"></div>
@@ -60,10 +63,19 @@
                                                         <select id="origen"
                                                                 name="establecimientoNáuticoOrigen"
                                                                 class="form-control custom-select">
-                                                            <option value="0">Seleccione</option>
+                                                            <option value="">Seleccione</option>
                                                             @foreach ($EstNauticos as $en)
+                                                                @if($solicitud->establecimiento_nautico_id==$en->id)
+                                                                    @php
+                                                                        $selecteden="selected='selected'";
+                                                                    @endphp
+                                                                @else
+                                                                    @php
+                                                                        $selecteden='';
+                                                                    @endphp
+                                                                @endif
                                                                 <option
-                                                                    value="{{$en->id}}">{{$en->nombre}} </option>
+                                                                    value="{{$en->id}}" {{$selecteden}} >{{$en->nombre}} </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -74,11 +86,23 @@
                                                         $fechaActual=new DateTime();
                                                         $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
                                                         $fechaActual=$fechaActual->format('Y-m-d')."T".$fechaActual->format('h:i');
+
+                                                        
                                                     @endphp
+                                                        @if($solicitud->fecha_hora_salida!='')
+                                                            @php
+                                                            $fechasal= $solicitud->fecha_hora_salida;
+                                                            @endphp
+                                                        @else
+                                                            @php
+                                                            $fechasal='';
+                                                            @endphp
+                                                        @endif
+
                                                     {!! Form::label('salida', 'Fecha/hora salida:') !!}
                                                     <input type="datetime-local" id="salida" name="salida"
                                                            min="{{$fechaActual}}" class="form-control"
-                                                           onblur="compararFechas()">
+                                                           onblur="compararFechas()" value="{{$fechasal}}">
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
@@ -87,17 +111,41 @@
                                                         $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
                                                         $fechaActual=$fechaActual->format('Y-m-d')."T".$fechaActual->format('h:i');
                                                     @endphp
+
+                                                    @if($solicitud->fecha_llegada_escala!='')
+                                                            @php
+                                                            $fechaesc= $solicitud->fecha_llegada_escala;
+                                                             
+                                                            @endphp
+                                                    @else
+                                                            @php
+                                                            $fechaesc='';
+                                                            @endphp
+                                                    @endif
+
                                                     {!! Form::label('llegada_escala', 'Fecha/hora llegada a punto de escala:') !!}
                                                     <input type="datetime-local" id="llegada_escala"
                                                            name="fecha_llegada_escala"
                                                            min="{{$fechaActual}}" class="form-control"
-                                                           onblur="compararFechasEscala()">
+                                                           onblur="compararFechasEscala()" value="{{$fechaesc}}" >
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
                                                     {!! Form::label('regreso', 'Fecha/hora llegada a destino:') !!}
+
+                                                    @if($solicitud->fecha_hora_regreso!='')
+                                                            @php
+                                                            $fechareg= $solicitud->fecha_hora_regreso;
+                                                             
+                                                            @endphp
+                                                    @else
+                                                            @php
+                                                            $fechareg='';
+                                                            @endphp
+                                                    @endif
+
                                                     <input type="datetime-local" id="regreso" name="regreso"
-                                                           class="form-control" onblur="compararFechas()">
+                                                           class="form-control" onblur="compararFechas()" value="{{$fechareg}}">
                                                 </div>
 
                                                 <div class="col-md-12 px-0">
@@ -107,7 +155,23 @@
                                                                 name="establecimientoNáuticoDestino"
                                                                 title="Selección el punto de escala en el mapa para visualizar los establecimientos náuticos de la circunscripción de destino"
                                                                 class="form-control custom-select">
+
                                                             <option value="">Seleccione</option>
+                                                            @if($EstNauticosDestino!='')
+                                                            @foreach ($EstNauticosDestino as $endestino)
+                                                                @if($solicitud->establecimiento_nautico_destino_id==$endestino->id)
+                                                                    @php
+                                                                        $selectedendestino="selected='selected'";
+                                                                    @endphp
+                                                                @else
+                                                                    @php
+                                                                        $selectedendestino='';
+                                                                    @endphp
+                                                                @endif
+                                                                <option
+                                                                    value="{{$endestino->id}}" {{$selectedendestino}} >{{$endestino->nombre}} </option>
+                                                            @endforeach
+                                                            @endif
                                                         </select>
                                                     </div>
                                                 </div>
@@ -115,15 +179,32 @@
                                                 <div class="col-md-12 py-2">
                                                     {!! Form::label('0', 'Circunscripción acuática de destino:') !!}
                                                     <div class="col-md-12 p-0 text-center"
-                                                         id="capiDestino"></div>
+                                                         id="capiDestino">
+                                                         @if($CapDestinoFinal!="")
+                                                            @php
+                                                            echo "<b>".$CapDestinoFinal->nombre."</b>";
+                                                            @endphp
+                                                         @endif       
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
                                                     <div class="form-group">
                                                         <label for="title">Latitud punto de escala:</label>
+                                                        @if($solicitud->coordenadas!='')
+                                                            @php
+                                                                $sol= json_decode($solicitud->coordenadas);
+                                                             $lat=$sol[0];
+                                                             $lon=$sol[1];
+                                                            @endphp
+                                                    @else
+                                                            @php
+                                                            $lat=''; $lon='';
+                                                            @endphp
+                                                    @endif
                                                         <input type="text" class="form-control" id="latitud"
                                                                readonly
-                                                               name="latitud" data-lat="">
+                                                               name="latitud" data-lat="{{$lat}}" value="{{$lat}}">
                                                     </div>
                                                 </div>
 
@@ -132,12 +213,21 @@
                                                         <label for="title">Longitud punto de escala:</label>
                                                         <input type="text" class="form-control"
                                                                id="longitud" readonly
-                                                               name="longitud" data-long="">
+                                                               name="longitud" data-long="{{$lon}}" value="{{$lon}}">
                                                     </div>
 
                                                 </div>
+                                                @if($solicitud->destino_capitania_id!='')
+                                                        @php
+                                                            $capDestino=$solicitud->destino_capitania_id;
+                                                        @endphp
+                                                        @else
+                                                            @php
+                                                            $capDestino='';
+                                                            @endphp
+                                                        @endif
                                                 <input type="hidden" class="form-control"
-                                                       id="capitaniaDestino" name="coordenadasDestino">
+                                                       id="capitaniaDestino" name="coordenadasDestino" value="{{$capDestino}}">
                                             </div>
                                         </div>
                                     </div>

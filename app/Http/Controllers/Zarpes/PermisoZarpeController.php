@@ -369,11 +369,19 @@ class PermisoZarpeController extends Controller
 
     public function createStepThree(Request $request)
     {
+        $solicitud= json_decode(session('solicitud'));
+        $descripcionNav=$solicitud->descripcion_navegacion_id;
+        if ($descripcionNav == 2) {
+            $CapDependencias = DependenciaFederal::selectRaw('distinct(capitania_id)')->get();
+            $capitania = Capitania::whereIn('id', $CapDependencias)->get();
+        } else {
+            $capitania = Capitania::all();
+        }
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $bandera = $solicitud['bandera'];
         $TipoZarpes = TipoZarpe::all();
-        $capitania = Capitania::all();
+        //$capitania = Capitania::all();
         $descripcionNavegacion = DescripcionNavegacion::all();
 
         $this->step = 3;
@@ -407,6 +415,14 @@ class PermisoZarpeController extends Controller
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $EstNauticos = EstablecimientoNautico::where('capitania_id', $solicitud['origen_capitania_id'])->get();
+        if($solicitud['destino_capitania_id']!=''){
+            $EstNauticosDestino = EstablecimientoNautico::where('capitania_id', $solicitud['destino_capitania_id'])->get();
+            $CapDestinoFinal=Capitania::find($solicitud['destino_capitania_id']);
+        }else{
+            $EstNauticosDestino = "";
+            $CapDestinoFinal='';
+        }
+        
         $coordenadas = [];
         $coordenadasDep = [];
         $arr = ["capitania" => 0, "coords" => []];
@@ -477,7 +493,7 @@ class PermisoZarpeController extends Controller
             }
         }
         $this->step = 4;
-        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias', json_encode($coordenadasDep))->with('activaDependencias', $activaDependencias);
+        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias', json_encode($coordenadasDep))->with('activaDependencias', $activaDependencias)->with('EstNauticosDestino', $EstNauticosDestino)->with('CapDestinoFinal', $CapDestinoFinal);
 
     }
 
@@ -792,11 +808,11 @@ class PermisoZarpeController extends Controller
     public function validarMarino(Request $request)
     {
         $cedula = $_REQUEST['cedula'];
-        $fecha = $_REQUEST['fecha'];
+       // $fecha = $_REQUEST['fecha'];
         $cap = $_REQUEST['cap'];
        
         $vj = [];
-        $newDate = date("d/m/Y", strtotime($fecha));
+        /*$newDate = date("d/m/Y", strtotime($fecha));
         $newDate2 = date("d-m-Y", strtotime($fecha));
         $newDate3 = date("Y-d-m", strtotime($fecha));
         $data = Saime_cedula::where('cedula', $cedula)
@@ -805,7 +821,7 @@ class PermisoZarpeController extends Controller
 
         if (is_null($data->first())) {
             $data2 = "saimeNotFound"; // no encontrado en saime
-        } else {
+        } else {*/
             $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
 
             $data2 = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
@@ -835,7 +851,7 @@ class PermisoZarpeController extends Controller
                 }
             }
 
-        }
+//        }
         $return = [$data2, $vj];
         echo json_encode($return);
     }
