@@ -417,7 +417,7 @@ function eliminarCoordenadasDF(id, idcoord){
                                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
                                       
                                     addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
-
+                                    pass.innerHTML+=html;
 
                                     msj.innerHTML="";
                                 }else{
@@ -749,7 +749,7 @@ msj.innerHTML='<div class="alert alert-danger">El campo cédula es requerido, po
 
                         break;
                         case 'gmarNotFound':
-                            msj.innerHTML='<div class="alert alert-danger">La cédula suministrada no pertenece a ningun marino, por favor verifique</div>' ;
+                            msj.innerHTML='<div class="alert alert-danger">La cédula suministrada no pertenece a ningún marino, por favor verifique</div>' ;
 
                         break;
                         case 'FoundButDefeated':
