@@ -11,7 +11,7 @@ function getmatricula(data1) {
               //  alert(response);
 console.log(response);
             if(response=="NoDeportivaNorecreativa"){
-                divError.innerHTML='<div class="alert alert-danger">El sistema actualmente sólo esta habilitado para notificaciones de zarpe de embarcaciones recreativas y/o deportivas, la embarcación de matricula '+data1+' no cumple con esta condición.</div>';
+                divError.innerHTML='<div class="alert alert-danger">El sistema actualmente sólo esta habilitado para notificaciones de zarpe de embarcaciones recreativas y/o deportivas, la embarcación de matrícula '+data1+' no cumple con esta condición.</div>';
                 table.style.display='none';
             }else if(response=='permisoPorCerrar'){
                // alert('permiso por cerrar');
@@ -19,7 +19,7 @@ console.log(response);
                 table.style.display='none';
 
             }else if(response=='sinCoincidenciasMatricula'){
-                divError.innerHTML='<div class="alert alert-danger"> La matricula indicada <b>'+data1+'</b> no existe en RENAVE, por favor verificar </div>';
+                divError.innerHTML='<div class="alert alert-danger"> La matrícula indicada <b>'+data1+'</b> no existe en RENAVE, por favor verificar </div>';
                 table.style.display='none';
 
             }else if(response=='sinCoincidencias'){
@@ -83,7 +83,7 @@ console.log(response);
         // This will be called on error
         .fail(function (response) {
             console.log(response);
-             divError.innerHTML='<div class="alert alert-danger"> Error en la Matricula</div>';
+             divError.innerHTML='<div class="alert alert-danger"> Error en la matrícula</div>';
             table.style.display='none';
            // alert('Error en la Matricula');
             table = document.getElementById("table-buque");

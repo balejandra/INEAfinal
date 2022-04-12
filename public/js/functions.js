@@ -237,7 +237,7 @@ divlon.innerHTML=`
 
 const divbtn=document.createElement("div");
 divbtn.classList.add("form-group", "col-sm-2");
-divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">borrar</button>`;
+divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">Borrar</button>`;
 
 divrow.appendChild(divids);
 divrow.appendChild(divlat);
@@ -295,7 +295,7 @@ divlon.innerHTML=`
 
 const divbtn=document.createElement("div");
 divbtn.classList.add("form-group", "col-sm-2");
-divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">borrar</button>`;
+divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">Borrar</button>`;
 
 divrow.appendChild(divids);
 divrow.appendChild(divlat);

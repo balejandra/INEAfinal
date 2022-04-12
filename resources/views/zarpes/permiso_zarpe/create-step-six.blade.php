@@ -26,7 +26,9 @@
                                 <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Listado</a>
 
                             </div>
-
+@php
+print_r($passengers);
+@endphp
                         </div>
                         <div class="card-body" style="min-height: 350px;">
                             @include('zarpes.permiso_zarpe.stepsIndicator')
@@ -141,7 +143,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody id="pasajeros">
-                                                    @if($passengers[0]==0)
+                                                    @if($passengers[0]==0 || $passengers[0]=="")
                                                         @php
                                                             $cant=0;
                                                         @endphp

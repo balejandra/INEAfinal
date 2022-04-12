@@ -46,15 +46,15 @@
                                         @endif
                                         <div class="form-group">
                                             <div class="container">
-                                                <h3 class="text-center">Declaracion de cumplimiento de normativas</h3>
+                                                <h3 class="text-center">Declaración de cumplimiento de normativas</h3>
 
                                                 <p class="text-justify">Por medio de la presente declaro que la presente
                                                     solicitud se hace bajo el estricto cumplimiento de las normativas
                                                     vigentes y las disposiciones previstas por las leyes
                                                     venezolanas.</p>
 
-                                                <p>Asi mismo declaro poseer en la embarcacion los siguientes equipos de
-                                                    seguridad raqueridos por la normativa vigente:</p>
+                                                <p>Así mismo declaro poseer en la embarcación los siguientes equipos de
+                                                    seguridad requeridos por la normativa vigente:</p>
                                             </div>
                                             <table class="table table-striped table-bordered" id="equipos">
                                                 <thead>
