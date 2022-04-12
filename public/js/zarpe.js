@@ -9,17 +9,24 @@ function getmatricula(data1) {
         .done(function (response) {
           
               //  alert(response);
-//console.log(response);
-            if(response=='permisoPorCerrar'){
+console.log(response);
+            if(response=="NoDeportivaNorecreativa"){
+                divError.innerHTML='<div class="alert alert-danger">El sistema actualmente sólo esta habilitado para notificaciones de zarpe de embarcaciones recreativas y/o deportivas, la embarcación de matricula '+data1+' no cumple con esta condición.</div>';
+                table.style.display='none';
+            }else if(response=='permisoPorCerrar'){
                // alert('permiso por cerrar');
                 divError.innerHTML='<div class="alert alert-danger">La embarcación de matrícula <b>'+data1+'</b> posee un permiso de zarpe que no ha sido cerrado, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
                 table.style.display='none';
 
-            }else if(response=='sinCoincidencias'){
+            }else if(response=='sinCoincidenciasMatricula'){
                 divError.innerHTML='<div class="alert alert-danger"> La matricula indicada <b>'+data1+'</b> no existe en RENAVE, por favor verificar </div>';
                 table.style.display='none';
 
-            }else if(response=='noEncontradoSgm'){
+            }else if(response=='sinCoincidencias'){
+                divError.innerHTML='<div class="alert alert-danger"> Su usuario no está autorizado para realizar solicitudes a nombre de la embarcación de matrícula '+data1+' </div>';
+                table.style.display='none';
+            }
+            else if(response=='noEncontradoSgm'){
                  divError.innerHTML='<div class="alert alert-danger">Matrícula no encontrada en BD seguridad marítima </div>';
                 table.style.display='none';
             }else{

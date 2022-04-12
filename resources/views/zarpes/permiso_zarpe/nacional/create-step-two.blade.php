@@ -57,7 +57,7 @@
                                         <div class="row gy-2 gx-3 justify-content-center">
                                             <div class="col-auto">
                                                 <div class="form-group">
-                                                    <label for="title">Matricula:</label>
+                                                    <label for="title">Matrícula:</label>
                                                                 @if($solicitud->matricula!="")
                                                                     @php
                                                                         $matricula="$solicitud->matricula";

@@ -102,7 +102,7 @@
                                                     {!! Form::label('salida', 'Fecha/hora salida:') !!}
                                                     <input type="datetime-local" id="salida" name="salida"
                                                            min="{{$fechaActual}}" class="form-control"
-                                                           onblur="compararFechas()" value="{{$fechasal}}">
+                                                           onblur="compararFechas()" max="9999-12-31T23:59" value="{{$fechasal}}">
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
@@ -127,7 +127,7 @@
                                                     <input type="datetime-local" id="llegada_escala"
                                                            name="fecha_llegada_escala"
                                                            min="{{$fechaActual}}" class="form-control"
-                                                           onblur="compararFechasEscala()" value="{{$fechaesc}}" >
+                                                           onblur="compararFechasEscala()" max="9999-12-31T23:59" value="{{$fechaesc}}" >
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
@@ -145,7 +145,7 @@
                                                     @endif
 
                                                     <input type="datetime-local" id="regreso" name="regreso"
-                                                           class="form-control" onblur="compararFechas()" value="{{$fechareg}}">
+                                                           class="form-control" max="9999-12-31T23:59" onblur="compararFechas()" value="{{$fechareg}}">
                                                 </div>
 
                                                 <div class="col-md-12 px-0">

@@ -10,7 +10,7 @@
         $lon='';
     @endphp
 @endif
- 
+  
 
 <div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}" data-coordDepencencias="{{$coordsDependencias}}" data-activarDep="{{$activaDependencias}}" data-coordSelected='' data-coordLatSel='{{$lat}}' data-coordLongSel='{{$lon}}' >
 

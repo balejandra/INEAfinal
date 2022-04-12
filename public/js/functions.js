@@ -5,7 +5,7 @@ function inputcant() {
         $("#cantidad").attr('value', 'false');
     }
 }
-
+ 
 //-------------------Tooltips----------------------------
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();

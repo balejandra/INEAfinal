@@ -166,84 +166,97 @@ class PermisoZarpeController extends Controller
     public function validationStepTwo(Request $request)
     {
         $matricula = $_REQUEST['matricula'];
-        $user = User::find(auth()->id());
 
-        $permisoZ = PermisoZarpe::select("matricula")->where('user_id', auth()->id())->where('matricula', $matricula)->whereIn('status_id', [1, 3, 5])->get();
+        $valida=explode('-',$matricula);
+        if($valida[1]!='RE' && $valida[1]!='DE'){
+            echo "NoDeportivaNorecreativa";
+        }else{
 
-        $data = Renave_data::where('matricula_actual', $matricula)->where('numero_identificacion', $user->numero_identificacion)->get();
+                $user = User::find(auth()->id());
+                $permisoZ = PermisoZarpe::select("matricula")->where('user_id', auth()->id())->where('matricula', $matricula)->whereIn('status_id', [1, 3, 5])->get();
 
-        if (is_null($data->first())) {
-            echo "sinCoincidencias";
-        } else {
-
-            if (count($permisoZ) > 0) {
-                echo 'permisoPorCerrar';
-            } else {
-
-
-                $validacionSgm = TiposCertificado::where('matricula', $matricula)->get();
-                $val1 = "LICENCIA DE NAVEGACIÓN no encontrada";
-                $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA no encontrado";
-                $val3 = "ASIGNACIÓN DE NÚMERO ISMM no encontrado";
-                $val3 = true;
-                $data2 = [
-                    "data" => $data,
-                    "validacionSgm" => [$val1, $val2, $val3],
-                ];
-
-                if (count($validacionSgm) > 0) {
-
-                    $fecha_actual = strtotime(date("d-m-Y H:i:00", time()));
-                    for ($i = 0; $i < count($validacionSgm); $i++) {
-
-                        switch ($validacionSgm[$i]->nombre_certificado) {
-                            case "LICENCIA DE NAVEGACIÓN":
-                                $fecha = $validacionSgm[$i]->fecha_vencimiento;
-                                list($dia, $mes, $ano) = explode("/", $fecha);
-                                $fecha_vence = $ano . "-" . $mes . "-" . $dia . " 00:00:00";
-                                $fecha_vence1 = strtotime($fecha_vence);
-                                if (($fecha_actual > $fecha_vence1)) {
-                                    $val1 = "LICENCIA DE NAVEGACIÓN vencida"; //encontrado pero vencido
-                                } else {
-                                    $val1 = true;
-
-                                    $valida = json_decode($request->session()->get('validacion'), true);
-                                    // dd($valida);
-                                    $valida['potencia_kw'] = $validacionSgm[$i]->potencia_kw;
-                                    $valida["cant_pasajeros"] = $validacionSgm[$i]->capacidad_personas;
-                                    $request->session()->put('validacion', json_encode($valida));
-                                }
-                                break;
-                            case "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA":
-                                $fecha = $validacionSgm[$i]->fecha_vencimiento;
-                                list($dia, $mes, $ano) = explode("/", $fecha);
-                                $fecha_vence = $ano . "-" . $mes . "-" . $dia . " 00:00:00";
-                                $fecha_vence1 = strtotime($fecha_vence);
-
-                                if (($fecha_actual > $fecha_vence1)) {
-                                    $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA vencido."; //encontrado pero vencido
-                                } else {
-                                    $val2 = true;
-                                }
-                                break;
-                            case "ASIGNACIÓN DE NÚMERO ISMM":
-                                $val3 = true;
-                                break;
-                        }
-                    }
-
-                    $data2 = [
-                        "data" => $data,
-                        "validacionSgm" => [$val1, $val2, $val3],
-                    ];
-                    echo json_encode($data2);
+                $data0 = Renave_data::where('matricula_actual', $matricula)->get();
+                $data = Renave_data::where('matricula_actual', $matricula)->where('numero_identificacion', $user->numero_identificacion)->get();
+                if(is_null($data0->first())){
+                    echo "sinCoincidenciasMatricula";
+                }else if (is_null($data->first())) {
+                    echo "sinCoincidencias";
                 } else {
-                    echo "noEncontradoSgm";
+
+                    if (count($permisoZ) > 0) {
+                        echo 'permisoPorCerrar';
+                    } else {
+
+
+                        $validacionSgm = TiposCertificado::where('matricula', $matricula)->get();
+                        $val1 = "LICENCIA DE NAVEGACIÓN no encontrada";
+                        $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA no encontrado";
+                        $val3 = "ASIGNACIÓN DE NÚMERO ISMM no encontrado";
+                        $val3 = true;
+                        $data2 = [
+                            "data" => $data,
+                            "validacionSgm" => [$val1, $val2, $val3],
+                        ];
+
+                        if (count($validacionSgm) > 0) {
+
+                            $fecha_actual = strtotime(date("d-m-Y H:i:00", time()));
+                            for ($i = 0; $i < count($validacionSgm); $i++) {
+
+                                switch ($validacionSgm[$i]->nombre_certificado) {
+                                    case "LICENCIA DE NAVEGACIÓN":
+                                        $fecha = $validacionSgm[$i]->fecha_vencimiento;
+                                        list($dia, $mes, $ano) = explode("/", $fecha);
+                                        $fecha_vence = $ano . "-" . $mes . "-" . $dia . " 00:00:00";
+                                        $fecha_vence1 = strtotime($fecha_vence);
+                                        if (($fecha_actual > $fecha_vence1)) {
+                                            $val1 = "LICENCIA DE NAVEGACIÓN vencida"; //encontrado pero vencido
+                                        } else {
+                                            $val1 = true;
+
+                                            $valida = json_decode($request->session()->get('validacion'), true);
+                                            // dd($valida);
+                                            $valida['potencia_kw'] = $validacionSgm[$i]->potencia_kw;
+                                            $valida["cant_pasajeros"] = $validacionSgm[$i]->capacidad_personas;
+                                            $request->session()->put('validacion', json_encode($valida));
+                                        }
+                                        break;
+                                    case "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA":
+                                        $fecha = $validacionSgm[$i]->fecha_vencimiento;
+                                        list($dia, $mes, $ano) = explode("/", $fecha);
+                                        $fecha_vence = $ano . "-" . $mes . "-" . $dia . " 00:00:00";
+                                        $fecha_vence1 = strtotime($fecha_vence);
+
+                                        if (($fecha_actual > $fecha_vence1)) {
+                                            $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA vencido."; //encontrado pero vencido
+                                        } else {
+                                            $val2 = true;
+                                        }
+                                        break;
+                                    case "ASIGNACIÓN DE NÚMERO ISMM":
+                                        $val3 = true;
+                                        break;
+                                }
+                            }
+
+                            $data2 = [
+                                "data" => $data,
+                                "validacionSgm" => [$val1, $val2, $val3],
+                            ];
+                            echo json_encode($data2);
+                        } else {
+                            echo "noEncontradoSgm";
+                        }
+
+                    }
                 }
 
-            }
+
         }
 
+    }
+
+    public function validarMatricula($mat){
 
     }
 
