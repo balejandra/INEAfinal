@@ -57,7 +57,7 @@
 <!-- Arqueo Bruto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('arqueo_bruto', 'Arqueo Bruto del Buque:') !!}
-    <input type="text" name="arqueo_bruto" id="arqueo_bruto" class="form-control" required onblur="ochina($('#arqueo_bruto').val())">
+    <input type="text" name="arqueo_bruto" id="arqueo_bruto" class="form-control" required>
 </div>
     <!-- Eslora Field -->
     <div class="form-group col-sm-6">
@@ -90,12 +90,15 @@
 <div class="form-group col-sm-6">
     {!! Form::label('capitania_id', 'Circunscripción Acuática de Arribo:') !!}
     <select id="capitania_id" name="capitania_id"
-            class="form-control custom-select" required>
-        <option value="0">Seleccione</option>
+            class="form-control custom-select {{ $errors->has("capitania_id")?"is-invalid":"" }}"  required>
+        <option value="">Seleccione</option>
         @foreach ($capitanias as $capitania)
             <option value="{{$capitania->id}}">{{$capitania->nombre}} </option>
         @endforeach
     </select>
+    @error('capitania_id')
+    <span class="error invalid-feedback">{{ $message }}</span>
+    @enderror
 </div>
 
 <!-- Tiempo Estadia Field -->

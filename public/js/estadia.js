@@ -1,7 +1,7 @@
 nacionalidad = document.querySelector("#nacionalidad");
     nacionalidad.innerHTML="<label for=\"nacionalidad_buque\">Nacionalidad Buque:</label>" +
-        " <select class=\"form-control\" name=\"nacionalidad_buque\" id=\"nacionalidad_buque\">\n" +
-        "<option value=\"\" id=\"AF\">Seleccione la nacionalidad</option>\n" +
+        " <select class=\"form-control\" name=\"nacionalidad_buque\" required id=\"nacionalidad_buque\">\n" +
+        "<option value=\"\" id=\"\">Seleccione la nacionalidad</option>\n" +
         "<option value=\"Afganistán\" id=\"AF\">Afganistán</option>\n" +
         "<option value=\"Albania\" id=\"AL\">Albania</option>\n" +
         "<option value=\"Alemania\" id=\"DE\">Alemania</option>\n" +
