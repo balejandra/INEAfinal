@@ -22,9 +22,9 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Consultar Solicitud Zarpe</strong>
+                            <strong>Consultar Solicitud Zarpe INTERNACIONAL</strong>
                             <div class="card-header-actions">
-                                <a href= "{{route('zarpeInternacional.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                <a href= "{{route('permisoszarpes.index')}} " class="btn btn-primary btn-sm">Listado</a>
                             </div>
                         </div>
                         <div class="card-body">

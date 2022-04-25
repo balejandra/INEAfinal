@@ -64,7 +64,7 @@
                     @can('anular-zarpeUsuario')
                         @if ($permisoZarpe->status->id==1)
                             <a class="btn btn-sm btn-danger"
-                               href="{{route('status',[$permisoZarpe->id,'anular-usuario',0])}}" data-toggle="tooltip"
+                               href="{{route('statusInt',[$permisoZarpe->id,'anular-usuario',0])}}" data-toggle="tooltip"
                                data-bs-placement="bottom" title="Anular Solicitud">
                                 <i class="fas fa-window-close"></i>
                             </a>

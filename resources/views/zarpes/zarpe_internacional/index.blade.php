@@ -18,7 +18,7 @@
              <div class="row">
                  <div class="col-lg-12">
                      <div class="card">
-                         <div class="card-header">
+                         <div class="card-header bg-zarpes text-white">
                              <i class="fas fa-ship"></i>
                              <strong>Solicitud de Permisos de Zarpe INTERNACIONAL</strong>
                              <div class="card-header-actions">

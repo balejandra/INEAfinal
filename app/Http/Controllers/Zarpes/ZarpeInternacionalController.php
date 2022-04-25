@@ -839,7 +839,7 @@ class ZarpeInternacionalController extends Controller
             ];
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de permiso de Zarpe ' . $transaccion->nro_solicitud;
-           // $email->mailZarpePDF($solicitante->email, $subject, $data, $view);
+            $email->mailZarpePDF($solicitante->email, $subject, $data, $view);
 
             Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
@@ -878,8 +878,8 @@ class ZarpeInternacionalController extends Controller
                 'mensaje'=>$mensaje
             ];
             $view = 'emails.zarpes.revision';
-            $subject = 'Solicitud de Zarpe ' . $transaccion->nro_solicitud;
-         //   $email->mailZarpe($solicitante->email, $subject, $data, $view);
+            $subject = 'Solicitud de Zarpe Internacional ' . $transaccion->nro_solicitud;
+            $email->mailZarpe($solicitante->email, $subject, $data, $view);
 
             Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
@@ -1007,7 +1007,7 @@ class ZarpeInternacionalController extends Controller
             $mensaje = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha recibido una
     nueva solicitud de permiso de zarpe en su jurisdicción que espera por su aprobación.";
             $mailTo = $capitanOrigen[0]->email;
-            $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+            $subject = 'Nueva solicitud de permiso de Zarpe Internacional ' . $solicitud->nro_solicitud;
 
             $email = new MailController();
             $data = [

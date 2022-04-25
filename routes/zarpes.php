@@ -133,6 +133,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
      Route::get('zarpeInternacional/{permisoszarpe}', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class, 'show'])->name('zarpeInternacional.show');
 
      Route::get('update/{id}/{status}/{capitania}', [\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'updateStatus'])->name('statusInt');
+     Route::get('/permisozarpeIntpdf/{id}',[\App\Http\Controllers\Zarpes\PdfGeneratorController::class,'imprimirInternacional'])->name('zarpeInternacionalpdf');
 
     /*Fin de Rutas de zarpe Internacional*/
 

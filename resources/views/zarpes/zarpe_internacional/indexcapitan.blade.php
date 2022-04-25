@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Permisos de Zarpe</li>
+                <li class="breadcrumb-item">Permisos de Zarpe INTERNACIONAL</li>
             </ol>
         </nav>
     </div>
@@ -18,9 +18,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header bg-zarpes text-white">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe</strong>
+                            <strong>Solicitud de Permisos de Zarpe INTERNACIONAL</strong>
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{ route('zarpeInternacional.createStepOne') }}">Nuevo</a>
                             </div>
@@ -102,7 +102,7 @@
                                                     @can('consultar-zarpe')
                                                         <a class="btn btn-sm btn-primary"
                                                            href=" {{route('zarpeInternacional.show',$permisoOrigenZarpe->id)}}">
-                                                            <i class="fa fa-search"></i>CC
+                                                            <i class="fa fa-search"></i>
                                                         </a>
                                                     @endcan
                                                     @if(($permisoOrigenZarpe->status->id=='1'))
@@ -125,7 +125,7 @@
                                                     @endif
 
                                                     @if (($permisoOrigenZarpe->status->id==1)||($permisoOrigenZarpe->status->id==4)||($permisoOrigenZarpe->status->id==5))
-                                                        <a class="btn btn-sm btn-dark" href="{{route('zarpepdf',$permisoOrigenZarpe->id)}}"
+                                                        <a class="btn btn-sm btn-dark" href="{{route('zarpeInternacionalpdf',$permisoOrigenZarpe->id)}}"
                                                            target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="Descargar PDF">
                                                             <i class="fas fa-file-pdf"></i>
                                                         </a>

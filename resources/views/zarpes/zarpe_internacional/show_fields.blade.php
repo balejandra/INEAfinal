@@ -153,7 +153,7 @@
 <div class="form-group col-sm-12 text-center">
     @can('aprobar-zarpe')
         @if(($permisoZarpe->status->id==3))
-            <a href="{{route('status',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}"
+            <a href="{{route('statusInt',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}"
                class="btn btn-success" title="Aprobar">
                 Aprobar
             </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -170,7 +170,7 @@
                  tabindex="-1" aria-labelledby="staticBackdropLabel"
                  aria-hidden="true">
                 <form
-                    action="{{route('status',[$permisoZarpe->id,'rechazado',$permisoZarpe->establecimiento_nautico_id])}}">
+                    action="{{route('statusInt',[$permisoZarpe->id,'rechazado',$permisoZarpe->establecimiento_nautico_id])}}">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -232,7 +232,7 @@
     @if(($permisoZarpe->status->id==1))
         @can('informar-navegacion')
             <a class="btn btn-warning"
-               href=" {{route('status',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}"
+               href=" {{route('statusInt',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}"
                data-toggle="tooltip">
                 Navegando
             </a>
@@ -241,7 +241,7 @@
     @if(($permisoZarpe->status->id==5))
         @can('anular-sar')
             <a class="btn btn-outline-danger"
-               href=" {{route('status',[$permisoZarpe->id,'anulado_sar',$permisoZarpe->establecimiento_nautico_id])}}"
+               href=" {{route('statusInt',[$permisoZarpe->id,'anulado_sar',$permisoZarpe->establecimiento_nautico_id])}}"
                data-toggle="tooltip">
                 Anular por SAR
             </a>
@@ -249,7 +249,7 @@
     @endif
         @if (($permisoZarpe->status->id==1)||($permisoZarpe->status->id==4) ||($permisoZarpe->status->id==5))
             <a class="btn btn-dark"
-               href="{{route('zarpepdf',$permisoZarpe->id)}}"
+               href="{{route('zarpeInternacionalpdf',$permisoZarpe->id)}}"
                target="_blank" data-toggle="tooltip"
                data-bs-placement="bottom"
                title="Descargar PDF">Descargar PDF

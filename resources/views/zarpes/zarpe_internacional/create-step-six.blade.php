@@ -46,8 +46,7 @@
                                         @endif
                                         <div class="row px-5" id="msj"  data-asset="{{asset('images')}}">
                                         </div>
-                                        <div class="row px-5" id="msjP6"   >
-                                        </div>
+                                         
                                         <div class="row" id="VE">
 
                                             <div class="col-md-2 p-0">

@@ -13,7 +13,7 @@ use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\Tripulante;
 use App\Models\Zarpes\EstablecimientoNautico;
 use App\Models\Zarpes\DescripcionNavegacion;
-
+use App\Models\Publico\Paise;
 
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
@@ -74,5 +74,27 @@ class PdfGeneratorController extends Controller
         $pdf=PDF::loadView('PDF.estadias.permiso', compact('estadia','capitania'))->stream();
         return $pdf;
 
+    }
+
+    public function imprimirInternacional($id){
+        $zarpe= PermisoZarpe::find($id);
+        if ($zarpe->bandera=='extranjera') {
+            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+        }else {
+            $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
+        }
+        $trans= PermisoZarpe::all();
+        $zarpe= $trans->find($id);
+        $capitania= Capitania::where('id',$zarpe->establecimiento_nautico->capitania_id)->first();
+        $cantTrip=Tripulante::where('permiso_zarpe_id',$id)->get()->count();
+        $cantPas=Pasajero::where('permiso_zarpe_id',$id)->get()->count();
+        $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->where('capitan',true)->get();
+        $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
+        $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
+        $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
+        $pais= Paise::find($zarpe->paises_id);
+        
+        $pdf=PDF::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip','estnauticoDestino','DescripcionNavegacion','pais'));
+        return $pdf->stream('zarpes.pdf');
     }
 }
