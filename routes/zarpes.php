@@ -94,4 +94,47 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::get('FindCapitania',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'FindCapitania'])->name('FindCapitania');
 
+    /*Inicio de Rutas de zarpe Internacional*/
+
+    Route::get('/zarpes/zarpeInternacional', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class, 'index'])->name('zarpeInternacional.index')->middleware('auth');
+
+    Route::get('/zarpes/zarpeInternacional/createStepOne', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'createStepOne'])->name('zarpeInternacional.createStepOne');
+
+    Route::post('zarpeInternacional/createStepOne', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'permissionCreateStepOne'])->name('zarpeInternacional.permissionCreateStepOne');
+
+    Route::get('zarpeInternacional/create-step-two', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'CreateStepTwo'])->name('zarpeInternacional.CreateStepTwo');
+
+    Route::post('zarpeInternacional/create-step-two', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'permissionCreateSteptwo'])->name('zarpeInternacional.permissionCreateSteptwo');
+
+    Route::get('zarpeInternacional/create-step-twoE', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'CreateStepTwoE'])->name('zarpeInternacional.CreateStepTwoE');
+
+    Route::post('zarpeInternacional/create-step-twoE', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'permissionCreateSteptwoE'])->name('zarpeInternacional.permissionCreateSteptwoE');
+
+    Route::get('zarpeInternacional/create-step-three', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'createStepThree'])->name('zarpeInternacional.createStepThree');
+
+    Route::post('zarpeInternacional/create-step-three', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'permissionCreateStepThree'])->name('zarpeInternacional.permissionCreateStepThree');
+
+    Route::get('zarpeInternacional/create-step-four', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'createStepFour'])->name('zarpeInternacional.createStepFour');
+
+    Route::post('zarpeInternacional/create-step-four', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'permissionCreateStepFour'])->name('zarpeInternacional.permissionCreateStepFour');
+
+    Route::get('zarpeInternacional/create-step-five', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'createStepFive'])->name('zarpeInternacional.createStepFive');
+
+    Route::post('zarpeInternacional/create-step-five', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'permissionCreateStepFive'])->name('zarpeInternacional.permissionCreateStepFive');
+
+    Route::get('zarpeInternacional/create-step-six', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'createStepSix'])->name('zarpeInternacional.createStepSix');
+
+    Route::post('zarpeInternacional/create-step-six', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'permissionCreateStepSix'])->name('zarpeInternacional.permissionCreateStepSix');
+
+    Route::get('zarpeInternacional/create-step-seven', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'createStepSeven'])->name('zarpeInternacional.createStepSeven');
+
+    Route::post('zarpeInternacional/create-step-seven', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class, 'store'])->name('zarpeInternacional.store');
+
+     Route::get('zarpeInternacional/{permisoszarpe}', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class, 'show'])->name('zarpeInternacional.show');
+
+     Route::get('update/{id}/{status}/{capitania}', [\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'updateStatus'])->name('statusInt');
+
+    /*Fin de Rutas de zarpe Internacional*/
+
+
 });

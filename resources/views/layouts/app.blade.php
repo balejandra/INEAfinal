@@ -48,6 +48,7 @@
 <script src="{{asset('assets/bootstrap/js/dist/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset('assets/DataTables/datatables.js')}}"></script>
 <script src="{{asset('js/functions.js')}}"></script>
+<script src="{{asset('js/zarpeInternacional.js')}}"></script>
 <script src="{{asset('assets/fontawesome/js/all.js')}}"></script>
 
 
