@@ -158,8 +158,17 @@ class PermisoZarpeController extends Controller
     {
 
         $this->step = 2;
+        $solicitud= json_decode(session('solicitud'));
+        $siglas=Capitania::all();
+        if($solicitud->matricula==""){
+            $matriculaActual=['','',''];
+        }else{
+            $matriculaActual=explode('-',$solicitud->matricula);
+        }
+        
 
-        return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula");
+
+        return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula")->with("siglas", $siglas)->with("matriculaActual", $matriculaActual);
 
     }
 

@@ -1,6 +1,9 @@
-function getmatricula(data1) {
+function getmatricula(siglas,destinacion,numero) {
     let divError = document.getElementById("errorMat");
     let table = document.getElementById("table-buque");
+
+    let data1=siglas+'-'+destinacion+'-'+numero;
+    console.log(data1);
     $.ajax({
         url: route('validationStepTwo'),
         data: {matricula: data1}
