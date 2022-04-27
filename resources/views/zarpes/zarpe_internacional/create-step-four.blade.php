@@ -31,7 +31,7 @@
                             <i class="fas fa-ship"></i>
                             <strong>Solicitud de Permisos de Zarpe INTERNACIONAL | Paso {{$paso}}</strong>
                             <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm" href="{{route('zarpeInternacional.index')}}">Listado</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('zarpeInternacional.index')}}">Cancelar</a>
                             </div>
                         </div>
 

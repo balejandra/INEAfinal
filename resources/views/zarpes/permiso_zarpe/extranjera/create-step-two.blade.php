@@ -24,7 +24,7 @@
                              <i class="fas fa-ship"></i>
                              <strong>Solicitud de Permisos de Zarpe</strong>
                              <div class="card-header-actions">
-                                 <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Listado</a>
+                                 <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Cancelar</a>
                              </div>
 
                          </div>

@@ -29,16 +29,16 @@
                             <strong>Solicitud de Permisos de Zarpe INTERNACIONAL</strong>
 
                             <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Listado</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('zarpeInternacional.index')}}">Cancelar</a>
                             </div>
 
                         </div>
 @php
      $solicitud= json_decode(session('solicitud'));
-
+ 
 @endphp
                         <div class="card-body" style="min-height: 350px;">
-                            @include('zarpes.zarpe_internacional.stepsIndicator')
+                            @include('zarpes.permiso_zarpe.stepsIndicator')
 
                             <form action="{{ route('zarpeInternacional.permissionCreateSteptwo') }}" method="POST">
                                 @csrf
@@ -55,24 +55,85 @@
                                         @endif
 
                                         <div class="row gy-2 gx-3 justify-content-center">
+                                             <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="title">Siglas:</label>
+
+                                                    <select id="siglas" name="siglas" class="form-control custom-select"  >
+                                                        <option value="">Seleccione</option>
+                                                        @foreach($siglas as $sigla)
+                                                            @if($matriculaActual[0] ==$sigla->sigla)
+                                                                @php
+                                                                $selectedSigla="selected='selected'";
+                                                                @endphp
+                                                            @else
+                                                                @php
+                                                                $selectedSigla='';
+                                                                @endphp
+                                                            @endif
+
+                                                            @if($sigla->sigla!='SEDE')
+                                                            <option value="{{$sigla->sigla}}" {{$selectedSigla}}  >{{$sigla->sigla}}</option>
+                                                            @endif
+                                                        @endforeach
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="title">Destinación:</label>
+
+                                                    <select id="destinacion1" name="destinación" class="form-control custom-select"  >
+
+                                                        @if($matriculaActual[1] =="RE")
+                                                                @php
+                                                                $selectedRE="selected='selected'";
+                                                                $selectedDE='';
+
+                                                                @endphp
+                                                            @elseif($matriculaActual[1] =="DE")
+                                                                @php
+                                                                    $selectedRE="";
+                                                                    $selectedDE="selected='selected'";
+                                                                @endphp
+                                                            @else
+                                                                @php
+                                                                    $selectedRE="";
+                                                                    $selectedDE="";
+                                                                @endphp
+                                                        @endif
+
+                                                        <option value="">Seleccione</option>
+                                                        <option value="RE" {{$selectedRE}} >RE</option>
+                                                        <option value="DE" {{$selectedDE}} >DE</option>
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="col-auto">
                                                 <div class="form-group">
-                                                    <label for="title">Matrícula:</label>
-                                                                @if($solicitud->matricula!="")
+                                                    <label for="title">Número:</label>
+                                                                @if($matriculaActual[2]!="")
                                                                     @php
-                                                                        $matricula="$solicitud->matricula";
+                                                                        $numero=$matriculaActual[2];
                                                                     @endphp
                                                                 @else
                                                                     @php
-                                                                        $matricula='';
+                                                                        $numero='';
                                                                     @endphp
-                                                                @endif
-                                                    <input type="text" class="form-control" id="matricula1" value="{{$matricula}}">
+                                                                @endif 
+                                                    <input type="text" class="form-control" name="número" id="numero" value="{{$numero}}" maxlength="4" onKeyDown="return soloNumeros(event)">
                                                 </div>
                                             </div>
+                                           
                                             <div class="col-auto">
                                                 <br>
-                                                <button type="button" class="btn btn-primary" onclick="getmatriculaZI($('#matricula1').val())">Verificar</button>
+                                                <button type="button" class="btn btn-primary" onclick="getmatriculaZI($('#siglas').val(),$('#destinacion1').val(),$('#numero').val())">Verificar</button>
                                             </div>
                                         </div>
                                             <br>

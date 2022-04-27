@@ -157,8 +157,15 @@ class ZarpeInternacionalController extends Controller
     {
 
         $this->step = 2;
-
-        return view('zarpes.zarpe_internacional.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula");
+        $solicitud= json_decode(session('solicitud'));
+        $siglas=Capitania::all();
+        if($solicitud->matricula==""){
+            $matriculaActual=['','',''];
+        }else{
+            $matriculaActual=explode('-',$solicitud->matricula);
+        }
+        
+        return view('zarpes.zarpe_internacional.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula")->with("siglas", $siglas)->with("matriculaActual", $matriculaActual);
 
     }
 

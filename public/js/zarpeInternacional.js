@@ -1,7 +1,14 @@
-function getmatriculaZI(data1) {
+function getmatriculaZI(siglas,destinacion,numero) {
     let divError = document.getElementById("errorMat");
     let table = document.getElementById("table-buque");
-    $.ajax({
+
+    let data1=siglas+'-'+destinacion+'-'+numero;
+       
+    if(siglas=="" || destinacion=="" || numero==""){
+         divError.innerHTML='<div class="alert alert-danger">Existen campos vacios en el formulario de verificación de matrícula, por favor verifique.</div>';
+        table.style.display='none';
+    }else{
+        $.ajax({
         url: route('validationStepTwo'),
         data: {matricula: data1}
 
@@ -93,6 +100,9 @@ console.log(response, 'ZARPE INTERNACIONAL');
             document.getElementById("destinacion").value = "";
             document.getElementById("UAB").value = "";
         });
+    }
+
+    
 
 }
 
