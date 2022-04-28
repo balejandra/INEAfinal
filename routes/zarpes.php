@@ -40,7 +40,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::match(['put', 'patch'],'permisosestadiarenovacion.store/{id}', [\App\Http\Controllers\Zarpes\PermisoEstadiaRenovacionController::class,'store'])->name('storerenovacion');
 
     //Route::resource('permisoszarpes', \App\Http\Controllers\Zarpes\PermisoZarpeController::class);
-    Route::get('update/{id}/{status}/{capitania}', [\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'updateStatus'])->name('status');
+    Route::get('updateStatus/{id}/{status}/{capitania}', [\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'updateStatus'])->name('status');
     Route::get('/permisozarpepdf/{id}',[\App\Http\Controllers\Zarpes\PdfGeneratorController::class,'imprimir'])->name('zarpepdf');
 
     Route::get('/zarpes/permisoszarpes', [App\Http\Controllers\Zarpes\PermisoZarpeController::class, 'index'])->name('permisoszarpes.index')->middleware('auth');

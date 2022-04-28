@@ -23,7 +23,7 @@
                              <strong>Solicitud de Permisos de Zarpe | Paso 3</strong>
 
                              <div class="card-header-actions">
-                                 <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Listado</a>
+                                 <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Cancelar</a>
 
                              </div>
 
