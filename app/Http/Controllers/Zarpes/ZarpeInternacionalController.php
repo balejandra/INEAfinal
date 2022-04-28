@@ -839,7 +839,7 @@ class ZarpeInternacionalController extends Controller
             ];
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de permiso de Zarpe ' . $transaccion->nro_solicitud;
-            $email->mailZarpePDF($solicitante->email, $subject, $data, $view);
+            $email->mailZarpePDFZI($solicitante->email, $subject, $data, $view);
 
             Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
