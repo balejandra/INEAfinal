@@ -83,7 +83,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('consultasaime2',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'consulta2'])->name('consultasaime2');
 
     Route::get('validarMarino',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validarMarino'])->name('validarMarino');
-
+    
     Route::get('validacionJerarquizacion',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validacionJerarquizacion'])->name('validacionJerarquizacion');
 
     Route::get('BuscaEstablecimientosNauticos',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'BuscaEstablecimientosNauticos'])->name('BuscaEstablecimientosNauticos');
@@ -93,6 +93,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::resource('equipos', \App\Http\Controllers\Zarpes\EquipoController::class);
 
     Route::get('FindCapitania',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'FindCapitania'])->name('FindCapitania');
+    
+    Route::get('deleteTripulante',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'deleteTripulante'])->name('deleteTripulante');
 
     /*Inicio de Rutas de zarpe Internacional*/
 

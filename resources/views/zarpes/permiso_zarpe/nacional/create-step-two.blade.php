@@ -55,7 +55,7 @@
                                         @endif
 
                                         <div class="row gy-2 gx-3 justify-content-center">
-                                             <div class="col-md-3">
+                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="title">Siglas:</label>
 
@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="title">Destinación:</label>
 
@@ -115,7 +115,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-auto">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="title">Número:</label>
                                                                 @if($matriculaActual[2]!="")

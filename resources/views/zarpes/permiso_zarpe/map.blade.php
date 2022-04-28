@@ -74,32 +74,6 @@ let idcapDestino=divMap.getAttribute("data-idcapdestino");
 
 
 /*FIN de seccion en el mapa para marcar cuando se regresa del paso cinco al cuatro*/
-
-/*
-var circle = L.circle(dep.coords, 25000, {
-           color: 'red',
-           fillColor: '#f03',
-           fillOpacity: 0.5,
-           capitaniaid: idcapi
-        }).addTo(mymap);
-*/
-
-
-   /* let cordXX=[[7,58],
-    [8,59],
-    [9,60],
-    [10,61],
-    [11,62],
-    [12,63],
-    [13,64],
-    [14,65],
-    [15,67],
-    [16,68],
-    [17,69],
-    [18,70],
-    [19,85]];
-
-     polygonX = L.polygon(cordXX, {color: 'red'}).addTo(mymap);*/
  
  
 //var polygon = L.polygon(CoordsCeiba, {color: 'blue', capitaniaid:13}).addTo(mymap);
@@ -111,6 +85,8 @@ var circle = L.circle(dep.coords, 25000, {
         /*Busco los input para agregar el valor seleccionado correspondiente latitud y longitud*/
         var latInput=document.getElementById('latitud'); 
         var longInput=document.getElementById('longitud'); 
+        var latText=document.getElementById('latitudText'); 
+        var longText=document.getElementById('longitudText'); 
         /*Busco el atributo data-lat y data-long que guardan la coordenada anterior para eliminar el marcador si es la segunda vez que dan click*/
         let dataLat=latInput.getAttribute("data-lat");
         let dataLong=longInput.getAttribute('data-long');
@@ -122,6 +98,8 @@ var circle = L.circle(dep.coords, 25000, {
         /*Asigno el valor del nuevo click a los input latitud y longitud*/
         latInput.value=coordenada.lat;
         	longInput.value=coordenada.lng;
+        latText.innerHTML=coordenadasGrad(coordenada.lat);
+        longText.innerHTML=coordenadasGrad(coordenada.lng);
 
         	/*coloco en los data-lat y data-long las nuevas coordenadas por si en el futuro hay que borrarlas*/
      	latInput.setAttribute('data-lat',coordenada.lat);
@@ -181,7 +159,22 @@ var circle = L.circle(dep.coords, 25000, {
     }
 
 
+    function coordenadasGrad(coordenada){
+        let gcoordenada=Math.trunc(coordenada);
+        let mcoordenada1=(coordenada-gcoordenada)*60;
+        mcoordenada1=Number.parseFloat(mcoordenada1).toFixed(4);  
+        let mcoordenada2=Math.trunc(mcoordenada1);
+        let scoordenada1=(mcoordenada1-mcoordenada2)*60; 
+        scoordenada1=Number.parseFloat(scoordenada1).toFixed(4);
+        let scoordenada2=Number.parseFloat(scoordenada1).toFixed(1);
+            scoordenada2= Math.abs(scoordenada2);
+            if(scoordenada2 < 10 ){
+                scoordenada2='0'+scoordenada2;
+            }
+        return Math.abs(gcoordenada)+'°'+Math.abs(mcoordenada2)+'\''+scoordenada2+'"';
 
+    
+    }
 
 
    // var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];

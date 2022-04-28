@@ -15,7 +15,7 @@ function getmatricula(siglas,destinacion,numero) {
         .done(function (response) {
           
               //  alert(response);
-console.log(response);
+ 
             if(response=="NoDeportivaNorecreativa"){
                 divError.innerHTML='<div class="alert alert-danger">El sistema actualmente sólo esta habilitado para notificaciones de zarpe de embarcaciones recreativas y/o deportivas, la embarcación de matrícula '+data1+' no cumple con esta condición.</div>';
                 table.style.display='none';
@@ -154,12 +154,12 @@ function getPermisoEstadia(data) {
 
             }
 
-            console.log(resp);
+            
     })
 
         // This will be called on error
     .fail(function (response) {
-            console.log(response);
+            
              divError.innerHTML='<div class="alert alert-danger"> Ha ocurrido un error durante la búsqueda de la información de la embarcación.</div>';
             table.style.display='none';
     });

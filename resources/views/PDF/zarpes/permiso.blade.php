@@ -145,14 +145,17 @@
 <body>
 
     @php
-        function coordenadasGrad($lat){
-            $glat=intval($lat);
-            $mlat1=($lat-$glat)*60;  
-            $mlat2=intval($mlat1);
-            $slat1=($mlat1-$mlat2)*60;
-            $slat2=intval($slat1);
-
-             return abs($glat).'°'.abs($mlat2).'\''.abs($slat2).'"';
+        function coordenadasGrad($coordenada){
+            $gcoordenada=intval($coordenada);
+            $mcoordenada1=number_format(($coordenada-$gcoordenada)*60, 4, '.', '');  
+            $mcoordenada2=intval($mcoordenada1);
+            $scoordenada1=number_format(($mcoordenada1-$mcoordenada2)*60, 4, '.', ''); 
+            $scoordenada2=number_format($scoordenada1,1,'.','');
+            $scoordenada2= abs($scoordenada2);
+            if($scoordenada2 < 10 ){
+                $scoordenada2='0'.$scoordenada2;
+            }
+             return abs($gcoordenada).'°'.abs($mcoordenada2).'\''.$scoordenada2.'"';
 
         }
     @endphp

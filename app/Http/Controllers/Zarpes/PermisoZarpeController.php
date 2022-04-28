@@ -566,7 +566,7 @@ class PermisoZarpeController extends Controller
 //print_r($solicitud);
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes = $request->session()->get('tripulantes');
-
+       
         $this->step = 5;
         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation);
 
@@ -597,8 +597,8 @@ class PermisoZarpeController extends Controller
 
         $tripulantes = $request->session()->get('tripulantes');
         $validation = json_decode($request->session()->get('validacion'), true);
-
-        if (isset($ctrldocumento) && count($ctrldocumento) == $validation['cant_tripulantes']) {
+       
+        if (isset($ctrldocumento) && count($ctrldocumento) == $validation['cant_pasajeros']) {
 
             for ($i = 0; $i < count($ctrldocumento); $i++) {
                 $trip["ctrl_documento_id"] = $ctrldocumento[$i];
@@ -625,7 +625,7 @@ class PermisoZarpeController extends Controller
         } else {
             $this->step = 5;
 
-            $mensj = "Los tripulantes de la embarcación son requeridos (cantidad de tripulantes " . $validation['cant_tripulantes'] . "), por favor verifique.";
+            $mensj = "Ha alcanzado la capacidad máxima de la embarcación " . $validation['cant_pasajeros'] . ", por favor verifique.";
 
             return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj);
 
@@ -637,7 +637,8 @@ class PermisoZarpeController extends Controller
 
         $passengers = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
-        $cantPasajeros = $validation['cant_pasajeros'] - $validation['cant_tripulantes'];
+        $tripulantes=$request->session()->get('tripulantes');
+        $cantPasajeros = $validation['cant_pasajeros'] - count($tripulantes);
         $this->step = 6;
         return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('cantPasajeros', $cantPasajeros);
 
@@ -809,7 +810,7 @@ class PermisoZarpeController extends Controller
 
         $newDate = date("d/m/Y", strtotime($fecha));
         $newDate2 = date("d-m-Y", strtotime($fecha));
-        $newDate3 = date("Y-d-m", strtotime($fecha));
+        $newDate3 = date("Y-m-d", strtotime($fecha));
         $data = Saime_cedula::where('cedula', $cedula)
             ->whereIn('fecha_nacimiento', [$newDate,$newDate2,$newDate3])
            // ->where('sexo', $sexo)
@@ -824,6 +825,11 @@ class PermisoZarpeController extends Controller
         }
 
         echo json_encode($data);
+    }
+
+    public function deleteTripulante(Request $request){
+        $index=$_REQUEST['index'];
+        
     }
 
 

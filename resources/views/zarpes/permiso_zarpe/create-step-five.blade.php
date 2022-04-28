@@ -28,6 +28,7 @@
                             </div>
 
                         </div>
+                     
                         <div class="card-body" style="min-height: 350px;">
 
                             @include('zarpes.permiso_zarpe.stepsIndicator')
@@ -125,7 +126,11 @@
 
                                         </div>
 
-
+                                        <div class="col-md-12 my-2">
+                                            <b>
+                                            Cantidad mínima de tripulantes: <span id="cantTripulantes">{{$validacion['cant_tripulantes']}}</span> 
+                                            </b>
+                                        </div>
                                         <div class="row px-3">
                                             <div class="table-responsive">
                                                 <table class="table" id="tableTripulantes">
@@ -136,6 +141,7 @@
                                                         <th>Nombres y Apellidos</th>
                                                         <th>fecha emisión</th>
                                                         <th>Documento</th>
+                                                        <th  class="text-center">Eliminar</th>
                                                     </tr>
                                                     </thead>
 
@@ -161,9 +167,9 @@
                                                                 $cant=count($tripulantes);
                                                             @endphp
 
-                                                            @foreach($tripulantes as $trip)
+                                                            @foreach($tripulantes as $key => $trip)
 
-                                                                <tr>
+                                                                <tr id="tr{{$key}}">
                                                                     @if($trip["capitan"]==1)
                                                                         <td>SI</td>
                                                                     @else
@@ -173,6 +179,7 @@
                                                                     <td>{{$trip["nombre"]}}</td>
                                                                     <td>{{$trip["fecha_emision"]}}</td>
                                                                     <td>{{$trip["documento"]}}</td>
+                                                                    <td class="text-center"><a href="#" onclick="eliminarTrip({{$key}})"><i class="fa fa-trash" title="Eliminar"></i></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -186,7 +193,7 @@
                                         @csrf
 
                                         <div id="dataMarinos" data-cantMar="{{$cant ?? 0}}"
-                                             data-cantMaxima="{{$validacion['cant_tripulantes']}}">
+                                             data-cantMaxima="{{$validacion['cant_pasajeros']}}" data-cantMinima="$validacion['cant_tripulantes']}}">
                                             @if(isset($cant) && $cant!=0)
                                                 @php  $count=0; @endphp
                                                 @foreach($tripulantes as $trip)

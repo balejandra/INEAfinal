@@ -189,8 +189,10 @@
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
+                                                
                                                     <div class="form-group">
                                                         <label for="title">Latitud punto de escala:</label>
+                                                        <div id="latitudText" class="font-weight-bold"></div>
                                                         @if($solicitud->coordenadas!='')
                                                             @php
                                                                 $sol= json_decode($solicitud->coordenadas);
@@ -202,19 +204,23 @@
                                                             $lat=''; $lon='';
                                                             @endphp
                                                     @endif
-                                                        <input type="text" class="form-control" id="latitud"
+                                                        <input type="hidden" class="form-control" id="latitud"
                                                                readonly
                                                                name="latitud" data-lat="{{$lat}}" value="{{$lat}}">
                                                     </div>
+                                                    
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
+                                                    
                                                     <div class="form-group">
                                                         <label for="title">Longitud punto de escala:</label>
-                                                        <input type="text" class="form-control"
+                                                        <div id="longitudText" class="font-weight-bold"></div>
+                                                        <input type="hidden" class="form-control"
                                                                id="longitud" readonly
                                                                name="longitud" data-long="{{$lon}}" value="{{$lon}}">
                                                     </div>
+                                                    
 
                                                 </div>
                                                 @if($solicitud->destino_capitania_id!='')

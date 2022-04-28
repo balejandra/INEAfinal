@@ -709,7 +709,9 @@ function getMarinos() {
 
     let tabla=document.getElementById('marinos');
     let divMarinos=document.getElementById('dataMarinos');
-    let cantMax=divMarinos.getAttribute('data-cantMaxima');
+    let cantMax=divMarinos.getAttribute('data-cantmaxima');
+    let cantMin=divMarinos.getAttribute('data-cantMinima');
+
     let cantMar=divMarinos.getAttribute('data-cantMar');
     let cap="";
     if($("#cap").is(':checked')){
@@ -718,9 +720,12 @@ function getMarinos() {
         cap="NO";
     }
 
-if(cantMar >= cantMax){
-msj.innerHTML='<div class="alert alert-danger">ha alcanzado la cantidad máxima de tripulantes para esta embarcación</div>' ;
+   
+if(parseInt(cantMar) >= parseInt(cantMax)){
+    msj.innerHTML='<div class="alert alert-danger">Ha alcanzado la capacidad máxima de la embarcación.</div>' ;
 
+}else if(cantMar < cantMin){
+msj.innerHTML='<div class="alert alert-danger">No ha alcanzado la cantidad mínima de tripulantes para esta embarcación, por favor verifique.</div>' ;
 }else{
 
 if(cedula=="" ){
@@ -826,6 +831,28 @@ msj.innerHTML='<div class="alert alert-danger">El campo cédula es requerido, po
 
 }
 
+function eliminarTrip(index){
+   // alert(index);
+    let tr=document.getElementById('tr'+index);
+    tr.remove();
+/*
+    $.ajax({
+        url: route('deleteTripulante'),
+        data: {index: index }
+
+    })// This will be called on success
+        .done(function (response) {
+            respuesta = JSON.parse(response);
+        })
+
+        // This will be called on error
+        .fail(function (response) {
+
+            
+        });
+        */
+}
+
 function validarCapitan(param){
     if(param==""){
         if($("#cap").is(':checked')){
@@ -865,7 +892,7 @@ function validarTripulante(documento, capitan) {
         // This will be called on error
         .fail(function (response) {
 
-            alert('fallo');
+            console.log('falló validación de Jerarquización');
         });
 
 }

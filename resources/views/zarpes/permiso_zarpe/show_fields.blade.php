@@ -1,3 +1,19 @@
+@php
+        function coordenadasGrad($coordenada){
+            $gcoordenada=intval($coordenada);
+            $mcoordenada1=number_format(($coordenada-$gcoordenada)*60, 4, '.', '');  
+            $mcoordenada2=intval($mcoordenada1);
+            $scoordenada1=number_format(($mcoordenada1-$mcoordenada2)*60, 4, '.', ''); 
+            $scoordenada2=number_format($scoordenada1,1,'.','');
+            $scoordenada2= abs($scoordenada2);
+            if($scoordenada2 < 10 ){
+                $scoordenada2='0'.$scoordenada2;
+            }
+             return abs($gcoordenada).'°'.abs($mcoordenada2).'\''.$scoordenada2.'"';
+
+        }
+    @endphp
+
 <strong>Detalle del Zarpe</strong>
 <div class="table-responsive">
 <table class="table">
@@ -23,7 +39,7 @@
     <tr>
         <th class="bg-light">Coordenadas (escala)</th>
         @php $coords=json_decode($permisoZarpe->coordenadas); @endphp
-        <td>Latitud: {{ $coords[0]}} <br> Longitud: {{ $coords[1]}}</td>
+        <td>Latitud: @php echo coordenadasGrad($coords[0]); @endphp   <br> Longitud: @php echo coordenadasGrad($coords[1]); @endphp  </td>
         <th class="bg-light">Destino</th>
         <td>{{ $permisoZarpe->capitania->nombre }} <br> {{$establecimientoDestino->nombre}}</td>
     </tr>

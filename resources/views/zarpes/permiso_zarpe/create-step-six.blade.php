@@ -26,9 +26,7 @@
                                 <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Cancelar</a>
 
                             </div>
-@php
-print_r($passengers);
-@endphp
+
                         </div>
                         <div class="card-body" style="min-height: 350px;">
                             @include('zarpes.permiso_zarpe.stepsIndicator')
