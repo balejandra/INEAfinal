@@ -279,8 +279,8 @@
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
             <b>
         El suscrito Capitán de Puerto valida su notificación y lo autoriza para zarpar
-        desde el lugar de procedencia, a partir del <u>{{$zarpe->fecha_hora_salida}}</u>, teniendo como punto de escala lat <u>@php echo coordenadasGrad(json_decode($zarpe->coordenadas)[0]); @endphp </u>,
-        long <u>@php echo coordenadasGrad(json_decode($zarpe->coordenadas)[1]); @endphp</u>, estimando arribar a la escala el
+        desde el lugar de procedencia, a partir del <u>{{$zarpe->fecha_hora_salida}}</u>, teniendo como punto de escala lat <u>@php echo coordenadasGrad(json_decode($zarpe->coordenadas)[0]); @endphp N</u>,
+        long <u>@php echo coordenadasGrad(json_decode($zarpe->coordenadas)[1]); @endphp W</u>, estimando arribar a la escala el
         <u>{{$zarpe->fecha_llegada_escala}}</u>,
         con destino a {{$zarpe->capitania->nombre}},
         con el propósito de efectuar navegación <u> {{ $DescripcionNavegacion->descripcion }}</u>,
@@ -291,7 +291,7 @@
             <i>
                 The undersigned Port Captain validates his notification and authorizes
                 him to set sail from the place of origin, as of <u>{{$zarpe->fecha_hora_salida}}</u>,
-                having lat <u>@php echo coordenadasGrad(json_decode($zarpe->coordenadas)[0]); @endphp </u>, long <u>@php echo coordenadasGrad(json_decode($zarpe->coordenadas)[1]); @endphp</u> as the stopover point,
+                having lat <u>@php echo coordenadasGrad(json_decode($zarpe->coordenadas)[0]); @endphp N</u>, long <u>@php echo coordenadasGrad(json_decode($zarpe->coordenadas)[1]); @endphp W</u> as the stopover point,
                 estimating to arrive at the stopover on <u>{{$zarpe->fecha_llegada_escala}}</u>,
                 bound for {{$zarpe->capitania->nombre}},
                 for the purpose of navigation <u>{{ $DescripcionNavegacion->descripcion }}</u>, estimating to arrive on the selected destination

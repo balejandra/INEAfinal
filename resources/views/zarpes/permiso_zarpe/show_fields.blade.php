@@ -14,14 +14,15 @@
         }
     @endphp
 
-<strong>Detalle del Zarpe</strong>
-<div class="table-responsive">
+
+<div class="table-responsive px-3">
+    <strong>Detalle del Zarpe</strong>
 <table class="table">
     <tbody>
     <tr>
-        <th width='25%' class="bg-light">Nro de Solicitud</th>
+        <th  class="bg-light col-md-2">Nro de Solicitud</th>
         <td>{{ $permisoZarpe->nro_solicitud }}</td>
-        <th width='25%' class="bg-light">Nombre Solicitante</th>
+        <th  class="bg-light col-md-2">Nombre Solicitante</th>
         <td>{{ $permisoZarpe->user->nombres}} {{ $permisoZarpe->user->apellidos}}</td>
     </tr>
     <tr>
@@ -38,8 +39,8 @@
     </tr>
     <tr>
         <th class="bg-light">Coordenadas (escala)</th>
-        @php $coords=json_decode($permisoZarpe->coordenadas); @endphp
-        <td>Latitud: @php echo coordenadasGrad($coords[0]); @endphp   <br> Longitud: @php echo coordenadasGrad($coords[1]); @endphp  </td>
+        @php $coords=json_decode($permisoZarpe->coordenadas); @endphp 
+        <td>Latitud: @php echo coordenadasGrad($coords[0]); @endphp N <br> Longitud: @php echo coordenadasGrad($coords[1]); @endphp W </td>
         <th class="bg-light">Destino</th>
         <td>{{ $permisoZarpe->capitania->nombre }} <br> {{$establecimientoDestino->nombre}}</td>
     </tr>
@@ -58,9 +59,11 @@
     </tbody>
 </table>
 <br>
-<strong>Tripulantes</strong>
 
-<table class="table">
+<div class="table-responsive">
+    <strong>Tripulantes</strong>
+
+    <table class="table table-bordered">
     <tbody>
     <thead>
     <th>Nombres y Apellidos</th>
@@ -79,6 +82,9 @@
         </tr>
     @endforelse
 </table>
+</div>
+
+
 <strong>Pasajeros</strong>
 
 <table class="table">

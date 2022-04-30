@@ -98,8 +98,8 @@ let idcapDestino=divMap.getAttribute("data-idcapdestino");
         /*Asigno el valor del nuevo click a los input latitud y longitud*/
         latInput.value=coordenada.lat;
         	longInput.value=coordenada.lng;
-        latText.innerHTML=coordenadasGrad(coordenada.lat);
-        longText.innerHTML=coordenadasGrad(coordenada.lng);
+        latText.innerHTML=coordenadasGrad(coordenada.lat)+"N";
+        longText.innerHTML=coordenadasGrad(coordenada.lng)+"W";
 
         	/*coloco en los data-lat y data-long las nuevas coordenadas por si en el futuro hay que borrarlas*/
      	latInput.setAttribute('data-lat',coordenada.lat);

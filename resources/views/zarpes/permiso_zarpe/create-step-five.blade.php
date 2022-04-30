@@ -40,7 +40,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         @if ($errors->any())
-                                            <div class="alert alert-danger">
+                                            <div id="ErrorsFlash" class="alert alert-danger">
                                                 <ul>
                                                     @foreach ($errors->all() as $error)
                                                         <li>{{ $error }}</li>
@@ -59,37 +59,16 @@
                                             <div class="row px-5" id="msjMarino"  data-asset="{{asset('images')}}">
 
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
 
                                                 <div class="form-group form-check form-switch ">
-                                                    <label for="title">Capitan?</label><br>
-                                                    &nbsp;
-
-
-                                                    @if(isset($tripulantes))
-                                                        @php
-
-                                                            $texto='NO'; $checked="";
-                                                        @endphp
-                                                        @if(is_int($tripulantes[0]) && $tripulantes[0]==0)
-                                                            @php
-
-                                                                $texto='SI';
-                                                                $checked="checked";
-                                                            @endphp
-                                                        @endif
-                                                    @else
-                                                        @php
-                                                            $texto='SI';
-                                                            $checked="checked";
-                                                        @endphp
-
-                                                    @endif
-
-
-                                                    <input class="form-check-input" type="checkbox" name="cap" id='cap'
-                                                           style="margin-left: auto;" {{$checked}} disabled> &nbsp;
-                                                    &nbsp; &nbsp; &nbsp; &nbsp;<label id="textoCap">{{$texto}}</label>
+                                                     <label>Función del tripulante:</label>
+                                                    <select id="funcion" name="funcion" class="form-control custom-select">
+                                                        <option value="">Seleccione</option>
+                                                        <option value="Capitán">Capitán</option>
+                                                        <option value="Motorista">Motorista</option>
+                                                        <option value="Marino">Marino</option>
+                                                    </select>
                                                 </div>
 
                                             </div>
@@ -101,25 +80,11 @@
                                                 </div>
                                             </div>
 
-                                            <!--<div class="col-md-3">
-
-                                                <div class="form-group">
-                                                    <label for="title">Fecha de nacimiento:</label>
-                                                    @php
-                                                        $ano=date('Y')-18;
-                                                        $fechamin=$ano.'-'.date('m-d');
-                                                    @endphp
-                                                    <input type="date"
-                                                           class="form-control "
-                                                           name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}"
-                                                           id="fecha_nacimiento"
-                                                           placeholder="Fecha de nacimiento" max="{{$fechamin}}">
-                                                </div>
-                                            </div>-->
+                                             
 
 
                                             <div class="col-md-3 mt-4">
-                                                <button type="button" class="btn btn-primary" onclick="getMarinos()">
+                                                <button type="button" class="btn btn-primary" onclick="validacionMarino()">
                                                     Agregar
                                                 </button>
                                             </div>
@@ -133,13 +98,14 @@
                                         </div>
                                         <div class="row px-3">
                                             <div class="table-responsive">
-                                                <table class="table" id="tableTripulantes">
+                                                <table class="table table-bordered" id="tableTripulantes">
                                                     <thead>
                                                     <tr>
-                                                        <th>Capitan</th>
+                                                        <th>Función</th>
                                                         <th>Cédula</th>
                                                         <th>Nombres y Apellidos</th>
                                                         <th>fecha emisión</th>
+                                                        <th>Tipo Doc.</th>
                                                         <th>Documento</th>
                                                         <th  class="text-center">Eliminar</th>
                                                     </tr>
@@ -150,14 +116,14 @@
                                                     @if(isset($tripulantes))
 
 
-                                                        @if(is_int($tripulantes[0]))
+                                                        @if(!is_array($tripulantes))
                                                             @php
 
                                                                 $cant=0;
 
                                                             @endphp
                                                             <tr>
-                                                                <td colspan="5" class="text-center" id="nodata">Sin
+                                                                <td colspan="7" class="text-center" id="nodata">Sin
                                                                     registros para mostrar
                                                                 </td>
                                                             </tr>
@@ -169,17 +135,14 @@
 
                                                             @foreach($tripulantes as $key => $trip)
 
-                                                                <tr id="tr{{$key}}">
-                                                                    @if($trip["capitan"]==1)
-                                                                        <td>SI</td>
-                                                                    @else
-                                                                        <td>NO</td>
-                                                                    @endif
+                                                                <tr id="trip{{$trip['cedula']}}">
+                                                                    <td>{{$trip["funcion"]}}</td>
                                                                     <td>{{$trip["cedula"]}}</td>
                                                                     <td>{{$trip["nombre"]}}</td>
                                                                     <td>{{$trip["fecha_emision"]}}</td>
+                                                                    <td>{{$trip["solicitud"]}}</td>
                                                                     <td>{{$trip["documento"]}}</td>
-                                                                    <td class="text-center"><a href="#" onclick="eliminarTrip({{$key}})"><i class="fa fa-trash" title="Eliminar"></i></td>
+                                                                    <td class="text-center"><a href="#" onclick="eliminarTrip({{$trip['cedula']}})"><i class="fa fa-trash" title="Eliminar"></i></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
