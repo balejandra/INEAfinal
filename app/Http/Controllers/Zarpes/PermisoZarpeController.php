@@ -202,6 +202,11 @@ class PermisoZarpeController extends Controller
                         $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA no encontrado";
                         $val3 = "ASIGNACIÓN DE NÚMERO ISMM no encontrado";
                         $val3 = true;
+                       
+                        $nroCorrelativos=["licenciaNavegacion" => '',
+                                            "certificadoRadio"  => '',
+                                            "numeroIsmm" => '',
+                                            ];
                         $data2 = [
                             "data" => $data,
                             "validacionSgm" => [$val1, $val2, $val3],
@@ -227,6 +232,7 @@ class PermisoZarpeController extends Controller
                                             // dd($valida);
                                             $valida['potencia_kw'] = $validacionSgm[$i]->potencia_kw;
                                             $valida["cant_pasajeros"] = $validacionSgm[$i]->capacidad_personas;
+                                            $nroCorrelativos["licenciaNavegacion"]=$validacionSgm[$i]->nro_correlativo;
                                             $request->session()->put('validacion', json_encode($valida));
                                         }
                                         break;
@@ -240,17 +246,20 @@ class PermisoZarpeController extends Controller
                                             $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA vencido."; //encontrado pero vencido
                                         } else {
                                             $val2 = true;
+                                            $nroCorrelativos["certificadoRadio"]=$validacionSgm[$i]->nro_correlativo;
                                         }
                                         break;
                                     case "ASIGNACIÓN DE NÚMERO ISMM":
                                         $val3 = true;
-                                        break;
+                                        $nroCorrelativos["numeroIsmm"]=$validacionSgm[$i]->nro_correlativo;
+
+                                    break;
                                 }
                             }
 
                             $data2 = [
                                 "data" => $data,
-                                "validacionSgm" => [$val1, $val2, $val3],
+                                "validacionSgm" => [$val1, $val2, $val3,$nroCorrelativos],
                             ];
                             echo json_encode($data2);
                         } else {
@@ -579,7 +588,7 @@ class PermisoZarpeController extends Controller
        $tripulantes = $request->session()->get('tripulantes');
         if (is_array($tripulantes) && (count($tripulantes) >= $validation['cant_tripulantes'] && count($tripulantes) <= $validation['cant_pasajeros'])) {
              $capitan=0;
-             for ($i=0; $i < count($tripulantes); $i++) { 
+            for ($i=0; $i < count($tripulantes); $i++) { 
                 $indice=array_search("Capitán",$tripulantes[$i],false);
                     
                 if($indice!=false){
@@ -814,8 +823,20 @@ class PermisoZarpeController extends Controller
     }
 
     public function deleteTripulante(Request $request){
-        $index=$_REQUEST['index'];
-        
+        $cedula=$_REQUEST['index'];
+        $borrado=false;
+        $tripulantes = $request->session()->get('tripulantes');
+        if(is_array($tripulantes)){
+            for ($i=0; $i < count($tripulantes); $i++) { 
+                $indice=array_search($cedula,$tripulantes[$i],false);
+                if($indice!=false){
+                    array_splice($tripulantes, $i, $i);
+                    $request->session()->put('tripulantes', $tripulantes);
+                    $borrado =true;
+                }
+            }
+        }
+        echo $borrado;
     }
 
     public function validacionMarino(Request $request){

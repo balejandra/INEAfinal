@@ -142,7 +142,7 @@
                                                                     <td>{{$trip["fecha_emision"]}}</td>
                                                                     <td>{{$trip["solicitud"]}}</td>
                                                                     <td>{{$trip["documento"]}}</td>
-                                                                    <td class="text-center"><a href="#" onclick="eliminarTrip({{$trip['cedula']}})"><i class="fa fa-trash" title="Eliminar"></i></td>
+                                                                    <td class="text-center"><a href="#" onclick="openModal({{$trip['cedula']}})"><i class="fa fa-trash" title="Eliminar"></i></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -201,4 +201,28 @@
             </div>
         </div>
     </div>
+
+ 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
+    role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Realmente desea eliminar al tripulante seleccionado?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button type="button" id="btnDelete" class="btn btn-primary" data-ced='' onclick="eliminarTrip()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+
 @endsection

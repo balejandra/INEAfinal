@@ -716,12 +716,12 @@ function validacionMarino(){
             respuesta=resp[0];
             validacion=resp[1];
             existe=resp[2];
-            alert(existe);
+            
             console.log(resp);
             if(existe==true){
                  msj.innerHTML='<div class="alert alert-danger">El tripulante ya se encuentra asignado a la lista, por favor verifique</div>' ;
             }else{
-                alert(resp[3]);
+                 
                  
                      switch(resp[3]){
                         case 'saimeNotFound':
@@ -750,10 +750,12 @@ function validacionMarino(){
                                 let fechaemision=respuesta[0].fecha_emision.substr(0, 10);
                                 msj.innerHTML="";
                                 let cantidad=respuesta.length;
-                                var html="<tr id='trip"+respuesta[cantidad-1].cedula+"'> <td>"+respuesta[cantidad-1].funcion+"</td><td>"+respuesta[cantidad-1].cedula+"</td> <td>"+respuesta[cantidad-1].nombre+"</td>   <td>"+fechaemision+"</td> <td>"+respuesta[cantidad-1].solicitud+"</td> <td>"+respuesta[cantidad-1].documento+"</td><td class='text-center'><a href='#' onclick='eliminarTrip("+respuesta[cantidad-1].cedula+")' ><i class='fa fa-trash' title='Eliminar'></i></td> </tr>";
+                                var html="<tr id='trip"+respuesta[cantidad-1].cedula+"'> <td>"+respuesta[cantidad-1].funcion+"</td><td>"+respuesta[cantidad-1].cedula+"</td> <td>"+respuesta[cantidad-1].nombre+"</td>   <td>"+fechaemision+"</td> <td>"+respuesta[cantidad-1].solicitud+"</td> <td>"+respuesta[cantidad-1].documento+"</td><td class='text-center'><a href='#' onclick='openModal("+respuesta[cantidad-1].cedula+")' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
                                 cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
-                                if(cantAct==0){
-                                        tabla.innerHTML="";
+                                var nodata=document.getElementById('nodata');
+                                 
+                                if(nodata!=null){
+                                    tabla.innerHTML="";
                                 }
                                 tabla.innerHTML+=html;
                                 document.getElementById('cedula').value="";
@@ -872,7 +874,7 @@ function getMarinos() {
                             validarCapitan("");
                             console.log(respuesta);
                             msj.innerHTML="";
-                            var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fechaemision+"</td> <td>"+respuesta[0].documento+"</td><td> </td> </tr>";
+                            var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fechaemision.substr(0, 10)+"</td> <td>"+respuesta[0].documento+"</td><td> </td> </tr>";
                             cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
                             if(cantAct==0){
                                 tabla.innerHTML="";
@@ -906,7 +908,7 @@ function getMarinos() {
 
             // This will be called on error
             .fail(function (response) {
-                        msj.innerHTML='<div class="alert alert-danger">No se ha encontrado la cedula o la fecha de nacimiento</div>' ;
+                msj.innerHTML='<div class="alert alert-danger">No se ha encontrado la cedula o la fecha de nacimiento</div>' ;
                         console.log(response);
 
             });
@@ -920,27 +922,56 @@ function getMarinos() {
 
 }
 
-function eliminarTrip(index){
-   // alert(index);
-    let tr=document.getElementById('tr'+index);
-    tr.remove();
-/*
+function eliminarTrip(){
+    let btn=document.getElementById('btnDelete');
+    var cedula=btn.getAttribute('data-ced');
+    let msj=document.getElementById('msjMarino');
     $.ajax({
         url: route('deleteTripulante'),
-        data: {index: index }
-
+        data: {index: cedula }
     })// This will be called on success
         .done(function (response) {
-            respuesta = JSON.parse(response);
-        })
+             
+            
+            if(response==true){
+                let tr=document.getElementById('trip'+cedula);
+                tr.remove();
+                msj.innerHTML='<div class="alert alert-success">Tripulante eliminado con éxito.</div>' ;
 
+            }else{
+                msj.innerHTML='<div class="alert alert-danger">No se ha podido eliminar el elemento del listado, actualice el navegador e intente nuevamente.</div>' ;
+            }
+            closeModal();
+        })
         // This will be called on error
         .fail(function (response) {
-
-            
+    
         });
-        */
 }
+
+
+function openModal(cedula) {
+    let btn=document.getElementById('btnDelete');
+    btn.setAttribute('data-ced', cedula);
+    document.getElementById("backdrop").style.display = "block";
+    document.getElementById("exampleModal").style.display = "block";
+    document.getElementById("exampleModal").classList.add("show");
+}
+function closeModal() {
+    document.getElementById("backdrop").style.display = "none";
+    document.getElementById("exampleModal").style.display = "none";
+    document.getElementById("exampleModal").classList.remove("show");
+}
+// Get the modal
+var modal = document.getElementById('exampleModal');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    closeModal();
+  }
+}
+
 
 function validarCapitan(param){
     if(param==""){

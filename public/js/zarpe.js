@@ -14,7 +14,7 @@ function getmatricula(siglas,destinacion,numero) {
     })// This will be called on success
         .done(function (response) {
           
-              //  alert(response);
+                console.log(response);
  
             if(response=="NoDeportivaNorecreativa"){
                 divError.innerHTML='<div class="alert alert-danger">El sistema actualmente sólo esta habilitado para notificaciones de zarpe de embarcaciones recreativas y/o deportivas, la embarcación de matrícula '+data1+' no cumple con esta condición.</div>';
@@ -65,6 +65,13 @@ function getmatricula(siglas,destinacion,numero) {
                     $("#numero_identificacion").val(numero_identificacion);
                     manga=(respuesta[0].manga);
                     $("#manga").val(manga);
+                    let licenciaNavegacion=valiacionSgm[3].licenciaNavegacion;
+                    let certificadoRadio=valiacionSgm[3].certificadoRadio;
+                    let numeroIsmm=valiacionSgm[3].numeroIsmm;
+
+                    $('#licenciaNavegacion').val(licenciaNavegacion);
+                    $('#certificadoRadio').val(certificadoRadio);
+                    $('#ismm').val(numeroIsmm);
                }else{
                     if(valiacionSgm[0]!=true){
                         divError.innerHTML='<div class="alert alert-danger"> '+valiacionSgm[0]+' </div>';
@@ -171,5 +178,4 @@ function soloNumeros(event){
         return false;
     }
 }
- 
  

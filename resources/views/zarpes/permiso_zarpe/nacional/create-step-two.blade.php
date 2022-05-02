@@ -176,6 +176,17 @@
                                                             <th class="bg-light">MANGA</th>
                                                             <td> <input type="text" name="manga" id="manga" readonly></td>
                                                         </tr>
+                                                        <tr>
+                                                            <th class="bg-light">LICENCIA DE NAVEGACIÓN</th>
+                                                            <td> <input type="text" name="licenciaNavegacion" id="licenciaNavegacion" readonly></td>
+                                                            <th class="bg-light">ASIGNACIÓN DE NÚMERO ISMM </th>
+                                                            <td> <input type="text" name="ismm" id="ismm" readonly></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="2" class="bg-light">CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA</th>
+                                                            <td colspan="2" > <input type="text" name="certificadoRadio" id="certificadoRadio" readonly></td>
+                                                             
+                                                        </tr>
                                                     </table>
                                                     </div>
 
