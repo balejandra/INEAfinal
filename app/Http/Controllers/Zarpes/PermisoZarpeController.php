@@ -201,7 +201,7 @@ class PermisoZarpeController extends Controller
                         $val1 = "LICENCIA DE NAVEGACIÓN no encontrada";
                         $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA no encontrado";
                         $val3 = "ASIGNACIÓN DE NÚMERO ISMM no encontrado";
-                        $val3 = true;
+                         
                        
                         $nroCorrelativos=["licenciaNavegacion" => '',
                                             "certificadoRadio"  => '',
@@ -481,6 +481,12 @@ class PermisoZarpeController extends Controller
                 $coordsDependencias = [];
 
                 break;
+            case 5://Hacia una dependencia federal de otra circunscripcion
+                    $coordCaps = CoordenadasCapitania::where('capitania_id', $solicitud['origen_capitania_id'])->get();
+                    $coordsDependencias = DependenciaFederal::select('latitud', 'longitud', 'capitania_id', 'dependencias_federales.id', 'dependencias_federales.nombre')->join('coordenadas_dependencias_federales', 'coordenadas_dependencias_federales.dependencias_federales_id', '=', 'dependencias_federales.id')->where('capitania_id', '!=',$solicitud['origen_capitania_id'])->get();
+    
+                    $activaDependencias = true;
+            break;
         }
 
         if (count($coordCaps) > 0) {

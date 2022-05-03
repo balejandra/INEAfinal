@@ -10,9 +10,10 @@
         $lon='';
     @endphp
 @endif
-  
 
-<div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}" data-coordDepencencias="{{$coordsDependencias}}" data-activarDep="{{$activaDependencias}}" data-coordSelected='' data-coordLatSel='{{$lat}}' data-coordLongSel='{{$lon}}' >
+ 
+
+<div id="map" style=" heigth:300px;" class="my-3 col-md-12"  data-coordCaps="{{$coordCaps}}" data-coordDepencencias="{{$coordsDependencias}}" data-activarDep="{{$activaDependencias}}" data-coordSelected='' data-coordLatSel='{{$lat}}' data-coordLongSel='{{$lon}}' data-DescripcionNav='{{$solicitud->descripcion_navegacion_id}}' data-origenCapitania='{{$solicitud->origen_capitania_id}}'>
 
 <x-maps-leaflet style='height: 400px' :centerPoint="['lat' => 10.4806, 'long' => -66.9036]"   :zoomLevel="5"></x-maps-leaflet>
 
@@ -29,7 +30,8 @@ var dependencias=divMap.getAttribute('data-coordDepencencias');
 
 
 var capitanias=document.getElementById("map").getAttribute('data-coordCaps');
-
+var capitaniaOrigen=document.getElementById("map").getAttribute('data-origenCapitania');
+var DescripcionNav=document.getElementById("map").getAttribute('data-DescripcionNav');
 
 capitanias=JSON.parse(capitanias);
 var polygon=[];
@@ -49,6 +51,9 @@ var polygon=[];
  dependencias.forEach(function(dep){
     if(activarDep==true){
         let idcapi2=dep.capitania;
+        if(DescripcionNav==5){
+            idcapi2=capitaniaOrigen;
+        }
         console.log(dep.coords[0]);
         circles[j++] = L.circle(dep.coords[0], 10000, {
            color: 'red',
@@ -214,7 +219,6 @@ function isMarkerInsidePolygon(marker, campus) {
      {
         var lat1 = marker.getLatLng().lat;
         var lon1 = marker.getLatLng().lng;
-
         rad = function(x) {return x*Math.PI/180;}
         var R = 6378.137; //Radio de la tierra en km
         var dLat = rad( lat2 - lat1 );

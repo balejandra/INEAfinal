@@ -214,11 +214,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Realmente desea eliminar al tripulante seleccionado?
+                ¿Realmente desea eliminar al tripulante (<span id='ci'></span>) seleccionado?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
-                <button type="button" id="btnDelete" class="btn btn-primary" data-ced='' onclick="eliminarTrip()">Save changes</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cerrar</button>
+                <button type="button" id="btnDelete" class="btn btn-primary" data-ced='' onclick="eliminarTrip()">Eliminar</button>
             </div>
         </div>
     </div>
