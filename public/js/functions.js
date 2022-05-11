@@ -717,7 +717,7 @@ function validacionMarino(){
             validacion=resp[1];
             existe=resp[2];
             
-            console.log(resp);
+            console.log("RespuestaMarinos:",resp);
             if(existe==true){
                  msj.innerHTML='<div class="alert alert-danger">El tripulante ya se encuentra asignado a la lista, por favor verifique</div>' ;
             }else{
@@ -740,6 +740,10 @@ function validacionMarino(){
                         break;
                         case 'FoundButMaxTripulationLimit':
                             msj.innerHTML='<div class="alert alert-danger">Ha alcanzado el máximo de personas abordo para la embarcación, no es posible agregar mas tripulantes o pasajeros.</div>' ;
+
+                        break;
+                        case 'capitanExiste':
+                            msj.innerHTML='<div class="alert alert-danger">Sólo un tripulante puede ejercer como capitán de la embarcación, por favor verifique.</div>' ;
 
                         break;
 

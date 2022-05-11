@@ -850,9 +850,20 @@ class PermisoZarpeController extends Controller
         $funcion=$_REQUEST['funcion'];
         $vj = [];
         $indice=false;
+        $tripulantes = $request->session()->get('tripulantes');
+        $capitanExiste=false;
         switch ($funcion) {
             case 'Capitán':
                  $cap="SI";
+                 if(is_array($tripulantes) && count($tripulantes)>0){
+                    foreach ($tripulantes as $value) {
+                     //   print_r($value);
+                        if($value['capitan']=='SI'){
+                           $capitanExiste=true;
+                        }
+                    }
+                 }
+                 
             break;
             case 'Motorista':
                  $cap="NO";
@@ -861,18 +872,21 @@ class PermisoZarpeController extends Controller
                  $cap="NO";
             break;
         }
- 
-        $tripulantes = $request->session()->get('tripulantes');
-        $validation = json_decode($request->session()->get('validacion'), true);
+
+
+        if($capitanExiste){
+            $return = [$tripulantes, "", "",'capitanExiste',""];
+            echo json_encode($return);
+        }else{
+            $validation = json_decode($request->session()->get('validacion'), true);
         $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
          $InfoMarino = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
- 
-         
+
        //  $request->session()->put('tripulantes', '');
         if (is_null($InfoMarino->first())) {
             $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
         } else {
-
+            $emision=explode(' ',$InfoMarino[0]->fecha_emision);
             $trip = [
             "permiso_zarpe_id" => '',
             "ctrl_documento_id" => $InfoMarino[0]->id,
@@ -880,7 +894,7 @@ class PermisoZarpeController extends Controller
             "nombre" => $InfoMarino[0]->nombre." ".$InfoMarino[0]->apellido,
             "cedula" => $InfoMarino[0]->ci,
             "fecha_vencimiento" => $InfoMarino[0]->fecha_vencimiento,
-            "fecha_emision" => $InfoMarino[0]->fecha_emision,
+            "fecha_emision" =>$emision[0],
             "documento" => $InfoMarino[0]->documento,
             "funcion"  => $funcion,
             "solicitud"  => $InfoMarino[0]->solicitud,
@@ -933,7 +947,8 @@ class PermisoZarpeController extends Controller
         }
         $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros']];
         echo json_encode($return);
-       
+        }
+ 
     }
 
     public function validarMarino(Request $request)

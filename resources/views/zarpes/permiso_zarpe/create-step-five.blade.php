@@ -139,7 +139,11 @@
                                                                     <td>{{$trip["funcion"]}}</td>
                                                                     <td>{{$trip["cedula"]}}</td>
                                                                     <td>{{$trip["nombre"]}}</td>
-                                                                    <td>{{$trip["fecha_emision"]}}</td>
+                                                                    @php
+                                                                        list($ano, $mes, $dia)=explode('-', $trip["fecha_emision"]);
+                                                                        $emision=$dia."-".$mes."-".$ano;
+                                                                    @endphp
+                                                                    <td>{{$emision}}</td>
                                                                     <td>{{$trip["solicitud"]}}</td>
                                                                     <td>{{$trip["documento"]}}</td>
                                                                     <td class="text-center"><a href="#" onclick="openModal({{$trip['cedula']}})"><i class="fa fa-trash" title="Eliminar"></i></td>
