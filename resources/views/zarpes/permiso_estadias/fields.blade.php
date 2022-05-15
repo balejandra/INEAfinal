@@ -46,28 +46,28 @@
 <!-- Eslora Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('cant_tripulantes', 'Cantidad de Tripulantes:') !!}
-    {!! Form::number('cant_tripulantes', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::number('cant_tripulantes', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
 </div>
 
     <div class="form-group col-sm-6">
         {!! Form::label('cant_pasajeros', 'Cantidad máxima  de personas a bordo:') !!}
-        {!! Form::number('cant_pasajeros', null, ['class' => 'form-control', 'required']) !!}
+        {!! Form::number('cant_pasajeros', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
     </div>
 
 <!-- Arqueo Bruto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('arqueo_bruto', 'Arqueo Bruto del Buque:') !!}
-    <input type="text" name="arqueo_bruto" id="arqueo_bruto" class="form-control" required>
+    {!! Form::number('arqueo_bruto', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
 </div>
     <!-- Eslora Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('eslora', 'Eslora:') !!}
-        {!! Form::text('eslora', null, ['class' => 'form-control', 'required']) !!}
+        {!! Form::text('eslora', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
     </div>
 
     <div class="form-group col-sm-6">
         {!! Form::label('potencia_kw', 'Potencia KW:') !!}
-        {!! Form::text('potencia_kw', null, ['class' => 'form-control', 'required']) !!}
+        {!! Form::text('potencia_kw', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
     </div>
 <!-- Actividades Field -->
 <div class="form-group col-sm-6">

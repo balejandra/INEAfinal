@@ -5,10 +5,11 @@ function inputcant() {
         $("#cantidad").attr('value', 'false');
     }
 }
- 
+
 //-------------------Tooltips----------------------------
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
+    $(".CHALECOS").prop('required', true);
 });
 
 function motivoRechazo() {
@@ -28,185 +29,6 @@ function motivoRechazo() {
         document.querySelector('#motivo2').required = false;
     }
 }
-//-------------------Datatables----------------------------
-
-
-$(document).ready(function() {
-    $('#TableRoles').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-
-    $('#permisoZarpes-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-
-    $('#TablePermissions').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        ordering: false,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
-
-    });
-
-    $('#permisoZarpesdestino-table').DataTable({
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );
-
-$(document).ready(function() {
-    $('#TableMenus').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );
-
-$(document).ready(function() {
-    $('#dependenciaFederals-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );
-
-
-
-
-$(document).ready(function() {
-    $('#users-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );
-
-$(document).ready(function() {
-    $('#capitanias-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );
-
-$(document).ready(function() {
-    $('#auditables-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );
-
-
-$(document).ready(function() {
-    $('#equipos').DataTable({
-        responsive: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-    });
-} );
-
-
-
-$(document).ready(function() {
-    $('#menusroles-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-    $('#permisoEstadias-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );
-
-
-$(document).ready(function() {
-    $('#generic-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );
-
 
 //-------------------------------------------------------------------------------
 
@@ -340,7 +162,7 @@ function eliminarCoordenadasDF(id, idcoord){
     const asset=msj.getAttribute('data-asset');
 
     msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con resgitros existentes en SAIME, por favor espere...</div>";
-   
+
     var div=document.getElementById("dataPassengers");
     cantAct=parseInt(div.getAttribute("data-cant"));
 
@@ -415,7 +237,7 @@ function eliminarCoordenadasDF(id, idcoord){
                                     $('#apellidos').val(apellidos);
 
                                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                                      
+
                                     addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
                                     pass.innerHTML+=html;
 
@@ -517,7 +339,7 @@ $('#menor').click(function() {
             option.textContent="No cedulado";
             select.appendChild(option);
         }
-        
+
 
         str =$( "select option:selected" ).val();
         let date = new Date();
@@ -624,8 +446,8 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
         var pass=document.getElementById('pasajeros');
         if(tipodoc!='V'){
             pass.innerHTML+=html;
-        }   
-        
+        }
+
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));
         let contenedor= document.createElement("div");
@@ -716,13 +538,13 @@ function validacionMarino(){
             respuesta=resp[0];
             validacion=resp[1];
             existe=resp[2];
-            
+
             console.log(resp);
             if(existe==true){
                  msj.innerHTML='<div class="alert alert-danger">El tripulante ya se encuentra asignado a la lista, por favor verifique</div>' ;
             }else{
-                 
-                 
+
+
                      switch(resp[3]){
                         case 'saimeNotFound':
                             msj.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias con los datos suministrados, por favor verifique</div>' ;
@@ -744,7 +566,7 @@ function validacionMarino(){
                         break;
 
                         default:
-                            
+
                             if(validacion[0] ==true){ //verifico si está autorizado para navegar en la envarcación
                                 let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
                                 let fechaemision=respuesta[0].fecha_emision.substr(0, 10);
@@ -753,14 +575,14 @@ function validacionMarino(){
                                 var html="<tr id='trip"+respuesta[cantidad-1].cedula+"'> <td>"+respuesta[cantidad-1].funcion+"</td><td>"+respuesta[cantidad-1].cedula+"</td> <td>"+respuesta[cantidad-1].nombre+"</td>   <td>"+fechaemision+"</td> <td>"+respuesta[cantidad-1].solicitud+"</td> <td>"+respuesta[cantidad-1].documento+"</td><td class='text-center'><a href='#' onclick='openModal("+respuesta[cantidad-1].cedula+")' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
                                 cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
                                 var nodata=document.getElementById('nodata');
-                                 
+
                                 if(nodata!=null){
                                     tabla.innerHTML="";
                                 }
                                 tabla.innerHTML+=html;
                                 document.getElementById('cedula').value="";
-                                    
-                               
+
+
                                 msj.innerHTML="";
                             }else{
 
@@ -775,16 +597,16 @@ function validacionMarino(){
                         break;
                     }
 
-                 
+
             }
 
         }).fail(function (response) {
-             
+
             console.log(response);
         });
     }
 
-    
+
 
 }
 
@@ -811,7 +633,7 @@ function getMarinos() {
         cap="NO";
     }
 
-   
+
         if(parseInt(cantMar) >= parseInt(cantMax)){
             msj.innerHTML='<div class="alert alert-danger">Ha alcanzado la capacidad máxima de la embarcación.</div>' ;
 
@@ -931,8 +753,8 @@ function eliminarTrip(){
         data: {index: cedula }
     })// This will be called on success
         .done(function (response) {
-             
-            
+
+
             if(response==true){
                 let tr=document.getElementById('trip'+cedula);
                 tr.remove();
@@ -945,7 +767,7 @@ function eliminarTrip(){
         })
         // This will be called on error
         .fail(function (response) {
-    
+
         });
 }
 
@@ -1096,42 +918,6 @@ $('#cap').click(function() {
 });
 
 
-$('.equipo').click(function() {
-
-    let id=$(this).val();
-
-    if($("#equipo").is(':checked')){
-        document.getElementById(id+"selected").value="true";
-        let cantidad=$(this).attr("data-cant");
-        let otros=$(this).attr("data-otrs");
-
-        if(cantidad==true){
-        document.getElementById(id+"cantidad").setAttribute("required",true);
-        }
-        if(otros!="ninguno"){
-        document.getElementById(id+"valores_otros").setAttribute("required",true);
-
-        }
-
-
-    }
-    else{
-        document.getElementById(id+"selected").value="false";
-
-        let cantidad=$(this).attr("data-cant");
-        let otros=$(this).attr("data-otrs");
-
-
-        if(cantidad==true){
-        document.getElementById(id+"cantidad").removeAttribute("required");
-        }
-
-        if(otros!="ninguno"){
-        document.getElementById(id+"valores_otros").removeAttribute("required");
-        }
-    }
-
-});
 
 
 /*FIN validacion paso cinco marinos*/
@@ -1155,6 +941,42 @@ function compararFechas(){
     compararFechasEscala();
 }
 
+function equipocheck(id,cantidad,otros){
+
+   // let id=$(this).val();
+//alert(id)
+    check = document.getElementById(id);
+    if(check.checked){
+        document.getElementById(id+"selected").value="true";
+        if(cantidad==true){
+            can1=document.getElementById("div_cant"+id);
+            can1.style.display='block';
+            document.getElementById(id+"cantidad").setAttribute("required",true);
+
+        }
+        if(otros!=='ninguno'){
+            document.getElementById(id+"valores_otros").setAttribute("required",true);
+            otros1=document.getElementById("valores_otros"+id);
+            otros1.style.display='block';
+        }
+
+    }
+    else{
+        document.getElementById(id+"selected").value="false";
+        if(cantidad==true){
+            document.getElementById(id+"cantidad").removeAttribute("required");
+            cant=document.getElementById("div_cant"+id);
+            cant.style.display='none';
+        }
+
+        if(otros!=='ninguno'){
+            document.getElementById(id+"valores_otros").removeAttribute("required");
+            otros=document.getElementById("valores_otros"+id);
+            otros.style.display='none';
+        }
+    }
+
+}
 
 function compararFechasEscala(){
     var salida =document.getElementById('salida').value;
@@ -1312,6 +1134,13 @@ function modalrechazarzarpe(id,solicitud) {
     frm1.setAttribute('action',  route('status', {id:id,status:'rechazado', capitania: 0}));
 }
 
+function modalanularzarpe(id,solicitud) {
+    var soli = document.getElementById('nrosolicitud');
+    soli.textContent = solicitud
+    let frm1 = document.getElementById('anular-zarpe');
+    frm1.setAttribute('action',  route('status', {id:id,status:'anular-usuario', capitania: 0}));
+}
+
 function cambiar() {
     password1=document.getElementById('password-div')
     if($("#password_change").is(':checked')){
@@ -1320,3 +1149,80 @@ function cambiar() {
         password1.style.display='none';
     }
 }
+
+$(document).ready(function() {
+
+    $('.confirmation').on('click', function(event) {
+        event.preventDefault();
+        var button = $(this);
+        accion=button.data('action');
+
+        bootbox.confirm({
+            title: "Confirmación",
+            message: "Esta seguro que desea "+accion+" este documento?",
+            centerVertical:true,
+            animate:true,
+            buttons: {
+                confirm: {
+                    label: 'Si',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    window.location=button.data('route')
+                }
+            }
+        });
+    })
+
+        $('.modal-form').on('submit', function(e) {
+            e.preventDefault();
+
+            let form1 = e.target;
+            var data = $(this).parent().find('.btn-primary').attr('data-action');
+
+            bootbox.confirm({
+                title: "Confirmacion",
+                message: "Estas seguro que desea "+data+ " este documento ",
+                centerVertical:true,
+                animate:true,
+                buttons: {
+                    confirm: {
+                        label: 'Si',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result1) {
+                    if(result1) {
+                        form1.submit();
+                    }
+                },
+            });
+
+
+        })
+    });
+
+
+$(document).ready(function() {
+    $("#solicitud").on("click", function() {
+        var condiciones = $("#option1").is(":checked");
+        if (!condiciones) {
+            bootbox.alert({
+                message: "Debe Aceptar las Condiciones!",
+                size: 'small',
+                centerVertical:true,
+                animate:true,
+            });
+        }
+    });
+});

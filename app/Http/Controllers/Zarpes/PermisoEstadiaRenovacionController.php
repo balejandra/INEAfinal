@@ -219,14 +219,14 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecapitan->name)
+            ->where('cargo', $rolecapitan->id)
             ->get();
 
 
         $coordinador = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecoordinador->name)
+            ->where('cargo', $rolecoordinador->id)
             ->get();
         //  dd($coordinador);
 

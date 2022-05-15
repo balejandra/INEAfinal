@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\Zarpes;
+namespace App\Repositories\Publico;
 
-use App\Models\Zarpes\CapitaniaUser;
+use App\Models\Publico\CapitaniaUser;
 use App\Repositories\BaseRepository;
 
 /**

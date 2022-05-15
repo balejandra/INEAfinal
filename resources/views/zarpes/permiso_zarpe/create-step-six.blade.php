@@ -128,16 +128,15 @@
                                                 </span>
                                             </div>
 
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered">
+                                                <table id="table-scroll" class="table table-bordered" style="width:100%">
                                                     <thead>
                                                     <tr>
-                                                        <th width="18%">Cédula</th>
+                                                        <th>Cédula</th>
                                                         <th>Nombres</th>
                                                         <th>Apellidos</th>
-                                                        <th width="5%">sexo</th>
+                                                        <th>sexo</th>
                                                         <th>Fecha nac.</th>
-                                                        <th width="5%">Menor</th>
+                                                        <th>Menor</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody id="pasajeros">
@@ -145,11 +144,6 @@
                                                         @php
                                                             $cant=0;
                                                         @endphp
-                                                        <tr>
-                                                            <td colspan="6" class="text-center">
-                                                                Sin registros para mostrar
-                                                            </td>
-                                                        </tr>
                                                     @else
                                                         @php
                                                             $cant=count($passengers);
@@ -172,7 +166,6 @@
                                                     @endif
                                                     </tbody>
                                                 </table>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

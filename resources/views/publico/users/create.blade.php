@@ -58,19 +58,6 @@
 
                                         {!! Form::select('roles', $roles, null, ['class' => 'roles form-control custom-select','placeholder' => 'Puede asignar un Rol...','onchange="requeridos(); EstablecimientoUser();"','required']) !!}
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        {!! Form::label('capitania_id', 'Capitania Asignada:') !!}
-                                        {!! Form::select('capitanias', $capitanias, null, ['id'=>'capitanias','class' => ' form-control custom-select','placeholder' => 'Puede asignar una capitania...','onchange="EstablecimientoUser();"']) !!}
-                                    </div>
-
-                                    <div class="form-group col-sm-6">
-                                        {!! Form::label('0', 'Establecimiento náutico asignado:') !!}
-
-                                        <select id="establecimientos" name="establecimientos" title="" class="form-control custom-select">
-                                            <option value="">Puede asignar un Establecimiento...</option>
-
-                                        </select>
-                                    </div>
                                     <!-- Submit Field -->
                                     <div class="form-group col-sm-12">
                                         {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
