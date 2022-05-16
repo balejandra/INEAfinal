@@ -145,6 +145,11 @@ Route::middleware(['auth' , 'verified'])->group(function () {
      Route::get('update/{id}/{status}/{capitania}', [\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'updateStatus'])->name('statusInt');
      Route::get('/permisozarpeIntpdf/{id}',[\App\Http\Controllers\Zarpes\PdfGeneratorController::class,'imprimirInternacional'])->name('zarpeInternacionalpdf');
 
+     Route::get('validacionMarinoZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'validacionMarinoZI'])->name('validacionMarinoZI');
+
+     Route::get('marinoExtranjeroZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'marinoExtranjeroZI'])->name('marinoExtranjeroZI');
+
+     Route::get('deleteTripulanteZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'deleteTripulanteZI'])->name('deleteTripulanteZI');
     /*Fin de Rutas de zarpe Internacional*/
 
 

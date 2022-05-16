@@ -14,7 +14,7 @@ use App\Models\Zarpes\EstablecimientoNauticoUser;
 use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\Status;
 use App\Models\Zarpes\TablaMando;
-use App\Models\Zarpes\Tripulante;
+use App\Models\Zarpes\TripulanteInternacionals;
 use App\Models\Zarpes\Pasajero;
 use App\Models\Zarpes\TipoZarpe;
 use App\Models\Zarpes\EquipoPermisoZarpe;
@@ -82,10 +82,11 @@ class ZarpeInternacionalController extends Controller
         $request->session()->put('stepName', "Matrícula");
         $request->session()->put('matriculasPermisadas', ['']);
 
-        $request->session()->put('pasajeros', ['']);
-        $request->session()->put('tripulantes', [0]);
+        $request->session()->put('pasajeros',  '');
+        $request->session()->put('tripulantes', '');
         $request->session()->put('validacion', '');
         $request->session()->put('validacionesSgm', '');
+        $request->session()->put('coordGadriales', '');
 
         $solicitud = json_encode([
             "user_id" => auth()->id(),
@@ -108,6 +109,7 @@ class ZarpeInternacionalController extends Controller
             "UAB" => '',
             "cant_tripulantes" => 0,
             "cant_pasajeros" => 0,
+            "cantPassAbordo"=> 0,
             "potencia_kw" => '',
             "cargos" => [
                 "cargo_desempena" => '',
@@ -198,7 +200,10 @@ class ZarpeInternacionalController extends Controller
                         $val1 = "LICENCIA DE NAVEGACIÓN no encontrada";
                         $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA no encontrado";
                         $val3 = "ASIGNACIÓN DE NÚMERO ISMM no encontrado";
-                        $val3 = true;
+                        $nroCorrelativos=["licenciaNavegacion" => '',
+                                            "certificadoRadio"  => '',
+                                            "numeroIsmm" => '',
+                                            ];
                         $data2 = [
                             "data" => $data,
                             "validacionSgm" => [$val1, $val2, $val3],
@@ -224,6 +229,7 @@ class ZarpeInternacionalController extends Controller
                                             // dd($valida);
                                             $valida['potencia_kw'] = $validacionSgm[$i]->potencia_kw;
                                             $valida["cant_pasajeros"] = $validacionSgm[$i]->capacidad_personas;
+                                            $nroCorrelativos["licenciaNavegacion"]=$validacionSgm[$i]->nro_correlativo;
                                             $request->session()->put('validacion', json_encode($valida));
                                         }
                                         break;
@@ -237,17 +243,19 @@ class ZarpeInternacionalController extends Controller
                                             $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA vencido."; //encontrado pero vencido
                                         } else {
                                             $val2 = true;
+                                            $nroCorrelativos["certificadoRadio"]=$validacionSgm[$i]->nro_correlativo;
                                         }
                                         break;
                                     case "ASIGNACIÓN DE NÚMERO ISMM":
                                         $val3 = true;
+                                         $nroCorrelativos["numeroIsmm"]=$validacionSgm[$i]->nro_correlativo;
                                         break;
                                 }
                             }
 
                             $data2 = [
                                 "data" => $data,
-                                "validacionSgm" => [$val1, $val2, $val3],
+                                "validacionSgm" => [$val1, $val2, $val3,$nroCorrelativos],
                             ];
                             echo json_encode($data2);
                         } else {
@@ -475,14 +483,14 @@ class ZarpeInternacionalController extends Controller
 
         $request->session()->put('tripulantes', [0]);
         $trip = [
-            "zarpe_internacional_id" => '',
-            "ctrl_documento_id" => '',
-            "capitan" => '',
-            "nombre" => '',
-            "cedula" => '',
-            "fecha_vencimiento" => '',
-            "fecha_emision" => '',
-            "documento" => ''
+            "permiso_zarpes_id" => '',
+            "nombres" => '',
+            "apellidos" => '',
+            "tipo_doc" => '',
+            "nro_doc" => '',
+            "rango" => '',
+            "funcion" => '',
+            "doc" => ''
         ];
         $ctrldocumento = $request->input('ids', []);
         $cap = $request->input('capitan', []);
@@ -775,6 +783,237 @@ class ZarpeInternacionalController extends Controller
 //        }
         $return = [$data2, $vj];
         echo json_encode($return);
+    }
+
+     public function validacionMarinoZI(Request $request){
+        $cedula=$_REQUEST['nrodoc'];
+        $funcion=$_REQUEST['funcion'];
+        $doc=$_REQUEST['doc'];
+
+        $vj = [];
+        $indice=false;
+        $tripulantes = $request->session()->get('tripulantes');
+        $capitanExiste=false;
+         dd($tripulantes);
+        switch ($funcion) {
+            case 'Capitán':
+                 $cap="SI";
+                 if(is_array($tripulantes) && count($tripulantes)>0){
+                    foreach ($tripulantes as $value) {
+                        print_r($value);
+                        if($value['capitan']=='SI'){
+                           $capitanExiste=true;
+                        }
+                    }
+                 }
+                 
+            break;
+            case 'Motorista':
+                 $cap="NO";
+            break;
+            case 'Marino':
+                 $cap="NO";
+            break;
+        }
+
+
+        if($capitanExiste){
+            $return = [$tripulantes, "", "",'capitanExiste',""];
+            echo json_encode($return);
+        }else{
+            $validation = json_decode($request->session()->get('validacion'), true);
+        $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
+         $InfoMarino = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
+
+       //  $request->session()->put('tripulantes', '');
+        if (is_null($InfoMarino->first())) {
+            $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
+        } else {
+            $emision=explode(' ',$InfoMarino[0]->fecha_emision);
+            /*$trip = [
+            "permiso_zarpe_id" => '',
+            "ctrl_documento_id" => $InfoMarino[0]->id,
+            "capitan" => $cap,
+            "nombre" => $InfoMarino[0]->nombre." ".$InfoMarino[0]->apellido,
+            "cedula" => $InfoMarino[0]->ci,
+            "fecha_vencimiento" => $InfoMarino[0]->fecha_vencimiento,
+            "fecha_emision" =>$emision[0],
+            "documento" => $InfoMarino[0]->documento,
+            "funcion"  => $funcion,
+            "solicitud"  => $InfoMarino[0]->solicitud,
+            ];*/
+
+            $trip=[
+                "permiso_zarpe_id" => '',
+                "nombres" => $InfoMarino[0]->nombre,
+                "apellidos" =>  $InfoMarino[0]->apellido,
+                "tipo_doc" => 'V',
+                "nro_doc" => $InfoMarino[0]->ci,
+                "funcion" => $funcion,
+                "rango" =>$InfoMarino[0]->documento,
+                "doc" => $doc,
+                 
+            ];
+
+            if(is_array($tripulantes)){
+                for ($i=0; $i < count($tripulantes); $i++) {
+                     $indice=array_search($cedula,$tripulantes[$i],false);
+
+                        if($indice!=false){
+                            $indice=true;
+                        }
+                }
+
+            }else{
+                $indice=false;
+                $tripulantes=[];
+            }
+
+            $fecha_actual = strtotime(date("d-m-Y H:i:00", time()));
+            $fecha_vence = strtotime($InfoMarino[0]->fecha_vencimiento);
+
+            if ($InfoMarino[0]->solicitud == 'Licencia' && ($fecha_actual > $fecha_vence)) {
+                    $InfoMarino = "FoundButDefeated"; //encontrado pero documento vencido
+                } else {
+
+                    $marinoAsignado = PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id')
+                        ->Join('tripulantes', 'permiso_zarpes.id', '=', 'tripulantes.permiso_zarpe_id')
+                        ->where('tripulantes.ctrl_documento_id', '=', $InfoMarino[0]->id)
+                        ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
+                        ->get();
+
+                    if (count($marinoAsignado) > 0) {
+                        $InfoMarino = "FoundButAssigned"; //encontrado pero asignado a otro barco
+                    } else {
+                        $vj = $this->validacionJerarquizacion($InfoMarino[0]->documento, $cap);
+
+                        if($indice==false && $vj[0]==true){
+                            if(count($tripulantes) <= $validation['cant_pasajeros']-1){
+                                array_push($tripulantes, $trip);
+                                $request->session()->put('tripulantes', $tripulantes);
+                            }else{
+                                $InfoMarino = "FoundButMaxTripulationLimit";
+                            }
+
+                        }
+
+                    }
+                }
+        }
+        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros']];
+        echo json_encode($return);
+        }
+ 
+    }
+
+
+    public function marinoExtranjeroZI(Request $request){
+        $cedula=$_REQUEST['nrodoc'];
+        $funcion=$_REQUEST['funcion'];
+        $vj = [];
+        $indice=false;
+        $tripulantes = $request->session()->get('tripulantes');
+        $validation = json_decode($request->session()->get('validacion'), true);
+        $capitanExiste=false;
+        switch ($funcion) {
+            case 'Capitán':
+                 $cap="SI";
+                 if(is_array($tripulantes) && count($tripulantes)>0){
+                    foreach ($tripulantes as $value) {
+                     //   print_r($value);
+                        if($value['funcion']=='Capitán'){
+                           $capitanExiste=true;
+                        }
+                    }
+                 }
+                 
+            break;
+            case 'Motorista':
+                 $cap="NO";
+            break;
+            case 'Marino':
+                 $cap="NO";
+            break;
+        }
+
+        if($capitanExiste){
+            $return = [$tripulantes, "", "",'capitanExiste',""];
+            echo json_encode($return);
+        }else{
+
+            $nrodoc=$_REQUEST['nrodoc'];
+            $tipodoc=$_REQUEST['tipodoc'];
+            $nombres=$_REQUEST['nombres'];
+            $apellidos=$_REQUEST['apellidos'];
+            $funcion=$_REQUEST['funcion'];
+            $rango=$_REQUEST['rango'];
+            $doc=$_REQUEST['doc'];
+
+                $trip=[
+                "permiso_zarpe_id" => '',
+                "nombres" =>$nombres,
+                "apellidos" =>$apellidos,
+                "tipo_doc" => 'P',
+                "nro_doc" =>  $nrodoc,
+                "funcion" => $funcion,
+                "rango" =>$rango,
+                "doc" => $doc,
+                 
+                ];
+
+            $tripExiste=false;
+
+            if(is_array($tripulantes)){
+                foreach ($tripulantes as $value) {
+                    
+                    if($value['nro_doc']==$nrodoc){
+                       $tripExiste=true;
+                    }
+                }
+                if ($tripExiste) {
+                    $InfoMarino = "TripulanteExiste";
+                }else{
+                        if(count($tripulantes) <= $validation['cant_pasajeros']-1){
+                            array_push($tripulantes, $trip);
+                            $request->session()->put('tripulantes', $tripulantes);
+                             $InfoMarino = "OK";
+                        }else{
+                            $InfoMarino = "FoundButMaxTripulationLimit";
+                        }
+
+                }
+                
+            }else{
+                $tripulantes=[];
+                array_push($tripulantes, $trip);
+                $request->session()->put('tripulantes', $tripulantes);
+                 $InfoMarino = "OK";
+            }
+            
+
+             $return = [$tripulantes, '', '',$InfoMarino, $validation['cant_pasajeros']];
+            echo json_encode($return);
+
+        }
+
+
+    }
+
+    public function deleteTripulanteZI(Request $request){
+        $cedula=$_REQUEST['index'];
+        $borrado=false;
+        $tripulantes = $request->session()->get('tripulantes');
+        if(is_array($tripulantes)){
+            for ($i=0; $i < count($tripulantes); $i++) {
+                $indice=array_search($cedula,$tripulantes[$i],false);
+                if($indice!=false){
+                    array_splice($tripulantes, $i, $i);
+                    $request->session()->put('tripulantes', $tripulantes);
+                    $borrado =true;
+                }
+            }
+        }
+        echo $borrado;
     }
 
     private function codigo($solicitud)

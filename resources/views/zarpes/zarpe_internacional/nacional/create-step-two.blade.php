@@ -147,35 +147,56 @@
                                                     <div class="table-responsive">
                                                         <table class="table table-bordered" id="">
                                                         <tr>
-                                                            <th class="bg-light">MATRÍCULA</th>
-                                                            <td><input type="text" id="matricula" name="matricula" readonly></td>
-                                                            <th class="bg-light">NOMBRE</th>
-                                                            <td><input type="text" id="nombre" name="nombre" readonly></td>
+                                                            <th width="25%" class="bg-light">MATRÍCULA</th>
+                                                            <td><input class="col-md-12" type="text" id="matricula" name="matricula" readonly></td>
+                                                            <th  width="25%" class="bg-light">NOMBRE</th>
+                                                            <td><input class="col-md-12" type="text" id="nombre" name="nombre" readonly></td>
                                                         </tr>
 
                                                         <tr>
                                                             <th class="bg-light">DESTINACIÓN DEL BUQUE</th>
-                                                            <td><input type="text" name="destinacion" id="destinacion" readonly></td>
+                                                            <td><input class="col-md-12" type="text" name="destinacion" id="destinacion" readonly></td>
                                                             <th class="bg-light">UAB</th>
-                                                            <td><input type="text" name="UAB" id="UAB" readonly></td>
+                                                            <td><input class="col-md-12" type="text" name="UAB" id="UAB" readonly></td>
                                                         </tr>
 
                                                         <tr>
                                                             <th class="bg-light">PROPIETARIO</th>
-                                                              <td><input type="text" name="nombre_propietario" id="nombre_propietario" readonly>
-                                                                    <input type="text" name="nombre_propietario" id="nombre_propietario" hidden>
+                                                              <td><input class="col-md-12" type="text" name="nombre_propietario" id="nombre_propietario" readonly>
+                                                                    <input class="col-md-12" type="text" name="nombre_propietario" id="nombre_propietario" hidden>
                                                                 </td>
                                                             <th class="bg-light">CÉDULA / RIF</th>
                                                             <td>
-                                                                <input type="text" name="numero_identificacion" id="numero_identificacion" readonly>
+                                                                <input class="col-md-12" type="text" name="numero_identificacion" id="numero_identificacion" readonly>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th class="bg-light">ESLORA</th>
-                                                            <td> <input type="text" name="eslora" id="eslora" readonly></td>
+                                                            <td> <input class="col-md-12" type="text" name="eslora" id="eslora" readonly></td>
                                                             <th class="bg-light">MANGA</th>
-                                                            <td> <input type="text" name="manga" id="manga" readonly></td>
+                                                            <td> <input class="col-md-12" type="text" name="manga" id="manga" readonly></td>
                                                         </tr>
+
+                                                         <tr>
+                                                                <th class="bg-light">LICENCIA DE NAVEGACIÓN</th>
+                                                                <td><input type="text" class="col-md-12"
+                                                                           name="licenciaNavegacion"
+                                                                           id="licenciaNavegacion"
+                                                                           readonly></td>
+                                                                <th class="bg-light">ASIGNACIÓN DE NÚMERO ISMM</th>
+                                                                <td><input type="text" class="col-md-12" name="ismm"
+                                                                           id="ismm" readonly></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="bg-light">CERT. NAC. DE SEGURIDAD
+                                                                    RADIOTELEFONICA
+                                                                </th>
+                                                                <td><input type="text" class="col-md-12"
+                                                                           name="certificadoRadio" id="certificadoRadio"
+                                                                           readonly></td>
+                                                                <th class="bg-light"></th>
+                                                                <td></td>
+                                                            </tr>
                                                     </table>
                                                     </div>
 
