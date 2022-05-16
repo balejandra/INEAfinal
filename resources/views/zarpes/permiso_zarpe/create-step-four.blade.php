@@ -44,8 +44,10 @@
                                 @csrf
 @php
      $solicitud= json_decode(session('solicitud'));
-
+     $coordGrad=  session('coordGadriales') ;
+ print_r($coordGrad);
 @endphp
+
                                 <div class="card">
                                     <div class="card-body">
                                         <div id="msjRuta"></div>
@@ -95,14 +97,14 @@
                                                             @endphp
                                                         @else
                                                             @php
-                                                            $fechasal='';
+                                                            $fechasal=old('salida');
                                                             @endphp
                                                         @endif
 
                                                     {!! Form::label('salida', 'Fecha/hora salida:') !!}
                                                     <input type="datetime-local" id="salida" name="salida"
                                                            min="{{$fechaActual}}" class="form-control"
-                                                           onblur="compararFechas()" max="9999-12-31T23:59" value="{{$fechasal}}">
+                                                           onblur="compararFechas()" max="9999-12-31T23:59"   value="{{ $fechasal }}" >
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
@@ -119,7 +121,7 @@
                                                             @endphp
                                                     @else
                                                             @php
-                                                            $fechaesc='';
+                                                            $fechaesc=old('llegada_escala');
                                                             @endphp
                                                     @endif
 
@@ -140,7 +142,7 @@
                                                             @endphp
                                                     @else
                                                             @php
-                                                            $fechareg='';
+                                                            $fechareg=old('regreso');
                                                             @endphp
                                                     @endif
 
@@ -151,6 +153,8 @@
                                                 <div class="col-md-12 px-0">
                                                     <div class="form-group col-sm-12 py-2">
                                                         {!! Form::label('0', 'Establecimiento náutico de retorno final:') !!}
+
+
                                                         <select id="estNautioDestino"
                                                                 name="establecimientoNáuticoDestino"
                                                                 title="Selección el punto de escala en el mapa para visualizar los establecimientos náuticos de la circunscripción de destino"
@@ -192,21 +196,29 @@
                                                 
                                                     <div class="form-group">
                                                         <label for="title">Latitud punto de escala:</label>
-                                                        <div id="latitudText" class="font-weight-bold"></div>
+                                                        <div id="latitudText" class="font-weight-bold">
+                                                             @if($coordGrad!='')
+                                                                {{$coordGrad[0]}}
+                                                            @endif
+                                                        </div>
                                                         @if($solicitud->coordenadas!='')
                                                             @php
                                                                 $sol= json_decode($solicitud->coordenadas);
-                                                             $lat=$sol[0];
-                                                             $lon=$sol[1];
+                                                              $lat=$sol[0];
+                                                              $lon=$sol[1];
                                                             @endphp
                                                     @else
                                                             @php
                                                             $lat=''; $lon='';
                                                             @endphp
                                                     @endif
+
+                                                   
                                                         <input type="hidden" class="form-control" id="latitud"
                                                                readonly
                                                                name="latitud" data-lat="{{$lat}}" value="{{$lat}}">
+                                                        <input type="hidden" class="form-control" id="latitudGrad"      readonly
+                                                               name="latitudGrad"   value="">
                                                     </div>
                                                     
                                                 </div>
@@ -215,10 +227,18 @@
                                                     
                                                     <div class="form-group">
                                                         <label for="title">Longitud punto de escala:</label>
-                                                        <div id="longitudText" class="font-weight-bold"></div>
+                                                        <div id="longitudText" class="font-weight-bold">
+                                                        @if($coordGrad!='')
+                                                            {{$coordGrad[1]}}
+                                                        @endif
+                                                        </div>
                                                         <input type="hidden" class="form-control"
                                                                id="longitud" readonly
                                                                name="longitud" data-long="{{$lon}}" value="{{$lon}}">
+
+                                                        <input type="hidden" class="form-control"
+                                                               id="longitudGrad" readonly
+                                                               name="longitudGrad"   value="">
                                                     </div>
                                                     
 

@@ -88,6 +88,7 @@ let idcapDestino=divMap.getAttribute("data-idcapdestino");
     function onMapClick(click){
         var coordenada = click.latlng; //capturo las coordenadas latitud y longitud
         /*Busco los input para agregar el valor seleccionado correspondiente latitud y longitud*/
+        console.log("coordenada",coordenada);
         var latInput=document.getElementById('latitud'); 
         var longInput=document.getElementById('longitud'); 
         var latText=document.getElementById('latitudText'); 
@@ -106,6 +107,8 @@ let idcapDestino=divMap.getAttribute("data-idcapdestino");
         latText.innerHTML=coordenadasGrad(coordenada.lat)+"N";
         longText.innerHTML=coordenadasGrad(coordenada.lng)+"W";
 
+        document.getElementById('latitudGrad').value=coordenadasGrad(coordenada.lat)+"N";
+        document.getElementById('longitudGrad').value=coordenadasGrad(coordenada.lng)+"W";
         	/*coloco en los data-lat y data-long las nuevas coordenadas por si en el futuro hay que borrarlas*/
      	latInput.setAttribute('data-lat',coordenada.lat);
      	longInput.setAttribute('data-long',coordenada.lng);

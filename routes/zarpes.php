@@ -98,6 +98,12 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     
     Route::get('deleteTripulante',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'deleteTripulante'])->name('deleteTripulante');
 
+    Route::get('deletePassenger',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'deletePassenger'])->name('deletePassenger');
+
+    Route::get('AddPassenger',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'AddPassenger'])->name('AddPassenger');
+
+    Route::post('AddDocumentos',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'AddDocumentos'])->name('AddDocumentos');
+
     /*Inicio de Rutas de zarpe Internacional*/
 
     Route::get('/zarpes/zarpeInternacional', [App\Http\Controllers\Zarpes\ZarpeInternacionalController::class, 'index'])->name('zarpeInternacional.index')->middleware('auth');
