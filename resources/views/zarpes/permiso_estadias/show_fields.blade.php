@@ -69,7 +69,7 @@
 <div class="row">
     @foreach($documentos as $documento)
         <div class="col-sm-6">
-            <a class="link-info" href="{{asset('permisoestadia/documentos/'.$documento->documento)}}" target="_blank">
+            <a class="link-info" href="{{asset('documentos/permisoestadia/'.$documento->documento)}}" target="_blank">
                 {{$documento->recaudo }}</a>
         </div>
     @endforeach
