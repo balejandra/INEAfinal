@@ -148,7 +148,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento1 = new DocumentoPermisoEstadia();
                 $procedencia = $request->file('zarpe_procedencia');
                 $filenamepro = date('dmYGi') . $procedencia->getClientOriginalName();
-                $avatar1 = $procedencia->move(public_path() . '/permisoestadia/documentos', $filenamepro);
+                $avatar1 = $procedencia->move(public_path() . '/documentos/permisoestadia', $filenamepro);
                 $documento1->permiso_estadia_id = $estadia->id;
                 $documento1->documento = $filenamepro;
                 $documento1->recaudo = 'Zarpe de Procedencia';
@@ -158,7 +158,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento2 = new DocumentoPermisoEstadia();
                 $registro = $request->file('registro_embarcacion');
                 $filenamereg = date('dmYGi') . $registro->getClientOriginalName();
-                $avatar2 = $registro->move(public_path() . '/permisoestadia/documentos', $filenamereg);
+                $avatar2 = $registro->move(public_path() . '/documentos/permisoestadia', $filenamereg);
                 $documento2->permiso_estadia_id = $estadia->id;
                 $documento2->documento = $filenamereg;
                 $documento2->recaudo = 'Registro de Embarcacion';
@@ -168,7 +168,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento3 = new DocumentoPermisoEstadia();
                 $migracion = $request->file('despacho_aduana_procedencia');
                 $filenamemig = date('dmYGi') . $migracion->getClientOriginalName();
-                $avatar3 = $migracion->move(public_path() . '/permisoestadia/documentos', $filenamemig);
+                $avatar3 = $migracion->move(public_path() . '/documentos/permisoestadia', $filenamemig);
                 $documento3->permiso_estadia_id = $estadia->id;
                 $documento3->documento = $filenamemig;
                 $documento3->recaudo = 'Despacho de Aduana de Procedencia';
@@ -178,7 +178,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento4 = new DocumentoPermisoEstadia();
                 $pasaportes = $request->file('pasaportes_tripulantes');
                 $filenamepas = date('dmYGi') . $pasaportes->getClientOriginalName();
-                $avatar4 = $pasaportes->move(public_path() . '/permisoestadia/documentos', $filenamepas);
+                $avatar4 = $pasaportes->move(public_path() . '/documentos/permisoestadia', $filenamepas);
                 $documento4->permiso_estadia_id = $estadia->id;
                 $documento4->documento = $filenamepas;
                 $documento4->recaudo = 'Pasaportes de Tripulantes';
@@ -286,7 +286,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento1 = new DocumentoPermisoEstadia();
             $seniat = $request->file('permiso_seniat');
             $filenamesen = date('dmYGi') . $seniat->getClientOriginalName();
-            $avatar1 = $seniat->move(public_path() . '/permisoestadia/documentos', $filenamesen);
+            $avatar1 = $seniat->move(public_path() . '/documentos/permisoestadia', $filenamesen);
             $documento1->permiso_estadia_id = $id;
             $documento1->documento = $filenamesen;
             $documento1->recaudo = 'Permiso de Admisión Temporal emitida por el SENIAT';
@@ -296,7 +296,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento2 = new DocumentoPermisoEstadia();
             $alicuota = $request->file('comprobante_alicuota');
             $filenamealic = date('dmYGi') . $alicuota->getClientOriginalName();
-            $avatar2 = $alicuota->move(public_path() . '/permisoestadia/documentos', $filenamealic);
+            $avatar2 = $alicuota->move(public_path() . '/documentos/permisoestadia', $filenamealic);
             $documento2->permiso_estadia_id = $id;
             $documento2->documento = $filenamealic;
             $documento2->recaudo = 'Comprobante de pago de Alícuota';
@@ -306,7 +306,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento3 = new DocumentoPermisoEstadia();
             $inspeccion = $request->file('inspeccion_visita');
             $filenameinsp = date('dmYGi') . $inspeccion->getClientOriginalName();
-            $avatar3 = $inspeccion->move(public_path() . '/permisoestadia/documentos', $filenameinsp);
+            $avatar3 = $inspeccion->move(public_path() . '/documentos/permisoestadia', $filenameinsp);
             $documento3->permiso_estadia_id = $id;
             $documento3->documento = $filenameinsp;
             $documento3->recaudo = 'Inspección por el Visitador';
@@ -316,7 +316,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $saime = $request->file('comprobante_saime');
             $filenamesai = date('dmYGi') . $saime->getClientOriginalName();
-            $avatar4 = $saime->move(public_path() . '/permisoestadia/documentos', $filenamesai);
+            $avatar4 = $saime->move(public_path() . '/documentos/permisoestadia', $filenamesai);
             $documento4->permiso_estadia_id = $id;
             $documento4->documento = $filenamesai;
             $documento4->recaudo = 'Comprobante de visita SAIME';
@@ -326,7 +326,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $insai = $request->file('comprobante_insai');
             $filenameins = date('dmYGi') . $insai->getClientOriginalName();
-            $avatar4 = $insai->move(public_path() . '/permisoestadia/documentos', $filenameins);
+            $avatar4 = $insai->move(public_path() . '/documentos/permisoestadia', $filenameins);
             $documento4->permiso_estadia_id = $id;
             $documento4->documento = $filenameins;
             $documento4->recaudo = 'Comprobante de visita INSAI';
@@ -336,7 +336,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $pestadia = $request->file('pago_permisoEstadia');
             $filenameest = date('dmYGi') . $pestadia->getClientOriginalName();
-            $avatar4 = $pestadia->move(public_path() . '/permisoestadia/documentos', $filenameest);
+            $avatar4 = $pestadia->move(public_path() . '/documentos/permisoestadia', $filenameest);
             $documento4->permiso_estadia_id = $id;
             $documento4->documento = $filenameest;
             $documento4->recaudo = 'Pago del Permiso Especial de Estadía';
@@ -346,7 +346,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $ochina = $request->file('comprobante_ochina');
             $filenameoch = date('dmYGi') . $ochina->getClientOriginalName();
-            $avatar4 = $ochina->move(public_path() . '/permisoestadia/documentos', $filenameoch);
+            $avatar4 = $ochina->move(public_path() . '/documentos/permisoestadia', $filenameoch);
             $documento4->permiso_estadia_id = $id;
             $documento4->documento = $filenameoch;
             $documento4->recaudo = 'Comprobante de pago a OCHINA';

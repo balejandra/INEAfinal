@@ -1607,7 +1607,7 @@ public function AddDocumentos(Request $request){
 
                 $partida = $request->file('partida_nacimiento');
                 $filename = date('dmYGi') . $partida->getClientOriginalName();
-                $avatar1 = $partida->move(public_path() . '/permisozarpe/documentos', $filename);
+                $avatar1 = $partida->move(public_path() . '/documentos/permisozarpe', $filename);
                  $partida_nacimiento=$filename;
 
 
@@ -1618,7 +1618,7 @@ public function AddDocumentos(Request $request){
 
                 $autorizacion = $request->file('autorizacion');
                 $filenameaut= date('dmYGi') . $autorizacion->getClientOriginalName();
-                $avatar1 = $autorizacion->move(public_path() . '/permisozarpe/documentos', $filenameaut);
+                $avatar1 = $autorizacion->move(public_path() . '/documentos/permisozarpe', $filenameaut);
                 $autorizacion=$filenameaut;
         }
 
@@ -1627,7 +1627,7 @@ public function AddDocumentos(Request $request){
 
         $pasaporte_menor = $request->file('pasaporte_menor');
         $filenamepasp= date('dmYGi') . $pasaporte_menor->getClientOriginalName();
-        $avatar1 = $pasaporte_menor->move(public_path() . '/permisozarpe/documentos', $filenamepasp);
+        $avatar1 = $pasaporte_menor->move(public_path() . '/documentos/permisozarpe', $filenamepasp);
         $pasaporte_menor=$filenamepasp;
     }
 
