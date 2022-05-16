@@ -195,16 +195,22 @@ class PermisoEstadiaController extends AppBaseController
 
     private function codigo($capitania_id)
     {
+        $capitania = Capitania::find($capitania_id);
+        $idcap=$capitania->id;
         $cantidadActual = PermisoEstadia::select(DB::raw('count(nro_solicitud) as cantidad'))
             ->where('cantidad_solicitud',1)
             ->where(DB::raw("(SUBSTR(nro_solicitud,6,4) = '" . date('Y') . "')"), '=', true)
+            ->Join('public.capitanias', function ($join) use ($idcap) {
+                $join->on('permiso_estadias.capitania_id', '=', 'public.capitanias.id')
+                    ->where('public.capitanias.id', '=',  $idcap);
+            })
             ->get();
 
         $capitania = Capitania::find($capitania_id);
 
         $correlativo = $cantidadActual[0]->cantidad + 1;
         $codigo = $capitania->sigla . "-" . date('Y') . date('m') . "-" . $correlativo;
-       // dd($codigo);
+       //dd($codigo);
         return $codigo;
     }
 
@@ -520,14 +526,14 @@ class PermisoEstadiaController extends AppBaseController
         $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecapitan->name)
+            ->where('cargo', $rolecapitan->id)
             ->get();
         //dd($capitanDestino);-
 
         $coordinador = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecoordinador->name)
+            ->where('cargo', $rolecoordinador->id)
             ->get();
         //dd($coordinador);
         $mensaje = "";

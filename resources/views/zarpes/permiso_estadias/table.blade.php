@@ -1,14 +1,15 @@
-<table class="table table-striped table-bordered" id="permisoEstadias-table">
+<table class="table table-striped table-bordered display" style="width:100%">
     <thead>
     <tr>
-        <th>Nro Solicitud</th>
+        <th data-priority="1">Nro Solicitud</th>
+        <th>Fecha Solicitud</th>
         <th>Solicitante</th>
         <th>Nombre Buque</th>
         <th>Nro Registro Buque</th>
         <th>Puerto Origen</th>
         <th>Puerto Destino</th>
-        <th style="font-size: 12px; width: 5%">Dias de Estadia aprobada en el Pais</th>
-        <th>Status</th>
+        <th style="font-size: 12px; width: 5%">Días de Estadia aprobada en el País</th>
+        <th data-priority="2">Status</th>
         <th style="width: max-content">Acciones</th>
     </tr>
     </thead>
@@ -17,6 +18,7 @@
 
         <tr>
             <td>{{ $permisoEstadia->nro_solicitud }}</td>
+            <td>{{ $permisoEstadia->created_at }}</td>
             <td>{{ $permisoEstadia->user->nombres }} {{ $permisoEstadia->user->apellidos }}</td>
             <td>{{ $permisoEstadia->nombre_buque }}</td>
             <td>{{ $permisoEstadia->nro_registro }}</td>
@@ -67,9 +69,9 @@
 
                 @can('visita-estadia-aprobada')
                     @if ($permisoEstadia->status_id===9)
-                        <a class="btn btn-sm btn-info"
-                           href=" {{route('statusEstadia',[$permisoEstadia->id,10])}}" data-toggle="tooltip"
-                           data-bs-placement="bottom" title="Aprobar Visita">
+                        <a class="btn btn-sm btn-info confirmation"
+                           data-route=" {{route('statusEstadia',[$permisoEstadia->id,10])}}" data-toggle="tooltip"
+                           data-bs-placement="bottom" title="Aprobar Visita" data-action="APROBAR LA VISITA de">
                             <i class="fas fa-user-check"></i>
                         </a>
                     @endif
@@ -87,10 +89,9 @@
                 @endcan
                 @can('aprobar-estadia')
                     @if ($permisoEstadia->status_id===11)
-                        <a class="btn btn-sm btn-primary"
-                           href="{{route('statusEstadia',[$permisoEstadia->id,1])}}" data-toggle="tooltip"
-                           data-bs-placement="bottom"
-                           title="Aprobar">
+                        <a class="btn btn-sm btn-primary confirmation"
+                           data-route="{{route('statusEstadia',[$permisoEstadia->id,1])}}" data-toggle="tooltip"
+                           data-bs-placement="bottom" data-action="APROBAR" title="Aprobar">
                             <i class="fa fa-check"></i>
                         </a>
                     @endif
@@ -133,10 +134,10 @@
     @endforeach
     </tbody>
 </table>
-<!-- Modal -->
+<!-- Modal ASIGNAR VISITA -->
 <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
      aria-hidden="true">
-    <form id="visita" action="">
+    <form id="visita" action="" class="modal-form">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -158,17 +159,17 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Asignar</button>
+                    <button type="submit" class="btn btn-primary" data-action="ASIGNAR VISITA">Asignar</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
 
-<!-- Modal -->
+<!-- Modal RECHAZAR -->
 <div class="modal fade" id="modal-rechazar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
      aria-hidden="true">
-    <form id="rechazar-estadia" action="">
+    <form id="rechazar-estadia" action="" class="modal-form">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -195,7 +196,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Rechazar</button>
+                    <button type="submit" class="btn btn-primary" data-action="RECHAZAR">Rechazar</button>
                 </div>
             </div>
         </div>

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Zarpes;
+namespace App\Http\Requests\Publico;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Zarpes\CapitaniaUser;
+use App\Models\Publico\CapitaniaUser;
 
-class CreateCapitaniaUserRequest extends FormRequest
+class UpdateCapitaniaUserRequest extends FormRequest
 {
 
     /**
@@ -25,6 +25,8 @@ class CreateCapitaniaUserRequest extends FormRequest
      */
     public function rules()
     {
-        return CapitaniaUser::$rules;
+        $rules = CapitaniaUser::$rules;
+
+        return $rules;
     }
 }

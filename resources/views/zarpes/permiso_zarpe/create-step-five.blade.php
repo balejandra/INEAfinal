@@ -28,7 +28,7 @@
                             </div>
 
                         </div>
-                     
+
                         <div class="card-body" style="min-height: 350px;">
 
                             @include('zarpes.permiso_zarpe.stepsIndicator')
@@ -80,7 +80,7 @@
                                                 </div>
                                             </div>
 
-                                             
+
 
 
                                             <div class="col-md-3 mt-4">
@@ -93,12 +93,12 @@
 
                                         <div class="col-md-12 my-2">
                                             <b>
-                                            Cantidad mínima de tripulantes: <span id="cantTripulantes">{{$validacion['cant_tripulantes']}}</span> 
+                                            Cantidad mínima de tripulantes: <span id="cantTripulantes">{{$validacion['cant_tripulantes']}}</span>
                                             </b>
                                         </div>
                                         <div class="row px-3">
                                             <div class="table-responsive">
-                                                <table class="table table-bordered" id="tableTripulantes">
+                                                <table class="table table-bordered" id="table-scroll" style="width:100%">
                                                     <thead>
                                                     <tr>
                                                         <th>Función</th>
@@ -122,11 +122,6 @@
                                                                 $cant=0;
 
                                                             @endphp
-                                                            <tr>
-                                                                <td colspan="7" class="text-center" id="nodata">Sin
-                                                                    registros para mostrar
-                                                                </td>
-                                                            </tr>
                                                         @else
 
                                                             @php
@@ -206,7 +201,7 @@
         </div>
     </div>
 
- 
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
     role="dialog">
     <div class="modal-dialog" role="document">

@@ -163,11 +163,11 @@
                                                                         $tipodoc="'".$position["tipo_doc"]."'";
                                                                     @endphp
                                                                     @if(!$position["menor_edad"])
-                                                                    <a href='#' onclick='openModalPassengers({{$tipodoc}},{{$position["nro_doc"]}} , 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> 
+                                                                    <a href='#' onclick='openModalPassengers($tipodoc,$position["nro_doc"], 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> 
                                                                     &nbsp;&nbsp; 
                                                                     @endif
 
-                                                                    <a href='#' onclick='openModalPassengers({{$tipodoc}}, {{$position["nro_doc"]}} , 1)' ><i class='fa fa-trash' title='Eliminar'></i></a>
+                                                                    <a href='#' onclick='openModalPassengers($tipodoc,$position["nro_doc"] , 1)' ><i class='fa fa-trash' title='Eliminar'></i></a>
                                                                 </td>
 
                                                             </tr>
@@ -279,14 +279,13 @@
                                                 </span>
                                             </div>
 
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered">
+                                                <table id="table-scroll" class="table table-bordered" style="width:100%">
                                                     <thead>
                                                     <tr>
-                                                        <th width="18%">Cédula</th>
+                                                        <th>Cédula</th>
                                                         <th>Nombres</th>
                                                         <th>Apellidos</th>
-                                                        <th width="5%">sexo</th>
+                                                        <th>sexo</th>
                                                         <th>Fecha nac.</th>
                                                         <th width="5%">Menor</th>
                                                         <th width="5%">Representante</th>
@@ -296,7 +295,6 @@
                                                     <tbody id="pasajeros">
                                                      
                                                 </table>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

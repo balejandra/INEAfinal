@@ -28,13 +28,13 @@
                         <div class="card-body" style="min-height: 350px;">
                             <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pills-origen-tab" data-bs-toggle="pill"
+                                    <button class="nav-link active" id="pills-origen-tab" data-bs-toggle="pill" data-toggle="tab"
                                             data-bs-target="#origen" type="button" role="tab" aria-controls="origen"
                                             aria-selected="true">Solicitudes de zarpe
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-destino-tab" data-bs-toggle="pill"
+                                    <button class="nav-link" id="pills-destino-tab" data-bs-toggle="pill" data-toggle="tab"
                                             data-bs-target="#destino" type="button" role="tab" aria-controls="destino"
                                             aria-selected="false">Información de arribos en su jurisdicción
                                     </button>
@@ -44,15 +44,16 @@
                                 <div class="tab-pane fade show active" id="origen" role="tabpanel"
                                      aria-labelledby="pills-origen-tab">
 
-                                    <table class="table table-striped table-bordered" id="permisoZarpes-table">
+                                    <table class="table table-striped table-bordered compact display" style="width:100%">
                                         <thead>
                                         <tr>
-                                            <th>Nro Solicitud</th>
+                                            <th data-priority="1">Nro Solicitud</th>
+                                            <th>Fecha de Solicitud</th>
                                             <th>Solicitante</th>
                                             <th>Bandera</th>
                                             <th>Matricula</th>
                                             <th>Tipo Navegacion</th>
-                                            <th>Status</th>
+                                            <th data-priority="2">Status</th>
                                             <th>Acciones</th>
                                         </tr>
                                         </thead>
@@ -60,6 +61,7 @@
                                         @foreach($permisoOrigenZarpes as $permisoOrigenZarpe)
                                             <tr>
                                                 <td>{{ $permisoOrigenZarpe->nro_solicitud }}</td>
+                                                <td>{{$permisoOrigenZarpe->created_at}}</td>
                                                 <td>{{ $permisoOrigenZarpe->user->nombres }} {{ $permisoOrigenZarpe->user->apellidos }}</td>
                                                 <td>{{ $permisoOrigenZarpe->bandera }}</td>
                                                 <td>{{ $permisoOrigenZarpe->matricula }}</td>
@@ -84,10 +86,11 @@
                                                     <td>{{ $permisoOrigenZarpe->status->nombre}} </td>
                                                 @endif
                                                 <td>
+
                                                     @if(($permisoOrigenZarpe->status->id=='3'))
                                                         @can('aprobar-zarpe')
-                                                            <a href="{{route('status',[$permisoOrigenZarpe->id,'aprobado',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
-                                                               class="btn btn-success btn-sm" title="Aprobar">
+                                                            <a data-route="{{route('status',[$permisoOrigenZarpe->id,'aprobado',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
+                                                               class="btn btn-success btn-sm confirmation" title="Aprobar" data-action="APROBAR" >
                                                                 <i class="fa fa-check"></i>
                                                             </a>
                                                         @endcan
@@ -107,23 +110,27 @@
                                                     @endcan
                                                     @if(($permisoOrigenZarpe->status->id=='1'))
                                                         @can('informar-navegacion')
-                                                            <a class="btn btn-sm btn-warning"
-                                                               href=" {{route('status',[$permisoOrigenZarpe->id,'navegando',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
-                                                               data-toggle="tooltip" data-bs-placement="bottom" title="Informar Navegacion">
-                                                                <i class="fas fa-water"></i>
-                                                            </a>
+                                                                <a class="btn btn-sm btn-warning confirmation"
+                                                                   data-route=" {{route('status',[$permisoOrigenZarpe->id,'navegando',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
+                                                                   data-toggle="tooltip" data-bs-placement="bottom" title="Informar Navegacion" data-action="INFORMAR NAVEGACIÓN de">
+                                                                    <i class="fas fa-water"></i>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
+                                                                   onclick="modalanularzarpe({{$permisoOrigenZarpe->id}},'{{$permisoOrigenZarpe->nro_solicitud}}')" data-toggle="tooltip"
+                                                                   data-bs-placement="bottom" title="Anular Solicitud">
+                                                                    <i class="fas fa-window-close"></i>
+                                                                </a>
                                                         @endcan
                                                     @endif
                                                     @if(($permisoOrigenZarpe->status->id=='5'))
                                                         @can('anular-sar')
-                                                            <a class="btn btn-sm btn-outline-danger"
-                                                               href=" {{route('status',[$permisoOrigenZarpe->id,'anulado_sar',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
-                                                               data-toggle="tooltip" data-bs-placement="bottom" title="Anular por SAR">
+                                                            <a class="btn btn-sm btn-outline-danger confirmation"
+                                                               data-route=" {{route('status',[$permisoOrigenZarpe->id,'anulado_sar',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
+                                                               data-toggle="tooltip" data-bs-placement="bottom" title="Anular por SAR" data-action="ANULAR POR SAR">
                                                                 <i class="fas fa-briefcase-medical"></i>
                                                             </a>
                                                         @endcan
                                                     @endif
-
                                                     @if (($permisoOrigenZarpe->status->id==1)||($permisoOrigenZarpe->status->id==4)||($permisoOrigenZarpe->status->id==5))
                                                         <a class="btn btn-sm btn-dark" href="{{route('zarpepdf',$permisoOrigenZarpe->id)}}"
                                                            target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="Descargar PDF">
@@ -140,12 +147,11 @@
                                 <!--   ZARPES DESTINO    --->
                                 <div class="tab-pane fade" id="destino" role="tabpanel"
                                      aria-labelledby="pills-destino-tab">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-bordered"
-                                               id="permisoZarpesdestino-table">
+                                        <table class="table table-striped table-bordered compact display" style="width:100%">
                                             <thead>
                                             <tr>
                                                 <th>Nro Solicitud</th>
+                                                <th>Fecha de Solicitud</th>
                                                 <th>Solicitante</th>
                                                 <th>Bandera</th>
                                                 <th>Matricula</th>
@@ -158,6 +164,7 @@
                                             @foreach($permisoDestinoZarpes as $permisoDestinoZarpe)
                                                 <tr>
                                                     <td>{{ $permisoDestinoZarpe->nro_solicitud }}</td>
+                                                    <td>{{$permisoDestinoZarpe->created_at}}</td>
                                                     <td>{{ $permisoDestinoZarpe->user->nombres }} {{ $permisoDestinoZarpe->user->apellidos }}</td>
                                                     <td>{{ $permisoDestinoZarpe->bandera }}</td>
                                                     <td>{{ $permisoDestinoZarpe->matricula }}</td>
@@ -192,13 +199,12 @@
                                             @endforeach
                                             </tbody>
                                         </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal -->
+                        <!-- Modal Rechazar -->
                         <div class="modal fade" id="modal-rechazo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <form id="rechazar-zarpe" action="">
+                            <form id="rechazar-zarpe" action="" class="modal-form">
                                 <div class="modal-dialog modal-fullscreen-sm-down">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -224,13 +230,43 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Rechazar</button>
+                                            <button type="submit" class="btn btn-primary" data-action="RECHAZAR">Rechazar</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
 
+                        <!-- ANULACION MODAL -->
+                        <div class="modal fade" id="modal-anular" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <form id="anular-zarpe" action="" class="modal-form" >
+                                <div class="modal-dialog modal-fullscreen-sm-down">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Anular Solicitud Zarpe</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Por favor indique el motivo de la anulación de la Solicitud Nro. <span id="nrosolicitud"></span></p>
+                                            <div class="col-sm-12">
+                                                <div class="input-group mb-3">
+                                                    <select class="form-select" aria-label="motivo" id="motivo1" name="motivo" required>
+                                                        <option value="">Seleccione un motivo</option>
+                                                        <option value="Incumplimiento de la normativa legal vigente">Incumplimiento de la normativa legal vigente.</option>
+                                                        <option value="Condiciones meteorológicas adversas">Condiciones meteorológicas adversas.</option>
+                                                        <option value="Restricciones de Navegación por motivos de Seguridad y Defensa">Restricciones de Navegación por motivos de Seguridad y Defensa.</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary" data-action="ANULAR" >Anular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

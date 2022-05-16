@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section("titulo")
-    Capitania
+    Usuarios de Capitanias
 @endsection
 @section('content')
     <div class="header-divider"></div>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Consulta</li>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Usuarios de Capitanias</li>
             </ol>
         </nav>
     </div>
@@ -20,16 +20,15 @@
                      <div class="card">
                          <div class="card-header">
                              <i class="fa fa-align-justify"></i>
-                             <strong>Capitanias</strong>
-                              @can('crear-capitania')
-                             <div class="card-header-actions">
-                                 <a class="btn btn-primary btn-sm"  href="{{ route('capitanias.create') }}">Nuevo</a>
-                                 <a class="btn btn-primary btn-sm"  href="{{ route('capitaniaUsers.index') }}">Usuarios de Capitanias</a>
-                             </div>
-                              @endcan
+                             Usuarios de Capitanias
+                             @can('crear-usuarios-capitanias')
+                                 <div class="card-header-actions">
+                                     <a class="btn btn-primary btn-sm"  href="{{ route('capitaniaUsers.create') }}">Nuevo</a>
+                                 </div>
+                             @endcan
                          </div>
                          <div class="card-body">
-                             @include('publico.capitanias.table')
+                             @include('publico.capitania_users.table')
                          </div>
                      </div>
                   </div>
