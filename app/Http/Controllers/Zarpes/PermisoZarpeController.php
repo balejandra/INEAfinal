@@ -276,7 +276,7 @@ class PermisoZarpeController extends Controller
 
     }
 
-   
+
 
     public function permissionCreateStepTwo(Request $request)
     {
@@ -442,12 +442,12 @@ class PermisoZarpeController extends Controller
 
     }
 
-    
+
 
     public function createStepFour(Request $request)
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-        
+
         $EstNauticos = EstablecimientoNautico::where('capitania_id', $solicitud['origen_capitania_id'])->get();
         if($solicitud['destino_capitania_id']!=''){
             $EstNauticosDestino = EstablecimientoNautico::where('capitania_id', $solicitud['destino_capitania_id'])->get();
@@ -572,11 +572,11 @@ class PermisoZarpeController extends Controller
         $solicitud['coordenadas'] = json_encode([$request->input('latitud'), $request->input('longitud')]);
         $solicitud['destino_capitania_id'] = $request->input('coordenadasDestino');
         $solicitud['fecha_llegada_escala'] = $request->input('fecha_llegada_escala');
-        
+
         $request->session()->put('coordGadriales',  [$request->input('latitudGrad'),$request->input('longitudGrad')]);
         $request->session()->put('solicitud', json_encode($solicitud));
-         
-         
+
+
 
         $this->step = 5;
         return redirect()->route('permisoszarpes.createStepFive');
@@ -869,7 +869,7 @@ class PermisoZarpeController extends Controller
                 $request->session()->put('pasajeros', $pasajeros);
                 $borrado =true;
             }else{
-                for ($i=0; $i < count($pasajeros); $i++) { 
+                for ($i=0; $i < count($pasajeros); $i++) {
                     $indice=array_search($cedula,$pasajeros[$i],false);
                     if($indice!=false){
                         array_splice($pasajeros, $i, $i);
@@ -878,7 +878,7 @@ class PermisoZarpeController extends Controller
                     }
                 }
             }
-            
+
         }
         echo $borrado;
     }
@@ -901,7 +901,7 @@ class PermisoZarpeController extends Controller
                         }
                     }
                  }
-                 
+
             break;
             case 'Motorista':
                  $cap="NO";
@@ -985,7 +985,7 @@ class PermisoZarpeController extends Controller
         $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros']];
         echo json_encode($return);
         }
- 
+
     }
 
     public function validarMarino(Request $request)
@@ -1600,29 +1600,38 @@ class PermisoZarpeController extends Controller
 
 
 public function AddDocumentos(Request $request){
-   dd($_REQUEST['partida_nacimiento'] );
+    $file = $request->file('partida_nacimiento');
+  // dd($file);
     $partida_nacimiento='';
         if ($request->hasFile('partida_nacimiento')) {
-               
+
                 $partida = $request->file('partida_nacimiento');
                 $filename = date('dmYGi') . $partida->getClientOriginalName();
                 $avatar1 = $partida->move(public_path() . '/permisozarpe/documentos', $filename);
                  $partida_nacimiento=$filename;
-                 
-                
+
+
         }
 
-$autorizacion='';
-
+        $autorizacion='';
         if ($request->hasFile('autorizacion')) {
-                
+
                 $autorizacion = $request->file('autorizacion');
                 $filenameaut= date('dmYGi') . $autorizacion->getClientOriginalName();
-                $avatar1 = $partida->move(public_path() . '/permisozarpe/documentos', $filenameaut);
+                $avatar1 = $autorizacion->move(public_path() . '/permisozarpe/documentos', $filenameaut);
                 $autorizacion=$filenameaut;
         }
 
-         echo json_encode(['OK',$partida_nacimiento,$autorizacion]);
+    $pasaporte_menor='';
+    if ($request->hasFile('pasaporte_menor')) {
+
+        $pasaporte_menor = $request->file('pasaporte_menor');
+        $filenamepasp= date('dmYGi') . $pasaporte_menor->getClientOriginalName();
+        $avatar1 = $pasaporte_menor->move(public_path() . '/permisozarpe/documentos', $filenamepasp);
+        $pasaporte_menor=$filenamepasp;
+    }
+
+         echo json_encode(['OK',$partida_nacimiento,$autorizacion,$pasaporte_menor]);
 }
 
     public function AddPassenger(Request $request){
@@ -1631,29 +1640,29 @@ $autorizacion='';
          $tripulantes=$request->session()->get('tripulantes');
         $cantPasajeros = $validation['cant_pasajeros'] - count($tripulantes);
         $indice="";
-        
+
            if ($_REQUEST['menor'] == "SI") {
                 $menor = true;
             } else {
                 $menor = false;
             }
 
-            
+
 
 
             $HijoNumero=1;
             if(is_array($pasajeros)){
-                for ($i=0; $i < count($pasajeros); $i++) { 
+                for ($i=0; $i < count($pasajeros); $i++) {
                    // $indice=array_search($_REQUEST['nrodoc'], $pasajeros[$i], false)
                     if($pasajeros[$i]['nro_doc']==$_REQUEST['nrodoc'] && $_REQUEST['representante']!=$_REQUEST['nrodoc']){
                         $indice=true;
                     }
 
                     if($pasajeros[$i]['representante']==$_REQUEST['representante']){
-                       $HijoNumero++; 
+                       $HijoNumero++;
                     }
                 }
-                
+
             }else{
                 $indice=false;
                 $pasajeros=[];
@@ -1673,7 +1682,7 @@ $autorizacion='';
             }
 
 
- 
+
 
         $pass = [
             "nombres" => $_REQUEST['nombres'],
@@ -1688,8 +1697,8 @@ $autorizacion='';
             "partida_nacimiento"=> $_REQUEST['partida_nacimiento'],
             "autorizacion"=> $_REQUEST['autorizacion']
         ];
-        
-            
+
+
 
         if($indice==false ){
             if(count($pasajeros) <= $cantPasajeros-1){
@@ -1702,17 +1711,17 @@ $autorizacion='';
             }else{
                 $info = "MaxPassengerLimit";
             }
-                             
+
         }else{
             $info="ExistInPassengerList";
 
         }
 
         $resp=[$info,$pass,$cantPasajeros,$HijoNumero, $nrodoc, $_REQUEST['nrodoc']];
-        echo json_encode($resp); 
-        
+        echo json_encode($resp);
+
     }
 
-    
+
 
 }

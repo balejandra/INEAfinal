@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('titulo' )| {{ config('app.name') }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" href="{{asset('assets/bootstrap/dist/css/bootstrap.min.css')}}">
 
     <link href="{{asset('assets/vendors/style.css')}}" rel="stylesheet">

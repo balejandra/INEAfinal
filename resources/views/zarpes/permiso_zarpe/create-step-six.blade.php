@@ -59,7 +59,7 @@
                                         <div class="col  my-1">
                                           <label   for="numero_identificacion">Cédula / Pasaporte</label>
                                           <div class="input-group">
-                                             
+
                                             <input type="text" class="form-control" id="numero_identificacion" placeholder="Cédula / Pasaporte"  maxlength="10" >
                                           </div>
                                         </div>
@@ -67,11 +67,11 @@
                                         <div class="col my-1">
                                           <label   for="fecha_nacimiento">Fecha de nacimiento</label>
                                           <div class="input-group">
-                                             
+
                                             <input type="date" class="form-control" id="fecha_nacimiento" placeholder="Fecha de nacimiento" maxlength="10" value="{{ old('fecha_nacimiento') }}" max='{{date("Y-m-d")}}' required>
                                           </div>
                                         </div>
- 
+
 
                                         <div class="col my-1 px-1">
                                                 <div class="form-group">
@@ -83,7 +83,7 @@
                                           <div class="col  my-1 DatosRestantes">
                                               <label   for="nombres">Nombres</label>
                                               <div class="input-group">
-                                                
+
                                                 <input type="text" class="form-control" id="nombres" placeholder="Nombres" name="nombres"  maxlength="40" >
                                               </div>
                                             </div>
@@ -91,7 +91,7 @@
                                         <div class="col  my-1 DatosRestantes">
                                           <label   for="nombres">Apellidos</label>
                                           <div class="input-group">
-                                             
+
                                             <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" name="apellidos"  maxlength="40" >
                                           </div>
                                         </div>
@@ -109,11 +109,11 @@
 
 
                                     <div class="row">
-                                        
+
                                         <div class="col-md-12 py-2">
                                                 <b>Cantidad de pasajeros disponible para esta embarcación:</b>
                                                 <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
-                                                    {{ $cantPasajeros ?? '' }}  
+                                                    {{ $cantPasajeros ?? '' }}
                                                 </span>
                                             </div>
 
@@ -160,14 +160,14 @@
                                                                 <td class="text-center">{{$position["representante"]}}</td>
                                                                 <td>
                                                                      @php
-                                                                        $tipodoc="'".$position["tipo_doc"]."'";
+                                                                        $tipodoc=$position["tipo_doc"];
                                                                     @endphp
                                                                     @if(!$position["menor_edad"])
-                                                                    <a href='#' onclick='openModalPassengers($tipodoc,$position["nro_doc"], 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> 
-                                                                    &nbsp;&nbsp; 
+                                                                    <a href='#' onclick="openModalPassengers('{{$tipodoc}}','{{$position["nro_doc"]}}', 2)" ><i class='fa fa-user' title='Agregar menor representado'></i></a>
+                                                                    &nbsp;&nbsp;
                                                                     @endif
 
-                                                                    <a href='#' onclick='openModalPassengers($tipodoc,$position["nro_doc"] , 1)' ><i class='fa fa-trash' title='Eliminar'></i></a>
+                                                                    <a href='#' onclick="openModalPassengers('{{$tipodoc}}','{{$position["nro_doc"]}}', 1)" ><i class='fa fa-trash' title='Eliminar'></i></a>
                                                                 </td>
 
                                                             </tr>
@@ -293,7 +293,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody id="pasajeros">
-                                                     
+
                                                 </table>
                                         </div>
                                     </div>
@@ -383,7 +383,7 @@
             </div>
             <div class="modal-body">
                 <div id="errorModalPass" data-asset="{{asset('images')}}"></div>
-                <form id="FormPassengersMenor">
+                {!! Form::open(['files' => true,'id'=>'FormPassengersMenor']) !!}
                        @csrf
 
                        <div class="row px-0 mx-0">
@@ -398,7 +398,7 @@
                             <div class="col  my-1">
                                 <label   for="numero_identificacion">Cédula / Pasaporte</label>
                                 <div class="input-group">
-                                             
+
                                     <input type="text" class="form-control" id="numero_identificacionMenor" placeholder="Cédula / Pasaporte"  maxlength="10" onblur="blurSaime()">
                                 </div>
                             </div>
@@ -406,15 +406,15 @@
                             <div class="col my-1">
                                           <label   for="fecha_nacimientoMenor">Fecha de nacimiento</label>
                                           <div class="input-group">
-                                             
+
                                             <input type="date" class="form-control" id="fecha_nacimientoMenor" placeholder="Fecha de nacimiento" maxlength="10" value="{{ old('fecha_nacimientoMenor') }}" max='{{date("Y-m-d")}}' required onblur="blurSaime()">
                                           </div>
                                         </div>
-  
+
                         </div>
 
                         <div class="row px-0 mx-0">
-                            
+
                             <div class="col-md-2 my-1 px-1">
                                 <div class="form-group">
                                     <label for="title">Sexo:</label>
@@ -425,7 +425,7 @@
 
                             <div class="col  my-1 DatosRestantes2">
                                 <label   for="nombres">Nombres</label>
-                                <div class="input-group">            
+                                <div class="input-group">
                                     <input type="text" class="form-control" id="nombresMenor" placeholder="Nombres" name="nombresMenor"  maxlength="40" >
                                 </div>
                             </div>
@@ -433,12 +433,12 @@
                             <div class="col  my-1 DatosRestantes2">
                                 <label   for="nombres">Apellidos</label>
                                 <div class="input-group">
-                                             
+
                                     <input type="text" class="form-control" id="apellidosMenor" placeholder="Apellidos" name="apellidosMenor"  maxlength="40" >
                                 </div>
                             </div>
 
-                             
+
                         </div>
                         <div class="row">
                             <div class="form-group col-sm-6">
@@ -450,10 +450,16 @@
                                 <input type="file" class="form-control" name="autorizacion" id="autorizacion" accept="application/pdf, image/*" >
                             </div>
                         </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        {!! Form::label('documento_1', 'Pasaporte (Obligatorio):') !!}
+                        <input type="file" class="form-control" name="pasaporte_menor" id="pasaporte_menor" accept="application/pdf, image/*" required>
+                    </div>
+                </div>
 
                         <input type="hidden" class="form-control" id="representanteMenor" placeholder="Nombres" name="representanteMenor"  maxlength="40" >
-                </form>
-                  
+                {!! Form::close() !!}
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModalPassengers(2)">Cerrar</button>
