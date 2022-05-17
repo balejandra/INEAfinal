@@ -145,7 +145,7 @@
                                                             <h4>Datos de la embarcación</h4>
                                                         </div>
 
-                                                        <table class="table table-bordered" id="table-nooptions" style="width:100%">
+                                                        <table class="table table-bordered" id="table-nooptionsXX" style="width:100%">
                                                             <thead>
                                                             <tr>
                                                                 <th>Dato</th>
