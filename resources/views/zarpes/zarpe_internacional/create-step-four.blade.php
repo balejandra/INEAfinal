@@ -104,7 +104,7 @@
                                             <div class="form-group col-sm-4">
                                                          
                                                         {!! Form::label('', 'Establecimiento náutico destino:') !!}
-                                                         <input type="text" name="estNauticoDestino" id="estNauticoDestino" class="form-control">
+                                                         <input type="text" name="estNauticoDestinoZI" id="estNauticoDestinoZI" class="form-control">
                                                     </div>
 
 

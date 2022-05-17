@@ -150,6 +150,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
      Route::get('marinoExtranjeroZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'marinoExtranjeroZI'])->name('marinoExtranjeroZI');
 
      Route::get('deleteTripulanteZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'deleteTripulanteZI'])->name('deleteTripulanteZI');
+
+     Route::post('AddDocumentosMarinosZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'AddDocumentosMarinosZI'])->name('AddDocumentosMarinosZI');
     /*Fin de Rutas de zarpe Internacional*/
 
 

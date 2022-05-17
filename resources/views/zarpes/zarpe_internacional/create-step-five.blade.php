@@ -128,7 +128,7 @@
 
                                     <div class="row text-center ">
                                         <div class="col-md-12 my-2 ">
-                                            <button type="button" class="btn btn-primary" onclick="getMarinosZI()">
+                                            <button type="button" class="btn btn-primary" onclick="AddPasportsMarinos()">
                                                     Agregar
                                             </button>
                                         </div>
@@ -170,7 +170,7 @@
                                                                 $cant=0;
 
                                                             @endphp
-                                                            <tr>
+                                                            <tr id="nodataTrip">
                                                                 <td colspan="5" class="text-center" id="nodata">Sin
                                                                     registros para mostrar
                                                                 </td>
@@ -183,7 +183,7 @@
 
                                                             @foreach($tripulantes as $trip)
 
-                                                    <tr id="">
+                                                    <tr id='{{$trip["nro_doc"]}}'>
                                                                     
                                         
                                                     <td> {{$trip["funcion"]}} </td>
@@ -208,7 +208,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}" method="POST">
+                                    <form action="{{ route('zarpeInternacional.permissionCreateStepFive') }}" method="POST">
                                         @csrf
 
                                         

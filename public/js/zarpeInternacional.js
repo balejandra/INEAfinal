@@ -480,14 +480,44 @@ function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
 
 }*/
 
-function getMarinosZI() {
+function AddPasportsMarinos(){
+    let doc=document.getElementById('doc').files[0];
+     
+
+        var formData = new FormData();
+        formData.append('doc', doc);
+         
+ 
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route('AddDocumentosMarinosZI'),
+            type: "POST",
+            dataType: "html",
+            data:formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (response){
+            var resps=JSON.parse(response);
+            if(resps[0] =='OK'){
+                 
+            pasaporteName=resps;
+
+                getMarinosZI(pasaporteName);
+        }
+             
+    });
+}
+
+
+function getMarinosZI(pass) {
     let funcion= document.getElementById('funcion').value;
     let tipodoc= document.getElementById('tipodoc').value;
     let nrodoc= document.getElementById('nrodoc').value;
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
     let rango= document.getElementById('rango').value;
-    let doc=''; 
+    let doc=pass[1]; 
     let ruta='';
     let tabla=document.getElementById('marinosZI');
     let msj=document.getElementById('msjMarinoInt');
@@ -522,7 +552,8 @@ function getMarinosZI() {
             respuesta = JSON.parse(response);
             console.log(respuesta);
             console.log(respuesta[0].length);
-
+            var validacion=respuesta[1];
+            
             switch(respuesta[3]){
                 case 'TripulanteExiste':
                     msj.innerHTML="<div class='alert alert-danger'>El tripulante que intenta agregar ya se encuanta en el listado, por favor verifique.</div>";
@@ -536,14 +567,50 @@ function getMarinosZI() {
                     msj.innerHTML="<div class='alert alert-danger'>Ha alcanzado el máximo de tripulantes disponibles para la embarcación.</div>";
 
                 break;
-                case 'OK':
-                    let pass=respuesta[0];
-                    pass=pass[pass.length-1];
-                    console.log(pass[pass.length-1]);
-                    let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick='openModalZI("+pass['nro_doc']+")'><i class='fa fa-trash'></i></a></td></tr>";
-                    tabla.innerHTML+=html;
-                    msj.innerHTML="<div class='alert alert-success'>El tripulante se ha agregado de manera exitosa</div>";
+                case 'TripulanteNoAutorizado':
+                        if(funcion=="Capitán"){
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+nrodoc+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                            }else{
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+nrodoc+' no esta permisado para tripular esta embarcación.</div>' ;
 
+                        }
+                break;
+                case 'OK':
+
+
+
+                     if(validacion[0] ==true){
+                        var pass=respuesta[0];
+                        pass=pass[pass.length-1];
+                        
+                        var nodataTrip = !!document.getElementById("nodataTrip");
+                        
+                        if(nodataTrip==true){
+                            tabla.innerHTML='';
+                        }
+                        let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick='openModalZI("+pass['nro_doc']+")'><i class='fa fa-trash'></i></a></td></tr>";
+                        tabla.innerHTML+=html;
+                        msj.innerHTML="<div class='alert alert-success'>El tripulante se ha agregado de manera exitosa</div>";
+
+
+                        document.getElementById('funcion').value="";
+                        document.getElementById('tipodoc').value="";
+                        document.getElementById('nrodoc').value="";
+                         document.getElementById('nombres').value="";
+                         document.getElementById('apellidos').value="";
+                         document.getElementById('rango').value="";
+                         document.getElementById('doc').value="";
+                     }else{
+                         if(funcion=="Capitán"){
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+cedula+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                            }else{
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+cedula+' no esta permisado para tripular esta embarcación.</div>' ;
+
+                        }
+                     }
+                    
+                    
+                    
 
                 break;
                 default:
@@ -556,13 +623,10 @@ function getMarinosZI() {
         // This will be called on error
         .fail(function (response) {
             console.log(response);
-            console.log('falló validación de Jerarquización');
+            console.log('falló validación de Jerarquización ZI');
         });
 
     }
-    
-     
-
 }
 
 function deleteTripulanteZI(){

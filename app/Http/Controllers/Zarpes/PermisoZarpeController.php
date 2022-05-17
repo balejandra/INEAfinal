@@ -814,16 +814,29 @@ class PermisoZarpeController extends Controller
         $cedula=$_REQUEST['index'];
         $borrado=false;
         $tripulantes = $request->session()->get('tripulantes');
-        if(is_array($tripulantes)){
-            for ($i=0; $i < count($tripulantes); $i++) {
-                $indice=array_search($cedula,$tripulantes[$i],false);
-                if($indice!=false){
-                    array_splice($tripulantes, $i, $i);
-                    $request->session()->put('tripulantes', $tripulantes);
-                    $borrado =true;
+        $validation = json_decode($request->session()->get('validacion'), true);
+       
+       if(count($tripulantes)==1){
+                $tripulantes=[];
+                $request->session()->put('tripulantes', $tripulantes);
+                $validation['cantPassAbordo']++;
+                $request->session()->put('validacion', json_encode($validation));
+                $borrado =true;
+        }else{
+            if(is_array($tripulantes)){
+                for ($i=0; $i < count($tripulantes); $i++) {
+                    $indice=array_search($cedula,$tripulantes[$i],false);
+                    if($indice!=false){
+                        array_splice($tripulantes, $i, $i);
+                        $request->session()->put('tripulantes', $tripulantes);
+                        $validation['cantPassAbordo']++;
+                         $request->session()->put('validacion', json_encode($validation));
+                        $borrado =true;
+                    }
                 }
             }
         }
+        
         echo $borrado;
     }
 
@@ -831,10 +844,14 @@ class PermisoZarpeController extends Controller
         $cedula=$_REQUEST['index'];
         $borrado=false;
         $pasajeros = $request->session()->get('pasajeros');
+        $validation = json_decode($request->session()->get('validacion'), true);
+
         if(is_array($pasajeros)){
             if(count($pasajeros)==1){
                 $pasajeros=[];
                 $request->session()->put('pasajeros', $pasajeros);
+                $validation['cantPassAbordo']++;
+                $request->session()->put('validacion', json_encode($validation));
                 $borrado =true;
             }else{
                 for ($i=0; $i < count($pasajeros); $i++) {
@@ -842,6 +859,8 @@ class PermisoZarpeController extends Controller
                     if($indice!=false){
                         array_splice($pasajeros, $i, $i);
                         $request->session()->put('pasajeros', $pasajeros);
+                        $validation['cantPassAbordo']++;
+                        $request->session()->put('validacion', json_encode($validation));
                         $borrado =true;
                     }
                 }
