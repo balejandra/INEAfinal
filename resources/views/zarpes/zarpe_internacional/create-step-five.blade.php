@@ -164,7 +164,7 @@
                                                     @if(isset($tripulantes))
 
 
-                                                        @if(!is_array($tripulantes))
+                                                       @if(!is_array($tripulantes))
                                                             @php
 
                                                                 $cant=0;
@@ -183,21 +183,19 @@
 
                                                             @foreach($tripulantes as $trip)
 
-                                                                <tr id='{{$trip["nro_doc"]}}'>
+                                                    <tr id="">
                                                                     
                                         
-                                                                    <td> {{$trip["funcion"]}} </td>
+                                                    <td> {{$trip["funcion"]}} </td>
                                                                     
-                                                                    <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
-                                                                    <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
-                                                                    <td>{{$trip["rango"]}}</td>
-                                                                    <td>{{$trip["doc"]}}</td>
-
-                                                                    <td>
+                                                    <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
+                                                    <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
+                                                    <td>{{$trip["rango"]}}</td>
+                                                    <td>{{$trip["doc"]}}</td>
+                                                    <td>
                                 <a href="#" onclick="openModalZI({{$trip['nro_doc']}})">
-                                                                            <i class="fa fa-trash"></i>
-
-                                                                        </a>
+                                    <i class="fa fa-trash"></i>
+                                </a>
                                                                         
 
                                                                     </td>

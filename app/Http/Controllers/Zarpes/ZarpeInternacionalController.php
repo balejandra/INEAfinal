@@ -789,12 +789,14 @@ class ZarpeInternacionalController extends Controller
         $cedula=$_REQUEST['nrodoc'];
         $funcion=$_REQUEST['funcion'];
         $doc=$_REQUEST['doc'];
+        $nrodoc=$_REQUEST['nrodoc'];
+
 
         $vj = [];
         $indice=false;
         $tripulantes = $request->session()->get('tripulantes');
         $capitanExiste=false;
-         dd($tripulantes);
+         
         switch ($funcion) {
             case 'Capitán':
                  $cap="SI";
@@ -888,13 +890,21 @@ class ZarpeInternacionalController extends Controller
                         $vj = $this->validacionJerarquizacion($InfoMarino[0]->documento, $cap);
 
                         if($indice==false && $vj[0]==true){
-                            if(count($tripulantes) <= $validation['cant_pasajeros']-1){
+                            
+
+                                if(count($tripulantes) <= $validation['cant_pasajeros']-1){
                                 array_push($tripulantes, $trip);
                                 $request->session()->put('tripulantes', $tripulantes);
-                            }else{
-                                $InfoMarino = "FoundButMaxTripulationLimit";
-                            }
+                                $InfoMarino='OK';
+                                }else{
+                                    $InfoMarino = "FoundButMaxTripulationLimit";
+                                }
 
+                            
+                            
+
+                        }else{
+                             $InfoMarino = "TripulanteExiste";
                         }
 
                     }
