@@ -1631,7 +1631,16 @@ public function AddDocumentos(Request $request){
         $pasaporte_menor=$filenamepasp;
     }
 
-         echo json_encode(['OK',$partida_nacimiento,$autorizacion,$pasaporte_menor]);
+    $pasaporte_mayor='';
+    if ($request->hasFile('pasaporte_mayor')) {
+
+        $pasaporte_mayor = $request->file('pasaporte_mayor');
+        $filenamepaspmay= date('dmYGi') . $pasaporte_mayor->getClientOriginalName();
+        $avatar1 = $pasaporte_mayor->move(public_path() . '/documentos/permisozarpe', $filenamepaspmay);
+        $pasaporte_mayor=$filenamepaspmay;
+    }
+
+         echo json_encode(['OK',$partida_nacimiento,$autorizacion,$pasaporte_menor,$pasaporte_mayor]);
 }
 
     public function AddPassenger(Request $request){

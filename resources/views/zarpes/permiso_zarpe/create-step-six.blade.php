@@ -45,7 +45,7 @@
                                                 </ul>
                                             </div>
                                         @endif
-                                        <div class="row px-5" id="msj"  data-asset="{{asset('images')}}">
+                                        <div class="row px-5" id="msj" data-asset="{{asset('images')}}">
                                         </div>
 
                                         <div class="row px-0 mx-0">
@@ -56,61 +56,72 @@
                                                 </div>
                                             </div>
 
-                                        <div class="col  my-1">
-                                          <label   for="numero_identificacion">Cédula / Pasaporte</label>
-                                          <div class="input-group">
+                                            <div class="col-md-3 my-1">
+                                                <div class="form-group">
+                                                    <label for="numero_identificacion">Cédula / Pasaporte</label>
+                                                    <input type="text" class="form-control" id="numero_identificacion"
+                                                           placeholder="Cédula / Pasaporte" maxlength="10">
+                                                </div>
+                                            </div>
 
-                                            <input type="text" class="form-control" id="numero_identificacion" placeholder="Cédula / Pasaporte"  maxlength="10" >
-                                          </div>
-                                        </div>
-
-                                        <div class="col my-1">
-                                          <label   for="fecha_nacimiento">Fecha de nacimiento</label>
-                                          <div class="input-group">
-
-                                            <input type="date" class="form-control" id="fecha_nacimiento" placeholder="Fecha de nacimiento" maxlength="10" value="{{ old('fecha_nacimiento') }}" max='{{date("Y-m-d")}}' required>
-                                          </div>
-                                        </div>
+                                            <div class="col-md-3 my-1">
+                                                <div class="form-group">
+                                                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                                                    <input type="date" class="form-control" id="fecha_nacimiento"
+                                                           placeholder="Fecha de nacimiento" maxlength="10"
+                                                           value="{{ old('fecha_nacimiento') }}" max='{{date("Y-m-d")}}'
+                                                           required>
+                                                </div>
+                                            </div>
 
 
-                                        <div class="col my-1 px-1">
+                                            <div class="col-md-3 my-1">
                                                 <div class="form-group">
                                                     <label for="title">Sexo:</label>
                                                     {!! Form::select('sexo', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexo']) !!}
                                                 </div>
                                             </div>
 
-                                          <div class="col  my-1 DatosRestantes">
-                                              <label   for="nombres">Nombres</label>
-                                              <div class="input-group">
+                                            <div class="col-md-4  my-1 DatosRestantes">
+                                                <label for="nombres">Nombres</label>
+                                                <div class="input-group">
 
-                                                <input type="text" class="form-control" id="nombres" placeholder="Nombres" name="nombres"  maxlength="40" >
-                                              </div>
+                                                    <input type="text" class="form-control" id="nombres"
+                                                           placeholder="Nombres" name="nombres" maxlength="40">
+                                                </div>
                                             </div>
 
-                                        <div class="col  my-1 DatosRestantes">
-                                          <label   for="nombres">Apellidos</label>
-                                          <div class="input-group">
+                                            <div class="col-md-4  my-1 DatosRestantes">
+                                                <label for="nombres">Apellidos</label>
+                                                <div class="input-group">
 
-                                            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" name="apellidos"  maxlength="40" >
-                                          </div>
+                                                    <input type="text" class="form-control" id="apellidos"
+                                                           placeholder="Apellidos" name="apellidos" maxlength="40">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4  my-1 DatosRestantes">
+                                                <label for="documento">Pasaporte</label>
+                                                <div class="input-group">
+                                                    <input type="file" class="form-control" name="pasaporte_mayor"
+                                                           id="pasaporte_mayor" accept="application/pdf, image/*">
+                                                </div>
+                                            </div>
                                         </div>
-
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col  text-center">
-                                                <button type="button" class="btn btn-primary" onclick="getDataPassengers()">
+                                            <br>
+                                        <div class="row">
+                                            <div class="col  text-center">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="getDataPassengers()">
                                                     Agregar
                                                 </button>
+                                            </div>
                                         </div>
-                                    </div>
 
 
-                                    <div class="row">
+                                        <div class="row">
 
-                                        <div class="col-md-12 py-2">
+                                            <div class="col-md-12 py-2">
                                                 <b>Cantidad de pasajeros disponible para esta embarcación:</b>
                                                 <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
                                                     {{ $cantPasajeros ?? '' }}
@@ -146,8 +157,9 @@
                                                             $cant=count($passengers);
                                                         @endphp
                                                         @foreach($passengers as $position)
-                                                            <tr  id='{{$position["nro_doc"]}}' >
-                                                                <td>{{$position["tipo_doc"]}}-{{$position["nro_doc"]}} </td>
+                                                            <tr id='{{$position["nro_doc"]}}'>
+                                                                <td>{{$position["tipo_doc"]}}
+                                                                    -{{$position["nro_doc"]}} </td>
                                                                 <td>{{$position["nombres"]}}</td>
                                                                 <td>{{$position["apellidos"]}}</td>
                                                                 <td class="text-center">{{$position["sexo"]}}</td>
@@ -159,15 +171,21 @@
                                                                 @endif
                                                                 <td class="text-center">{{$position["representante"]}}</td>
                                                                 <td>
-                                                                     @php
+                                                                    @php
                                                                         $tipodoc=$position["tipo_doc"];
                                                                     @endphp
                                                                     @if(!$position["menor_edad"])
-                                                                    <a href='#' onclick="openModalPassengers('{{$tipodoc}}','{{$position["nro_doc"]}}', 2)" ><i class='fa fa-user' title='Agregar menor representado'></i></a>
-                                                                    &nbsp;&nbsp;
+                                                                        <a href='#'
+                                                                           onclick="openModalPassengers('{{$tipodoc}}','{{$position["nro_doc"]}}', 2)"><i
+                                                                                class='fa fa-user'
+                                                                                title='Agregar menor representado'></i></a>
+                                                                        &nbsp;&nbsp;
                                                                     @endif
 
-                                                                    <a href='#' onclick="openModalPassengers('{{$tipodoc}}','{{$position["nro_doc"]}}', 1)" ><i class='fa fa-trash' title='Eliminar'></i></a>
+                                                                    <a href='#'
+                                                                       onclick="openModalPassengers('{{$tipodoc}}','{{$position["nro_doc"]}}', 1)"><i
+                                                                            class='fa fa-trash'
+                                                                            title='Eliminar'></i></a>
                                                                 </td>
 
                                                             </tr>
@@ -177,25 +195,25 @@
                                                 </table>
                                             </div>
 
+                                        </div>
+
+
                                     </div>
-
-
-                                </div>
                             </form>
-                            <!--<form action="#" method="POST">
+                        <!--<form action="#" method="POST">
                                 @csrf
-                                <div class="card">
-                                    <div class="card-body">
-                                        @if ($errors->any())
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
+                            <div class="card">
+                                <div class="card-body">
+@if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+@foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
                                                     @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
-                                        <div class="row px-5" id="msj"  data-asset="{{asset('images')}}">
+                                </ul>
+                            </div>
+@endif
+                            <div class="row px-5" id="msj"  data-asset="{{asset('images')}}">
                                         </div>
                                         <div class="row" id="VE">
 
@@ -213,24 +231,24 @@
                                                 <div class="form-group">
                                                     <label for="title">Tipo doc..:</label>
                                                     {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
-                                                </div>
-                                            </div>
+                            </div>
+                        </div>
 
-                                            <div class="col-md-2 px-1">
-                                                <div class="form-group">
-                                                    <label for="title">Cédula/Pasaporte:</label>
-                                                    <input type="text" class="form-control" id="numero_identificacion"
-                                                           name="numero_identificacion" maxlength="10"
-                                                           title="En caso de ser menor venezolano no cedulado, agregue la cédula del representante.">
-                                                </div>
-                                            </div>
+                        <div class="col-md-2 px-1">
+                            <div class="form-group">
+                                <label for="title">Cédula/Pasaporte:</label>
+                                <input type="text" class="form-control" id="numero_identificacion"
+                                       name="numero_identificacion" maxlength="10"
+                                       title="En caso de ser menor venezolano no cedulado, agregue la cédula del representante.">
+                            </div>
+                        </div>
 
-                                            <div class="col-md-2 px-1">
-                                                <div class="form-group">
-                                                    <label for="title">Fecha de nacimiento:</label>
-                                                    <input type="date"
-                                                           class="form-control "
-                                                           name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}"
+                        <div class="col-md-2 px-1">
+                            <div class="form-group">
+                                <label for="title">Fecha de nacimiento:</label>
+                                <input type="date"
+                                       class="form-control "
+                                       name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}"
                                                            id="fecha_nacimiento"
                                                            placeholder="fecha_nacimiento" required
                                                            max='{{date("Y-m-d")}}'>
@@ -241,64 +259,64 @@
                                                 <div class="form-group">
                                                     <label for="title">Sexo:</label>
                                                     {!! Form::select('sexo', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexo']) !!}
-                                                </div>
-                                            </div>
+                            </div>
+                        </div>
 
-                                            <div class="col-md-2 mt-4">
-                                                <button type="button" class="btn btn-primary" onclick="getData()">
-                                                    Agregar
-                                                </button>
-                                            </div>
+                        <div class="col-md-2 mt-4">
+                            <button type="button" class="btn btn-primary" onclick="getData()">
+                                Agregar
+                            </button>
+                        </div>
 
-                                        </div>
+                    </div>
 
-                                        <div class="row mb-3">
-                                            <div class="col-md-5 px-1 DatosRestantes" style="display:none">
-                                                <div class="form-group">
-                                                    <label for="title">Nombre:</label>
-                                                    <input type="text" class="form-control" id="nombres" name="nombres">
-                                                </div>
-                                            </div>
+                    <div class="row mb-3">
+                        <div class="col-md-5 px-1 DatosRestantes" style="display:none">
+                            <div class="form-group">
+                                <label for="title">Nombre:</label>
+                                <input type="text" class="form-control" id="nombres" name="nombres">
+                            </div>
+                        </div>
 
-                                            <div class="col-md-5 px-1 DatosRestantes" style="display:none">
-                                                <div class="form-group">
-                                                    <label for="title">Apellidos:</label>
-                                                    <input type="text" class="form-control" id="apellidos"
-                                                           name="apellidos">
-                                                </div>
-                                            </div>
-                                        </div>
+                        <div class="col-md-5 px-1 DatosRestantes" style="display:none">
+                            <div class="form-group">
+                                <label for="title">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellidos"
+                                       name="apellidos">
+                            </div>
+                        </div>
+                    </div>
 
-                                        <div class="row px-3">
+                    <div class="row px-3">
 
 
-                                            <div class="col-md-12 py-2">
-                                                <b>Cantidad de pasajeros disponible para esta embarcación:</b>
-                                                <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
+                        <div class="col-md-12 py-2">
+                            <b>Cantidad de pasajeros disponible para esta embarcación:</b>
+                            <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
                                                     {{ $cantPasajeros ?? '' }}
-                                                </span>
-                                            </div>
+                            </span>
+                        </div>
 
-                                                <table id="table-scroll" class="table table-bordered" style="width:100%">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Cédula</th>
-                                                        <th>Nombres</th>
-                                                        <th>Apellidos</th>
-                                                        <th>sexo</th>
-                                                        <th>Fecha nac.</th>
-                                                        <th width="5%">Menor</th>
-                                                        <th width="5%">Representante</th>
-                                                        <th width="5%">Acciones</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="pasajeros">
+                            <table id="table-scroll" class="table table-bordered" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Cédula</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>sexo</th>
+                                    <th>Fecha nac.</th>
+                                    <th width="5%">Menor</th>
+                                    <th width="5%">Representante</th>
+                                    <th width="5%">Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody id="pasajeros">
 
-                                                </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        </form>
 -->
 
                             <form action="{{ route('permisoszarpes.permissionCreateStepSix') }}" method="POST">
@@ -337,138 +355,155 @@
                                         </div>
                                     </div>
                                 </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
 
 
-<div class="modal fade" id="deletePassengerModal" tabindex="-1" aria-labelledby="deletePassengerModalLabel" aria-modal="true"
-    role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación de pasajero</h5>
-                <button type="button" class="close" aria-label="Close" onclick="closeModalPassengers(1)">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ¿Realmente desea eliminar al Pasajero (<span id='ci'></span>) seleccionado?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModalPassengers(1)">Cerrar</button>
-                <button type="button" id="btnDelete" class="btn btn-primary" data-ced='' onclick="deletePassenger()">Eliminar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
-
-
-
-
-<div class="modal fade" id="AddPassengerModal" tabindex="-1" aria-labelledby="AddPassengerModalLabel" aria-modal="true"
-    role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="AddPassengerModalLabel">Agregar menor representado por: <span id='ci2'></span></h5>
-                <button type="button" class="close" aria-label="Close" onclick="closeModalPassengers(2)">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="errorModalPass" data-asset="{{asset('images')}}"></div>
-                {!! Form::open(['files' => true,'id'=>'FormPassengersMenor']) !!}
-                       @csrf
-
-                       <div class="row px-0 mx-0">
-                            <div class="col-md-2 my-1 px-1">
-                                <div class="form-group">
-                                    <label for="title">Tipo doc.:</label>
-                                    {!! Form::select('tipodocmenor', ['V'=>'Cédula', 'P'=>'Pasaporte', 'NC'=>'No cedulado'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodocmenor']) !!}
-                                </div>
-
-                            </div>
-
-                            <div class="col  my-1">
-                                <label   for="numero_identificacion">Cédula / Pasaporte</label>
-                                <div class="input-group">
-
-                                    <input type="text" class="form-control" id="numero_identificacionMenor" placeholder="Cédula / Pasaporte"  maxlength="10" onblur="blurSaime()">
-                                </div>
-                            </div>
-
-                            <div class="col my-1">
-                                          <label   for="fecha_nacimientoMenor">Fecha de nacimiento</label>
-                                          <div class="input-group">
-
-                                            <input type="date" class="form-control" id="fecha_nacimientoMenor" placeholder="Fecha de nacimiento" maxlength="10" value="{{ old('fecha_nacimientoMenor') }}" max='{{date("Y-m-d")}}' required onblur="blurSaime()">
-                                          </div>
-                                        </div>
-
-                        </div>
-
-                        <div class="row px-0 mx-0">
-
-                            <div class="col-md-2 my-1 px-1">
-                                <div class="form-group">
-                                    <label for="title">Sexo:</label>
-                                    {!! Form::select('sexoMenor', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexoMenor']) !!}
-                                </div>
-                            </div>
-
-
-                            <div class="col  my-1 DatosRestantes2">
-                                <label   for="nombres">Nombres</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="nombresMenor" placeholder="Nombres" name="nombresMenor"  maxlength="40" >
-                                </div>
-                            </div>
-
-                            <div class="col  my-1 DatosRestantes2">
-                                <label   for="nombres">Apellidos</label>
-                                <div class="input-group">
-
-                                    <input type="text" class="form-control" id="apellidosMenor" placeholder="Apellidos" name="apellidosMenor"  maxlength="40" >
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('documento_1', 'Partida de nacimiento (Obligatorio):') !!}
-                                <input type="file" class="form-control" name="partida_nacimiento" id="partida_nacimiento" accept="application/pdf, image/*" required>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                {!! Form::label('documento_1', 'Autorización (Si amerita):') !!}
-                                <input type="file" class="form-control" name="autorizacion" id="autorizacion" accept="application/pdf, image/*" >
-                            </div>
-                        </div>
-                <div class="row">
-                    <div class="form-group col-sm-6">
-                        {!! Form::label('documento_1', 'Pasaporte (Obligatorio):') !!}
-                        <input type="file" class="form-control" name="pasaporte_menor" id="pasaporte_menor" accept="application/pdf, image/*" required>
-                    </div>
+    <div class="modal fade" id="deletePassengerModal" tabindex="-1" aria-labelledby="deletePassengerModalLabel"
+         aria-modal="true"
+         role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación de pasajero</h5>
+                    <button type="button" class="close" aria-label="Close" onclick="closeModalPassengers(1)">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-
-                        <input type="hidden" class="form-control" id="representanteMenor" placeholder="Nombres" name="representanteMenor"  maxlength="40" >
-                {!! Form::close() !!}
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModalPassengers(2)">Cerrar</button>
-                <button type="button" id="btnAdd" class="btn btn-primary" data-ced='' onclick="AddPassengerMenor()">Agregar</button>
+                <div class="modal-body">
+                    ¿Realmente desea eliminar al Pasajero (<span id='ci'></span>) seleccionado?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModalPassengers(1)">Cerrar</button>
+                    <button type="button" id="btnDelete" class="btn btn-primary" data-ced=''
+                            onclick="deletePassenger()">Eliminar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+    <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+
+
+
+
+    <div class="modal fade" id="AddPassengerModal" tabindex="-1" aria-labelledby="AddPassengerModalLabel"
+         aria-modal="true"
+         role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddPassengerModalLabel">Agregar menor representado por: <span
+                            id='ci2'></span></h5>
+                    <button type="button" class="close" aria-label="Close" onclick="closeModalPassengers(2)">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="errorModalPass" data-asset="{{asset('images')}}"></div>
+                    {!! Form::open(['files' => true,'id'=>'FormPassengersMenor']) !!}
+                    @csrf
+
+                    <div class="row px-0 mx-0">
+                        <div class="col-md-2 my-1 px-1">
+                            <div class="form-group">
+                                <label for="title">Tipo doc.:</label>
+                                {!! Form::select('tipodocmenor', ['V'=>'Cédula', 'P'=>'Pasaporte', 'NC'=>'No cedulado'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodocmenor']) !!}
+                            </div>
+
+                        </div>
+
+                        <div class="col  my-1">
+                            <label for="numero_identificacion">Cédula / Pasaporte</label>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" id="numero_identificacionMenor"
+                                       placeholder="Cédula / Pasaporte" maxlength="10" onblur="blurSaime()">
+                            </div>
+                        </div>
+
+                        <div class="col my-1">
+                            <label for="fecha_nacimientoMenor">Fecha de nacimiento</label>
+                            <div class="input-group">
+
+                                <input type="date" class="form-control" id="fecha_nacimientoMenor"
+                                       placeholder="Fecha de nacimiento" maxlength="10"
+                                       value="{{ old('fecha_nacimientoMenor') }}" max='{{date("Y-m-d")}}' required
+                                       onblur="blurSaime()">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row px-0 mx-0">
+
+                        <div class="col-md-2 my-1 px-1">
+                            <div class="form-group">
+                                <label for="title">Sexo:</label>
+                                {!! Form::select('sexoMenor', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexoMenor']) !!}
+                            </div>
+                        </div>
+
+
+                        <div class="col  my-1 DatosRestantes2">
+                            <label for="nombres">Nombres</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="nombresMenor" placeholder="Nombres"
+                                       name="nombresMenor" maxlength="40">
+                            </div>
+                        </div>
+
+                        <div class="col  my-1 DatosRestantes2">
+                            <label for="nombres">Apellidos</label>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" id="apellidosMenor" placeholder="Apellidos"
+                                       name="apellidosMenor" maxlength="40">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            {!! Form::label('documento_1', 'Partida de nacimiento (Obligatorio):') !!}
+                            <input type="file" class="form-control" name="partida_nacimiento" id="partida_nacimiento"
+                                   accept="application/pdf, image/*" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            {!! Form::label('documento_1', 'Autorización (Si amerita):') !!}
+                            <input type="file" class="form-control" name="autorizacion" id="autorizacion"
+                                   accept="application/pdf, image/*">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            {!! Form::label('documento_1', 'Pasaporte (Obligatorio):') !!}
+                            <input type="file" class="form-control" name="pasaporte_menor" id="pasaporte_menor"
+                                   accept="application/pdf, image/*" required>
+                        </div>
+                    </div>
+
+                    <input type="hidden" class="form-control" id="representanteMenor" placeholder="Nombres"
+                           name="representanteMenor" maxlength="40">
+                    {!! Form::close() !!}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModalPassengers(2)">Cerrar</button>
+                    <button type="button" id="btnAdd" class="btn btn-primary" data-ced='' onclick="AddPassengerMenor()">
+                        Agregar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
 
 
 

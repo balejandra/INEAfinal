@@ -746,6 +746,30 @@ console.log(formData);
             }
             console.log(resps);
         });
+    }else{
+        let pasaportemayor=document.getElementById('pasaporte_mayor').files[0];
+
+        var formData = new FormData();
+        formData.append('pasaporte_mayor', pasaportemayor);
+        console.log(formData);
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route('AddDocumentos'),
+            type: "POST",
+            dataType: "html",
+            data:formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (response){
+            let resps=JSON.parse(response);
+            if(resps[0] =='OK'){
+                partida=resps[1];
+                auth=resps[2];
+                pasaporte=resps[3];
+            }
+            console.log(resps);
+        });
     }
 
 
