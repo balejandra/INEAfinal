@@ -1225,6 +1225,13 @@ class PermisoZarpeController extends Controller
     public function show($id)
     {
         $permisoZarpe = PermisoZarpe::find($id);
+        if ($permisoZarpe->bandera=='extranjera') {
+            $buque=PermisoEstadia::where('id',$permisoZarpe->permiso_estadia_id)->first();
+        }else {
+            $buque=Renave_data::where('matricula_actual',$permisoZarpe->matricula)->first();
+        }
+        $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
+//dd($validacionSgm);
         $tripulantes = Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id', $id)->get();
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
         $tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
@@ -1247,6 +1254,8 @@ class PermisoZarpeController extends Controller
 
         return view('zarpes.permiso_zarpe.show')
             ->with('permisoZarpe', $permisoZarpe)
+            ->with('buque',$buque)
+            ->with('certificados', $validacionSgm)
             ->with('tripulantes', $tripulantes2)
             ->with('pasajeros', $pasajeros)
             ->with('equipos', $equipos)
