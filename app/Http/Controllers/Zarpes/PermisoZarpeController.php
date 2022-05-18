@@ -648,7 +648,7 @@ class PermisoZarpeController extends Controller
 
         $passengers = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
-        
+
         $tripulantes=$request->session()->get('tripulantes');
         $cantPasajeros = $validation['cantPassAbordo'];
         $this->step = 6;
@@ -659,9 +659,9 @@ class PermisoZarpeController extends Controller
 
     public function permissionCreateStepSix(Request $request)
     {
-         
-          
-         
+
+
+
         $this->step = 7;
         return redirect()->route('permisoszarpes.createStepSeven');
 
@@ -815,7 +815,7 @@ class PermisoZarpeController extends Controller
         $borrado=false;
         $tripulantes = $request->session()->get('tripulantes');
         $validation = json_decode($request->session()->get('validacion'), true);
-       
+
        if(count($tripulantes)==1){
                 $tripulantes=[];
                 $request->session()->put('tripulantes', $tripulantes);
@@ -836,7 +836,7 @@ class PermisoZarpeController extends Controller
                 }
             }
         }
-        
+
         echo $borrado;
     }
 
@@ -1222,8 +1222,17 @@ class PermisoZarpeController extends Controller
         $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
 //dd($validacionSgm);
         $tripulantes = Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id', $id)->get();
+        $tripulacion= Tripulante::where('permiso_zarpe_id', $id)->get();
+       // dd($tripulacion);
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
-        $tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
+
+        $tripulantes2 = DB::table('zarpes.tripulantes')
+            ->join('gmar.licencias_titulos_gmar', DB::raw('CAST(licencias_titulos_gmar.id AS TEXT)'), '=', 'tripulantes.ctrl_documento_id')
+            ->where('permiso_zarpe_id', $id)
+            ->select('licencias_titulos_gmar.*', 'tripulantes.funcion')
+            ->get();
+
+       // $tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
         $equipos = EquipoPermisoZarpe::where('permiso_zarpe_id', $id)->get();
         $revisiones = ZarpeRevision::where('permiso_zarpe_id', $id)->get();
 

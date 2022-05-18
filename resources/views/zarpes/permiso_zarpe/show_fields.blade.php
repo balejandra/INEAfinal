@@ -80,8 +80,8 @@
         <table class="table table-bordered">
             <tbody>
             <thead>
-            <th class="bg-light col-md-2">Tipo de Certificado</th>
-            <th class="bg-light col-md-2">Fecha de Expedición</th>
+            <th>Tipo de Certificado</th>
+            <th>Fecha de Expedición</th>
             </thead>
 
             @forelse($certificados as $certificado)
@@ -103,14 +103,18 @@
                 <th>Nombres y Apellidos</th>
                 <th>Cédula</th>
                 <th>Documento</th>
+                <th>Posicion</th>
                 <th>Fecha vencimiento</th>
+                <th>Cargo que desempeña</th>
                 </thead>
                 @forelse($tripulantes as $tripulante)
                     <tr>
                         <td>{{$tripulante->nombre}} {{$tripulante->apellido}} </td>
                         <td>{{$tripulante->ci}}</td>
+                        <td>{{$tripulante->solicitud}}</td>
                         <td>{{$tripulante->documento}} </td>
                         <td>{{$tripulante->fecha_vencimiento}} </td>
+                        <td>{{$tripulante->funcion}} </td>
                         @empty
                             <span class="badge badge-danger">Sin Tripulantes</span>
                     </tr>
@@ -128,6 +132,7 @@
             <th>Documentacion</th>
             <th>Sexo</th>
             <th>menor</th>
+            <th>Documentos</th>
 
             </thead>
             @forelse($pasajeros as $pasajero)
@@ -137,8 +142,28 @@
                     <td>{{$pasajero->sexo}} </td>
                     @if($pasajero->menor_edad==true)
                         <td>SI</td>
+                        <td>
+                            @if ($pasajero->pasaporte_menor)
+                                <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_menor)}}" target="_blank">
+                                    Pasaporte</a> <br>
+                            @endif
+                            @if ($pasajero->partida_nacimiento)
+                                    <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->partida_nacimiento)}}" target="_blank">
+                                        Partida de Nacimiento</a> <br>
+                                @endif
+                            @if ($pasajero->autorizacion)
+                                    <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->autorizacion)}}" target="_blank">
+                                            Autorización</a>
+                                @endif
+
+                        </td>
                     @else
                         <td>NO</td>
+                        <td> @if ($pasajero->pasaporte_mayor)
+                                <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_mayor)}}" target="_blank">
+                                Pasaporte</a>
+                                 @endif
+                           </td>
                     @endif
                     @empty
                         <span class="badge badge-danger">Sin Pasajeros</span>
@@ -312,3 +337,4 @@
             </a>
         @endif
     </div>
+</div>
