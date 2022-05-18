@@ -1,11 +1,11 @@
-<table class="table table-striped table-bordered" id="users-table" style="width:100%">
+<table class="table table-striped table-bordered" id="generic-table" style="width:100%">
     <thead>
         <th>UAB minimo</th>
         <th>UAB maximo</th>
         <th>Tripulantes</th>
         <th>Cargo</th>
         <th>Titulacion Minima</th>
-        <th>Acciones</th>
+        <th  style="width: max-content">Acciones</th>
     </thead>
     <tbody>
     @foreach($tablaMandos as $tablaMando)
@@ -20,7 +20,7 @@
                 <span class="badge badge-danger">Sin Cargos asignados</span>
             @endforelse
             </td>
-            <td>
+            <td  style="width: 30%">
                 @forelse($tablaMando->cargotablamandos as $cargotablamando)
                     <span class="badge badge-info">{{$cargotablamando->titulacion_aceptada_minima}} </span>
                 @empty

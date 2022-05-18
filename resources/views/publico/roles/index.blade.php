@@ -44,7 +44,7 @@
                         <div class="card-body">
 
 
-                            <table class="table table-striped table-bordered" style="width:100%" id="TableRoles">
+                            <table class="table table-striped table-bordered" style="width:100%" id="generic-table">
                                 <thead>
                                 <th>ID</th>
                                 <th>Nombre</th>

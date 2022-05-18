@@ -14,7 +14,7 @@
     </tr>
 
     <tr>
-        <th class="bg-light">Created At</th>
+        <th class="bg-light">Creado</th>
         <td>{{ $tablaMando->created_at }}</td>
     </tr>
     </tbody>

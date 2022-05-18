@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Zarpes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Zarpes\CreateTablaMandoRequest;
 use App\Http\Requests\Zarpes\UpdateTablaMandoRequest;
+use App\Models\Zarpes\CargoTablaMando;
 use App\Repositories\Zarpes\TablaMandoRepository;
 use Illuminate\Http\Request;
 
@@ -91,6 +92,8 @@ class TablaMandoController extends Controller
     public function edit($id)
     {
         $tablaMando = $this->tablaMandoRepository->find($id);
+        $coords=CargoTablaMando::select(['id','tabla_mando_id', 'titulacion_aceptada_minima', 'cargo_desempena','titulacion_aceptada_maxima'])
+            ->where('cargo_tabla_mandos.tabla_mando_id', '=', $id)->get();
 
         if (empty($tablaMando)) {
             Flash::error('Tabla Mando not found');
@@ -98,7 +101,9 @@ class TablaMandoController extends Controller
             return redirect(route('tablaMandos.index'));
         }
 
-        return view('zarpes.tabla_mando.edit')->with('tablaMando', $tablaMando);
+        return view('zarpes.tabla_mando.edit')
+            ->with('tablaMando', $tablaMando)
+            ->with('coordenadas',$coords);
     }
 
     /**

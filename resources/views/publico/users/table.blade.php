@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered" id="users-table" style="width:100%">
+<table class="table table-striped table-bordered" id="generic-table" style="width:100%">
     <thead>
         <th>Id</th>
         <th>Email</th>

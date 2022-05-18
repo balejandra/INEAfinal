@@ -15,7 +15,7 @@ class RoleController extends Controller
      */
     public function __construct()
     {
-        
+
         $this->middleware('permission:listar-rol', ['only'=>['index'] ]);
         $this->middleware('permission:crear-rol', ['only'=>['create','store']]);
         $this->middleware('permission:editar-rol', ['only'=>['edit','update']]);
@@ -40,7 +40,7 @@ class RoleController extends Controller
         $permissions=Permission::all()->pluck('name','id');
         //dd($permissions);
         return view('publico.roles.create', compact('permissions'));
-        
+
     }
 
     /**
@@ -52,10 +52,14 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required',
-            
-        ]);
-        
+            'name' => 'required|unique:roles|max:255',
+
+        ],
+        [
+        'name.unique'=>'Rol ya registrado',
+            ]
+    );
+
         $role= Role::create($request->only('name'));
         $role->permissions()->sync($request->input('permissions', [] ));
         return redirect()->route('roles')->with('success','Rol creado con exito.');
@@ -107,7 +111,7 @@ class RoleController extends Controller
         $role->name=$request->input('name');
         $role->save();*/
         return redirect()->route('roles')->with('success','Información actualizada con exito.');
-        
+
     }
 
     /**

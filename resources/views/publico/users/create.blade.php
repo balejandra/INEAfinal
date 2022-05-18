@@ -34,7 +34,13 @@
                                 <!-- Email Field -->
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('email', 'Email:') !!}
-                                        {!! Form::email('email', null, ['class' => 'form-control','required']) !!}
+                                        <input type="email"
+                                               class="form-control {{ $errors->has("email")?"is-invalid":"" }}"
+                                               name="email"
+                                               value="{{ old('email') }}" placeholder="Email" required>
+                                        @error('email')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
                                     <!-- Nombres Field -->
@@ -46,7 +52,10 @@
                                     <!-- Password Field -->
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('password', 'Contraseña:') !!}
-                                        <input type="password" class="form-control" id="password" name="password" required>
+                                        <input type="password" class="form-control {{ $errors->has('password')?'is-invalid':''}}" id="password" name="password" required>
+                                        @error('password')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                         {!! Form::label('password', 'Confirmar Contraseña:') !!}
                                         <input type="password" name="password_confirmation" class="form-control" required
                                                placeholder={{ __('Confirm Password') }}>

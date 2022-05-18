@@ -7,9 +7,25 @@ function inputcant() {
 }
 
 //-------------------Tooltips----------------------------
-$(document).ready(function(){
+$(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $(".CHALECOS").prop('required', true);
+
+    let elements = document.getElementById(1);
+    if (elements) {
+        elements.oninvalid = function (e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("Marque la casilla, Para generar la solicitud es obligatorio incluir la cantidad de salvavidas que tiene en la embarcación");
+            }
+        };
+        elements.oninput = function (e) {
+            e.target.setCustomValidity("");
+        };
+
+    } else {
+    }
+
 });
 
 function motivoRechazo() {
@@ -146,6 +162,63 @@ function eliminarCoordenadasDF(id, idcoord){
 
 //-----------------------------------------------------------------------------------------
 
+//-------------------------------------------------------------------------------
+
+function agregarcargosMandos(){
+
+    var coords1=document.getElementById('coords1');
+    let cantAct=coords1.getAttribute('data-cant');
+    cantAct<=0 ? cantAct=1 : cantAct++;
+
+
+    const divrow= document.createElement("div");
+    divrow.classList.add("row");
+    divrow.id="coordenadas"+cantAct;
+
+    const divids=document.createElement("div");
+    divids.innerHTML=`<input class="form-control" name="ids[]" type="hidden" >`;
+
+    const divlat=document.createElement("div");
+    divlat.classList.add("form-group", "col-sm-5");
+    divlat.innerHTML=`
+            <input class="form-control" name="latitud[]" id="lat`+cantAct+`" type="text">`;
+
+
+    const divlon=document.createElement("div");
+    divlon.classList.add("form-group", "col-sm-5");
+    divlon.innerHTML=`
+            <input class="form-control" name="longitud[]" id="lon`+cantAct+`"  type="text">`;
+
+    const divbtn=document.createElement("div");
+    divbtn.classList.add("form-group", "col-sm-2");
+    divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">Borrar</button>`;
+
+    divrow.appendChild(divids);
+    divrow.appendChild(divlat);
+    divrow.appendChild(divlon);
+    divrow.appendChild(divbtn);
+
+    coords.appendChild(divrow);
+
+    coords.setAttribute('data-cant', cantAct);
+//coords.innerHTML=  coords.innerHTML+campos;
+
+}
+
+function eliminarCoordenadasDF(id, idcoord){
+
+    if(id!=""){
+        const div = document.querySelector("#coordenadas"+id);
+        div.remove();
+    }
+    if(idcoord!=""){
+        const del = document.querySelector("#deletes"+id);
+        del.value=idcoord;
+    }
+
+}
+
+//-----------------------------------------------------------------------------------------
 
 //INICIO VALIDACIONES DE PERMISOS DE ZARPES
 
@@ -730,7 +803,7 @@ function subirDocumentos(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
         formData.append('partida_nacimiento', partidaNacimiento);
         formData.append('autorizacion', autorizacion);
         formData.append('pasaporte_menor', pasaporte);
- 
+
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: route('AddDocumentos'),
@@ -753,7 +826,7 @@ function subirDocumentos(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
 
 
             }
-             
+
         });
     }else{
         let pasaportemayor=document.getElementById('pasaporte_mayor').files[0];
@@ -781,13 +854,13 @@ function subirDocumentos(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
                 addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante, resps);
 
             }
-            
+
         });
     }
 
 }
 
-    
+
 
 function addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante,documentos){
     let msj=document.getElementById('msj');
@@ -1540,7 +1613,7 @@ function estNauticoDestinoSelect(idCapitania){
                 console.log("fallo al buscar establecimientos nautico destino ");
             });
     }
-    
+
 }
 
 

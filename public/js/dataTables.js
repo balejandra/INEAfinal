@@ -226,16 +226,3 @@ $(document).ready(function() {
 } );
 
 
-$(document).ready(function() {
-    $('#generic-table').DataTable({
-        responsive: true,
-        fixedHeader: true,
-        language: {
-            "url": "../assets/DataTables/es_es.json"
-        },
-        dom: 'Blfrtp',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-} );

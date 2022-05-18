@@ -20,13 +20,13 @@
     <table class="table">
         <tbody>
         <tr>
-            <th class="bg-light col-md-2">Nro de Solicitud</th>
+            <th class="bg-light">Nro de Solicitud</th>
             <td>{{ $permisoZarpe->nro_solicitud }}</td>
-            <th class="bg-light col-md-2">Fecha de Solicitud</th>
+            <th class="bg-light">Fecha de Solicitud</th>
             <td>{{ $permisoZarpe->created_at}}</td>
         </tr>
         <tr>
-            <th class="bg-light col-md-2">Nombre Solicitante</th>
+            <th class="bg-light">Nombre Solicitante</th>
             <td>{{ $permisoZarpe->user->nombres}} {{ $permisoZarpe->user->apellidos}}</td>
             <th class="bg-light">Bandera</th>
             <td>{{ $permisoZarpe->bandera }}</td>
@@ -77,7 +77,7 @@
     <div class="table-responsive">
         <strong>Certificados de Seguridad Marítima</strong>
 
-        <table class="table table-bordered">
+        <table class="table table-hover">
             <tbody>
             <thead>
             <th>Tipo de Certificado</th>
@@ -97,7 +97,7 @@
         <div class="table-responsive">
             <strong>Tripulantes</strong>
 
-            <table class="table table-bordered">
+            <table class="table table-hover">
                 <tbody>
                 <thead>
                 <th>Nombres y Apellidos</th>
@@ -125,7 +125,7 @@
 
         <strong>Pasajeros</strong>
 
-        <table class="table">
+        <table class="table table-hover">
             <tbody>
             <thead>
             <th>Nombres y Apellidos</th>
@@ -172,7 +172,7 @@
         </table>
         <br>
         <strong>Equipos de Seguridad</strong>
-        <table class="table">
+        <table class="table table-hover">
             <tbody>
             <thead>
             <tr>
@@ -207,7 +207,7 @@
         </table>
         <br>
         <strong>Historial de revisiones</strong>
-        <table class="table">
+        <table class="table table-hover">
             <tbody>
             <thead>
             <tr>

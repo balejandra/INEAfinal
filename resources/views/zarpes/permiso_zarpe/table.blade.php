@@ -1,13 +1,13 @@
 <table class="table table-striped table-bordered compact display" style="width:100%">
     <thead>
     <tr>
-        <th>Nro Solicitud</th>
+        <th data-priority="1">Nro Solicitud</th>
         <th>Fecha de Solicitud</th>
         <th>Solicitante</th>
         <th>Bandera</th>
         <th>Matricula</th>
         <th>Tipo Navegacion</th>
-        <th>Status</th>
+        <th data-priority="2">Status</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -15,7 +15,7 @@
     @foreach($permisoZarpes as $permisoZarpe)
         <tr>
             <td>{{ $permisoZarpe->nro_solicitud }}</td>
-            <td>{{ $permisoZarpe->created_at }}</td>
+            <td>{{ date_format($permisoZarpe->created_at,'d-m-Y') }}</td>
             <td>{{ $permisoZarpe->user->nombres }} {{ $permisoZarpe->user->apellidos }}</td>
             <td>{{ $permisoZarpe->bandera }}</td>
             <td>{{ $permisoZarpe->matricula }}</td>
