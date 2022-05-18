@@ -149,7 +149,7 @@ function eliminarCoordenadasDF(id, idcoord){
 
 //INICIO VALIDACIONES DE PERMISOS DE ZARPES
 
-     function getDataPassengers() {
+    function getDataPassengers() {
         let cedula= document.getElementById('numero_identificacion').value;
         let fechanac= document.getElementById('fecha_nacimiento').value;
         let sexo= document.getElementById('sexo').value;
@@ -180,9 +180,9 @@ function eliminarCoordenadasDF(id, idcoord){
                     //si llenaron los nombres y apellidos
                     let  pasajeroExiste=document.getElementById(cedula);
                     if(pasajeroExiste==null){
-                        var html="<tr id='"+cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>NO</td> <td class='text-center'> N/A </td> <td> <a href='#' onclick='openModalPassengers("+tipodoc+","+cedula+", 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+","+cedula+", 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
+                        var html="<tr id='"+cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>NO</td> <td class='text-center'> N/A </td> <td> <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
 
-                        addPassengers2('NO', tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html, '');
+                        subirDocumentos('NO', tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html, '');
                         msj.innerHTML="";
                     }else{
                         msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -216,11 +216,11 @@ function eliminarCoordenadasDF(id, idcoord){
                                 $('#apellidos').val(apellidos);
 
 
-                                    var html="<tr id='"+respuesta.cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td>NO</td> <td class='text-center'> N/A </td><td><a href='#' onclick='openModalPassengers("+tipodoc+","+respuesta.cedula+", 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+","+respuesta.cedula+", 1)' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
+                                    var html="<tr id='"+respuesta.cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td>NO</td> <td class='text-center'> N/A </td><td><a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
 
                                 //pass.innerHTML+=html;
 
-                                addPassengers2("NO", tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html,'');
+                                subirDocumentos("NO", tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html,'');
                                 msj.innerHTML="";
                             }else{
                                 msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -270,7 +270,7 @@ function eliminarCoordenadasDF(id, idcoord){
                     if(pasajeroExiste==null){
                         //var html="<tr id='"+cedula+"' data-menor='SI'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombresMenor').val()+"</td> <td>"+$('#apellidosMenor').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>SI</td> <td class='text-center'> N/A </td> <td>  <a href='#' onclick='openModalPassengers("+tipodoc+","+cedula+", 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
 
-                        addPassengers2('SI', tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(), '', representante);
+                        subirDocumentos('SI', tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(), '', representante);
 
                         msj.innerHTML="";
                         $('#numero_identificacionMenor').val("");
@@ -280,6 +280,10 @@ function eliminarCoordenadasDF(id, idcoord){
                                 $('#nombresMenor').val("");
                                 $('#apellidosMenor').val("");
                                 $('#representanteMenor').val("");
+                                $('#partida_nacimiento').val("");
+                                $('#autorizacion').val("");
+                                $('#pasaporte_menor').val("");
+                                $('#pasaporte_mayor').val("");
                         closeModalPassengers(2);
                 }else{
                         msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -297,7 +301,7 @@ function eliminarCoordenadasDF(id, idcoord){
                             //si no han llenado los nombres y apellidos
                             msj.innerHTML='<div class="alert alert-danger">Los campos nombres y apellidos son requeridos</div>' ;
                         }else{
-                         addPassengers2('SI', tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(), '', representante);
+                         subirDocumentos('SI', tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(), '', representante);
                         msj.innerHTML="";
                         $('#numero_identificacionMenor').val("");
                                 $('#fecha_nacimientoMenor').val("");
@@ -306,6 +310,10 @@ function eliminarCoordenadasDF(id, idcoord){
                                 $('#nombresMenor').val("");
                                 $('#apellidosMenor').val("");
                                 $('#representanteMenor').val("");
+                                $('#partida_nacimiento').val("");
+                                $('#autorizacion').val("");
+                                $('#pasaporte_menor').val("");
+                                $('#pasaporte_mayor').val("");
                                  closeModalPassengers(2);
 
                          }
@@ -336,7 +344,7 @@ function eliminarCoordenadasDF(id, idcoord){
                                 $('#apellidosMenor').val(apellidos);
 
 
-                                addPassengers2("SI", tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(),'',representante);
+                                subirDocumentos("SI", tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(),'',representante);
                                 msj.innerHTML="";
 
                                 $('#numero_identificacionMenor').val("");
@@ -711,12 +719,7 @@ $( "#tipodoc" )
   })
   .change();
 
-
-
-function addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante){
-    let msj=document.getElementById('msj');
-     let partida='';
-    let auth='';
+function subirDocumentos(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante){
 
     if(menor=='SI'){
        let partidaNacimiento=document.getElementById('partida_nacimiento').files[0];
@@ -727,7 +730,7 @@ function addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellid
         formData.append('partida_nacimiento', partidaNacimiento);
         formData.append('autorizacion', autorizacion);
         formData.append('pasaporte_menor', pasaporte);
-console.log(formData);
+ 
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: route('AddDocumentos'),
@@ -738,13 +741,19 @@ console.log(formData);
             contentType: false,
             processData: false
         }).done(function (response){
-            let resps=JSON.parse(response);
+            var resps=JSON.parse(response);
             if(resps[0] =='OK'){
                 partida=resps[1];
                 auth=resps[2];
-                pasaporte=resps[3];
+                pasaporte_menor=resps[3];
+
+                console.log("MENOR:",resps);
+                console.log("pasaporte_menor",pasaporte_menor);
+                addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante, resps);
+
+
             }
-            console.log(resps);
+             
         });
     }else{
         let pasaportemayor=document.getElementById('pasaporte_mayor').files[0];
@@ -762,16 +771,32 @@ console.log(formData);
             contentType: false,
             processData: false
         }).done(function (response){
-            let resps=JSON.parse(response);
+            var resps=JSON.parse(response);
             if(resps[0] =='OK'){
                 partida=resps[1];
                 auth=resps[2];
-                pasaporte=resps[3];
+                //pasaporte_menor=resps[3];
+                pasaporte_mayor=resps[4];
+                console.log("MAYOR:",resps);
+                addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante, resps);
+
             }
-            console.log(resps);
+            
         });
     }
 
+}
+
+    
+
+function addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante,documentos){
+    let msj=document.getElementById('msj');
+    var partida=documentos[1];
+    var auth=documentos[2];
+    var pasaporte_menor=documentos[3];
+    var pasaporte_mayor=documentos[4];
+
+console.log("Documentos::",documentos);
 
      $.ajax({
         url: route('AddPassenger'),
@@ -785,7 +810,9 @@ console.log(formData);
             apellidos: apellidos,
             representante: representante,
             partida_nacimiento:partida,
-            autorizacion:auth
+            autorizacion:auth,
+            pasaporte_mayor:pasaporte_mayor,
+            pasaporte_menor:pasaporte_menor
         }
     })// This will be called on success
         .done(function (response) {
@@ -804,12 +831,12 @@ console.log(formData);
                         representante='N/A';
                     }
                     let respuesta=resp[1];
-                    let modal="<a href='#' onclick=\"openModalPassengers('"+tipodoc+"',"+respuesta.nro_doc+", 2)\" ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; ";
+                    let modal="<a href='#' onclick=\"openModalPassengers('"+tipodoc+"','"+respuesta.nro_doc+"', 2)\" ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; ";
                     if(menor=='SI'){
                         modal='';
                     }
 
-                    var html="<tr id='"+respuesta.nro_doc+"' data-menor='"+menor+"'> <td>"+tipodoc+"-"+respuesta.nro_doc+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+menor+"</td> <td class='text-center'> "+representante+"</td> <td> "+modal+" <a href='#' onclick=\"openModalPassengers('"+tipodoc+"',"+respuesta.nro_doc+", 1)\" ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
+                    var html="<tr id='"+respuesta.nro_doc+"' data-menor='"+menor+"'> <td>"+tipodoc+"-"+respuesta.nro_doc+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+menor+"</td> <td class='text-center'> "+representante+"</td> <td> "+modal+" <a href='#' onclick=\"openModalPassengers('"+tipodoc+"','"+respuesta.nro_doc+"', 1)\" ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
 
                     addPassengers(menor, tipodoc, respuesta.nro_doc, fechanac, sexo, nombres, apellidos, html)
                 break;
@@ -1642,6 +1669,7 @@ $("#tipodocmenor").change(function(){
     fechamin+="-"+String(date.getDate()).padStart(2, '0');
     let str=$(this).val();
    if($(this).val()=='NC'){
+    $('.FilePassport').attr('style', 'display:none');
 
     nrodoc.setAttribute("readOnly", 'readonly');
     nrodoc.value=cedRepresentante;
@@ -1660,21 +1688,20 @@ $("#tipodocmenor").change(function(){
 
         if((str=="V")){
 
-            //$('.DatosRestantes2').attr('style', 'display:block');
+            $('.FilePassport').attr('style', 'display:none');
 
                 fechamin=date.getFullYear()-18;
                 fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
                 fechamin+="-"+String(date.getDate()).padStart(2, '0');
 
-
-        }else{
-            ///$('.DatosRestantes').attr('style', 'display:none');
+        }else if(str=="P"){
+            $('.FilePassport').attr('style', 'display:block');
             $('#fecha_nacimientoMenor').attr('min',"" );
-
             fechamin=date.getFullYear()-18;
                 fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
                 fechamin+="-"+String(date.getDate()).padStart(2, '0');
-
+        }else{
+            $('.FilePassport').attr('style', 'display:none');
 
         }
    }

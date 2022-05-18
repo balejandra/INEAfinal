@@ -49,7 +49,7 @@
                                         </div>
 
                                         <div class="row px-0 mx-0">
-                                            <div class="col-md-2 my-1 px-1">
+                                            <div class="col-md-3 my-1">
                                                 <div class="form-group">
                                                     <label for="title">Tipo doc..:</label>
                                                     {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4  my-1 DatosRestantes">
+                                            <div class="col-md-3  my-1 DatosRestantes">
                                                 <label for="nombres">Nombres</label>
                                                 <div class="input-group">
 
@@ -91,7 +91,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4  my-1 DatosRestantes">
+                                            <div class="col-md-3  my-1 DatosRestantes">
                                                 <label for="nombres">Apellidos</label>
                                                 <div class="input-group">
 
@@ -100,7 +100,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4  my-1 DatosRestantes">
+                                            <div class="col-md-6  my-1 DatosRestantes">
                                                 <label for="documento">Pasaporte</label>
                                                 <div class="input-group">
                                                     <input type="file" class="form-control" name="pasaporte_mayor"
@@ -200,124 +200,7 @@
 
                                     </div>
                             </form>
-                        <!--<form action="#" method="POST">
-                                @csrf
-                            <div class="card">
-                                <div class="card-body">
-@if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-@foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                                    @endforeach
-                                </ul>
-                            </div>
-@endif
-                            <div class="row px-5" id="msj"  data-asset="{{asset('images')}}">
-                                        </div>
-                                        <div class="row" id="VE">
-
-                                            <div class="col-md-2 p-0">
-                                                <div class="px-2 form-group form-check form-switch ">
-                                                    <label>Menor:</label><br>
-                                                    &nbsp;
-                                                    <input class="form-check-input" type="checkbox" name="menor"
-                                                           id='menor' style="margin-left: auto;"> &nbsp; &nbsp; &nbsp;
-                                                    &nbsp; &nbsp;<label id="textoMenor">NO</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2 px-1">
-                                                <div class="form-group">
-                                                    <label for="title">Tipo doc..:</label>
-                                                    {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
-                            </div>
-                        </div>
-
-                        <div class="col-md-2 px-1">
-                            <div class="form-group">
-                                <label for="title">Cédula/Pasaporte:</label>
-                                <input type="text" class="form-control" id="numero_identificacion"
-                                       name="numero_identificacion" maxlength="10"
-                                       title="En caso de ser menor venezolano no cedulado, agregue la cédula del representante.">
-                            </div>
-                        </div>
-
-                        <div class="col-md-2 px-1">
-                            <div class="form-group">
-                                <label for="title">Fecha de nacimiento:</label>
-                                <input type="date"
-                                       class="form-control "
-                                       name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}"
-                                                           id="fecha_nacimiento"
-                                                           placeholder="fecha_nacimiento" required
-                                                           max='{{date("Y-m-d")}}'>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2 px-1">
-                                                <div class="form-group">
-                                                    <label for="title">Sexo:</label>
-                                                    {!! Form::select('sexo', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexo']) !!}
-                            </div>
-                        </div>
-
-                        <div class="col-md-2 mt-4">
-                            <button type="button" class="btn btn-primary" onclick="getData()">
-                                Agregar
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-5 px-1 DatosRestantes" style="display:none">
-                            <div class="form-group">
-                                <label for="title">Nombre:</label>
-                                <input type="text" class="form-control" id="nombres" name="nombres">
-                            </div>
-                        </div>
-
-                        <div class="col-md-5 px-1 DatosRestantes" style="display:none">
-                            <div class="form-group">
-                                <label for="title">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos"
-                                       name="apellidos">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row px-3">
-
-
-                        <div class="col-md-12 py-2">
-                            <b>Cantidad de pasajeros disponible para esta embarcación:</b>
-                            <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
-                                                    {{ $cantPasajeros ?? '' }}
-                            </span>
-                        </div>
-
-                            <table id="table-scroll" class="table table-bordered" style="width:100%">
-                                <thead>
-                                <tr>
-                                    <th>Cédula</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>sexo</th>
-                                    <th>Fecha nac.</th>
-                                    <th width="5%">Menor</th>
-                                    <th width="5%">Representante</th>
-                                    <th width="5%">Acciones</th>
-                                </tr>
-                                </thead>
-                                <tbody id="pasajeros">
-
-                            </table>
-                    </div>
-                </div>
-            </div>
-        </form>
--->
+ 
 
                             <form action="{{ route('permisoszarpes.permissionCreateStepSix') }}" method="POST">
                                 @csrf
@@ -481,7 +364,7 @@
                                    accept="application/pdf, image/*">
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row FilePassport" style="display:none">
                         <div class="form-group col-sm-6">
                             {!! Form::label('documento_1', 'Pasaporte (Obligatorio):') !!}
                             <input type="file" class="form-control" name="pasaporte_menor" id="pasaporte_menor"

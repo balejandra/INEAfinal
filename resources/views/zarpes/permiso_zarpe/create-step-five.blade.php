@@ -98,7 +98,7 @@
                                         </div>
                                         <div class="row px-3">
                                             <div class="table-responsive">
-                                                <table class="table table-bordered" id="table-scroll" style="width:100%">
+                                                <table class="table table-bordered" id="table-Trip" style="width:100%">
                                                     <thead>
                                                     <tr>
                                                         <th>Función</th>

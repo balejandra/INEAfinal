@@ -55,7 +55,7 @@
 
                                             <div class="col-sm-12 bg-light rounded">
                                                 <div class="row px-0 py-2">
-                                                    <div class="form-group col-sm-6">
+                                                    <div class="form-group col-sm-4">
                                                          
                                                         {!! Form::label('', 'Establecimiento náutico origen:') !!}
                                                         <select id="origen"
@@ -78,7 +78,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="form-group col-sm-6">
+                                                    <div class="form-group col-sm-4">
                                                         {!! Form::label('', 'País de destino:') !!}
                                                         
                                                         <select id="pais_destino_id"
@@ -100,6 +100,15 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
+
+                                            <div class="form-group col-sm-4">
+                                                         
+                                                        {!! Form::label('', 'Establecimiento náutico destino:') !!}
+                                                         <input type="text" name="estNauticoDestinoZI" id="estNauticoDestinoZI" class="form-control">
+                                                    </div>
+
+
+
                                                 </div>
 <div class="row">
 <div class="col-md-6 py-2">

@@ -66,6 +66,13 @@ console.log(response, 'ZARPE INTERNACIONAL');
                     $("#numero_identificacion").val(numero_identificacion);
                     manga=(respuesta[0].manga);
                     $("#manga").val(manga);
+                    let licenciaNavegacion=valiacionSgm[3].licenciaNavegacion;
+                    let certificadoRadio=valiacionSgm[3].certificadoRadio;
+                    let numeroIsmm=valiacionSgm[3].numeroIsmm;
+
+                    $('#licenciaNavegacion').val(licenciaNavegacion);
+                    $('#certificadoRadio').val(certificadoRadio);
+                    $('#ismm').val(numeroIsmm);
                }else{
                     if(valiacionSgm[0]!=true){
                         divError.innerHTML='<div class="alert alert-danger"> '+valiacionSgm[0]+' </div>';
@@ -210,6 +217,8 @@ function getPermisoEstadiaZI(data) {
     });
 
 }
+
+/*
 
 function getDataZI() {
     let cedula= document.getElementById('numero_identificacion').value;
@@ -469,4 +478,200 @@ function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
         msj.innerHTML='<div class="alert alert-danger">Ha alcanzado la cantidad máxima de pasajeros para esta embarcación.</div>' ;
     }
 
+}*/
+
+function AddPasportsMarinos(){
+    let doc=document.getElementById('doc').files[0];
+     
+
+        var formData = new FormData();
+        formData.append('doc', doc);
+         
+ 
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route('AddDocumentosMarinosZI'),
+            type: "POST",
+            dataType: "html",
+            data:formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (response){
+            var resps=JSON.parse(response);
+            if(resps[0] =='OK'){
+                 
+            pasaporteName=resps;
+
+                getMarinosZI(pasaporteName);
+        }
+             
+    });
 }
+
+
+function getMarinosZI(pass) {
+    let funcion= document.getElementById('funcion').value;
+    let tipodoc= document.getElementById('tipodoc').value;
+    let nrodoc= document.getElementById('nrodoc').value;
+    let nombres= document.getElementById('nombres').value;
+    let apellidos= document.getElementById('apellidos').value;
+    let rango= document.getElementById('rango').value;
+    let doc=pass[1]; 
+    let ruta='';
+    let tabla=document.getElementById('marinosZI');
+    let msj=document.getElementById('msjMarinoInt');
+    msj.innerHTML="";
+
+
+    if(funcion=='' || tipodoc =='' || nrodoc =='' || nombres == '' || apellidos == '' || rango==''){
+        msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
+    }else{
+         msj.innerHTML='';
+        if(tipodoc=='V'){
+            ruta=route('validacionMarinoZI');
+        }else{
+            ruta=route('marinoExtranjeroZI');
+        }
+
+        $.ajax({
+        url: ruta,
+        data: {
+            funcion:funcion,
+            tipodoc:tipodoc,
+            nrodoc:nrodoc,
+            nombres:nombres,
+            apellidos:apellidos,
+            rango:rango,
+            doc:doc
+        }
+
+        })// This will be called on success
+        .done(function (response) {
+          //  alert(response);
+            respuesta = JSON.parse(response);
+            console.log(respuesta);
+            console.log(respuesta[0].length);
+            var validacion=respuesta[1];
+            
+            switch(respuesta[3]){
+                case 'TripulanteExiste':
+                    msj.innerHTML="<div class='alert alert-danger'>El tripulante que intenta agregar ya se encuanta en el listado, por favor verifique.</div>";
+
+                break;
+                case 'capitanExiste':
+                    msj.innerHTML="<div class='alert alert-danger'>Sólo puede haber un capitán asignado a la embarcación, por favor verifique.</div>";
+
+                break;
+                case 'FoundButMaxTripulationLimit':
+                    msj.innerHTML="<div class='alert alert-danger'>Ha alcanzado el máximo de tripulantes disponibles para la embarcación.</div>";
+
+                break;
+                case 'TripulanteNoAutorizado':
+                        if(funcion=="Capitán"){
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+nrodoc+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                            }else{
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+nrodoc+' no esta permisado para tripular esta embarcación.</div>' ;
+
+                        }
+                break;
+                case 'OK':
+
+
+
+                     if(validacion[0] ==true){
+                        var pass=respuesta[0];
+                        pass=pass[pass.length-1];
+                        
+                        var nodataTrip = !!document.getElementById("nodataTrip");
+                        
+                        if(nodataTrip==true){
+                            tabla.innerHTML='';
+                        }
+                        let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick='openModalZI("+pass['nro_doc']+")'><i class='fa fa-trash'></i></a></td></tr>";
+                        tabla.innerHTML+=html;
+                        msj.innerHTML="<div class='alert alert-success'>El tripulante se ha agregado de manera exitosa</div>";
+
+
+                        document.getElementById('funcion').value="";
+                        document.getElementById('tipodoc').value="";
+                        document.getElementById('nrodoc').value="";
+                         document.getElementById('nombres').value="";
+                         document.getElementById('apellidos').value="";
+                         document.getElementById('rango').value="";
+                         document.getElementById('doc').value="";
+                     }else{
+                         if(funcion=="Capitán"){
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+cedula+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                            }else{
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+cedula+' no esta permisado para tripular esta embarcación.</div>' ;
+
+                        }
+                     }
+                    
+                    
+                    
+
+                break;
+                default:
+
+                break;
+            }
+           
+        })
+
+        // This will be called on error
+        .fail(function (response) {
+            console.log(response);
+            console.log('falló validación de Jerarquización ZI');
+        });
+
+    }
+}
+
+function deleteTripulanteZI(){
+    let btn=document.getElementById('btnDelete');
+    var cedula=btn.getAttribute('data-ced');
+    let msj=document.getElementById('msjMarinoInt');
+    $.ajax({
+        url: route('deleteTripulanteZI'),
+        data: {index: cedula }
+    })// This will be called on success
+        .done(function (response) {
+
+
+            if(response==true){
+                let tr=document.getElementById(cedula);
+                tr.remove();
+                msj.innerHTML='<div class="alert alert-success">Tripulante eliminado con éxito.</div>' ;
+
+            }else{
+                msj.innerHTML='<div class="alert alert-danger">No se ha podido eliminar el elemento del listado, actualice el navegador e intente nuevamente.</div>' ;
+            }
+            closeModalZI();
+        })
+        // This will be called on error
+        .fail(function (response) {
+
+        });
+}
+
+
+
+function openModalZI(cedula) {
+    let btn=document.getElementById('btnDelete');
+    btn.setAttribute('data-ced', cedula);
+    let ci=document.getElementById('ci');
+        ci.innerHTML=cedula;
+    document.getElementById("backdrop").style.display = "block";
+    document.getElementById("modalDeleteTrip").style.display = "block";
+    document.getElementById("modalDeleteTrip").classList.add("show");
+}
+function closeModalZI() {
+    document.getElementById("backdrop").style.display = "none";
+    document.getElementById("modalDeleteTrip").style.display = "none";
+    document.getElementById("modalDeleteTrip").classList.remove("show");
+}
+
+
+

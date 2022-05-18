@@ -53,104 +53,124 @@
                                                 {{$msj}}
                                             </div>
                                         @endif
-
-                                        <div class="row">
-                                            <div class="row px-5" id="msjMarino"  data-asset="{{asset('images')}}">
+                                        <div class="row px-5" id="msjMarinoInt"  data-asset="{{asset('images')}}">
 
                                             </div>
+                                        <div class="row  ">
+                                             
+
                                             <div class="col-md-2">
 
-                                                <div class="form-group form-check form-switch ">
-                                                    <label for="title">Capitan?</label><br>
-                                                    &nbsp;
-
-
-                                                    @if(isset($tripulantes))
-                                                        @php
-
-                                                            $texto='NO'; $checked="";
-                                                        @endphp
-                                                        @if(is_int($tripulantes[0]) && $tripulantes[0]==0)
-                                                            @php
-
-                                                                $texto='SI';
-                                                                $checked="checked";
-                                                            @endphp
-                                                        @endif
-                                                    @else
-                                                        @php
-                                                            $texto='SI';
-                                                            $checked="checked";
-                                                        @endphp
-
-                                                    @endif
-
-
-                                                    <input class="form-check-input" type="checkbox" name="cap" id='cap'
-                                                           style="margin-left: auto;" {{$checked}} disabled> &nbsp;
-                                                    &nbsp; &nbsp; &nbsp; &nbsp;<label id="textoCap">{{$texto}}</label>
+                                                <div class="form-group     ">
+                                                     <label>Función:</label>
+                                                    <select id="funcion" name="funcion" class="form-control custom-select">
+                                                        <option value="">Seleccione</option>
+                                                        <option value="Capitán">Capitán</option>
+                                                        <option value="Motorista">Motorista</option>
+                                                        <option value="Marino">Marino</option>
+                                                    </select>
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-3">
+
+                                            <div class="col-md-2 px-1">
                                                 <div class="form-group">
-                                                    <label for="title">Cédula:</label>
-                                                    <input type="text" class="form-control" id="cedula" name="cedula"
-                                                           maxlength="10" onKeyDown="return soloNumeros(event)">
+                                                    <label for="title">Tipo doc..:</label>
+                                                    {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
                                                 </div>
                                             </div>
 
-                                            <!--<div class="col-md-3">
-
+                                             <div class="col-md-2 px-1">
                                                 <div class="form-group">
-                                                    <label for="title">Fecha de nacimiento:</label>
-                                                    @php
-                                                        $ano=date('Y')-18;
-                                                        $fechamin=$ano.'-'.date('m-d');
-                                                    @endphp
-                                                    <input type="date"
-                                                           class="form-control "
-                                                           name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}"
-                                                           id="fecha_nacimiento"
-                                                           placeholder="Fecha de nacimiento" max="{{$fechamin}}">
+                                                    <label for="title">Cédula/Pasaporte:</label>
+                                                    <input type="text" class="form-control" id="nrodoc"
+                                                           name="nrodoc" maxlength="10"
+                                                            >
                                                 </div>
-                                            </div>-->
+                                            </div>
 
+                                           
+                                            <div class="col-md-3 px-1 " >
+                                                <div class="form-group">
+                                                    <label for="title">Nombre:</label>
+                                                    <input type="text" class="form-control" id="nombres" name="nombres" maxlength="35">
+                                                </div>
+                                            </div>
 
-                                            <div class="col-md-3 mt-4">
-                                                <button type="button" class="btn btn-primary" onclick="getMarinos()">
-                                                    Agregar
-                                                </button>
+                                            <div class="col-md-3 px-1 " >
+                                                <div class="form-group">
+                                                    <label for="title">Apellidos:</label>
+                                                    <input type="text" class="form-control" id="apellidos"
+                                                           name="apellidos" maxlength="35">
+                                                </div>
                                             </div>
 
                                         </div>
+                                    <div class="row">
+                                        
+                                         <div class="col-md-3 px-1 " >
+                                                <div class="form-group">
+                                                    <label for="title">Rango:</label>
+                                                    <input type="text" class="form-control" id="rango"
+                                                           name="rango" maxlength="35">
+                                                </div>
+                                            </div>
+
+                                        <div class="col">
+                                            <div class="form-group">
+                                                    <label for="title">Pasaporte:</label>
+                                                    <input type="file" class="form-control" id="doc"
+                                                           name="doc"  >
+                                                </div>
+                                        </div>
+                                    </div>
 
 
-                                        <div class="row px-3">
+                                    <div class="row text-center ">
+                                        <div class="col-md-12 my-2 ">
+                                            <button type="button" class="btn btn-primary" onclick="AddPasportsMarinos()">
+                                                    Agregar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                        <div class="row mt-3 px-3">
+                                            <div id="cantTripulantes">
+                                                @php
+                                    $validacion= json_decode(session('validacion'));
+                                     $cantTrip=$validacion->cant_tripulantes;
+                                      
+                                                @endphp
+
+                                    Cantidad mínima de tripulantes abordo:  {{$cantTrip}}
+                                            </div>
+
                                             <div class="table-responsive">
                                                 <table class="table" id="tableTripulantes">
                                                     <thead>
                                                     <tr>
-                                                        <th>Capitan</th>
-                                                        <th>Cédula</th>
+                                                        <th>Función</th>
+                                                        <th>Cédula / Pasaporte</th>
                                                         <th>Nombres y Apellidos</th>
-                                                        <th>fecha emisión</th>
+                                                        <th>Rango</th>
                                                         <th>Documento</th>
+                                                        <th>Acciones</th>
+
                                                     </tr>
                                                     </thead>
 
-                                                    <tbody id="marinos">
+                                                    <tbody id="marinosZI">
 
                                                     @if(isset($tripulantes))
 
 
-                                                        @if(is_int($tripulantes[0]))
+                                                       @if(!is_array($tripulantes))
                                                             @php
 
                                                                 $cant=0;
 
                                                             @endphp
-                                                            <tr>
+                                                            <tr id="nodataTrip">
                                                                 <td colspan="5" class="text-center" id="nodata">Sin
                                                                     registros para mostrar
                                                                 </td>
@@ -163,16 +183,22 @@
 
                                                             @foreach($tripulantes as $trip)
 
-                                                                <tr>
-                                                                    @if($trip["capitan"]==1)
-                                                                        <td>SI</td>
-                                                                    @else
-                                                                        <td>NO</td>
-                                                                    @endif
-                                                                    <td>{{$trip["cedula"]}}</td>
-                                                                    <td>{{$trip["nombre"]}}</td>
-                                                                    <td>{{$trip["fecha_emision"]}}</td>
-                                                                    <td>{{$trip["documento"]}}</td>
+                                                    <tr id='{{$trip["nro_doc"]}}'>
+                                                                    
+                                        
+                                                    <td> {{$trip["funcion"]}} </td>
+                                                                    
+                                                    <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
+                                                    <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
+                                                    <td>{{$trip["rango"]}}</td>
+                                                    <td>{{$trip["doc"]}}</td>
+                                                    <td>
+                                <a href="#" onclick="openModalZI({{$trip['nro_doc']}})">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                                                        
+
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -182,35 +208,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}" method="POST">
+                                    <form action="{{ route('zarpeInternacional.permissionCreateStepFive') }}" method="POST">
                                         @csrf
 
-                                        <div id="dataMarinos" data-cantMar="{{$cant ?? 0}}"
-                                             data-cantMaxima="{{$validacion['cant_tripulantes']}}">
-                                            @if(isset($cant) && $cant!=0)
-                                                @php  $count=0; @endphp
-                                                @foreach($tripulantes as $trip)
-                                                    @php $count++; $id="contentMar".$count; @endphp
-                                                    <div id="{{$id}}">
-                                                        <input type="hidden" name="ids[]"
-                                                               value="{{$trip['ctrl_documento_id']}}"><input
-                                                            type="hidden" name="capitan[]" value="SI">
-                                                        <input type="hidden" name="cedula[]"
-                                                               value="{{$trip['cedula']}}">
-                                                        <input type="hidden" name="nombre[]"
-                                                               value="{{$trip['nombre']}}">
-                                                        <input type="hidden" name="fechaVence[]"
-                                                               value="{{$trip['fecha_vencimiento']}}">
-                                                        <input type="hidden" name="fechaEmision[]"
-                                                               value="{{$trip['fecha_emision']}}">
-
-                                                        <input type="hidden" name="documento[]"
-                                                               value="{{$trip['documento']}}">
-                                                    </div>
-
-                                                @endforeach
-                                            @endif
-                                        </div>
+                                        
                                         <div class="card-footer text-right">
                                             <div class="row">
                                                 <div class="col text-left">
@@ -231,4 +232,28 @@
             </div>
         </div>
     </div>
+
+<div class="modal fade" id="modalDeleteTrip" tabindex="-1" aria-labelledby="modalDeleteTripLabel" aria-modal="true"
+    role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteTripLabel">Confirmar</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeModalZI()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Realmente desea eliminar al tripulante (<span id='ci'></span>) seleccionado?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModalZI()">Cerrar</button>
+                <button type="button" id="btnDelete" class="btn btn-primary" data-ced='' onclick="deleteTripulanteZI()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+
+
 @endsection
