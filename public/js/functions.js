@@ -149,7 +149,7 @@ function eliminarCoordenadasDF(id, idcoord){
 
 //INICIO VALIDACIONES DE PERMISOS DE ZARPES
 
-     function getDataPassengers() {
+    function getDataPassengers() {
         let cedula= document.getElementById('numero_identificacion').value;
         let fechanac= document.getElementById('fecha_nacimiento').value;
         let sexo= document.getElementById('sexo').value;

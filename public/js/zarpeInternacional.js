@@ -672,3 +672,6 @@ function closeModalZI() {
     document.getElementById("modalDeleteTrip").style.display = "none";
     document.getElementById("modalDeleteTrip").classList.remove("show");
 }
+
+
+
