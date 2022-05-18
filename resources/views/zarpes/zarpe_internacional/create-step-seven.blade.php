@@ -45,89 +45,120 @@
                                             </div>
                                         @endif
                                         <div class="form-group">
-                                            <div class="container">
-                                                <h3 class="text-center">Declaración de cumplimiento de normativas</h3>
+                                            <div class="row">
+                                                <div class="col-sm-8 card-norma">
+                                                    <div class="card">
+                                                        <div class="card-body text-norma">
+                                                            “Declaro que la presente solicitud se hace bajo el estricto
+                                                            cumplimiento de las normativas vigentes y las disposiciones
+                                                            previstas por las leyes venezolanas”
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 card-norma">
+                                                    <div class="card">
+                                                        <div class="card-body card-acepto">
 
-                                                <p class="text-justify">Por medio de la presente declaro que la presente
-                                                    solicitud se hace bajo el estricto cumplimiento de las normativas
-                                                    vigentes y las disposiciones previstas por las leyes
-                                                    venezolanas.</p>
-
-                                                <p>Así mismo declaro poseer en la embarcación los siguientes equipos de
-                                                    seguridad requeridos por la normativa vigente:</p>
-                                            </div>
-                                            <table class="table table-striped table-bordered" id="equipos">
-                                                <thead>
-                                                <tr>
-                                                    <th>Equipo</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Otros</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($equipos as $equipo)
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check form-switch col-12">
-                                                                <input class="form-check-input equipo" type="checkbox" name="equipo[] "
-                                                                       id='equipo' value="{{$equipo->id}}"
-                                                                       style="margin-left: auto;" data-cant="{{$equipo->cantidad}}" data-otrs="{{$equipo->otros}}" >
-                                                                <label class="form-check-label" for="flexSwitchCheckDefault"
-                                                                       style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
-
-                                                                 <input type="text" class="form-control col-sm-7" id="{{$equipo->id}}selected" name="{{$equipo->id}}selected" value="false" hidden>
+                                                            <div class="form">
+                                                                <div class="inputGroup">
+                                                                    <input id="option1" name="option1" type="checkbox" required/>
+                                                                    <label for="option1">ACEPTO</label>
+                                                                </div>
                                                             </div>
-                                                        </td>
-
-                                                        <td>
-                                                            @if ($equipo->cantidad==true)
-                                                                <div class=" col-12 ">
-                                                                    <input type="number" class="form-control" id="{{$equipo->id}}cantidad" name="{{$equipo->id}}cantidad">
-                                                                </div>
-                                                            @else
-                                                                <div class=" col-12 ">
-                                                                    NO APLICA
-                                                                </div>
-                                                                @endif
-
-                                                        </td>
-
-                                                        <td>
-                                                            @if($equipo->otros!='ninguno')
-
-
-                                                                    <div class=" form-inline">
-                                                                        <label for="inputEmail4" class="col-sm-5" style="text-transform: uppercase;">
-                                                                            @if($equipo->otros=="fecha_ultima_inspeccion")
-                                                                                Fecha de última inspección
-
-                                                                                @php
-                                                                                $type="date";
-                                                                                $max="max=".date('Y-m-d').""
-                                                                                @endphp
-
-                                                                            @else
-                                                                                {{$equipo->otros}}
-                                                                                @php
-                                                                                $type="text";
-                                                                                $max="";
-                                                                                @endphp
-
-                                                                            @endif
-
-
-                                                                        </label>
-                                                                        <input type="{{$type}}" class="form-control col-sm-7" id="{{$equipo->id}}valores_otros" name="{{$equipo->id}}valores_otros" {{$max}} >
-                                                                        <input type="text" class="form-control col-sm-7" id="otros" name="{{$equipo->id}}otros" value="{{$equipo->otros}}" hidden>
-                                                                    </div>
-
-                                                            @endif
-                                                        </td>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered" id="table-nooptions-equipo"  style="width:100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 40%">Equipo</th>
+                                                        <th style="width: 30%">Cantidad</th>
+                                                        <th>Otros</th>
                                                     </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($equipos as $equipo)
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-check form-switch col-12">
+                                                                    <input class="form-check-input equipo {{$equipo->equipo}}" type="checkbox"
+                                                                           name="equipo[] " id='{{$equipo->id}}' value="{{$equipo->id}}"
+                                                                           style="margin-left: auto;"
+                                                                           onclick="equipocheck('{{$equipo->id}}','{{$equipo->cantidad}}','{{$equipo->otros}}')">
+                                                                    <label class="form-check-label"
+                                                                           for="flexSwitchCheckDefault"
+                                                                           style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
 
+                                                                    <input type="text" class="form-control col-sm-7"
+                                                                           id="{{$equipo->id}}selected"
+                                                                           name="{{$equipo->id}}selected" value="false"
+                                                                           hidden>
+
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div id="div_cant{{$equipo->id}}" style="display: none">
+                                                                    @if ($equipo->cantidad==true)
+                                                                        <div class=" col-12 ">
+                                                                            <input type="number" class="form-control"
+                                                                                   id="{{$equipo->id}}cantidad"
+                                                                                   name="{{$equipo->id}}cantidad">
+                                                                        </div>
+                                                                    @else
+                                                                        <div class=" col-12 ">
+                                                                            NO APLICA
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div id="valores_otros{{$equipo->id}}" style="display: none">
+                                                                    @if($equipo->otros!='ninguno')
+
+
+                                                                        <div class=" form-inline">
+                                                                            <label for="inputEmail4" class="col-sm-5"
+                                                                                   style="text-transform: uppercase;">
+                                                                                @if($equipo->otros=="fecha_ultima_inspeccion")
+                                                                                    Fecha de última inspección
+
+                                                                                    @php
+                                                                                        $type="date";
+                                                                                        $max="max=".date('Y-m-d').""
+                                                                                    @endphp
+
+                                                                                @else
+                                                                                    {{$equipo->otros}}
+                                                                                    @php
+                                                                                        $type="text";
+                                                                                        $max="";
+                                                                                    @endphp
+
+                                                                                @endif
+
+
+                                                                            </label>
+                                                                            <input type="{{$type}}"
+                                                                                   class="form-control col-sm-7"
+                                                                                   id="{{$equipo->id}}valores_otros"
+                                                                                   name="{{$equipo->id}}valores_otros" {{$max}} >
+                                                                            <input type="text" class="form-control col-sm-7"
+                                                                                   id="otros" name="{{$equipo->id}}otros"
+                                                                                   value="{{$equipo->otros}}" hidden>
+                                                                        </div>
+
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -143,7 +174,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </form>
                         </div>
                     </div>
