@@ -45,7 +45,7 @@
 @php
      $solicitud= json_decode(session('solicitud'));
      $coordGrad=  session('coordGadriales') ;
- print_r($coordGrad);
+ 
 @endphp
 
                                 <div class="card">
@@ -151,7 +151,36 @@
                                                 </div>
 
                                                 <div class="col-md-12 px-0">
-                                                    <div class="form-group col-sm-12 py-2">
+                                                    <div class="form-group col-sm-12 ">
+                                                        {!! Form::label('0', 'Capitanía de retorno final:') !!}
+
+
+                                                        <select id="capitaniaDestino"
+                                                                name="capitaniaDestino"
+                                                                 onchange="estNauticoDestinoSelect('')"
+                                                                class="form-control custom-select">
+
+                                                            <option value="">Seleccione</option>
+                                                           <!-- @if($capitaniasDestinoList!='')
+                                                             @foreach ($capitaniasDestinoList as $capitania)
+                                                            @if($CapDestinoFinal==$capitania->id)
+                                                                @php
+                                                                $selectedcap="selected='selected'";
+                                                                @endphp
+                                                            @else
+                                                                @php
+                                                                $selectedcap='';
+                                                                @endphp
+                                                            @endif -->
+                                                            <option value="{{$capitania->id}}" {{$selectedcap}} >{{$capitania->nombre}} </option>
+                                                        @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 px-0">
+                                                    <div class="form-group col-sm-12 ">
                                                         {!! Form::label('0', 'Establecimiento náutico de retorno final:') !!}
 
 
@@ -252,8 +281,8 @@
                                                             $capDestino='';
                                                             @endphp
                                                         @endif
-                                                <input type="hidden" class="form-control"
-                                                       id="capitaniaDestino" name="coordenadasDestino" value="{{$capDestino}}">
+                                                <!--<input type="hidden" class="form-control"
+                                                       id="capitaniaDestino" name="coordenadasDestino" value="{{$capDestino}}">-->
                                             </div>
                                         </div>
                                     </div>

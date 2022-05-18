@@ -126,8 +126,8 @@ let idcapDestino=divMap.getAttribute("data-idcapdestino");
                     // si la distancia es menor a diez km es porque esta dentro del citculo
                     console.log("distancia",distancia, cir.options.capitaniaid);
                     idCapitania=cir.options.capitaniaid;
-                     document.getElementById('capitaniaDestino').value=idCapitania; 
-                    estNauticoDestinoSelect(idCapitania);
+                    // document.getElementById('capitaniaDestino').value=idCapitania; 
+                    //estNauticoDestinoSelect(idCapitania);
                     
                   }else{
                     idCapitania=false;
@@ -138,8 +138,8 @@ let idcapDestino=divMap.getAttribute("data-idcapdestino");
             polygon.forEach(function(pol){
                 idCapitania=isMarkerInsidePolygon(marca, pol);
                 if(idCapitania!=false){
-                    document.getElementById('capitaniaDestino').value=idCapitania; 
-                    estNauticoDestinoSelect(idCapitania);
+                    //document.getElementById('capitaniaDestino').value=idCapitania; 
+                    //estNauticoDestinoSelect(idCapitania);
                 }else{
                     idCapitania=false;
                 }

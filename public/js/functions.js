@@ -1511,32 +1511,36 @@ function compararFechasEscala(){
 }
 
 function estNauticoDestinoSelect(idCapitania){
-
-
-    $.ajax({
+    if(idCapitania==''){
+        idCapitania=$("#capitaniaDestino").children("option:selected").val();
+    }
+    if(idCapitania!=''){
+        $.ajax({
         url: route('BuscaEstablecimientosNauticos'),
         data: {idcap: idCapitania }
 
-    })// This will be called on success
-        .done(function (response) {
-          //  alert(response);
-            respuesta = JSON.parse(response);
-            let estabecimientos=respuesta[1];
-            document.getElementById('capiDestino').innerHTML=" <b>"+respuesta[0].nombre+" </b>";
-            let select=document.getElementById("estNautioDestino");
-            let options="<option value='0'>Seleccione</option>";
-            for (var i = 0; i < estabecimientos.length; i++) {
-                options+="<option value='"+estabecimientos[i].id+"'>"+estabecimientos[i].nombre+"</option>"
-            }
-            select.innerHTML=options;
-           // console.log(options);
-        })
+        })// This will be called on success
+            .done(function (response) {
+              //  alert(response);
+                respuesta = JSON.parse(response);
+                let estabecimientos=respuesta[1];
+                document.getElementById('capiDestino').innerHTML=" <b>"+respuesta[0].nombre+" </b>";
+                let select=document.getElementById("estNautioDestino");
+                let options="<option value='0'>Seleccione</option>";
+                for (var i = 0; i < estabecimientos.length; i++) {
+                    options+="<option value='"+estabecimientos[i].id+"'>"+estabecimientos[i].nombre+"</option>"
+                }
+                select.innerHTML=options;
+               // console.log(options);
+            })
 
-        // This will be called on error
-        .fail(function (response) {
-           // respuesta = JSON.parse(response);
-            console.log("fallo al buscar establecimientos nautico destino ");
-        });
+            // This will be called on error
+            .fail(function (response) {
+               // respuesta = JSON.parse(response);
+                console.log("fallo al buscar establecimientos nautico destino ");
+            });
+    }
+    
 }
 
 
