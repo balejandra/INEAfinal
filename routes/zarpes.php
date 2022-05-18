@@ -156,6 +156,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
      Route::get('AddPassengerZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'AddPassengerZI'])->name('AddPassengerZI');
 
     Route::post('AddDocumentosZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'AddDocumentosZI'])->name('AddDocumentosZI');
+    
+    
     /*Fin de Rutas de zarpe Internacional*/
 
 

@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('tablaMandos.index') }}">Zarpes</a>
+                    <a href="{{ route('zarpeInternacional.index') }}">Zarpes</a>
                 </li>
                 <li class="breadcrumb-item active">Consulta</li>
             </ol>
@@ -21,10 +21,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header bg-zarpes text-white">
                             <strong>Consultar Solicitud Zarpe INTERNACIONAL</strong>
                             <div class="card-header-actions">
-                                <a href= "{{route('permisoszarpes.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                <a href= "{{route('zarpeInternacional.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                             </div>
                         </div>
                         <div class="card-body">

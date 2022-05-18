@@ -1511,8 +1511,12 @@ function compararFechasEscala(){
 }
 
 function estNauticoDestinoSelect(idCapitania){
+    
     if(idCapitania==''){
-        idCapitania=$("#capitaniaDestino").children("option:selected").val();
+        idCapitania=$("#capitaniaDestinoSelect").children("option:selected").val();
+        document.getElementById('capitaniaDestino').value=idCapitania;
+         
+       
     }
     if(idCapitania!=''){
         $.ajax({
@@ -1531,6 +1535,7 @@ function estNauticoDestinoSelect(idCapitania){
                     options+="<option value='"+estabecimientos[i].id+"'>"+estabecimientos[i].nombre+"</option>"
                 }
                 select.innerHTML=options;
+               // 
                // console.log(options);
             })
 

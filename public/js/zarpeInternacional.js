@@ -602,9 +602,9 @@ function getMarinosZI(pass) {
                          document.getElementById('doc').value="";
                      }else{
                          if(funcion=="Capitán"){
-                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+cedula+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
                             }else{
-                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+cedula+' no esta permisado para tripular esta embarcación.</div>' ;
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para tripular esta embarcación.</div>' ;
 
                         }
                      }

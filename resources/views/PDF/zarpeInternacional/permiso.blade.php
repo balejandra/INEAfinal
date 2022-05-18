@@ -165,7 +165,8 @@
             @php
                     $QR =
                         "Nombre Embarcacion: ".$buque->nombre_buque."\n".
-                        "Destino: ".$pais->name." \n".
+                        "Destino: ".$zarpe->establecimiento_nautico_destino_zi.", ".$pais->name." \n".
+                        "Navegación: INTERNACIONAL.".
                         "Fecha Emision: " .$zarpe->updated_at."\n".
                         "Fecha Vencimiento: " .$vencimiento
                         @endphp
@@ -173,7 +174,8 @@
             @php
                     $QR =
                         "Nombre Embarcacion: ".$buque->nombrebuque_actual."\n".
-                        "Destino: ".$pais->name." \n".
+                        "Destino: ".$zarpe->establecimiento_nautico_destino_zi.", ".$pais->name." \n".
+                        "Tipo de zarpe: INTERNACIONAL. \n".
                         "Fecha Emision: " .$zarpe->updated_at."\n".
                         "Fecha Vencimiento: " .$vencimiento
             @endphp
@@ -206,11 +208,11 @@
             <b>
             El Buque
                 @if($zarpe->bandera=='extranjera')
-                           <u>{{$buque->nombre_buque}}</u>
+                        <u>{{$buque->nombre_buque}}</u>
                 @else
                     <u>{{$buque->nombrebuque_actual}}</u>
                 @endif
-                , matrícula {{$zarpe->matricula}}, de bandera
+                , matrícula <u>{{$zarpe->matricula}}</u>, de bandera
             @if ($zarpe->bandera=='nacional')
                     <u>Venezolana</u>
                 @elseif ($zarpe->bandera=='extranjera')
@@ -225,7 +227,7 @@
                  unidades de arqueo bruto y <u>{{$buque->eslora}}</u> metros de eslora,
             procedente de <u>{{$zarpe->establecimiento_nautico->nombre}}  </u>
             ubicado en la circunscripción acuática de <u>{{$capitania->nombre}}</u>,
-            al mando del Capitán <u>{{$trip->nombre}} {{$trip->apellido}}</u>, con <u> {{$cantTrip}} </u> tripulantes y <u> {{$cantPas}} </u> pasajeros,
+            al mando del Capitán <u>{{$trip->nombres}} {{$trip->apellidos}}</u>, con <u> {{$cantTrip}} </u> tripulantes y <u> {{$cantPas}} </u> pasajeros,
             ha cumplido con todos los requisitos de seguridad marítima y legales para hacerse a la mar,
             en concordancia con lo establecido en los Artículos 38 y 39 de la Ley General de Marina y
             Actividades Conexas y las disposiciones emitidas por la Autoridad Acuática.
@@ -262,20 +264,19 @@
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
             <b>
-        El suscrito Capitán de Puerto valida su notificación y lo autoriza para zarpar
+        El suscrito Capitán de Puerto autoriza el zarpe
         desde el lugar de procedencia, a partir del <u>{{$zarpe->fecha_hora_salida}}</u>, 
-        con destino a {{$pais->name}},
-        con el propósito de efectuar navegación <u> {{ $DescripcionNavegacion->descripcion }}</u>,
-        estimando arribar al destino seleccionado el <u>{{$zarpe->fecha_hora_regreso}}</u>
+        con destino a <u>{{$zarpe->establecimiento_nautico_destino_zi}}, {{$pais->name}}</u>,
+        con el propósito de efectuar navegación <u>{{ $DescripcionNavegacion->descripcion }}</u>,
+        estimando arribar el <u>{{$zarpe->fecha_hora_regreso}}</u>
             </b>
 
             <br>
             <i>
-                The undersigned Port Captain validates his notification and authorizes
-                him to set sail from the place of origin, as of <u>{{$zarpe->fecha_hora_salida}}</u>,
-                
-                bound for {{$pais->name}},
-                for the purpose of navigation <u>{{ $DescripcionNavegacion->descripcion }}</u>, estimating to arrive on the selected destination
+                The undersigned Port Captain authorizes the departure
+                from the place of origin, as of <u>{{$zarpe->fecha_hora_salida}}</u>,
+                destined for the <u>{{$zarpe->establecimiento_nautico_destino_zi}}, {{$pais->name}}</u>,
+                with the purpose of international navigation, estimating to arrive
                 <u>{{$zarpe->fecha_hora_regreso}}</u>
             </i>
         </p>

@@ -480,7 +480,7 @@ class ZarpeInternacionalController extends Controller
     public function createStepFive(Request $request)
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-       print_r($solicitud);
+       
         $codigo = $this->codigo($solicitud);
 
         $validation = json_decode($request->session()->get('validacion'), true);
@@ -504,7 +504,7 @@ class ZarpeInternacionalController extends Controller
         $tripulantes = $request->session()->get('tripulantes');
         $validation = json_decode($request->session()->get('validacion'), true);
 
-        if (isset($tripulantes) && (count($tripulantes) >= $validation['cant_tripulantes']) && (count($tripulantes) <= $validation['cant_pasajeros'])) {
+        if (is_array($tripulantes) && (count($tripulantes) >= $validation['cant_tripulantes']) && (count($tripulantes) <= $validation['cant_pasajeros'])) {
             $capitan=0;
             for ($i=0; $i < count($tripulantes); $i++) {
                 $indice=array_search("Capitán",$tripulantes[$i],false);
@@ -1195,9 +1195,14 @@ class ZarpeInternacionalController extends Controller
     public function show($id)
     {
         $permisoZarpe = PermisoZarpe::find($id);
-        $tripulantes = Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id', $id)->get();
+        if ($permisoZarpe->bandera=='extranjera') {
+            $buque=PermisoEstadia::where('id',$permisoZarpe->permiso_estadia_id)->first();
+        }else {
+            $buque=Renave_data::where('matricula_actual',$permisoZarpe->matricula)->first();
+        }
+        $tripulantes = TripulanteInternacional::select('*')->where('permiso_zarpe_id', $id)->get();
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
-        $tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
+        //$tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
         $equipos = EquipoPermisoZarpe::where('permiso_zarpe_id', $id)->get();
         $revisiones = ZarpeRevision::where('permiso_zarpe_id', $id)->get();
         $paises= Paise::where('id', $permisoZarpe->paises_id)->get();
@@ -1217,7 +1222,8 @@ class ZarpeInternacionalController extends Controller
 
         return view('zarpes.zarpe_internacional.show')
             ->with('permisoZarpe', $permisoZarpe)
-            ->with('tripulantes', $tripulantes2)
+            ->with('buque',$buque)
+            ->with('tripulantes', $tripulantes)
             ->with('pasajeros', $pasajeros)
             ->with('equipos', $equipos)
             ->with('revisiones', $revisiones)

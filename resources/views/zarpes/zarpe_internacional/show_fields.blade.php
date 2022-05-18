@@ -4,25 +4,38 @@
     <tbody>
     <tr>
         <th width='25%' class="bg-light">Nro de Solicitud</th>
-        <td>{{ $permisoZarpe->nro_solicitud }}</td>
-        <th width='25%' class="bg-light">Nombre Solicitante</th>
-        <td>{{ $permisoZarpe->user->nombres}} {{ $permisoZarpe->user->apellidos}}</td>
+        <td width='25%'>{{ $permisoZarpe->nro_solicitud }}</td>
+        <th width='25%' class="bg-light col-md-2">Fecha de Solicitud</th>
+        <td width='25%'>{{ $permisoZarpe->created_at}}</td>
     </tr>
     <tr>
         <th class="bg-light">Bandera</th>
         <td>{{ $permisoZarpe->bandera }}</td>
+        <th width='25%' class="bg-light">Nombre Solicitante</th>
+        <td>{{ $permisoZarpe->user->nombres}} {{ $permisoZarpe->user->apellidos}}</td>
+    </tr>
+    <tr>
         <th class="bg-light">Matricula Buque</th>
         <td>{{ $permisoZarpe->matricula }}</td>
+        <th class="bg-light">Nombre Buque</th>
+            @if($permisoZarpe->bandera=='extranjera')
+                <td>{{ $buque->nombre_buque }}</td>
+            @else
+                <td>{{ $buque->nombrebuque_actual }}</td>
+            @endif
     </tr>
     <tr>
         <th class="bg-light">Tipo de Navegacion</th>
         <td>{{ $permisoZarpe->tipo_zarpe->nombre }}</td>
-        <th class="bg-light">Origen</th>
-        <td>{{$capitaniaOrigen->nombre}} <br> {{ $permisoZarpe->establecimiento_nautico->nombre }}</td>
-    </tr>
+        <th class="bg-light">Descripcion de Navegación</th>
+        <td><b>{{$descripcionNavegacion->descripcion}}</b> </td>
+       </tr>
     <tr>
+    <th class="bg-light">Origen</th>
+        <td>{{$capitaniaOrigen->nombre}} <br> {{ $permisoZarpe->establecimiento_nautico->nombre }}</td>
+    
         <th class="bg-light">Destino</th>
-        <td colspan="3"> {{ $pais[0]->name}} </td>
+        <td> {{ $pais[0]->name}} <br> {{$permisoZarpe->establecimiento_nautico_destino_zi}} </td>
     </tr>
     <tr>
         <th class="bg-light">Fecha y Hora Salida</th>
@@ -32,9 +45,8 @@
     </tr>
     <tr>
         <th class="bg-light">Status</th>
-        <td>{{ $permisoZarpe->status->nombre }}</td>
-        <th class="bg-light">Descripcion de Navegación</th>
-        <td><b>{{$descripcionNavegacion->descripcion}}</b> </td>
+        <td colspan="3">{{ $permisoZarpe->status->nombre }}</td>
+        
     </tr>
     </tbody>
 </table>
@@ -44,48 +56,76 @@
 <table class="table">
     <tbody>
     <thead>
+    <th>Función</th>
     <th>Nombres y Apellidos</th>
     <th>Cédula</th>
-    <th>Documento</th>
-    <th>Fecha vencimiento</th>
+    <th>rango</th>
+    <th  class="text-center">Pasaporte</th>
     </thead>
     @forelse($tripulantes as $tripulante)
         <tr>
-            <td>{{$tripulante->nombre}} {{$tripulante->apellido}} </td>
-            <td>{{$tripulante->ci}}</td>
-            <td>{{$tripulante->documento}} </td>
-            <td>{{$tripulante->fecha_vencimiento}} </td>
+            <td>{{$tripulante->funcion}} </td>
+            <td>{{$tripulante->nombres}} {{$tripulante->apellidos}} </td>
+            <td>{{$tripulante->tipo_doc}}-{{$tripulante->nro_doc}}</td>
+            <td>{{$tripulante->rango}} </td>
+            <td class="text-center">
+            @if ($tripulante->doc)
+                <a class="link-info" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$tripulante->doc)}}" target="_blank">
+                    <i class="fa fa-file"></i> 
+                </a>   
+            @endif
+            </td>
             @empty
                 <span class="badge badge-danger">Sin Tripulantes</span>
         </tr>
     @endforelse
 </table>
 <strong>Pasajeros</strong>
-
 <table class="table">
-    <tbody>
-    <thead>
-    <th>Nombres y Apellidos</th>
-    <th>Documentacion</th>
-    <th>Sexo</th>
-    <th>menor</th>
+            <tbody>
+            <thead>
+            <th>Nombres y Apellidos</th>
+            <th>Documentacion</th>
+            <th>Sexo</th>
+            <th>menor</th>
+            <th>Documentos</th>
 
-    </thead>
-    @forelse($pasajeros as $pasajero)
-        <tr>
-            <td> {{$pasajero->nombres}}  {{$pasajero->apellidos}}</td>
-            <td> {{$pasajero->tipo_doc}}  {{$pasajero->nro_doc}}</td>
-            <td>{{$pasajero->sexo}} </td>
-            @if($pasajero->menor_edad==true)
-                <td>SI</td>
-            @else
-                <td>NO</td>
-            @endif
-            @empty
-                <span class="badge badge-danger">Sin Pasajeros</span>
-        </tr>
-    @endforelse
-</table>
+            </thead>
+            @forelse($pasajeros as $pasajero)
+                <tr>
+                    <td> {{$pasajero->nombres}}  {{$pasajero->apellidos}}</td>
+                    <td> {{$pasajero->tipo_doc}}  {{$pasajero->nro_doc}}</td>
+                    <td>{{$pasajero->sexo}} </td>
+                    @if($pasajero->menor_edad==true)
+                        <td>SI</td>
+                        <td>
+                            @if ($pasajero->pasaporte_menor)
+                                <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_menor)}}" target="_blank">
+                                    Pasaporte</a> <br>
+                            @endif
+                            @if ($pasajero->partida_nacimiento)
+                                    <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->partida_nacimiento)}}" target="_blank">
+                                        Partida de Nacimiento</a> <br>
+                                @endif
+                            @if ($pasajero->autorizacion)
+                                    <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->autorizacion)}}" target="_blank">
+                                            Autorización</a>
+                                @endif
+
+                        </td>
+                    @else
+                        <td>NO</td>
+                        <td> @if ($pasajero->pasaporte_mayor)
+                                <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_mayor)}}" target="_blank">
+                                Pasaporte</a>
+                                 @endif
+                           </td>
+                    @endif
+                    @empty
+                        <span class="badge badge-danger">Sin Pasajeros</span>
+                </tr>
+            @endforelse
+        </table>
 <br>
 <strong>Equipos de Seguridad</strong>
 <table class="table">

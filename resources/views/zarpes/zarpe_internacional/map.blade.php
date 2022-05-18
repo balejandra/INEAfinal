@@ -121,7 +121,7 @@ var circle = L.circle(dep.coords, 25000, {
 
         /*Asigno el valor del nuevo click a los input latitud y longitud*/
         latInput.value=coordenada.lat;
-        	longInput.value=coordenada.lng;
+        longInput.value=coordenada.lng;
 
         	/*coloco en los data-lat y data-long las nuevas coordenadas por si en el futuro hay que borrarlas*/
      	latInput.setAttribute('data-lat',coordenada.lat);

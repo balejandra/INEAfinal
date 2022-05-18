@@ -15,7 +15,13 @@
     @foreach($permisoZarpes as $permisoZarpe)
         <tr>
             <td>{{ $permisoZarpe->nro_solicitud }}</td>
-            <td>{{ $permisoZarpe->created_at }}</td>
+            <td>
+                @php
+                $fecha=explode(' ',$permisoZarpe->created_at);
+                list($ano, $mes, $dia) = explode("-", $fecha[0]);
+                $fechaNew=$dia."/".$mes."/".$ano;
+                @endphp
+                {{ $fechaNew }}</td>
             <td>{{ $permisoZarpe->user->nombres }} {{ $permisoZarpe->user->apellidos }}</td>
             <td>{{ $permisoZarpe->bandera }}</td>
             <td>{{ $permisoZarpe->matricula }}</td>

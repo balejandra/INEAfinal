@@ -1,24 +1,21 @@
 <table class="table table-striped table-bordered" id="permisoZarpes-table">
     <thead>
     <tr>
+        <th>Status</th>
         <th>Nro Solicitud</th>
+        <th>Fecha de solicitud</th>
         <th>Solicitante</th>
         <th>Bandera</th>
         <th>Matricula</th>
         <th>Tipo Navegacion</th>
-        <th>Status</th>
+        
         <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
     @foreach($permisoZarpes as $permisoZarpe)
         <tr>
-            <td>{{ $permisoZarpe->nro_solicitud }}</td>
-            <td>{{ $permisoZarpe->user->nombres }} {{ $permisoZarpe->user->apellidos }}</td>
-            <td>{{ $permisoZarpe->bandera }}</td>
-            <td>{{ $permisoZarpe->matricula }}</td>
-            <td>{{ $permisoZarpe->tipo_zarpe->nombre }}</td>
-            @if ($permisoZarpe->status->id==1)
+        @if ($permisoZarpe->status->id==1)
                 <td class="text-success">{{ $permisoZarpe->status->nombre}} </td>
             @elseif($permisoZarpe->status->id==2)
                 <td class="text-danger">{{ $permisoZarpe->status->nombre}} </td>
@@ -35,6 +32,19 @@
             @else
                 <td>{{ $permisoZarpe->status->nombre}} </td>
             @endif
+            <td>{{ $permisoZarpe->nro_solicitud }}</td>
+            <td>
+                @php
+                $fecha=explode(' ',$permisoZarpe->created_at);
+                list($ano, $mes, $dia) = explode("-", $fecha[0]);
+                $fechaNew=$dia."/".$mes."/".$ano;
+                @endphp
+                {{ $fechaNew }}</td>
+            <td>{{ $permisoZarpe->user->nombres }} {{ $permisoZarpe->user->apellidos }}</td>
+            <td>{{ $permisoZarpe->bandera }}</td>
+            <td>{{ $permisoZarpe->matricula }}</td>
+            <td>{{ $permisoZarpe->tipo_zarpe->nombre }}</td>
+           
             <td>
                 @can('consultar-zarpe')
                     <a class="btn btn-sm btn-primary"
@@ -72,7 +82,7 @@
                         @endcan
                     @if (($permisoZarpe->status->id==1)||($permisoZarpe->status->id==4)||($permisoZarpe->status->id==5))
                         <a class="btn btn-sm btn-dark"
-                           href="{{route('zarpepdf',$permisoZarpe->id)}}" target="_blank" data-toggle="tooltip"
+                           href="{{route('zarpeInternacionalpdf',$permisoZarpe->id)}}" target="_blank" data-toggle="tooltip"
                            data-bs-placement="bottom" title="Descargar PDF">
                             <i class="fas fa-file-pdf"></i>
                         </a>

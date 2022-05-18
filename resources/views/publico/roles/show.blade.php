@@ -22,7 +22,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-plus-square-o fa-lg"></i>
+                                <i class="fa fa-id-badge fa-lg"></i>
                                 <strong>Consultar Rol - {{$role->name}}</strong>
 
                                 <div class="card-header-actions">
