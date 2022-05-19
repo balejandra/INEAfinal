@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('capitanias.index') }}">Capitania</a>
+                    <a href="{{ route('capitanias.index') }}">Capitanía</a>
                 </li>
                 <li class="breadcrumb-item ">Consulta</li>
             </ol>
@@ -22,7 +22,8 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Consultar Capitania</strong>
+                             <i class="fa fa-building"></i>
+                                 <strong>Consultar Capitanía</strong>
                                  <div class="card-header-actions">
                                      <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Listado de Capitanias</a>
                                  </div>

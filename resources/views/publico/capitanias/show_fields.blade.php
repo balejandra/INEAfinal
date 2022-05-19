@@ -1,4 +1,9 @@
- 
+
+
+<div class="row">
+    <dic class="col-md-2"></dic>
+    <dic class="col-md-8">
+         
 <table class="table table-bordered">
     <tbody>
         <tr>
@@ -31,10 +36,14 @@
          
     </tbody>
 </table>
+    </dic>
+    <dic class="col-md-2"></dic>
+</div>
 
 <div class="row d-flex justify-content-center">
-<div class="text-center col-md-12" >
-<table   id='coordenadas-table' class="table table-bordered">
+<div class="col-md-2"></div>
+<div class="text-center col-md-8" >
+<table id="table-paginate" class="table table-bordered">
     <thead>
         <tr>
             <th colspan="2" class="bg-light text-center">Coordenadas</th>
@@ -60,6 +69,7 @@
 
 </div>
 
+<div class="col-md-2"></div>
 
 </div>
 

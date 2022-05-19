@@ -1,23 +1,22 @@
 <div class="row" >
     <!-- Nombre Field -->
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-4">
         {!! Form::label('nombre', 'Nombre:') !!}
         {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
     </div>
 
     <!-- Sigla Field -->
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-4">
         {!! Form::label('sigla', 'Sigla:') !!}
         {!! Form::text('sigla', null, ['class' => 'form-control']) !!}
     </div>
-</div>
-<div class="row" >
-    <!-- Nombre Field -->
-    <div class="form-group col-sm-6">
+
+    <div class="form-group col-sm-4">
         {!! Form::label('capitanes', 'Capitan:') !!}
         {!! Form::select('user',$user, null, ['class' => 'form-control custom-select']) !!}
     </div>
 </div>
+ 
 
 {!! Form::label('coordenadas', 'Coordenas:') !!}
 @php($var=0)

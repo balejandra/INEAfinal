@@ -65,4 +65,14 @@ $(document).ready(function() {
         "ordering": false,
         "info":     false
     });
+
+    $('#table-paginate').DataTable({
+        "scrollX": true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        "paging":   false,
+        "ordering": false,
+        "info":     false
+    });
 } );
