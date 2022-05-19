@@ -69,13 +69,23 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <br>
+                                            <style>
+                                                @media (min-width: 576px) {
+                                                    .dataTables_wrapper {
+                                                        margin: 0 auto;
+                                                        width: 75%;
+                                                        align-content: center;
+                                                    }
+                                                }
+                                            </style>
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-bordered" id="table-nooptions-equipo"  style="width:100%">
+                                                <table class="table table-striped table-bordered" id="table-nooptions-equipo">
                                                     <thead>
                                                     <tr>
-                                                        <th style="width: 40%">Equipo</th>
+                                                        <th>Equipo</th>
                                                         <th style="width: 30%">Cantidad</th>
-                                                        <th>Otros</th>
+                                                        <th style="width: 30%">Otros</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -121,7 +131,7 @@
 
 
                                                                         <div class=" form-inline">
-                                                                            <label for="inputEmail4" class="col-sm-5"
+                                                                            <label for="inputEmail4" class="col-sm-12"
                                                                                    style="text-transform: uppercase;">
                                                                                 @if($equipo->otros=="fecha_ultima_inspeccion")
                                                                                     Fecha de última inspección

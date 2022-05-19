@@ -69,14 +69,18 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <br>
                                             <style>
-                                                .dataTables_wrapper   {
-                                                    margin: 0 auto;
-                                                    width: 95%;
+                                                @media (min-width: 576px) {
+                                                    .dataTables_wrapper {
+                                                        margin: 0 auto;
+                                                        width: 75%;
+                                                        align-content: center;
+                                                    }
                                                 }
                                             </style>
-                                            <div class="table-responsive align-content-center">
-                                            <table class="table table-striped table-bordered" id="table-nooptions-equipo"  style="width:95%">
+                                            <div class="table-responsive justify-content-center">
+                                            <table class="table table-striped table-bordered" id="table-nooptions-equipo" >
                                                 <thead>
                                                 <tr>
                                                     <th>Equipo</th>
@@ -127,7 +131,7 @@
 
 
                                                                 <div class=" form-inline">
-                                                                    <label for="inputEmail4" class="col-sm-5"
+                                                                    <label for="inputEmail4" class="col-sm-12"
                                                                            style="text-transform: uppercase;">
                                                                         @if($equipo->otros=="fecha_ultima_inspeccion")
                                                                             Fecha de última inspección

@@ -43,7 +43,7 @@
 <div class="row d-flex justify-content-center">
 <div class="col-md-2"></div>
 <div class="text-center col-md-8" >
-<table id="table-paginate" class="table table-bordered" style="width: 100%">
+<table id="table-paginate" class="table table-bordered">
     <thead>
         <tr>
             <th colspan="2" class="bg-light text-center">Coordenadas</th>
