@@ -22,16 +22,23 @@
                  <div class="col-lg-12">
                       <div class="card">
                           <div class="card-header">
-                              <i class="fa fa-edit fa-lg"></i>
+                              <i class="fa fa-user fa-lg"></i>
                               <strong>Editar Usuario</strong>
                               <div class="card-header-actions">
-                                  <a href= "{{route('users.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                     
                               </div>
                           </div>
                           <div class="card-body">
                               {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'patch']) !!}
-
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-6  border rounded ">
                               @include('publico.users.fields')
+
+
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
 
                               {!! Form::close() !!}
                             </div>

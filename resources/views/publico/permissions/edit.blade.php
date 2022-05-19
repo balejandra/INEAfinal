@@ -22,14 +22,14 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-edit fa-lg"></i>
+                        <i class="fa fa-address-card"></i>
                             <strong>Modificar Permiso</strong>
                         </div>
                         <div class="card-body">
 
                         <div class="row justify-content-center">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8 border rounded">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8 col-lg-4 border rounded p-3">
 
                             <form action="{{route('permissions.update', $permission->id)}} " method="post"
                                   class="needs-validation" novalidate>
@@ -49,10 +49,21 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-2 text-center mt-4">
-                                        <button type="submit" class="btn btn-primary btn-bg-inea">Modificar</button>
-                                    </div>
+                                    
+                                    
+
                                 </div>
+                                <div class="row mt-4 ">
+                                    
+                                        <div class="col-md-6 text-center">
+                                        <a href="{{route('permissions')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+                                    
+                                        </div>
+
+                                        <div class="col-md-6 text-center ">
+                                            <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
+                                        </div>
+                                    </div>
                             </form>
                             </div>
                                 <div class="col-md-2"></div>

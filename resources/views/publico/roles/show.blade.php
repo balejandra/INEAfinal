@@ -26,7 +26,7 @@
                                 <strong>Consultar Rol - {{$role->name}}</strong>
 
                                 <div class="card-header-actions">
-                                     <a href= "{{route('roles')}} " class="btn btn-primary btn-sm">Listado</a>
+                                    
                                   </div>
                             </div>
                             <div class="card-body">
@@ -55,7 +55,11 @@
                     </div>
 
 
-
+                    <div class="row mt-4">
+                        <div class="col-md-12 text-center">
+                        <a href="{{route('roles')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+                        </div>
+                    </div>
 
 
                 </div>

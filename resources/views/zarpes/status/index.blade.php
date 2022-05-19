@@ -19,7 +19,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-plus-square-o fa-lg"></i>
+                            <i class="fa fa-clipboard-check fa-lg"></i>
                             <strong>Estatus</strong>
                             @can('crear-status')
                                 <div class="card-header-actions">

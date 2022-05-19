@@ -1,11 +1,27 @@
 <!-- Nombre Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('nombre', 'Nombre:') !!}
-    {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
+<div class="row ">
+<div class="col-lg-4 col-md-3 "></div>
+<div class="col-lg-4 col-md-6 col-sm-12">
+
+<div class="row border">
+    <div class="form-group col-lg-12 col-sm-6">
+        {!! Form::label('nombre', 'Nombre:') !!}
+        {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
+    </div>
+
+    <!-- Submit Field -->
+    <div class="form-group col-sm-6 text-center">
+        
+        <a href="{{ route('status.index') }}" class="btn  btncancelarZarpes">Cancelar</a>
+    </div>
+    <div class="form-group col-sm-6 text-center">
+        {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+         
+    </div>
 </div>
 
-<!-- Submit Field -->
-<div class="form-group col-sm-12">
-    {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('status.index') }}" class="btn btn-secondary">Cancelar</a>
 </div>
+<div class="col-lg-4 col-md-3"></div>
+</div>
+
+

@@ -708,7 +708,7 @@ class PermisoZarpeController extends Controller
         $this->step = 7;
         return view('zarpes.permiso_zarpe.create-step-seven')
             ->with('paso', $this->step)
-            ->with('equipos', $equipos);
+            ->with('equipos', $equipos)->with('titulo', $this->titulo);
         }else{
             return redirect(route('permisoszarpes.createStepOne'));
         }

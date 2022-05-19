@@ -23,11 +23,11 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <i class="fa fa-plus-square-o fa-lg"></i>
+                            <i class="fa fa-id-badge fa-lg"></i>
                             <strong>Crear rol</strong>
 
                             <div class="card-header-actions">
-                                <a href="{{route('roles')}} " class="btn btn-primary btn-sm">Listado</a>
+                              
                             </div>
 
                         </div>
@@ -35,15 +35,15 @@
 
                         <div class="row justify-content-center">
                             <div class="col-md-2"></div>
-                            <div class="col-md-8 border rounded py-3">
+                            <div class="col-md-8 col-lg-8 col-sm-12 border rounded py-3">
 
                             <form action="{{route('roles.store')}} " method="post" class="needs-validation" novalidate>
                                 @csrf
                                 <div class="form-row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 col-lg-4">
                                         <div class="form-group">
                                             <label for="nombre">Nombre:</label>
-                                            <input type="text" class="form-control" id="name"
+                                            <input type="text" class="form-control " id="name"
                                                    placeholder="Nombre del rol" name="name" value="{{ old('name') }}"
                                                    required>
                                             @if($errors->has('name'))
@@ -81,9 +81,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 text-center mt-4">
-                                        <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
+
+                                       
                                     </div>
+                                    <div class="row  mt-4">
+                                        <div class="col-md-6 text-center">
+                                            <a href="{{route('roles')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+                                        </div>
+                                        <div class="col-md-6 text-center  ">
+                                            <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
+                                        </div>
                                 </div>
                             </form>
 

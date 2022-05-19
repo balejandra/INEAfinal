@@ -30,7 +30,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i>
+                            <i class="fa fa-address-card"></i>
                             <strong>Permisos</strong>
                             @can('crear-permiso')
                             <div class="card-header-actions">

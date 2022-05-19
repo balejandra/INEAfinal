@@ -1,9 +1,9 @@
 
-<table class="table">
+<table class="table"> 
     <tbody>
         @if($user->tipo_identificacion !="")
         <tr>
-            <th class="bg-light">Tipo de identificación</th>
+            <th width="40%" class="bg-light">Tipo de identificación</th>
             <td>{{ $user->tipo_identificacion }}</td>
         </tr>
         @endif
@@ -67,3 +67,8 @@
         @endif
     </tbody>
 </table>
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <a href="{{route('users.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+    </div>
+</div>

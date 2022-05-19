@@ -22,17 +22,21 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-plus-square-o fa-lg"></i>
+                                <i class="fa fa-user fa-lg"></i>
                                 <strong>Crear Usuario</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('users.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                   
                                 </div>
                             </div>
                             <div class="card-body">
-                                {!! Form::open(['route' => 'users.store']) !!}
+                            <div class="row ">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6 border rounded ">
 
-                                <!-- Email Field -->
-                                    <div class="form-group col-sm-6">
+
+                                {!! Form::open(['route' => 'users.store']) !!}
+                                <div class="row">
+                                <div class="form-group col-sm-6">
                                         {!! Form::label('email', 'Email:') !!}
                                         <input type="email"
                                                class="form-control {{ $errors->has("email")?"is-invalid":"" }}"
@@ -48,7 +52,10 @@
                                         {!! Form::label('nombres', 'Nombres:') !!}
                                         {!! Form::text('nombres', null, ['class' => 'form-control','required']) !!}
                                     </div>
-
+                                </div>
+                                <!-- Email Field -->
+                                    
+                                <div class="row">
                                     <!-- Password Field -->
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('password', 'Contraseña:') !!}
@@ -56,10 +63,15 @@
                                         @error('password')
                                         <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
+                                    </div>
+                                    <div class="col-md-6">
+
                                         {!! Form::label('password', 'Confirmar Contraseña:') !!}
                                         <input type="password" name="password_confirmation" class="form-control" required
                                                placeholder={{ __('Confirm Password') }}>
                                     </div>
+                                </div>
+                                    
 
 
                                     <div class="form-group col-sm-6">
@@ -68,13 +80,27 @@
                                         {!! Form::select('roles', $roles, null, ['class' => 'roles form-control custom-select','placeholder' => 'Puede asignar un Rol...','onchange="requeridos(); EstablecimientoUser();"','required']) !!}
                                     </div>
                                     <!-- Submit Field -->
-                                    <div class="form-group col-sm-12">
+                                    
+
+                                    <div class="row  mt-4">
+                                        <div class="col-md-6 text-center">
+                                            <a href="{{route('users.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+                                        </div>
+                                        <div class="form-group col-sm-6 text-center">
                                         {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+                                        </div>
                                     </div>
 
                                     <input type="text" name="tipo_usuario" value="interno" hidden>
 
                                 {!! Form::close() !!}
+
+
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+                                
                             </div>
                         </div>
                     </div>

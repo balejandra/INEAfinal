@@ -22,9 +22,10 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
+                             <i class="fa fa-clipboard-check fa-lg"></i>
                                  <strong>Consulta</strong>
                                  <div class="card-header-actions">
-                                     <a href="{{route('status.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                     
                                  </div>
                              </div>
                              <div class="card-body">

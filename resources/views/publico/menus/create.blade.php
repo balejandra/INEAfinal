@@ -26,7 +26,7 @@
                                 <strong>Creación de {{$titulo}}</strong>
 
                                 <div class="card-header-actions">
-                                    <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                   
                                 </div>
 
                             </div>
@@ -34,13 +34,13 @@
                                 <div class="row">
                                     <div class="col-lg-2 col-md-3"></div>
                                     <div class=" border col-lg-8 col-md-12 col-sm-12 col-xs-12 ">  
-                                    <div class=" border col-lg-6 col-md-4 col-sm-6 col-xs-12 ">           
+                                            
                                         {!! Form::open(['route' => 'menus.store']) !!}
 
                                         @include('publico.menus.fields')
 
                                         {!! Form::close() !!}
-                                        </div>
+                                    </div>
                                     <div class=" col-lg-2 col-md-3"></div>
                                 </div>
                             </div>

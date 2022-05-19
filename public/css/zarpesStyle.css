@@ -73,6 +73,12 @@
     background: #003B74 !important;
 }
 
+.btncancelarZarpes{
+    background-color: #8b9ab0 !important;
+    color:#333 !important;
+    font: bold !important;
+}
+
 .inputGroup {
     background-color: #d5d5d5;
     display: block;

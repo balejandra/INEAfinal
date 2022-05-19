@@ -22,7 +22,7 @@
                             <i class="fa fa-align-justify"></i>
                             Roles asociados a {{$titulo}}
                             <div class="card-header-actions">
-                                <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
+                                <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -31,7 +31,7 @@
                                     <thead>
                                     <tr>
 
-                                        <th>Menu</th>
+                                        <th>Menú</th>
                                         <th>Rol Asociado</th>
                                     </tr>
                                     </thead>

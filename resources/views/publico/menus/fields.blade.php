@@ -62,6 +62,14 @@
 
 
 <!-- Submit Field -->
-<div class="form-group col-sm-12">
+<div class="row">
+<div class="col-sm-6 text-center">
+<a href= "{{route('menus.index')}}   " class="btn btn-ligth btncancelarZarpes ">Cancelar</a>
+
+</div>
+<div class="form-group col-sm-6 text-center">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
 </div>
+
+</div>
+

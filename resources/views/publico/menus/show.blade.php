@@ -22,6 +22,7 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
+                             <i class="fa fa-bars fa-lg"></i>
                                  <strong>Consultar {{$titulo}}  - {{$menu->name}}</strong>
                                  <div class="card-header-actions">
                                      <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado</a>
@@ -30,7 +31,7 @@
                              <div class="card-body">
                                  <div class="my-2">
                                      <div class="container">
-                                 @include('publico.menus.show_fields')
+                                        @include('publico.menus.show_fields')
                                      </div>
                                  </div>
                              </div>
