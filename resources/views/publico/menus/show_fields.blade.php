@@ -1,7 +1,9 @@
-<table class="table">
+<div class='row'>
+    <div class="d-flex flex-wrap justify-content-center">
+    <table class="table table-bordered" style="width:50%;">
     <tbody>
         <tr>
-            <th class="bg-light" style="width:25%">Roles permisados</th>
+            <th class="bg-light" style="width:35%">Roles permisados</th>
             <td>
                 @foreach($menuRols as $Roles)
 
@@ -20,7 +22,7 @@
             <td>{{ $menu->name }}</td>
         </tr>
         <tr>
-            <th class="bg-light">Descripcion</th>
+            <th class="bg-light">Descripción</th>
             <td>{{ $menu->description }}</td>
         </tr>
         <tr>
@@ -45,3 +47,6 @@
         </tr>
     </tbody>
 </table>
+
+    </div>
+</div>

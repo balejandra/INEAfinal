@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Permisos de Zarpe</li>
+                <li class="breadcrumb-item">Permisos de {{$titulo}}</li>
 
             </ol>
         </nav>
@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe</strong>
+                            <strong>Solicitud de {{$titulo}}</strong>
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{ route('permisoszarpes.createStepOne') }}">Nuevo</a>
                             </div>

@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('menus.index') !!}">Menu</a>
+                    <a href="{!! route('menus.index') !!}">{{$titulo}}</a>
                 </li>
                 <li class="breadcrumb-item">Editar</li>
             </ol>
@@ -23,7 +23,7 @@
                       <div class="card">
                           <div class="card-header">
                               <i class="fa fa-edit fa-lg"></i>
-                              <strong>Editar Menu</strong>
+                              <strong>Edición de {{$titulo}}</strong>
 
                               <div class="card-header-actions">
                                   <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado</a>
@@ -32,11 +32,15 @@
                           <div class="card-body">
                           </div>
                           <div class="card-body">
+                           
+                            <div class=" col-6  d-flex flex-wrap justify-content-center">           
                               {!! Form::model($menu, ['route' => ['menus.update', $menu->id], 'method' => 'patch']) !!}
 
                               @include('publico.menus.fields')
 
                               {!! Form::close() !!}
+                              </div>
+                             
                             </div>
                         </div>
                     </div>

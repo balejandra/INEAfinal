@@ -17,7 +17,7 @@ class MenuController extends AppBaseController
 {
     /** @var  MenuRepository */
     private $menuRepository;
-
+    private $titulo="Menús";
     public function __construct(MenuRepository $menuRepo)
     {
         $this->menuRepository = $menuRepo;
@@ -41,7 +41,7 @@ class MenuController extends AppBaseController
         $menus = $this->menuRepository->all();
 
         return view('publico.menus.index')
-            ->with('menus', $menus);
+            ->with('menus', $menus)->with('titulo', $this->titulo);
     }
 
 
@@ -63,7 +63,7 @@ class MenuController extends AppBaseController
 
         return view('publico.menus.create')
             ->with('roles',$menuRols)
-            ->with('parent',$parent);
+            ->with('parent',$parent)->with('titulo', $this->titulo);
     }
 
     /**
@@ -90,7 +90,7 @@ class MenuController extends AppBaseController
 
 
        // Flash::success('Menú guardado con éxito.');
-        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.');
+        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.')->with('titulo', $this->titulo);
         //return redirect(route('menus.index'));
     }
 
@@ -123,7 +123,7 @@ class MenuController extends AppBaseController
             //return redirect(route('menus.index'));
         }
 
-        return view('publico.menus.show')->with('menu', $menu)->with('parent', $parent)->with('menuRols', $menuRols);
+        return view('publico.menus.show')->with('menu', $menu)->with('parent', $parent)->with('menuRols', $menuRols)->with('titulo', $this->titulo);
     }
 
     /**
@@ -163,7 +163,7 @@ class MenuController extends AppBaseController
             ->with('menu', $menu)
            // ->with('roles',$roles)
             ->with('parent',$parent)
-            ->with('roles',$menuRols);
+            ->with('roles',$menuRols)->with('titulo', $this->titulo);
     }
 
     /**
@@ -190,7 +190,7 @@ class MenuController extends AppBaseController
         $roles = $menu->roles()->sync($request['role']);
 
        // Flash::success('Menú actualizado correctamente.');
-        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.');
+        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.')->with('titulo', $this->titulo);
 
        // return redirect(route('menus.index'));
     }
@@ -211,7 +211,7 @@ class MenuController extends AppBaseController
         if (empty($menu)) {
             //Flash::error('Menú no encontrado');
 
-            return redirect()->route('menus.index')->with('error','Menu no encontrado');
+            return redirect()->route('menus.index')->with('error','Menu no encontrado')->with('titulo', $this->titulo);
 
         }
 
@@ -220,6 +220,6 @@ class MenuController extends AppBaseController
 
         //Flash::success('Menú eliminado con éxito.');
 
-        return redirect()->route('menus.index')->with('success','Menu eliminado con exito.');
+        return redirect()->route('menus.index')->with('success','Menu eliminado con exito.')->with('titulo', $this->titulo);
     }
 }

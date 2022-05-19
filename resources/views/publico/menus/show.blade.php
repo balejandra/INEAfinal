@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('menus.index') }}">Menu</a>
+                    <a href="{{ route('menus.index') }}">{{$titulo}}</a>
                 </li>
                 <li class="breadcrumb-item active1">Consulta</li>
             </ol>
@@ -22,7 +22,7 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Consultar Menu  - {{$menu->name}}</strong>
+                                 <strong>Consultar {{$titulo}}  - {{$menu->name}}</strong>
                                  <div class="card-header-actions">
                                      <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado</a>
                                  </div>

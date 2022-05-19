@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\DB;
 class ZarpeInternacionalController extends Controller
 {
     private $step;
-
+    private $titulo="Zarpe Internacional";
     public function __construct()
     {
         $this->step = 1;
@@ -51,11 +51,11 @@ class ZarpeInternacionalController extends Controller
     {
         if (auth()->user()->hasPermissionTo('listar-zarpes-todos')) {
             $data = PermisoZarpe::where('descripcion_navegacion_id', 4)->get();
-            return view('zarpes.zarpe_internacional.index')->with('permisoZarpes', $data);
+            return view('zarpes.zarpe_internacional.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-generados')) {
             $user = auth()->id();
             $data = PermisoZarpe::where('user_id', $user)->where('descripcion_navegacion_id', 4)->get();
-            return view('zarpes.zarpe_internacional.index')->with('permisoZarpes', $data);
+            return view('zarpes.zarpe_internacional.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
             $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
@@ -64,14 +64,14 @@ class ZarpeInternacionalController extends Controller
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id', 4)->get();
             return view('zarpes.zarpe_internacional.indexcapitan')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)
-                ->with('permisoDestinoZarpes', $datazarpedestino);
+                ->with('permisoDestinoZarpes', $datazarpedestino)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
             $establecimiento = EstablecimientoNauticoUser::select('establecimiento_nautico_id')->where('user_id', $user)->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id', 4)->get();
 
             return view('zarpes.zarpe_internacional.indexcomodoro')
-                ->with('permisoOrigenZarpes', $datazarpeorigen);
+                ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
         } else {
             return redirect(route('home'));
         }
@@ -130,7 +130,7 @@ class ZarpeInternacionalController extends Controller
 
         $request->session()->put('solicitud', $solicitud);
         
-        return view('zarpes.zarpe_internacional.create-step-one')->with('paso', $this->step);
+        return view('zarpes.zarpe_internacional.create-step-one')->with('paso', $this->step)->with('titulo', $this->titulo);
     }
 
 
@@ -173,7 +173,7 @@ class ZarpeInternacionalController extends Controller
             $matriculaActual=explode('-',$solicitud->matricula);
         }
         
-        return view('zarpes.zarpe_internacional.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula")->with("siglas", $siglas)->with("matriculaActual", $matriculaActual);
+        return view('zarpes.zarpe_internacional.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula")->with("siglas", $siglas)->with("matriculaActual", $matriculaActual)->with('titulo', $this->titulo);
 
     }
 
@@ -337,7 +337,7 @@ class ZarpeInternacionalController extends Controller
 
         $this->step = 2;
 
-        return view('zarpes.zarpe_internacional.extranjera.create-step-two')->with('paso', $this->step);
+        return view('zarpes.zarpe_internacional.extranjera.create-step-two')->with('paso', $this->step)->with('titulo', $this->titulo);
 
     }
 
@@ -411,7 +411,7 @@ class ZarpeInternacionalController extends Controller
 
         $this->step = 3;
 
-        return view('zarpes.zarpe_internacional.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('bandera', $bandera);
+        return view('zarpes.zarpe_internacional.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('bandera', $bandera)->with('titulo', $this->titulo);
 
     }
 
@@ -443,7 +443,7 @@ class ZarpeInternacionalController extends Controller
         $paises= Paise::all();
         
         $this->step = 4;
-        return view('zarpes.zarpe_internacional.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('paises', $paises);
+        return view('zarpes.zarpe_internacional.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('paises', $paises)->with('titulo', $this->titulo);
 
     }
 
@@ -487,7 +487,7 @@ class ZarpeInternacionalController extends Controller
         $tripulantes = $request->session()->get('tripulantes');
 
         $this->step = 5;
-        return view('zarpes.zarpe_internacional.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('codigo', $codigo);
+        return view('zarpes.zarpe_internacional.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('codigo', $codigo)->with('titulo', $this->titulo);
 
     }
 
@@ -555,7 +555,7 @@ class ZarpeInternacionalController extends Controller
         $validation = json_decode($request->session()->get('validacion'), true);
         $cantPasajeros = $validation['cant_pasajeros'] - $validation['cant_tripulantes'];
         $this->step = 6;
-        return view('zarpes.zarpe_internacional.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('cantPasajeros', $cantPasajeros);
+        return view('zarpes.zarpe_internacional.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('cantPasajeros', $cantPasajeros)->with('titulo', $this->titulo);
 
     }
 
@@ -577,7 +577,7 @@ class ZarpeInternacionalController extends Controller
         $this->step = 7;
         return view('zarpes.zarpe_internacional.create-step-seven')
             ->with('paso', $this->step)
-            ->with('equipos', $equipos);
+            ->with('equipos', $equipos)->with('titulo', $this->titulo);
 
     }
 
@@ -1232,7 +1232,7 @@ class ZarpeInternacionalController extends Controller
             ->with('descripcionNavegacion', $descipcionNavegacion)
             ->with('establecimientoDestino', $establecimiento_destino)
             ->with('capitaniaOrigen', $capitaniaOrigen[0])
-            ->with('pais',$paises);
+            ->with('pais',$paises)->with('titulo', $this->titulo);
     }
 
     public function SendMail($idsolicitud, $tipo)

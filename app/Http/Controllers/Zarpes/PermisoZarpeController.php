@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\DB;
 class PermisoZarpeController extends Controller
 {
     private $step;
-
+    private $titulo="Zarpe Nacional";
     public function __construct()
     {
         $this->step = 1;
@@ -49,11 +49,11 @@ class PermisoZarpeController extends Controller
     {
         if (auth()->user()->hasPermissionTo('listar-zarpes-todos')) {
             $data = PermisoZarpe::whereIn('descripcion_navegacion_id', [1,2,3])->get();
-            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-generados')) {
             $user = auth()->id();
             $data = PermisoZarpe::where('user_id', $user)->whereIn('descripcion_navegacion_id', [1,2,3])->get();
-            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data->with('titulo', $this->titulo));
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
             $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
@@ -62,14 +62,14 @@ class PermisoZarpeController extends Controller
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->whereIn('descripcion_navegacion_id', [1,2,3])->get();
             return view('zarpes.permiso_zarpe.indexcapitan')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)
-                ->with('permisoDestinoZarpes', $datazarpedestino);
+                ->with('permisoDestinoZarpes', $datazarpedestino)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
             $establecimiento = EstablecimientoNauticoUser::select('establecimiento_nautico_id')->where('user_id', $user)->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->whereIn('descripcion_navegacion_id', [1,2,3])->get();
 
             return view('zarpes.permiso_zarpe.indexcomodoro')
-                ->with('permisoOrigenZarpes', $datazarpeorigen);
+                ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
         } else {
             return redirect(route('home'));
         }
@@ -77,6 +77,7 @@ class PermisoZarpeController extends Controller
 
     public function createStepOne(Request $request)
     {
+        $titulo="Zarpe Nacional";
         $request->session()->put('stepName', "Matrícula");
         $request->session()->put('matriculasPermisadas', ['']);
 
@@ -125,7 +126,7 @@ class PermisoZarpeController extends Controller
 
         $request->session()->put('solicitud', $solicitud);
 
-        return view('zarpes.permiso_zarpe.create-step-one')->with('paso', $this->step);
+        return view('zarpes.permiso_zarpe.create-step-one')->with('paso', $this->step)->with('titulo', $this->titulo);
     }
 
 
@@ -172,7 +173,7 @@ class PermisoZarpeController extends Controller
 
 
 
-            return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula")->with("siglas", $siglas)->with("matriculaActual", $matriculaActual);
+            return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula")->with("siglas", $siglas)->with("matriculaActual", $matriculaActual)->with('titulo', $this->titulo);
 
 
         }else{
@@ -345,7 +346,7 @@ class PermisoZarpeController extends Controller
 
         $this->step = 2;
 
-        return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', $this->step);
+        return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', $this->step)->with('titulo', $this->titulo);
 
     }
 
@@ -425,7 +426,7 @@ class PermisoZarpeController extends Controller
 
             $this->step = 3;
 
-            return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('descripcionNavegacion', $descripcionNavegacion)->with('bandera', $bandera);
+            return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('descripcionNavegacion', $descripcionNavegacion)->with('bandera', $bandera)->with('titulo', $this->titulo);
 
 
         }else{
@@ -550,7 +551,7 @@ class PermisoZarpeController extends Controller
             }
         }
         $this->step = 4;
-        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias', json_encode($coordenadasDep))->with('activaDependencias', $activaDependencias)->with('EstNauticosDestino', $EstNauticosDestino)->with('CapDestinoFinal', $CapDestinoFinal)->with('capitaniasDestinoList', $capitaniasDestinoList);
+        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias', json_encode($coordenadasDep))->with('activaDependencias', $activaDependencias)->with('EstNauticosDestino', $EstNauticosDestino)->with('CapDestinoFinal', $CapDestinoFinal)->with('capitaniasDestinoList', $capitaniasDestinoList)->with('showSelect', $showSelect)->with('idCapdestinoFinal', $idCapdestinoFinal)->with('titulo', $this->titulo);
         }else{
             return redirect(route('permisoszarpes.createStepOne'));
         }
@@ -616,7 +617,7 @@ class PermisoZarpeController extends Controller
         $tripulantes = $request->session()->get('tripulantes');
 
         $this->step = 5;
-        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation);
+        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('titulo', $this->titulo);
         }else{
             return redirect(route('permisoszarpes.createStepOne'));
         }
@@ -645,10 +646,10 @@ class PermisoZarpeController extends Controller
 
             }elseif($capitan< 1){
                 $mensj ="Debe asignar un capitán para esta embarcación, por favor verifique";
-                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj);
+                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj)->with('titulo', $this->titulo);
             }else{
                 $mensj ="No puede asignar más de un capitán para la embarcación";
-                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj);
+                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj)->with('titulo', $this->titulo);
             }
 
         } else {
@@ -664,7 +665,7 @@ class PermisoZarpeController extends Controller
             }
 
 
-            return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj);
+            return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj)->with('titulo', $this->titulo);
 
 
         }
@@ -681,7 +682,7 @@ class PermisoZarpeController extends Controller
         $cantPasajeros = $validation['cantPassAbordo'];
         $this->step = 6;
 
-        return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('cantPasajeros', $cantPasajeros);
+        return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('cantPasajeros', $cantPasajeros)->with('titulo', $this->titulo);
         }else{
             return redirect(route('permisoszarpes.createStepOne'));
         }
@@ -693,7 +694,7 @@ class PermisoZarpeController extends Controller
 
 
         $this->step = 7;
-        return redirect()->route('permisoszarpes.createStepSeven');
+        return redirect()->route('permisoszarpes.createStepSeven')->with('titulo', $this->titulo);
 
     }
 
@@ -1295,7 +1296,7 @@ class PermisoZarpeController extends Controller
             ->with('comodoro', $establecimiento_user)
             ->with('descripcionNavegacion', $descipcionNavegacion)
             ->with('establecimientoDestino', $establecimiento_destino)
-            ->with('capitaniaOrigen', $capitaniaOrigen[0]);
+            ->with('capitaniaOrigen', $capitaniaOrigen[0])->with('titulo', $this->titulo);
     }
 
     public function SendMail($idsolicitud, $tipo)

@@ -26,7 +26,7 @@
                     <div class="card">
                         <div class="card-header bg-zarpes text-white">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe INTERNACIONAL</strong>
+                            <strong>Solicitud de Permisos de {{$titulo}}</strong>
 
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{route('zarpeInternacional.index')}}">Cancelar</a>
