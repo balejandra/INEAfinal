@@ -116,7 +116,6 @@ class UserController extends Controller
     public function show($id)
     {
         $user = $this->userRepository->find($id);
-        print_r($user);
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
 
