@@ -69,13 +69,19 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="table-responsive">
-                                            <table class="table table-striped table-bordered" id="table-nooptions-equipo"  style="width:100%">
+                                            <style>
+                                                .dataTables_wrapper   {
+                                                    margin: 0 auto;
+                                                    width: 95%;
+                                                }
+                                            </style>
+                                            <div class="table-responsive align-content-center">
+                                            <table class="table table-striped table-bordered" id="table-nooptions-equipo"  style="width:95%">
                                                 <thead>
                                                 <tr>
-                                                    <th style="width: 40%">Equipo</th>
+                                                    <th>Equipo</th>
                                                     <th style="width: 30%">Cantidad</th>
-                                                    <th>Otros</th>
+                                                    <th style="width: 30%">Otros</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>

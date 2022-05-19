@@ -228,9 +228,9 @@
     <div class="form-group col-sm-12 text-center">
         @can('aprobar-zarpe')
             @if(($permisoZarpe->status->id==3))
-                <a href="{{route('statusInt',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}"
-                   class="btn btn-success" title="Aprobar">
-                    Aprobar
+                <a data-route="{{route('statusInt',[$permisoZarpe->id,'aprobado',$permisoZarpe->establecimiento_nautico_id])}}"
+                   class="btn btn-success confirmation" title="Aprobar" data-action="APROBAR">
+                    Aprobar <i class="fa fa-check"></i>
                 </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             @endif
         @endcan

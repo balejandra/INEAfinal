@@ -1836,7 +1836,6 @@ $(document).ready(function() {
             bootbox.confirm({
                 title: "Confirmacion",
                 message: "Estas seguro que desea "+data+ " este documento ",
-                centerVertical:true,
                 animate:true,
                 buttons: {
                     confirm: {
