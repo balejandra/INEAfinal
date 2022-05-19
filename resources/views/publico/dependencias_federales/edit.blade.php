@@ -29,11 +29,20 @@
                                 </div>
                           </div>
                           <div class="card-body">
+                          <div class="row">
+                                    <div class="col-lg-3 col-md-3"></div>
+                                        <div class=" border col-lg-6 col-md-12 col-sm-12 col-xs-12 "> 
+
                               {!! Form::model($dependenciaFederal, ['route' => ['dependenciasfederales.update', $dependenciaFederal->id], 'method' => 'patch']) !!}
 
                               @include('publico.dependencias_federales.fields')
 
                               {!! Form::close() !!}
+
+                                        </div>
+                                    <div class=" col-lg-3 col-md-3"></div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

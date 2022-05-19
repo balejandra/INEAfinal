@@ -82,18 +82,18 @@
 <div class="row" >
     <!-- latitud Field -->
 
-    <div class="form-group col-sm-5">
+    <div class="form-group col-sm-6">
         {!! Form::label('Latitud', 'Latitud:') !!}
         {!! Form::text('latitud[]', null, ['class' => 'form-control']) !!}
     </div>
     <!-- longitud Field -->
-    <div class="form-group col-sm-5">
+    <div class="form-group col-sm-6">
         {!! Form::label('longitud', 'Longitud:') !!}
         {!! Form::text('longitud[]', null , ['class' => 'form-control']) !!}
     </div>
-    <div class="form-group col-sm-2 pt-4">
-     <!--   {!! Form::button('Agregar otras', ['class' => 'btn btn-success', 'onclick' => 'agregarCoordenadasDF()']) !!}-->
-    </div>
+   <!-- <div class="form-group col-sm-2 pt-4">
+         {!! Form::button('Agregar otras', ['class' => 'btn btn-success', 'onclick' => 'agregarCoordenadasDF()']) !!} 
+    </div>-->
 
 </div>
 
