@@ -88,8 +88,8 @@
                                                 <td>
                                                     @if(($permisoOrigenZarpe->status->id=='3'))
                                                         @can('aprobar-zarpe')
-                                                            <a href="{{route('statusInt',[$permisoOrigenZarpe->id,'aprobado',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
-                                                               class="btn btn-success btn-sm" title="Aprobar">
+                                                            <a data-route="{{route('statusInt',[$permisoOrigenZarpe->id,'aprobado',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
+                                                               class="btn btn-success btn-sm confirmation" title="Aprobar" data-action="APROBAR">
                                                                 <i class="fa fa-check"></i>
                                                             </a>
                                                         @endcan
@@ -109,18 +109,23 @@
                                                     @endcan
                                                     @if(($permisoOrigenZarpe->status->id=='1'))
                                                         @can('informar-navegacion')
-                                                            <a class="btn btn-sm btn-warning"
-                                                               href=" {{route('statusInt',[$permisoOrigenZarpe->id,'navegando',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
-                                                               data-toggle="tooltip" data-bs-placement="bottom" title="Informar Navegación y Cerrar">
+                                                            <a class="btn btn-sm btn-warning confirmation"
+                                                               data-route=" {{route('statusInt',[$permisoOrigenZarpe->id,'navegando',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
+                                                               data-toggle="tooltip" data-bs-placement="bottom" title="Informar Navegación y Cerrar" data-action="INFORMAR NAVEGACIÓN de">
                                                                 <i class="fas fa-water"></i>
                                                             </a>
+                                                                <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
+                                                                   onclick="modalanularzarpe({{$permisoOrigenZarpe->id}},'{{$permisoOrigenZarpe->nro_solicitud}}')" data-toggle="tooltip"
+                                                                   data-bs-placement="bottom" title="Anular Solicitud">
+                                                                    <i class="fas fa-window-close"></i>
+                                                                </a>
                                                         @endcan
                                                     @endif
                                                     @if(($permisoOrigenZarpe->status->id=='5'))
                                                         @can('anular-sar')
-                                                            <a class="btn btn-sm btn-outline-danger"
-                                                               href=" {{route('statusInt',[$permisoOrigenZarpe->id,'anulado_sar',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
-                                                               data-toggle="tooltip" data-bs-placement="bottom" title="Anular por SAR">
+                                                            <a class="btn btn-sm btn-outline-danger confirmation"
+                                                               data-route=" {{route('statusInt',[$permisoOrigenZarpe->id,'anulado_sar',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
+                                                               data-toggle="tooltip" data-bs-placement="bottom" title="Anular por SAR" data-action="ANULAR POR SAR">
                                                                 <i class="fas fa-briefcase-medical"></i>
                                                             </a>
                                                         @endcan
@@ -198,20 +203,22 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal -->
+
+
+                        <!-- Modal Rechazar -->
                         <div class="modal fade" id="modal-rechazo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <form id="rechazar-zarpe" action="">
-                                <div class="modal-dialog modal-fullscreen-sm-down">
+                            <form id="rechazar-zarpe" action="" class="modal-form">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Rechazar Solicitud de Zarpe INTERNACIONAL</h5>
+                                            <h5 class="modal-title" id="staticBackdropLabel">Rechazar Solicitud Zarpe</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Por favor indique el motivo del rechazo de la Solicitud Nro. <span id="solicitudzarpe"></span></p>
+                                            <p>Por favor indique el motivo del rechaz o de la Solicitud Nro. <span id="solicitudzarpe"></span></p>
                                             <div class="col-sm-12">
                                                 <div class="input-group mb-3">
-                                                    <select class="form-select" aria-label="motivo" id="motivo1" name="motivo" onchange="motivoRechazoZI();" required>
+                                                    <select class="form-select" aria-label="motivo" id="motivo1" name="motivo" onchange="motivoRechazo();" required>
                                                         <option value="">Seleccione un motivo</option>
                                                         <option value="Disposiciones del Ejecutivo Nacional">Disposiciones del Ejecutivo Nacional.</option>
                                                         <option value="Instrucciones especiales de la autoridad acuática">Instrucciones especiales de la autoridad acuática.</option>
@@ -226,12 +233,44 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Rechazar</button>
+                                            <button type="submit" class="btn btn-primary" data-action="RECHAZAR">Rechazar</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
+
+                        <!-- ANULACION MODAL -->
+                        <div class="modal fade" id="modal-anular" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <form id="anular-zarpe" action="" class="modal-form" >
+                                <div class="modal-dialog modal-fullscreen-sm-down">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Anular Solicitud Zarpe</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Por favor indique el motivo de la anulación de la Solicitud Nro. <span id="nrosolicitud"></span></p>
+                                            <div class="col-sm-12">
+                                                <div class="input-group mb-3">
+                                                    <select class="form-select" aria-label="motivo" id="motivo1" name="motivo" required>
+                                                        <option value="">Seleccione un motivo</option>
+                                                        <option value="Incumplimiento de la normativa legal vigente">Incumplimiento de la normativa legal vigente.</option>
+                                                        <option value="Condiciones meteorológicas adversas">Condiciones meteorológicas adversas.</option>
+                                                        <option value="Restricciones de Navegación por motivos de Seguridad y Defensa">Restricciones de Navegación por motivos de Seguridad y Defensa.</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary" data-action="ANULAR" >Anular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
 
                     </div>
                 </div>

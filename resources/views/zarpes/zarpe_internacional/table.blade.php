@@ -37,7 +37,7 @@
             @else
                 <td>{{ $permisoZarpe->status->nombre}} </td>
             @endif
-            
+
             <td>
                 @can('consultar-zarpe')
                     <a class="btn btn-sm btn-primary"
@@ -47,28 +47,27 @@
                 @endcan
                     @if(($permisoZarpe->status->id=='1'))
                         @can('informar-navegacion')
-                            <a class="btn btn-sm btn-warning"
-                               href=" {{route('statusInt',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip"
-                               data-bs-placement="bottom"
-                               title="Informar Navegacion">
+                            <a class="btn btn-sm btn-warning confirmation"
+                               data-route=" {{route('statusInt',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}"
+                               data-toggle="tooltip" data-bs-placement="bottom" title="Informar Navegacion" data-action="INFORMAR NAVEGACIÓN de">
                                 <i class="fas fa-water"></i>
                             </a>
                         @endcan
                     @endif
                     @can('informar-arribo')
                         @if ($permisoZarpe->status->id==5)
-                            <a class="btn btn-sm btn-warning"
-                               href="{{route('statusInt',[$permisoZarpe->id,'cerrado',0])}}" data-toggle="tooltip"
-                               data-bs-placement="bottom" title="Informar Arribo">
+                            <a class="btn btn-sm btn-warning confirmation"
+                               data-route="{{route('statusInt',[$permisoZarpe->id,'cerrado',0])}}" data-toggle="tooltip"
+                               data-bs-placement="bottom" title="Informar Arribo" data-action="INFORMAR ARRIBO de">
                                 <i class="fas fa-anchor"></i>
                             </a>
                         @endif
                     @endcan
                     @can('anular-zarpeUsuario')
                         @if ($permisoZarpe->status->id==1)
-                            <a class="btn btn-sm btn-danger"
-                               href="{{route('statusInt',[$permisoZarpe->id,'anular-usuario',0])}}" data-toggle="tooltip"
-                               data-bs-placement="bottom" title="Anular Solicitud">
+                            <a class="btn btn-sm btn-danger confirmation"
+                               data-route="{{route('statusInt',[$permisoZarpe->id,'anular-usuario',0])}}" data-toggle="tooltip"
+                               data-bs-placement="bottom" title="Anular Solicitud" data-action="ANULAR">
                                 <i class="fas fa-window-close"></i>
                             </a>
                             @endif
