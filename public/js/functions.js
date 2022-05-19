@@ -164,12 +164,11 @@ function eliminarCoordenadasDF(id, idcoord){
 
 //-------------------------------------------------------------------------------
 
-function agregarcargosMandos(){
+function agregarCargosMandos(){
 
     var coords1=document.getElementById('coords1');
     let cantAct=coords1.getAttribute('data-cant');
     cantAct<=0 ? cantAct=1 : cantAct++;
-
 
     const divrow= document.createElement("div");
     divrow.classList.add("row");
@@ -179,33 +178,39 @@ function agregarcargosMandos(){
     divids.innerHTML=`<input class="form-control" name="ids[]" type="hidden" >`;
 
     const divlat=document.createElement("div");
-    divlat.classList.add("form-group", "col-sm-5");
+    divlat.classList.add("form-group", "col-sm-3");
     divlat.innerHTML=`
-            <input class="form-control" name="latitud[]" id="lat`+cantAct+`" type="text">`;
+            <input class="form-control" name="cargo[]" id="cargo`+cantAct+`" type="text" placeholder="Cargo que desempeña">`;
 
 
     const divlon=document.createElement("div");
-    divlon.classList.add("form-group", "col-sm-5");
+    divlon.classList.add("form-group", "col-sm-3");
     divlon.innerHTML=`
-            <input class="form-control" name="longitud[]" id="lon`+cantAct+`"  type="text">`;
+            <input class="form-control" name="titulacion_minima[]" id="titmin`+cantAct+`"  type="text" placeholder="Titulación minima aceptada">`;
+
+    const divtitmax=document.createElement("div");
+    divtitmax.classList.add("form-group", "col-sm-3");
+    divtitmax.innerHTML=`
+            <input class="form-control" name="titulacion_maxima[]" id="titmax`+cantAct+`"  type="text" placeholder="Titulación máxima aceptada">`;
 
     const divbtn=document.createElement("div");
     divbtn.classList.add("form-group", "col-sm-2");
-    divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">Borrar</button>`;
+    divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCargosMandos(`+cantAct+`,'')" type="button">Borrar</button>`;
 
     divrow.appendChild(divids);
     divrow.appendChild(divlat);
     divrow.appendChild(divlon);
+    divrow.appendChild(divtitmax);
     divrow.appendChild(divbtn);
 
-    coords.appendChild(divrow);
+    coords1.appendChild(divrow);
 
-    coords.setAttribute('data-cant', cantAct);
+    coords1.setAttribute('data-cant', cantAct);
 //coords.innerHTML=  coords.innerHTML+campos;
 
 }
 
-function eliminarCoordenadasDF(id, idcoord){
+function eliminarCargosMandos(id, idcoord){
 
     if(id!=""){
         const div = document.querySelector("#coordenadas"+id);
@@ -1584,12 +1589,12 @@ function compararFechasEscala(){
 }
 
 function estNauticoDestinoSelect(idCapitania){
-    
+
     if(idCapitania==''){
         idCapitania=$("#capitaniaDestinoSelect").children("option:selected").val();
         document.getElementById('capitaniaDestino').value=idCapitania;
-         
-       
+
+
     }
     if(idCapitania!=''){
         $.ajax({
@@ -1608,7 +1613,7 @@ function estNauticoDestinoSelect(idCapitania){
                     options+="<option value='"+estabecimientos[i].id+"'>"+estabecimientos[i].nombre+"</option>"
                 }
                 select.innerHTML=options;
-               // 
+               //
                // console.log(options);
             })
 

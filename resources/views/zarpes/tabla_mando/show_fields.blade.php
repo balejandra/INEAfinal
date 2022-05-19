@@ -20,21 +20,29 @@
     </tbody>
 </table>
 <table class="table">
-    <tbody>
+
     <thead>
     <th>Cargo</th>
     <th>Titulacion Minima</th>
+    <th>Titulacion Máxima</th>
     </thead>
+    <tbody>
     @forelse($tablaMando->cargotablamandos as $cargotablamando)
+
         <tr>
             <td>
                 <span class="badge badge-info">{{$cargotablamando->cargo_desempena}} </span>
             <td>
                 <span class="badge badge-info">{{$cargotablamando->titulacion_aceptada_minima}} </span>
             </td>
+            <td>
+                <span class="badge badge-info">{{$cargotablamando->titulacion_aceptada_maxima}} </span>
+            </td>
             @empty
                 <span class="badge badge-danger">Sin Cargos asignados</span>
         </tr>
+
     @endforelse
+    </tbody>
 </table>
 
