@@ -1,5 +1,4 @@
-<div class="table-responsive-sm ">
-    <table class="table table-striped table-bordered" id="capitanias-table">
+    <table class="table table-striped table-bordered" id="capitanias-table" style="width:100%">
         <thead>
         <tr>
             <th>Nombre</th>
@@ -69,4 +68,3 @@
         @endforeach
         </tbody>
     </table>
-</div>

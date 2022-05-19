@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered" id="generic-table">
+<table class="table table-striped table-bordered" id="generic-table" style="width:100%">
     <thead>
     <tr>
         <th>Equipo</th>

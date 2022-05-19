@@ -1,4 +1,4 @@
-<table class="table table-responsive-sm table-bordered table-striped " id="TableMenus">
+<table class="table table-bordered table-striped " id="generic-table" style="width:100%">
     <thead>
 
         <th>Id</th>

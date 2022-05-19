@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="card-body">
-                            <table class="table table-responsive-sm table-bordered table-striped" id="TablePermissions">
+                            <table class="table table-bordered table-striped" id="generic-table" style="width:100%">
                                 <thead>
                                 <tr>
                                     <th>ID</th>

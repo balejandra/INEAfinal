@@ -28,15 +28,16 @@
                         </div>
                         <div class="card-body" style="min-height: 350px;">
 
-                            <table class="table table-striped table-bordered" id="permisoZarpes-table">
+                            <table class="table table-striped table-bordered display" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>Nro Solicitud</th>
+                                    <th data-priority="1">Nro Solicitud</th>
+                                    <th>Fecha de Solicitud</th>
                                     <th>Solicitante</th>
                                     <th>Bandera</th>
                                     <th>Matricula</th>
                                     <th>Tipo Navegacion</th>
-                                    <th>Status</th>
+                                    <th data-priority="2">Status</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
@@ -44,6 +45,7 @@
                                 @foreach($permisoOrigenZarpes as $permisoOrigenZarpe)
                                     <tr>
                                         <td>{{ $permisoOrigenZarpe->nro_solicitud }}</td>
+                                        <td>{{date_format($permisoOrigenZarpe->created_at,'d-m-Y')}}</td>
                                         <td>{{ $permisoOrigenZarpe->user->nombres }} {{ $permisoOrigenZarpe->user->apellidos }}</td>
                                         <td>{{ $permisoOrigenZarpe->bandera }}</td>
                                         <td>{{ $permisoOrigenZarpe->matricula }}</td>
