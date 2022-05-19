@@ -171,3 +171,22 @@
 }
 
 div.container { max-width: 1200px }
+
+
+.document-link {
+
+    text-decoration: none;
+    color: #39f;
+}
+
+[href$=".pdf"]::after {
+    font-family: "Font Awesome 5 Free";
+    content: '  \f1c1';
+    color: red;
+}
+
+[href$=".png"]::after, [href$=".jpg"]::after , [href$=".gif"]::after, [href$=".bmp"]::after, [href$=".jpeg"]::after, [href$=".tif"]::after {
+    font-family: "Font Awesome 5 Free";
+    content: '  \f03e';
+    color: green;
+}

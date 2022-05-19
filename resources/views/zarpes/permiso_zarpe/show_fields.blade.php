@@ -144,15 +144,15 @@
                         <td>SI</td>
                         <td>
                             @if ($pasajero->pasaporte_menor)
-                                <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_menor)}}" target="_blank">
+                                <a class="document-link" href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_menor)}}" target="_blank">
                                     Pasaporte</a> <br>
                             @endif
                             @if ($pasajero->partida_nacimiento)
-                                    <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->partida_nacimiento)}}" target="_blank">
+                                    <a class="document-link" href="{{asset('documentos/permisozarpe/'.$pasajero->partida_nacimiento)}}" target="_blank">
                                         Partida de Nacimiento</a> <br>
                                 @endif
                             @if ($pasajero->autorizacion)
-                                    <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->autorizacion)}}" target="_blank">
+                                    <a class="document-link" href="{{asset('documentos/permisozarpe/'.$pasajero->autorizacion)}}" target="_blank">
                                             Autorización</a>
                                 @endif
 
@@ -160,7 +160,7 @@
                     @else
                         <td>NO</td>
                         <td> @if ($pasajero->pasaporte_mayor)
-                                <a class="link-info" href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_mayor)}}" target="_blank">
+                                <a class="document-link" href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_mayor)}}" target="_blank">
                                 Pasaporte</a>
                                  @endif
                            </td>
