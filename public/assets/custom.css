@@ -68,3 +68,14 @@ img.nav-avatar {
 .page-link {
     color: #20a8d8;
 }
+
+@media (min-width: 576px) {
+    table.table-small {
+        margin: 0 auto;
+        width: 55%;
+        align-content: center;
+    }
+    .margin{
+        margin: 0 30px !important;
+    }
+}
