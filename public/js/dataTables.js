@@ -239,3 +239,17 @@ $(document).ready(function() {
         ]
     });
 } );
+
+$(document).ready(function() {
+    $('#coordenadas-table').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        "ordering": false,
+        "info":     false,
+        searching: false,
+         
+    });
+} );

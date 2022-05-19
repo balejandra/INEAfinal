@@ -126,17 +126,19 @@ class DependenciaFederalController extends Controller
                 $capitania=$capitania->pluck('nombre','id')->toArray();
 
         $coords=CoordenadasDependenciasFederales::select(['id','dependencias_federales_id', 'latitud', 'longitud'])->where('coordenadas_dependencias_federales.dependencias_federales_id', '=', $id)->get();
-
+ 
 
         if (empty($dependenciaFederal)) {
             Flash::error('Dependencia Federal no encontrada');
 
             return redirect(route('dependenciasfederales.index'));
+        }else{
+            $IDdependenciaFederal=$dependenciaFederal->capitania_id;
         }
 
 
 
-       return view('publico.dependencias_federales.edit')->with('dependenciaFederal', $dependenciaFederal)->with('capitanias',  $capitania)->with('coordenadas',$coords);
+       return view('publico.dependencias_federales.edit')->with('dependenciaFederal', $dependenciaFederal)->with('capitanias',  $capitania)->with('coordenadas',$coords)->with('IDdependenciaFederal', $IDdependenciaFederal);
     }
 
     /**

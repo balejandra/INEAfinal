@@ -9,7 +9,28 @@
     <!-- Capitanias Id Field -->
     <div class="form-group col-sm-6">
          {!! Form::label('capitania', 'Capitania:') !!}
-        {!! Form::select('capitania', $capitanias, null, ['class' => 'form-control','placeholder' => 'Seleccione']) !!}
+        
+        <div class="form-group">
+        <select id="capitania"
+             name="capitania"
+             class="form-control custom-select">
+        <option value="">Seleccione</option>
+        @foreach ($capitanias as $key => $cap )
+        @if(isset($IDdependenciaFederal) && $IDdependenciaFederal==$key)
+             @php
+                $selectedcap="selected='selected'";
+            @endphp
+       @else
+         @php
+        $selectedcap='';
+            @endphp
+        @endif 
+        <option value="{{$key}}" {{$selectedcap}} >{{$cap}}  </option>
+                                                           
+        @endforeach
+</select>
+            </div>
+    
     </div>
 </div>
 

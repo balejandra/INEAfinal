@@ -32,7 +32,9 @@
     </tbody>
 </table>
 
-<table class="table table-bordered">
+<div class="row d-flex justify-content-center">
+<div class="text-center col-md-12" >
+<table   id='coordenadas-table' class="table table-bordered">
     <thead>
         <tr>
             <th colspan="2" class="bg-light text-center">Coordenadas</th>
@@ -56,4 +58,8 @@
     </tbody>
 </table>
 
+</div>
+
+
+</div>
 
