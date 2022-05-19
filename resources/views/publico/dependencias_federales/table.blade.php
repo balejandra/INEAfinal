@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Nombre</th>
-        <th>Capitanias</th>
+        <th>Capitanías</th>
         <th>Acciones</th>
     </tr>
     </thead>
