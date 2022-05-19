@@ -8,6 +8,8 @@ use App\Http\Requests\Zarpes\UpdateTablaMandoRequest;
 use App\Models\Zarpes\CargoTablaMando;
 use App\Repositories\Zarpes\TablaMandoRepository;
 use Illuminate\Http\Request;
+use Flash;
+use Response;
 
 class TablaMandoController extends Controller
 {
@@ -41,7 +43,8 @@ class TablaMandoController extends Controller
      */
     public function create()
     {
-        return view('zarpes.tabla_mando.create');
+        $cargos=[];
+        return view('zarpes.tabla_mando.create')->with('cargos',$cargos);
     }
 
     /**
@@ -56,6 +59,26 @@ class TablaMandoController extends Controller
         $input = $request->all();
 
         $tablaMando = $this->tablaMandoRepository->create($input);
+        $lat=$request->input('cargo', []);
+        $long=$request->input('titulacion_minima', []);
+        $titmax=$request->input('titulacion_maxima', []);
+        $c = count($lat);
+        $c2= count($long);
+
+        if($c==$c2){
+            for( $i=0;$i<$c;$i++ )
+            {
+                $coordenadas= [
+                    'tabla_mando_id' => $tablaMando->id,
+                    'cargo_desempena'      => $lat[$i],
+                    'titulacion_aceptada_minima'     => $long[$i],
+                    'titulacion_aceptada_maxima'     => $titmax[$i],
+                ];
+
+
+                CargoTablaMando::create($coordenadas);
+            }
+        }
 
         Flash::success('Tabla Mando saved successfully.');
 
@@ -103,7 +126,7 @@ class TablaMandoController extends Controller
 
         return view('zarpes.tabla_mando.edit')
             ->with('tablaMando', $tablaMando)
-            ->with('coordenadas',$coords);
+            ->with('cargos',$coords);
     }
 
     /**
@@ -126,6 +149,50 @@ class TablaMandoController extends Controller
 
         $tablaMando = $this->tablaMandoRepository->update($request->all(), $id);
 
+        $ids=$request->input('ids', []);
+        $lat=$request->input('cargo', []);
+        $long=$request->input('titulacion_minima', []);
+        $titmax=$request->input('titulacion_maxima', []);
+        $deletes=$request->input('deletes', []);
+
+        foreach ($deletes as $k => $val) {
+
+            if($val!=""){
+                $coorDel=CargoTablaMando::find($val);
+                $coorDel->delete($val);
+            }
+
+        }
+
+        if(count($lat)==count($long)){
+            for( $i=0;$i<count($lat);$i++ )
+            {
+                $coordenadas[]= [
+                    'tabla_mando_id' => $id,
+                    'cargo_desempena'      => $lat[$i],
+                    'titulacion_aceptada_minima'     => $long[$i],
+                    'titulacion_aceptada_maxima'     => $titmax[$i],
+                ];
+            }
+
+            foreach ($coordenadas as $key => $value) {
+
+                if($ids[$key]==""){
+                    $coordenadas= [
+                        'tabla_mando_id' => $id,
+                        'cargo_desempena' => $lat[$key],
+                        'titulacion_aceptada_minima'     => $long[$key],
+                        'titulacion_aceptada_maxima'     => $titmax[$key],
+                    ];
+
+                    CargoTablaMando::create($coordenadas);
+                }else{
+                    $coord=CargoTablaMando::find($ids[$key]);
+                    $coord->update($value);
+                }
+            }
+        }
+
         Flash::success('Tabla Mando updated successfully.');
 
         return redirect(route('tablaMandos.index'));
@@ -144,6 +211,7 @@ class TablaMandoController extends Controller
     {
         $tablaMando = $this->tablaMandoRepository->find($id);
 
+
         if (empty($tablaMando)) {
             Flash::error('Tabla Mando not found');
 
@@ -151,6 +219,7 @@ class TablaMandoController extends Controller
         }
 
         $this->tablaMandoRepository->delete($id);
+        $cargos=CargoTablaMando::where('tabla_mando_id',$id)->delete();
 
         Flash::success('Tabla Mando deleted successfully.');
 
