@@ -25,7 +25,7 @@
             <td>{{ $user->nombres }}</td>
         </tr>
         @endif
-        
+
         @if($user->tipo_identificacion!='rif')
             @if($user->apellidos !="")
             <tr>
@@ -45,7 +45,7 @@
                 <td>{{ $user->fecha_nacimiento }}</td>
             </tr>
             @endif
-         
+
         @endif
             @if($user->telefono !="")
         <tr>
@@ -65,6 +65,14 @@
             <td>{{ $user->tipo_usuario }}</td>
         </tr>
         @endif
+        <tr>
+            <th class="bg-light">Rol de usuario</th>
+            <td>
+                @foreach($user->roles as $rol)
+                    {{ $rol->name }}<br>
+                @endforeach
+            </td>
+        </tr>
     </tbody>
 </table>
 <div class="row mt-4">

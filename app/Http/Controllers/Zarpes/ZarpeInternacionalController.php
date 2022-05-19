@@ -129,7 +129,7 @@ class ZarpeInternacionalController extends Controller
         $this->step = 1;
 
         $request->session()->put('solicitud', $solicitud);
-        
+
         return view('zarpes.zarpe_internacional.create-step-one')->with('paso', $this->step)->with('titulo', $this->titulo);
     }
 
@@ -172,7 +172,7 @@ class ZarpeInternacionalController extends Controller
         }else{
             $matriculaActual=explode('-',$solicitud->matricula);
         }
-        
+
         return view('zarpes.zarpe_internacional.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula")->with("siglas", $siglas)->with("matriculaActual", $matriculaActual)->with('titulo', $this->titulo);
 
     }
@@ -326,7 +326,7 @@ class ZarpeInternacionalController extends Controller
             // dd($solicitud);
             return redirect()->route('zarpeInternacional.createStepThree');
         }
-        
+
 
     }
 
@@ -400,7 +400,7 @@ class ZarpeInternacionalController extends Controller
     public function createStepThree(Request $request)
     {
         $solicitud= json_decode(session('solicitud'));
-         
+
         $capitania = Capitania::all();
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
@@ -441,7 +441,7 @@ class ZarpeInternacionalController extends Controller
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $EstNauticos = EstablecimientoNautico::where('capitania_id', $solicitud['origen_capitania_id'])->get();
         $paises= Paise::all();
-        
+
         $this->step = 4;
         return view('zarpes.zarpe_internacional.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('paises', $paises)->with('titulo', $this->titulo);
 
@@ -451,7 +451,7 @@ class ZarpeInternacionalController extends Controller
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
 
-         
+
             $validatedData = $request->validate([
                 'establecimientoNáuticoOrigen' => 'required',
                 'salida' => 'required',
@@ -460,7 +460,7 @@ class ZarpeInternacionalController extends Controller
                 'estNauticoDestinoZI'=>['required', 'string', 'max:255'],
                  [
                 'estNauticoDestinoZI.required'=>'El campo establecimiento naútico de destino es requerido']
-                
+
             ]);
 
         $solicitud['establecimiento_nautico_id'] = $request->input('establecimientoNáuticoOrigen');
@@ -470,7 +470,7 @@ class ZarpeInternacionalController extends Controller
         $solicitud['paises_id'] = intval($request->input('país_de_destino'));
         $solicitud['establecimiento_nautico_destino_zi'] = $request->input('estNauticoDestinoZI');
          $solicitud['fecha_llegada_escala'] = $request->input('llegada');
-         
+
         $request->session()->put('solicitud', json_encode($solicitud));
         $this->step = 5;
         return redirect()->route('zarpeInternacional.createStepFive');
@@ -480,7 +480,7 @@ class ZarpeInternacionalController extends Controller
     public function createStepFive(Request $request)
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-       
+
         $codigo = $this->codigo($solicitud);
 
         $validation = json_decode($request->session()->get('validacion'), true);
@@ -494,11 +494,11 @@ class ZarpeInternacionalController extends Controller
     public function permissionCreateStepFive(Request $request)
     {
 
-        
+
         $validation = json_decode($request->session()->get('validacion'), true);
         $validation['cantPassAbordo']=$validation['cant_pasajeros']-$validation['cant_tripulantes'];
        $request->session()->put('validacion', json_encode($validation));
-        
+
 
 
         $tripulantes = $request->session()->get('tripulantes');
@@ -541,7 +541,7 @@ class ZarpeInternacionalController extends Controller
             }else{
                  $mensj ="Ha ocurrido un error al agregar a los tripulantes, contacte al administrador del sistema";
             }
-            
+
 
             return view('zarpes.zarpe_internacional.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj);
 
@@ -550,7 +550,7 @@ class ZarpeInternacionalController extends Controller
 
     public function createStepSix(Request $request)
     {
-        
+
         $passengers = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
         $cantPasajeros = $validation['cant_pasajeros'] - $validation['cant_tripulantes'];
@@ -561,7 +561,7 @@ class ZarpeInternacionalController extends Controller
 
     public function permissionCreateStepSix(Request $request)
     {
-        
+
         $this->step = 7;
         return redirect()->route('zarpeInternacional.createStepSeven');
 
@@ -572,7 +572,7 @@ class ZarpeInternacionalController extends Controller
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $equipos = Equipo::all();
-        print_r($solicitud);
+       // print_r($solicitud);
         //  dd($equipos);
         $this->step = 7;
         return view('zarpes.zarpe_internacional.create-step-seven')
@@ -594,14 +594,14 @@ class ZarpeInternacionalController extends Controller
             return redirect()->route('permisoszarpes.createStepSeven');
         } else {
             $solicitud = json_decode($request->session()->get('solicitud'), true);
-            
+
 
             $codigo = $this->codigo($solicitud);
 
             $solicitud['nro_solicitud'] = $codigo;
             print_r($solicitud);
             $saveSolicitud = PermisoZarpe::create($solicitud);
-            
+
             $tripulantes = $request->session()->get('tripulantes');
             for ($i = 0; $i < count($tripulantes); $i++) {
                 $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
@@ -713,7 +713,7 @@ class ZarpeInternacionalController extends Controller
         $cedula = $_REQUEST['cedula'];
        // $fecha = $_REQUEST['fecha'];
         $cap = $_REQUEST['cap'];
-       
+
         $vj = [];
         /*$newDate = date("d/m/Y", strtotime($fecha));
         $newDate2 = date("d-m-Y", strtotime($fecha));
@@ -770,19 +770,19 @@ class ZarpeInternacionalController extends Controller
         $indice=false;
         $tripulantes = $request->session()->get('tripulantes');
         $capitanExiste=false;
-         
+
         switch ($funcion) {
             case 'Capitán':
                  $cap="SI";
                  if(is_array($tripulantes) && count($tripulantes)>0){
                     foreach ($tripulantes as $value) {
-                        
+
                         if($value['funcion']=='Capitán'){
                            $capitanExiste=true;
                         }
                     }
                  }
-                 
+
             break;
             case 'Motorista':
                  $cap="NO";
@@ -828,7 +828,7 @@ class ZarpeInternacionalController extends Controller
                 "funcion" => $funcion,
                 "rango" =>$InfoMarino[0]->documento,
                 "doc" => $doc,
-                 
+
             ];
 
             if(is_array($tripulantes)){
@@ -864,7 +864,7 @@ class ZarpeInternacionalController extends Controller
                         $vj = $this->validacionJerarquizacion($InfoMarino[0]->documento, $cap);
 
                         if($vj[0]==true){
-                            
+
                             if($indice==false){
                                 $InfoMarino = "TripulanteExiste";
                             }else{
@@ -889,7 +889,7 @@ class ZarpeInternacionalController extends Controller
         $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros']];
         echo json_encode($return);
         }
- 
+
     }
 
 
@@ -912,7 +912,7 @@ class ZarpeInternacionalController extends Controller
                         }
                     }
                  }
-                 
+
             break;
             case 'Motorista':
                  $cap="NO";
@@ -944,14 +944,14 @@ class ZarpeInternacionalController extends Controller
                 "funcion" => $funcion,
                 "rango" =>$rango,
                 "doc" => $doc,
-                 
+
                 ];
 
             $tripExiste=false;
 
             if(is_array($tripulantes)){
                 foreach ($tripulantes as $value) {
-                    
+
                     if($value['nro_doc']==$nrodoc){
                        $tripExiste=true;
                     }
@@ -968,14 +968,14 @@ class ZarpeInternacionalController extends Controller
                         }
 
                 }
-                
+
             }else{
                 $tripulantes=[];
                 array_push($tripulantes, $trip);
                 $request->session()->put('tripulantes', $tripulantes);
                  $InfoMarino = "OK";
             }
-            
+
 
              $return = [$tripulantes, '', '',$InfoMarino, $validation['cant_pasajeros']];
             echo json_encode($return);
@@ -1011,7 +1011,7 @@ class ZarpeInternacionalController extends Controller
             }
 
         }
-        
+
         echo $borrado;
     }
 
@@ -1023,7 +1023,7 @@ class ZarpeInternacionalController extends Controller
         $estNautico = EstablecimientoNautico::find($solicitud['establecimiento_nautico_id']);
         $capitania = Capitania::find($estNautico->capitania_id);
         $idcap=$capitania->id;
-    
+
         $cantidadActual = PermisoZarpe::select(DB::raw('count(nro_solicitud) as cantidad'))
             ->where(DB::raw("(SUBSTR(nro_solicitud, 8, 4) = '" . $ano . "')"), '=', true)
             ->where("permiso_zarpes.descripcion_navegacion_id", '=', 4)
@@ -1032,7 +1032,7 @@ class ZarpeInternacionalController extends Controller
                     ->where('establecimiento_nauticos.capitania_id', '=',  $idcap);
             })
             ->get();
-        
+
         $correlativo = $cantidadActual[0]->cantidad + 1;
         $codigo = $capitania->sigla . "-" .$internacional. "-" . $ano . $mes . "-" . $correlativo;
 
@@ -1203,6 +1203,7 @@ class ZarpeInternacionalController extends Controller
         $tripulantes = TripulanteInternacional::select('*')->where('permiso_zarpe_id', $id)->get();
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
         //$tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
+        $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
         $equipos = EquipoPermisoZarpe::where('permiso_zarpe_id', $id)->get();
         $revisiones = ZarpeRevision::where('permiso_zarpe_id', $id)->get();
         $paises= Paise::where('id', $permisoZarpe->paises_id)->get();
@@ -1223,6 +1224,7 @@ class ZarpeInternacionalController extends Controller
         return view('zarpes.zarpe_internacional.show')
             ->with('permisoZarpe', $permisoZarpe)
             ->with('buque',$buque)
+            ->with('certificados', $validacionSgm)
             ->with('tripulantes', $tripulantes)
             ->with('pasajeros', $pasajeros)
             ->with('equipos', $equipos)
@@ -1576,8 +1578,8 @@ class ZarpeInternacionalController extends Controller
     }
 
     public function AddDocumentosMarinosZI(Request $request){
-     
-         
+
+
         $pasaporte='';
         if ($request->hasFile('doc')) {
 
@@ -1590,7 +1592,7 @@ class ZarpeInternacionalController extends Controller
             echo json_encode(['errorFile','']);
         }
 
-        
+
     }
 
 

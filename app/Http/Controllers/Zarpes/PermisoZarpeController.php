@@ -53,7 +53,7 @@ class PermisoZarpeController extends Controller
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-generados')) {
             $user = auth()->id();
             $data = PermisoZarpe::where('user_id', $user)->whereIn('descripcion_navegacion_id', [1,2,3])->get();
-            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data->with('titulo', $this->titulo));
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
             $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
@@ -472,7 +472,7 @@ class PermisoZarpeController extends Controller
             $CapDestinoFinal='';
             $idCapdestinoFinal=0;
         }
-         
+
         $capitaniasDestinoList = Capitania::all();
         $coordenadas = [];
         $coordenadasDep = [];
@@ -595,8 +595,8 @@ class PermisoZarpeController extends Controller
         }else{
             $solicitud['destino_capitania_id'] = $request->input('capitaniaDestino');
         }
-        
-        
+
+
         $solicitud['fecha_llegada_escala'] = $request->input('fecha_llegada_escala');
 
         $request->session()->put('coordGadriales',  [$request->input('latitudGrad'),$request->input('longitudGrad')]);
@@ -1254,10 +1254,7 @@ class PermisoZarpeController extends Controller
             $buque=Renave_data::where('matricula_actual',$permisoZarpe->matricula)->first();
         }
         $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
-//dd($validacionSgm);
-        $tripulantes = Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id', $id)->get();
-        $tripulacion= Tripulante::where('permiso_zarpe_id', $id)->get();
-       // dd($tripulacion);
+
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
 
         $tripulantes2 = DB::table('zarpes.tripulantes')
@@ -1266,7 +1263,6 @@ class PermisoZarpeController extends Controller
             ->select('licencias_titulos_gmar.*', 'tripulantes.funcion')
             ->get();
 
-       // $tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
         $equipos = EquipoPermisoZarpe::where('permiso_zarpe_id', $id)->get();
         $revisiones = ZarpeRevision::where('permiso_zarpe_id', $id)->get();
 

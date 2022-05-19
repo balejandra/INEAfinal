@@ -64,7 +64,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3 my-1">
+                                            <div class="col-md-2 my-1">
                                                 <div class="form-group">
                                                     <label for="fecha_nacimiento">Fecha de nacimiento</label>
                                                     <input type="date" class="form-control" id="fecha_nacimiento"
@@ -75,7 +75,7 @@
                                             </div>
 
 
-                                            <div class="col-md-3 my-1">
+                                            <div class="col-md-2 my-1">
                                                 <div class="form-group">
                                                     <label for="title">Sexo:</label>
                                                     {!! Form::select('sexo', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexo']) !!}
@@ -100,22 +100,25 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6  my-1 DatosRestantes">
+                                            <div class="col-md-4  my-1 DatosRestantes">
                                                 <label for="documento">Pasaporte</label>
                                                 <div class="input-group">
                                                     <input type="file" class="form-control" name="pasaporte_mayor"
                                                            id="pasaporte_mayor" accept="application/pdf, image/*">
                                                 </div>
                                             </div>
-                                        </div>
-                                            <br>
-                                        <div class="row">
-                                            <div class="col  text-center">
+                                            <div class="col-md-2 my-1">
+                                                <br>
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="getDataPassengers()">
                                                     Agregar
                                                 </button>
+
                                             </div>
+                                        </div>
+                                            <br>
+                                        <div class="row">
+
                                         </div>
 
 
@@ -200,7 +203,7 @@
 
                                     </div>
                             </form>
- 
+
 
                             <form action="{{ route('zarpeInternacional.permissionCreateStepSix') }}" method="POST">
                                 @csrf
@@ -366,12 +369,12 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-6">
-                         {!! Form::label('documento_1', 'Autorización (Si amerita):') !!}
+                         {!! Form::label('documento_1', 'Pasaporte (Obligatorio):') !!}
                             <input type="file" class="form-control" name="pasaporte_menor" id="pasaporte_menor"
                                    accept="application/pdf, image/*" required>
                         </div>
                     </div>
-                     
+
 
                     <input type="hidden" class="form-control" id="representanteMenor" placeholder="Nombres"
                            name="representanteMenor" maxlength="40">
