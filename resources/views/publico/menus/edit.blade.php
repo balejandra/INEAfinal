@@ -32,14 +32,17 @@
                           <div class="card-body">
                           </div>
                           <div class="card-body">
-                           
-                            <div class=" col-6  d-flex flex-wrap justify-content-center">           
+                          <div class="row">
+                                    <div class="col-lg-2 col-md-3"></div>
+                                    <div class=" border col-lg-8 col-md-12 col-sm-12 col-xs-12 ">                      
                               {!! Form::model($menu, ['route' => ['menus.update', $menu->id], 'method' => 'patch']) !!}
 
                               @include('publico.menus.fields')
 
                               {!! Form::close() !!}
                               </div>
+                                    <div class=" col-lg-2 col-md-3"></div>
+                                </div>
                              
                             </div>
                         </div>
