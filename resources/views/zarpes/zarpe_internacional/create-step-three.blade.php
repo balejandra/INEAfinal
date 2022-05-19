@@ -93,7 +93,7 @@
                                 <div class="col-md-4">
 
                                         <div class="form-group">
-                                            <label for="title">Capitanía de ori gen:</label>
+                                            <label for="title">Capitanía de origen:</label>
 
                                             <select id="capitania" name="capitania" class="form-control custom-select">
                                             <option value="">Seleccione</option>
