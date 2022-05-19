@@ -25,7 +25,7 @@
                              <i class="fa fa-building"></i>
                                  <strong>Consultar Capitanía</strong>
                                  <div class="card-header-actions">
-                                     <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Listado de Capitanias</a>
+                                     <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                                  </div>
                              </div>
                              <div class="card-body">

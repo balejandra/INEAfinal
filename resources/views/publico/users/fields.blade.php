@@ -37,7 +37,7 @@
             placeholder={{ __('Confirm Password') }}>
     </div>
     </div>
-    
+
 </div>
 
 <div class="row">
@@ -51,13 +51,12 @@
 
 <!-- Submit Field -->
 
-<div class="row   mt-4">
-    <div class="col-md-6 text-center">
+<div class="row form-group  mt-4">
+    <div class="col text-center">
         <a href="{{route('users.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
     </div>
-    <div class="form-group col-md-6 text-center">
+    <div class=" col text-center">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
     </div>
 </div>
 <input type="text" name="tipo_usuario" value="interno" hidden>
- 

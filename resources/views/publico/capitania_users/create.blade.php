@@ -23,15 +23,21 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-plus-square-o fa-lg"></i>
+                                <i class="fas fa-user-tie"></i>
                                 <strong>Crear Usuario de Capitania</strong>
                             </div>
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8 border rounded p-3">
                                 {!! Form::open(['route' => 'capitaniaUsers.store']) !!}
 
                                    @include('publico.capitania_users.fields')
 
                                 {!! Form::close() !!}
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

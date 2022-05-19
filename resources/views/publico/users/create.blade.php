@@ -25,13 +25,13 @@
                                 <i class="fa fa-user fa-lg"></i>
                                 <strong>Crear Usuario</strong>
                                 <div class="card-header-actions">
-                                   
+
                                 </div>
                             </div>
                             <div class="card-body">
                             <div class="row ">
                                 <div class="col-md-3"></div>
-                                <div class="col-md-6 border rounded ">
+                                <div class="col-md-6 border rounded p-3">
 
 
                                 {!! Form::open(['route' => 'users.store']) !!}
@@ -47,6 +47,7 @@
                                         @enderror
                                     </div>
 
+
                                     <!-- Nombres Field -->
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('nombres', 'Nombres:') !!}
@@ -54,7 +55,7 @@
                                     </div>
                                 </div>
                                 <!-- Email Field -->
-                                    
+
                                 <div class="row">
                                     <!-- Password Field -->
                                     <div class="form-group col-sm-6">
@@ -71,8 +72,8 @@
                                                placeholder={{ __('Confirm Password') }}>
                                     </div>
                                 </div>
-                                    
 
+                                    <br>
 
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('role id', 'Rol asignado:') !!}
@@ -80,13 +81,13 @@
                                         {!! Form::select('roles', $roles, null, ['class' => 'roles form-control custom-select','placeholder' => 'Puede asignar un Rol...','onchange="requeridos(); EstablecimientoUser();"','required']) !!}
                                     </div>
                                     <!-- Submit Field -->
-                                    
 
-                                    <div class="row  mt-4">
-                                        <div class="col-md-6 text-center">
+
+                                    <div class="row form-group mt-4">
+                                        <div class="col text-center">
                                             <a href="{{route('users.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
                                         </div>
-                                        <div class="form-group col-sm-6 text-center">
+                                        <div class=" col text-center">
                                         {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
                                         </div>
                                     </div>
@@ -100,7 +101,7 @@
                                 <div class="col-md-3"></div>
                             </div>
 
-                                
+
                             </div>
                         </div>
                     </div>

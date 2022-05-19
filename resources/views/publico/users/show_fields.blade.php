@@ -1,9 +1,9 @@
 
-<table class="table"> 
+<table class="table table-bordered">
     <tbody>
         @if($user->tipo_identificacion !="")
         <tr>
-            <th width="40%" class="bg-light">Tipo de identificación</th>
+            <th  width="30%" class="bg-light">Tipo de identificación</th>
             <td>{{ $user->tipo_identificacion }}</td>
         </tr>
         @endif

@@ -19,7 +19,7 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
+                             <i class="fas fa-user-tie"></i>
                              Usuarios de Capitanias
                              @can('crear-usuarios-capitanias')
                                  <div class="card-header-actions">

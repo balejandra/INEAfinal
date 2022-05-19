@@ -22,18 +22,24 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-plus-square-o fa-lg"></i>
+                            <i class="fas fa-table"></i>
                             <strong>Crear Tabla de Mando</strong>
                             <div class="card-header-actions">
-                                <a href="{{route('tablaMandos.index')}} " class="btn btn-primary btn-sm">Listado</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            {!! Form::open(['route' => 'tablaMandos.store']) !!}
 
+                            {!! Form::open(['route' => 'tablaMandos.store']) !!}
+                            <div class="row ">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8 border rounded p-3">
                             @include('zarpes.tabla_mando.fields')
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
 
                             {!! Form::close() !!}
+
                         </div>
                     </div>
                 </div>

@@ -5,12 +5,8 @@
 
     @foreach ($roles as $key => $item)
         <div class="form-check form-switch col-sm-6 ">
-
-
                 <input class="form-check-input" type="checkbox" name="role[]" id='role' value="{{$item->id}}"  style="margin-left: auto;" {{$item->checked}}>
                 <label class="form-check-label" for="flexSwitchCheckDefault" style="margin-inline-start: 30px;">{{$item->name}} </label>
-
-
         </div>
     @endforeach
 </div>
@@ -23,7 +19,7 @@
 
     <!-- Description Field -->
     <div class="form-group col-sm-6">
-        {!! Form::label('description', 'Descripcion:') !!}
+        {!! Form::label('description', 'Descripción:') !!}
         {!! Form::text('description', null, ['class' => 'form-control']) !!}
     </div>
 </div>
@@ -34,7 +30,7 @@
         {!! Form::text('url', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-6">
-        {!! Form::label('parent', 'Menu padre:') !!}
+        {!! Form::label('parent', 'Menú padre:') !!}
         {!! Form::select('parent', $parent, null, ['class' => 'form-control','placeholder' => 'Seleccione un padre']) !!}
     </div>
 </div>

@@ -2,7 +2,7 @@
     <tbody>
     <tr>
         <th width="30%" class="bg-light">Cargo</th>
-        <td> {{ $capitaniaUser->cargo }} </td>
+        <td> {{ $capitaniaUser->cargos->name }} </td>
     </tr>
     <tr>
         <th class="bg-light">Usuario</th>

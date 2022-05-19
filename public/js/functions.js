@@ -63,18 +63,18 @@ const divids=document.createElement("div");
 divids.innerHTML=`<input class="form-control" name="ids[]" type="hidden" >`;
 
 const divlat=document.createElement("div");
-divlat.classList.add("form-group", "col-sm-5");
+divlat.classList.add("form-group", "col-sm-4");
 divlat.innerHTML=`
             <input class="form-control" name="latitud[]" id="lat`+cantAct+`" type="text">`;
 
 
 const divlon=document.createElement("div");
-divlon.classList.add("form-group", "col-sm-5");
+divlon.classList.add("form-group", "col-sm-4");
 divlon.innerHTML=`
             <input class="form-control" name="longitud[]" id="lon`+cantAct+`"  type="text">`;
 
 const divbtn=document.createElement("div");
-divbtn.classList.add("form-group", "col-sm-2");
+divbtn.classList.add("form-group", "col-sm-3");
 divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCoordenadas(`+cantAct+`,'')" type="button">Borrar</button>`;
 
 divrow.appendChild(divids);
@@ -184,17 +184,17 @@ function agregarCargosMandos(){
 
 
     const divlon=document.createElement("div");
-    divlon.classList.add("form-group", "col-sm-3");
+    divlon.classList.add("form-group", "col-4");
     divlon.innerHTML=`
             <input class="form-control" name="titulacion_minima[]" id="titmin`+cantAct+`"  type="text" placeholder="Titulación minima aceptada">`;
 
     const divtitmax=document.createElement("div");
-    divtitmax.classList.add("form-group", "col-sm-3");
+    divtitmax.classList.add("form-group", "col-4");
     divtitmax.innerHTML=`
             <input class="form-control" name="titulacion_maxima[]" id="titmax`+cantAct+`"  type="text" placeholder="Titulación máxima aceptada">`;
 
     const divbtn=document.createElement("div");
-    divbtn.classList.add("form-group", "col-sm-2");
+    divbtn.classList.add("form-group", "col-sm-1");
     divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCargosMandos(`+cantAct+`,'')" type="button">Borrar</button>`;
 
     divrow.appendChild(divids);
@@ -1872,3 +1872,9 @@ $(document).ready(function() {
         }
     });
 });
+
+function soloNumeros(event){
+    if((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !==190  && event.keyCode !==110 && event.keyCode !==8 && event.keyCode !==9  ){
+        return false;
+    }
+}

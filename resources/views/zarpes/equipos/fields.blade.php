@@ -1,12 +1,12 @@
-<div class="row ">
+<div class="row  ">
     <div class="col-md-3 "></div>
 
     <div class="col-sm-12 col-md-12 col-lg-6 border rounded">
 
-        <div class="row">
+        <div class="row p-3">
 
              <!-- Equipo Field -->
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6 ">
                 {!! Form::label('equipo', 'Equipo:') !!}
                 {!! Form::text('equipo', null, ['class' => 'form-control']) !!}
             </div>
@@ -20,7 +20,7 @@
                 {!! Form::label('equipo', 'Otros:') !!}
                 {!! Form::text('otros', null, ['class' => 'form-control']) !!}
             </div>
-            
+
         </div>
         <div class="row">
             <!-- Submit Field -->
@@ -33,7 +33,7 @@
             </div>
 
         </div>
-       
+
     </div>
 
     <div class="col-md-3 "></div>
