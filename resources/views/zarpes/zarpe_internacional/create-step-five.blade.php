@@ -90,14 +90,14 @@
                                             <div class="col-md-3 px-1 ">
                                                 <div class="form-group">
                                                     <label for="title">Nombres:</label>
-                                                    <input type="text" class="form-control" id="nombres" name="nombres" maxlength="35">
+                                                    <input type="text" class="form-control" id="nombres" name="nombres"  onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3 px-1 ">
                                                 <div class="form-group">
                                                     <label for="title">Apellidos:</label>
-                                                    <input type="text" class="form-control" id="apellidos" name="apellidos" maxlength="35">
+                                                    <input type="text" class="form-control" id="apellidos" name="apellidos" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
