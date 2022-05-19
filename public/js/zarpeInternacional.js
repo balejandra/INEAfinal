@@ -3,7 +3,7 @@ function getmatriculaZI(siglas,destinacion,numero) {
     let table = document.getElementById("table-buque");
 
     let data1=siglas+'-'+destinacion+'-'+numero;
-       
+
     if(siglas=="" || destinacion=="" || numero==""){
          divError.innerHTML='<div class="alert alert-danger">Existen campos vacios en el formulario de verificación de matrícula, por favor verifique.</div>';
         table.style.display='none';
@@ -14,7 +14,7 @@ function getmatriculaZI(siglas,destinacion,numero) {
 
     })// This will be called on success
         .done(function (response) {
-          
+
               //  alert(response);
 console.log(response, 'ZARPE INTERNACIONAL');
             if(response=="NoDeportivaNorecreativa"){
@@ -37,7 +37,7 @@ console.log(response, 'ZARPE INTERNACIONAL');
                  divError.innerHTML='<div class="alert alert-danger">Matrícula no encontrada en BD seguridad marítima </div>';
                 table.style.display='none';
             }else{
-                
+
 
                 let resp= JSON.parse(response);
                 let valiacionSgm=resp.validacionSgm;
@@ -88,7 +88,7 @@ console.log(response, 'ZARPE INTERNACIONAL');
                         divError.innerHTML='<div class="alert alert-danger"> '+valiacionSgm[2]+' </div>';
                         table.style.display='none';
                     }
-                    
+
 
                 }
             }
@@ -109,7 +109,7 @@ console.log(response, 'ZARPE INTERNACIONAL');
         });
     }
 
-    
+
 
 }
 
@@ -127,7 +127,7 @@ function compararFechasZI(){
         regreso.value="";
     }
 
-    
+
 }
 
 function motivoRechazoZI() {
@@ -167,11 +167,11 @@ function getPermisoEstadiaZI(data) {
     })// This will be called on success
     .done(function (response) {
         let resp=JSON.parse(response);
-          
+
             if(resp=="sinCoincidencias"){
                 divError.innerHTML='<div class="alert alert-danger"> Número de permiso de estadía no encontrado. </div>';
                     tableEstadiaVAl.style.display='none';
-                
+
             }else if(resp=='permisoPorCerrar'){
                 divError.innerHTML='<div class="alert alert-danger">La embarcación con el número de registro <b>'+resp[0].nro_registro+'</b> posee una solicitud de permiso de zarpe que no ha sido cerrada, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
 
@@ -185,7 +185,7 @@ function getPermisoEstadiaZI(data) {
                 if(date1>date2){
 
                     divError.innerHTML="<div class='alert alert-danger'>El permiso de estadía se encuentra vencido</div>"
-                    
+
                 }else{
                     document.getElementById("solicitud").innerHTML=resp[0].nro_solicitud;
                     document.getElementById("nombre").innerHTML=resp[0].nombre_buque;
@@ -198,11 +198,11 @@ function getPermisoEstadiaZI(data) {
 
                     document.getElementById("permiso_de_estadia").value=resp[0].id;
                     document.getElementById("numero_registro").value=resp[0].nro_registro;
-                    
+
                         tableEstadiaVAl.style.display='';
                 }
 
-                
+
 
             }
 
@@ -232,11 +232,11 @@ function getDataZI() {
     const asset=msj.getAttribute('data-asset');
 
     msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con resgitros existentes en SAIME, por favor espere...</div>";
-   
+
     var div=document.getElementById("dataPassengers");
     cantAct=parseInt(div.getAttribute("data-cant"));
     var cantPasajeros =document.getElementById('cantPasajeros');
-    
+
     if(cantAct==0 && parseInt(cantPasajeros.innerText)!=0){
         pass.innerHTML="";
     }
@@ -308,7 +308,7 @@ function getDataZI() {
                                     $('#apellidos').val(apellidos);
 
                                     var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
-                                      
+
                                     addPassengersZI(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
                                     pass.innerHTML+=html;
 
@@ -394,10 +394,10 @@ function getDataZI() {
 
 function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html){
     //console.log(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos);
-    
+
     var cantPass= document.getElementById("cantPasajeros");
     let cant=parseInt(cantPass.innerText);
-    
+
     if(cant > 0){
 
         cant=cant-1;
@@ -408,8 +408,8 @@ function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
         var pass=document.getElementById('pasajeros');
         if(tipodoc!='V'){
             pass.innerHTML+=html;
-        }   
-        
+        }
+
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));
         let contenedor= document.createElement("div");
@@ -470,8 +470,8 @@ function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
         document.getElementById("sexo").options.item(0).selected = 'selected';
         document.getElementById("nombres").value="";
         document.getElementById("apellidos").value="";
- 
-}else{ 
+
+}else{
 
 
         let msj= document.getElementById('msj');
@@ -482,31 +482,37 @@ function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
 
 function AddPasportsMarinos(){
     let doc=document.getElementById('doc').files[0];
-     
+if (doc){
+    var formData = new FormData();
+    formData.append('doc', doc);
 
-        var formData = new FormData();
-        formData.append('doc', doc);
-         
- 
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: route('AddDocumentosMarinosZI'),
-            type: "POST",
-            dataType: "html",
-            data:formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        }).done(function (response){
-            var resps=JSON.parse(response);
-            if(resps[0] =='OK'){
-                 
+
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: route('AddDocumentosMarinosZI'),
+        type: "POST",
+        dataType: "html",
+        data:formData,
+        cache: false,
+        contentType: false,
+        processData: false
+    }).done(function (response){
+        var resps=JSON.parse(response);
+        if(resps[0] =='OK'){
+
             pasaporteName=resps;
 
-                getMarinosZI(pasaporteName);
+            getMarinosZI(pasaporteName);
         }
-             
+
     });
+}else{
+    let msj=document.getElementById('msjMarinoInt');
+    msj.innerHTML="";
+    msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el pasaporte.</div>";
+}
+
+
 }
 
 
@@ -517,7 +523,7 @@ function getMarinosZI(pass) {
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
     let rango= document.getElementById('rango').value;
-    let doc=pass[1]; 
+    let doc=pass[1];
     let ruta='';
     let tabla=document.getElementById('marinosZI');
     let msj=document.getElementById('msjMarinoInt');
@@ -553,7 +559,7 @@ function getMarinosZI(pass) {
             console.log(respuesta);
             console.log(respuesta[0].length);
             var validacion=respuesta[1];
-            
+
             switch(respuesta[3]){
                 case 'TripulanteExiste':
                     msj.innerHTML="<div class='alert alert-danger'>El tripulante que intenta agregar ya se encuanta en el listado, por favor verifique.</div>";
@@ -582,9 +588,9 @@ function getMarinosZI(pass) {
                      if(validacion[0] ==true){
                         var pass=respuesta[0];
                         pass=pass[pass.length-1];
-                        
+
                         var nodataTrip = !!document.getElementById("nodataTrip");
-                        
+
                         if(nodataTrip==true){
                             tabla.innerHTML='';
                         }
@@ -608,16 +614,16 @@ function getMarinosZI(pass) {
 
                         }
                      }
-                    
-                    
-                    
+
+
+
 
                 break;
                 default:
 
                 break;
             }
-           
+
         })
 
         // This will be called on error

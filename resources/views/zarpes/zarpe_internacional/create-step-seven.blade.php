@@ -170,7 +170,7 @@
                                                    class="btn btn-primary pull-right">Anterior</a>
                                             </div>
                                             <div class="col-md-6 text-right">
-                                                <button type="submit" class="btn btn-primary">Generar solicitud</button>
+                                                <button id="solicitud" type="submit" class="btn btn-primary">Generar solicitud</button>
                                             </div>
                                         </div>
                                     </div>

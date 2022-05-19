@@ -31,7 +31,7 @@
                         <div class="card-body" style="min-height: 350px;">
 
                             @include('zarpes.zarpe_internacional.stepsIndicator')
- 
+
 
                             <form action="#" method="POST">
                                 @csrf
@@ -57,7 +57,7 @@
 
                                             </div>
                                         <div class="row  ">
-                                             
+
 
                                             <div class="col-md-2">
 
@@ -89,7 +89,7 @@
                                                 </div>
                                             </div>
 
-                                           
+
                                             <div class="col-md-3 px-1 " >
                                                 <div class="form-group">
                                                     <label for="title">Nombre:</label>
@@ -107,7 +107,7 @@
 
                                         </div>
                                     <div class="row">
-                                        
+
                                          <div class="col-md-3 px-1 " >
                                                 <div class="form-group">
                                                     <label for="title">Rango:</label>
@@ -119,8 +119,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                     <label for="title">Pasaporte:</label>
-                                                    <input type="file" class="form-control" id="doc"
-                                                           name="doc"  >
+                                                    <input type="file" class="form-control" id="doc" name="doc" required>
                                                 </div>
                                         </div>
                                     </div>
@@ -139,7 +138,7 @@
                                                 @php
                                     $validacion= json_decode(session('validacion'));
                                      $cantTrip=$validacion->cant_tripulantes;
-                                      
+
                                                 @endphp
 
                                     Cantidad mínima de tripulantes abordo:  {{$cantTrip}}
@@ -184,10 +183,10 @@
                                                             @foreach($tripulantes as $trip)
 
                                                     <tr id='{{$trip["nro_doc"]}}'>
-                                                                    
-                                        
+
+
                                                     <td> {{$trip["funcion"]}} </td>
-                                                                    
+
                                                     <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
                                                     <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
                                                     <td>{{$trip["rango"]}}</td>
@@ -196,7 +195,7 @@
                                 <a href="#" onclick="openModalZI({{$trip['nro_doc']}})">
                                     <i class="fa fa-trash"></i>
                                 </a>
-                                                                        
+
 
                                                                     </td>
                                                                 </tr>
@@ -211,7 +210,7 @@
                                     <form action="{{ route('zarpeInternacional.permissionCreateStepFive') }}" method="POST">
                                         @csrf
 
-                                        
+
                                         <div class="card-footer text-right">
                                             <div class="row">
                                                 <div class="col text-left">
