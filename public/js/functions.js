@@ -322,7 +322,7 @@ function eliminarCargosMandos(id, idcoord){
 
      }
 
-     function AddPassengerMenor(){
+     function AddPassengerMenor(tipozarpe){
 
         let cedula= document.getElementById('numero_identificacionMenor').value;
         let fechanac= document.getElementById('fecha_nacimientoMenor').value;
@@ -333,7 +333,22 @@ function eliminarCargosMandos(id, idcoord){
 
         let partidaNacimiento=document.getElementById('partida_nacimiento').value;
         let autorizacion=document.getElementById('autorizacion').value;
-
+        let pasaporteMenor=document.getElementById('pasaporte_menor').value;
+        if(tipozarpe=='ZI'){
+           
+            console.log('ZI pasaporye');
+            if(pasaporteMenor==''){
+                msj.innerHTML='<div class="alert alert-danger">El campo pasaporte es requerido para el menor</div>' ;
+                return false;
+              
+            }
+        }else if(tipozarpe=='ZN'){
+            if(pasaporteMenor=='' && tipodoc=="P"){
+                msj.innerHTML='<div class="alert alert-danger">El campo pasaporte es requerido para el menor</div>' ;
+                return false;
+              
+            }
+        }
 
         if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="" &&  partidaNacimiento!="") {
 

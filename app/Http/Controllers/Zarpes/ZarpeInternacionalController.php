@@ -832,14 +832,16 @@ class ZarpeInternacionalController extends Controller
             ];
 
             if(is_array($tripulantes)){
-                for ($i=0; $i < count($tripulantes); $i++) {
-                     $indice=array_search($cedula,$tripulantes[$i],false);
+                
+                $indice=true;
+                foreach ($tripulantes as $value) {
 
-                        if($indice!=false){
-                            $indice=true;
-                        }
+                    if($value['nro_doc']==$cedula){
+                        $indice=false;
+                    }
                 }
-
+                
+                
             }else{
                 $indice=false;
                 $tripulantes=[];
@@ -865,11 +867,11 @@ class ZarpeInternacionalController extends Controller
 
                         if($vj[0]==true){
 
-                            if($indice==false){
+                            if(!$indice){
                                 $InfoMarino = "TripulanteExiste";
                             }else{
 
-                            }
+                            
                                 if(count($tripulantes) <= $validation['cant_pasajeros']-1){
                                 array_push($tripulantes, $trip);
                                 $request->session()->put('tripulantes', $tripulantes);
@@ -877,7 +879,7 @@ class ZarpeInternacionalController extends Controller
                                 }else{
                                     $InfoMarino = "FoundButMaxTripulationLimit";
                                 }
-
+                             }
 
                         }else{
                              $InfoMarino = "TripulanteNoAutorizado";
@@ -886,7 +888,7 @@ class ZarpeInternacionalController extends Controller
                     }
                 }
         }
-        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros']];
+        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros'],count($tripulantes)];
         echo json_encode($return);
         }
 
@@ -959,6 +961,7 @@ class ZarpeInternacionalController extends Controller
                 if ($tripExiste) {
                     $InfoMarino = "TripulanteExiste";
                 }else{
+                   
                         if(count($tripulantes) <= $validation['cant_pasajeros']-1){
                             array_push($tripulantes, $trip);
                             $request->session()->put('tripulantes', $tripulantes);
@@ -979,7 +982,7 @@ class ZarpeInternacionalController extends Controller
             }
 
 
-             $return = [$tripulantes, $vj, '',$InfoMarino, $validation['cant_pasajeros']];
+             $return = [$tripulantes, $vj, '',$InfoMarino, $validation['cant_pasajeros'], count($tripulantes)];
             echo json_encode($return);
 
         }
@@ -997,24 +1000,28 @@ class ZarpeInternacionalController extends Controller
                 $request->session()->put('tripulantes', $tripulantes);
                 $validation['cantPassAbordo']++;
                 $request->session()->put('validacion', json_encode($validation));
-                $borrado =true;
+                $borrado =[true, $validation['cantPassAbordo']];
         }else{
             if(is_array($tripulantes)){
-                for ($i=0; $i < count($tripulantes); $i++) {
-                    $indice=array_search($cedula,$tripulantes[$i],false);
-                    if($indice!=false){
-                        array_splice($tripulantes, $i, $i);
+                
+
+                foreach ($tripulantes as $key=> $value) {
+                    if($value['nro_doc']==$cedula){
+
+                        array_splice($tripulantes, $key, $key);
                         $request->session()->put('tripulantes', $tripulantes);
                         $validation['cantPassAbordo']++;
                         $request->session()->put('validacion', json_encode($validation));
-                        $borrado =true;
+                        $borrado =[true, $validation['cantPassAbordo'],$tripulantes];
+
+                       
                     }
                 }
             }
 
         }
 
-        echo $borrado;
+        echo json_encode($borrado);
     }
 
     private function codigo($solicitud)

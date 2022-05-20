@@ -383,7 +383,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeModalPassengers(2)">Cerrar</button>
-                    <button type="button" id="btnAdd" class="btn btn-primary" data-ced='' onclick="AddPassengerMenor()">
+                    <button type="button" id="btnAdd" class="btn btn-primary" data-ced='' onclick="AddPassengerMenor('ZI')">
                         Agregar
                     </button>
                 </div>

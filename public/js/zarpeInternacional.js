@@ -581,6 +581,10 @@ function getMarinosZI(pass) {
 
                         }
                 break;
+                case 'gmarNotFound':
+                    msj.innerHTML="<div class='alert alert-danger'>La cédula suministrada no pertenecea a un marino venezolano.</div>";
+                    
+                break;
                 case 'OK':
 
                     var pass=respuesta[0];
@@ -644,9 +648,9 @@ function deleteTripulanteZI(){
         data: {index: cedula }
     })// This will be called on success
         .done(function (response) {
-
-
-            if(response==true){
+            let respuesta = JSON.parse(response);
+            console.log("eliminaTripulante:", respuesta);
+            if(respuesta[0]==true){
                 let tr=document.getElementById(cedula);
                 tr.remove();
                 msj.innerHTML='<div class="alert alert-success">Tripulante eliminado con éxito.</div>' ;

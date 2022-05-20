@@ -45,7 +45,7 @@
                                 @csrf
                                 @php
                                     $solicitud= json_decode(session('solicitud'));
-
+print_r($solicitud->establecimiento_nautico_destino_zi);
                                 @endphp
                                 <div class="card">
                                     <div class="card-body">
@@ -102,11 +102,21 @@
                                                     </div>
 
                                                     <div class="form-group col-sm-4">
+                                                        
+                                                        @if($solicitud->establecimiento_nautico_destino_zi!='')
+                                                            @php
+                                                             $est=$solicitud->establecimiento_nautico_destino_zi;
+                                                            @endphp
+                                                        @else
+                                                            @php
+                                                             $est=old('estNauticoDestinoZI');
+                                                            @endphp
+                                                        @endif
 
                                                         {!! Form::label('', 'Establecimiento náutico destino:') !!}
                                                         <input type="text" name="estNauticoDestinoZI"
                                                                id="estNauticoDestinoZI"
-                                                               value="{{old('estNauticoDestinoZI')}}"
+                                                               value="{{$est}}"
                                                                class="form-control">
                                                     </div>
 
