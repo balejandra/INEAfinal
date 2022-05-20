@@ -151,9 +151,14 @@
                             {!! Form::label('visitador', 'Nombres y Apellidos del Visitador:') !!}
                             {!! Form::text('visitador', null, ['class' => 'form-control', 'required']) !!}
                         </div>
+                        @php
+                            $fechaActual=new DateTime();
+                            $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
+                            $fechaActual=$fechaActual->format('Y-m-d');
+                        @endphp
                         <div class="form-group col-sm-6">
                             {!! Form::label('fecha_visita', 'Fecha de Visita:') !!}
-                            <input type="date" name="fecha_visita" class="form-control" min="{{date('Y-m-d')}}">
+                            <input type="date" name="fecha_visita" class="form-control" min="{{$fechaActual}}">
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Permisos de Estadia</li>
+                <li class="breadcrumb-item">Permisos de Estadía</li>
             </ol>
         </nav>
     </div>
@@ -19,8 +19,8 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
-                             Permisos de estadia
+                             <i class="fas fa-water"></i>
+                             Permisos de Estadía
                              @can('crear-estadia')
                                  <div class="card-header-actions">
                                      <a class="btn btn-primary btn-sm"  href="{{ route('permisosestadia.create') }}">Nuevo</a>

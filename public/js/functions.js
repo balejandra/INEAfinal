@@ -180,18 +180,18 @@ function agregarCargosMandos(){
     const divlat=document.createElement("div");
     divlat.classList.add("form-group", "col-sm-3");
     divlat.innerHTML=`
-            <input class="form-control" name="cargo[]" id="cargo`+cantAct+`" type="text" placeholder="Cargo que desempeña">`;
+            <input class="form-control" name="cargo[]" id="cargo`+cantAct+`" type="text" placeholder="Cargo que desempeña" required>`;
 
 
     const divlon=document.createElement("div");
     divlon.classList.add("form-group", "col-3");
     divlon.innerHTML=`
-            <input class="form-control" name="titulacion_minima[]" id="titmin`+cantAct+`"  type="text" placeholder="Titulación minima aceptada">`;
+            <input class="form-control" name="titulacion_minima[]" id="titmin`+cantAct+`"  type="text" placeholder="Titulación minima aceptada" required>`;
 
     const divtitmax=document.createElement("div");
     divtitmax.classList.add("form-group", "col-3");
     divtitmax.innerHTML=`
-            <input class="form-control" name="titulacion_maxima[]" id="titmax`+cantAct+`"  type="text" placeholder="Titulación máxima aceptada">`;
+            <input class="form-control" name="titulacion_maxima[]" id="titmax`+cantAct+`"  type="text" placeholder="Titulación máxima aceptada" required>`;
 
     const divbtn=document.createElement("div");
     divbtn.classList.add("form-group", "col-sm-2");
@@ -335,18 +335,18 @@ function eliminarCargosMandos(id, idcoord){
         let autorizacion=document.getElementById('autorizacion').value;
         let pasaporteMenor=document.getElementById('pasaporte_menor').value;
         if(tipozarpe=='ZI'){
-           
+
             console.log('ZI pasaporye');
             if(pasaporteMenor==''){
                 msj.innerHTML='<div class="alert alert-danger">El campo pasaporte es requerido para el menor</div>' ;
                 return false;
-              
+
             }
         }else if(tipozarpe=='ZN'){
             if(pasaporteMenor=='' && tipodoc=="P"){
                 msj.innerHTML='<div class="alert alert-danger">El campo pasaporte es requerido para el menor</div>' ;
                 return false;
-              
+
             }
         }
 
@@ -1821,7 +1821,7 @@ $(document).ready(function() {
 
         bootbox.confirm({
             title: "Confirmación",
-            message: "Esta seguro que desea "+accion+" este documento?",
+            message: "Esta seguro que desea "+accion+" esta solicitud?",
             centerVertical:true,
             animate:true,
             buttons: {
@@ -1850,7 +1850,7 @@ $(document).ready(function() {
 
             bootbox.confirm({
                 title: "Confirmacion",
-                message: "Estas seguro que desea "+data+ " este documento ",
+                message: "Estas seguro que desea "+data+ " esta solicitud?",
                 animate:true,
                 buttons: {
                     confirm: {
