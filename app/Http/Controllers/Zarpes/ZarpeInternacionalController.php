@@ -948,7 +948,7 @@ class ZarpeInternacionalController extends Controller
                 ];
 
             $tripExiste=false;
-
+            $vj=[false];
             if(is_array($tripulantes)){
                 foreach ($tripulantes as $value) {
 
@@ -963,6 +963,7 @@ class ZarpeInternacionalController extends Controller
                             array_push($tripulantes, $trip);
                             $request->session()->put('tripulantes', $tripulantes);
                              $InfoMarino = "OK";
+                             $vj=[true];
                         }else{
                             $InfoMarino = "FoundButMaxTripulationLimit";
                         }
@@ -974,10 +975,11 @@ class ZarpeInternacionalController extends Controller
                 array_push($tripulantes, $trip);
                 $request->session()->put('tripulantes', $tripulantes);
                  $InfoMarino = "OK";
+                 $vj=[true];
             }
 
 
-             $return = [$tripulantes, '', '',$InfoMarino, $validation['cant_pasajeros']];
+             $return = [$tripulantes, $vj, '',$InfoMarino, $validation['cant_pasajeros']];
             echo json_encode($return);
 
         }

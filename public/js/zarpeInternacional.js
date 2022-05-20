@@ -559,7 +559,7 @@ function getMarinosZI(pass) {
             console.log(respuesta);
             console.log(respuesta[0].length);
             var validacion=respuesta[1];
-
+            console.log("resppos UNO::", respuesta[1]);
             switch(respuesta[3]){
                 case 'TripulanteExiste':
                     msj.innerHTML="<div class='alert alert-danger'>El tripulante que intenta agregar ya se encuanta en el listado, por favor verifique.</div>";
@@ -583,11 +583,11 @@ function getMarinosZI(pass) {
                 break;
                 case 'OK':
 
-
-
+                    var pass=respuesta[0];
+                    pass=pass[pass.length-1];
+                        console.log("vlaid:::",validacion[0]);
                      if(validacion[0] ==true){
-                        var pass=respuesta[0];
-                        pass=pass[pass.length-1];
+                        
 
                         var nodataTrip = !!document.getElementById("nodataTrip");
 

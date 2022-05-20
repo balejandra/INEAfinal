@@ -36,7 +36,7 @@ class CapitaniaUserController extends AppBaseController
     public function index(Request $request)
     {
         $capitaniaUsers = $this->capitaniaUserRepository->all();
-
+       
         return view('publico.capitania_users.index')
             ->with('capitaniaUsers', $capitaniaUsers);
     }

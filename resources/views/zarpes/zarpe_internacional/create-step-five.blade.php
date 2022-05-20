@@ -119,7 +119,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                     <label for="title">Pasaporte:</label>
-                                                    <input type="file" class="form-control" id="doc" name="doc" required>
+                                                    <input type="file" class="form-control" id="doc" name="doc"  >
                                                 </div>
                                         </div>
                                     </div>

@@ -12,6 +12,7 @@
         </nav>
     </div>
     </header>
+    
     <div class="container-fluid">
         <div class="animated fadeIn">
              @include('flash::message')
