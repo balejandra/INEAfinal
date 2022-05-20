@@ -23,7 +23,8 @@
                             <strong>Solicitud de Permisos de Zarpe INTERNACIONAL | Paso {{$paso}}</strong>
 
                             <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm" href="{{route('zarpeInternacional.index')}}">Cancelar</a>
+                                <a class="btn btn-primary btn-sm"
+                                   href="{{route('zarpeInternacional.index')}}">Cancelar</a>
 
                             </div>
 
@@ -53,16 +54,14 @@
                                                 {{$msj}}
                                             </div>
                                         @endif
-                                        <div class="row px-5" id="msjMarinoInt"  data-asset="{{asset('images')}}">
+                                        <div class="row px-5" id="msjMarinoInt" data-asset="{{asset('images')}}">
 
-                                            </div>
-                                        <div class="row  ">
+                                        </div>
+                                        <div class="row margin">
 
-
-                                            <div class="col-md-2">
-
-                                                <div class="form-group     ">
-                                                     <label>Función:</label>
+                                            <div class="col-md-2 px-1">
+                                                <div class="form-group">
+                                                    <label>Función:</label>
                                                     <select id="funcion" name="funcion" class="form-control custom-select">
                                                         <option value="">Seleccione</option>
                                                         <option value="Capitán">Capitán</option>
@@ -75,73 +74,71 @@
 
                                             <div class="col-md-2 px-1">
                                                 <div class="form-group">
-                                                    <label for="title">Tipo doc..:</label>
+                                                    <label for="title">Tipo documento:</label>
                                                     {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
                                                 </div>
                                             </div>
 
-                                             <div class="col-md-2 px-1">
+                                            <div class="col-md-2 px-1">
                                                 <div class="form-group">
                                                     <label for="title">Cédula/Pasaporte:</label>
-                                                    <input type="text" class="form-control" id="nrodoc"
-                                                           name="nrodoc" maxlength="10"
-                                                            >
+                                                    <input type="text" class="form-control" id="nrodoc" name="nrodoc" maxlength="10">
                                                 </div>
                                             </div>
 
 
-                                            <div class="col-md-3 px-1 " >
+                                            <div class="col-md-3 px-1 ">
                                                 <div class="form-group">
-                                                    <label for="title">Nombre:</label>
-                                                    <input type="text" class="form-control" id="nombres" name="nombres" maxlength="35">
+                                                    <label for="title">Nombres:</label>
+                                                    <input type="text" class="form-control" id="nombres" name="nombres"  onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3 px-1 " >
+                                            <div class="col-md-3 px-1 ">
                                                 <div class="form-group">
                                                     <label for="title">Apellidos:</label>
-                                                    <input type="text" class="form-control" id="apellidos"
-                                                           name="apellidos" maxlength="35">
+                                                    <input type="text" class="form-control" id="apellidos" name="apellidos" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
                                         </div>
-                                    <div class="row">
-
-                                         <div class="col-md-3 px-1 " >
+                                        <div class="row margin">
+                                            <div class="col-md-3 px-1 ">
                                                 <div class="form-group">
                                                     <label for="title">Rango:</label>
-                                                    <input type="text" class="form-control" id="rango"
-                                                           name="rango" maxlength="35">
+                                                    <input type="text" class="form-control" id="rango" name="rango" maxlength="35">
                                                 </div>
                                             </div>
 
-                                        <div class="col">
-                                            <div class="form-group">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
                                                     <label for="title">Pasaporte:</label>
                                                     <input type="file" class="form-control" id="doc" name="doc"  >
                                                 </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row text-center ">
-                                        <div class="col-md-12 my-2 ">
-                                            <button type="button" class="btn btn-primary" onclick="AddPasportsMarinos()">
+                                            </div>
+                                            <div class="col-md-4 my-2 ">
+                                                <br>
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="AddPasportsMarinos()">
                                                     Agregar
-                                            </button>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+
+
+                                        <div class="row text-center ">
+
+                                        </div>
 
                                         <div class="row mt-3 px-3">
                                             <div id="cantTripulantes">
                                                 @php
-                                    $validacion= json_decode(session('validacion'));
-                                     $cantTrip=$validacion->cant_tripulantes;
+                                                    $validacion= json_decode(session('validacion'));
+                                                     $cantTrip=$validacion->cant_tripulantes;
 
                                                 @endphp
 
-                                    Cantidad mínima de tripulantes abordo:  {{$cantTrip}}
+                                                Cantidad mínima de tripulantes abordo: {{$cantTrip}}
                                             </div>
 
                                             <div class="table-responsive">
@@ -163,7 +160,7 @@
                                                     @if(isset($tripulantes))
 
 
-                                                       @if(!is_array($tripulantes))
+                                                        @if(!is_array($tripulantes))
                                                             @php
 
                                                                 $cant=0;
@@ -182,19 +179,20 @@
 
                                                             @foreach($tripulantes as $trip)
 
-                                                    <tr id='{{$trip["nro_doc"]}}'>
+                                                                <tr id='{{$trip["nro_doc"]}}'>
 
 
-                                                    <td> {{$trip["funcion"]}} </td>
+                                                                    <td> {{$trip["funcion"]}} </td>
 
-                                                    <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
-                                                    <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
-                                                    <td>{{$trip["rango"]}}</td>
-                                                    <td>{{$trip["doc"]}}</td>
-                                                    <td>
-                                <a href="#" onclick="openModalZI({{$trip['nro_doc']}})">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                                                    <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
+                                                                    <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
+                                                                    <td>{{$trip["rango"]}}</td>
+                                                                    <td>{{$trip["doc"]}}</td>
+                                                                    <td>
+                                                                        <a href="#"
+                                                                           onclick="openModalZI({{$trip['nro_doc']}})">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
 
 
                                                                     </td>
@@ -207,7 +205,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="{{ route('zarpeInternacional.permissionCreateStepFive') }}" method="POST">
+                                    <form action="{{ route('zarpeInternacional.permissionCreateStepFive') }}"
+                                          method="POST">
                                         @csrf
 
 
@@ -232,27 +231,29 @@
         </div>
     </div>
 
-<div class="modal fade" id="modalDeleteTrip" tabindex="-1" aria-labelledby="modalDeleteTripLabel" aria-modal="true"
-    role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalDeleteTripLabel">Confirmar</h5>
-                <button type="button" class="close" aria-label="Close" onclick="closeModalZI()">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ¿Realmente desea eliminar al tripulante (<span id='ci'></span>) seleccionado?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModalZI()">Cerrar</button>
-                <button type="button" id="btnDelete" class="btn btn-primary" data-ced='' onclick="deleteTripulanteZI()">Eliminar</button>
+    <div class="modal fade" id="modalDeleteTrip" tabindex="-1" aria-labelledby="modalDeleteTripLabel" aria-modal="true"
+         role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteTripLabel">Confirmar</h5>
+                    <button type="button" class="close" aria-label="Close" onclick="closeModalZI()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Realmente desea eliminar al tripulante (<span id='ci'></span>) seleccionado?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModalZI()">Cerrar</button>
+                    <button type="button" id="btnDelete" class="btn btn-primary" data-ced=''
+                            onclick="deleteTripulanteZI()">Eliminar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+    <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
 
 
 @endsection

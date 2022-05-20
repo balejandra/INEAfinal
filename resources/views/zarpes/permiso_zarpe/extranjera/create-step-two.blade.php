@@ -60,9 +60,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="row justify-content-center">
-                                        	<div class="table-responsive col-md-8" id="tableEstadiaVAl" style="display:none;" >
-                                        		<table  class="table table-bordered"  >
+                                        	<div class="table-responsive" id="tableEstadiaVAl" style="display:none;" >
+                                        		<table  class="table table-bordered table-small">
                                         			<tr>
                                         				<th class="bg-light" width="40%">Nro. solicitud</th>
                                         				<td id="solicitud"></td>
@@ -93,7 +92,6 @@
                                         		<input type="hidden" id="numero_registro" name="numero_de_registro" value="">
                                         	</div>
                                         </div>
-				                    </div>
 
 				                    <div class="card-footer text-right">
 				                    	<div class="row">

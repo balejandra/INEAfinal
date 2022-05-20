@@ -134,6 +134,5 @@
 </div>
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('permisosestadia.index') }}" class="btn btn-secondary">Cancelar</a>
+    {!! Form::submit('Generar Solicitud', ['class' => 'btn btn-primary']) !!}
 </div>

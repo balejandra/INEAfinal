@@ -28,7 +28,7 @@
                                 <i class="fa fa-plus-square-o fa-lg"></i>
                                 <strong>Crear Permiso de Estadia</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                    <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                                 </div>
                             </div>
                             <div class="card-body">

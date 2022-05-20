@@ -59,12 +59,14 @@
                                                 <button type="button" class="btn btn-primary" onclick="getPermisoEstadiaZI($('#permiso').val())">Verificar</button>
                                             </div>
                                         </div>
+                                                <style>
 
-                                        <div class="row justify-content-center">
-                                        	<div class="table-responsive col-md-8" id="tableEstadiaVAl" style="display:none;" >
-                                        		<table  class="table table-bordered"  >
+                                                </style>
+                                                <br>
+                                                <div class="table-responsive" id="tableEstadiaVAl" style="display:none;" >
+                                        		<table  class="table table-bordered table-small">
                                         			<tr>
-                                        				<th class="bg-light" width="40%">Nro. solicitud</th>
+                                        				<th class="bg-light">Nro. solicitud</th>
                                         				<td id="solicitud"></td>
                                         			</tr>
                                         			<tr>

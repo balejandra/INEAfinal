@@ -40,7 +40,7 @@
 
 @php
     $solicitud= json_decode(session('solicitud'));
-    
+
     $tipozarpes=$solicitud->tipo_zarpe_id;
     $descripcion=$solicitud->descripcion_navegacion_id;
     $capitaniaOrigen=$solicitud->origen_capitania_id;
@@ -62,9 +62,9 @@
                             @endif
 
                             <div class="row">
-                                <div class="col-md-1"></div>
+                                <div class="col-md-2"></div>
 
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
 
                                         <div class="form-group">
                                             <label for="title">Tipo de navegación:</label>
@@ -90,7 +90,7 @@
                                     </div>
 
 
-                                <div class="col-md-5">
+                                <div class="col-md-4">
 
                                         <div class="form-group">
                                             <label for="title">Capitanía de origen:</label>
@@ -116,7 +116,7 @@
                                     </div>
 
                             </div>
-                                <div class="col-md-1"></div>
+                                <div class="col-md-2"></div>
 
 
                     </div>
