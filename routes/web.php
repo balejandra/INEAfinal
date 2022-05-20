@@ -25,6 +25,8 @@ Route::get('error', function (){
 })->name('error');
 
 Route::get('consultasaime',[\App\Http\Controllers\Publico\UserController::class,'consulta'])->name('consultasaime');
+Route::get('userDelete.index',[\App\Http\Controllers\Publico\UserController::class,'indexUserDeleted'])->name('userDelete.index');
+Route::get('userDeleted/{user}',[\App\Http\Controllers\Publico\UserController::class,'restoreUserDeleted'])->name('userDeleted.restore');
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verified');
 

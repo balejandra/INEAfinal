@@ -26,6 +26,7 @@
                             @can('crear-usuario')
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm"  href="{{ route('users.create') }}">Nuevo</a>
+                                <a class="btn btn-warning btn-sm"  href="{{ route('userDelete.index') }}">Usuarios Eliminados</a>
                             </div>
                             @endcan
                         </div>
