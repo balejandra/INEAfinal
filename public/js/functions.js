@@ -227,7 +227,7 @@ function eliminarCargosMandos(id, idcoord){
 
 //INICIO VALIDACIONES DE PERMISOS DE ZARPES
 
-    function getDataPassengers() {
+    function getDataPassengers(tipozarpe) {
         let cedula= document.getElementById('numero_identificacion').value;
         let fechanac= document.getElementById('fecha_nacimiento').value;
         let sexo= document.getElementById('sexo').value;
@@ -242,7 +242,24 @@ function eliminarCargosMandos(id, idcoord){
 
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));
+        let pasaporteMayor=document.getElementById('pasaporte_mayor').value;
 
+        if(tipozarpe=='ZI'){
+         
+           
+            console.log('ZI pasaporteMayor');
+            if(pasaporteMayor==''){
+                msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido</div>' ;
+                return false;
+              
+            }
+        }else if(tipozarpe=='ZN'){
+            if(pasaporteMayor=='' && tipodoc=="P"){
+                msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido</div>' ;
+                return false;
+              
+            }
+        }
         if(cantAct==0){
             pass.innerHTML="";
         }
@@ -338,13 +355,13 @@ function eliminarCargosMandos(id, idcoord){
            
             console.log('ZI pasaporye');
             if(pasaporteMenor==''){
-                msj.innerHTML='<div class="alert alert-danger">El campo pasaporte es requerido para el menor</div>' ;
+                msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido para el menor</div>' ;
                 return false;
               
             }
         }else if(tipozarpe=='ZN'){
             if(pasaporteMenor=='' && tipodoc=="P"){
-                msj.innerHTML='<div class="alert alert-danger">El campo pasaporte es requerido para el menor</div>' ;
+                msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido para el menor</div>' ;
                 return false;
               
             }

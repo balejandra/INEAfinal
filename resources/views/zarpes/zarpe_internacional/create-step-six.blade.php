@@ -100,17 +100,17 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4  my-1 DatosRestantes">
+                                            <div class="col-md-4  my-1 ">
                                                 <label for="documento">Pasaporte</label>
                                                 <div class="input-group">
                                                     <input type="file" class="form-control" name="pasaporte_mayor"
                                                            id="pasaporte_mayor" accept="application/pdf, image/*">
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 my-1">
+                                            <div class="col-md-12 text-center my-1">
                                                 <br>
                                                 <button type="button" class="btn btn-primary"
-                                                        onclick="getDataPassengers()">
+                                                        onclick="getDataPassengers('ZI')">
                                                     Agregar
                                                 </button>
 

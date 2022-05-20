@@ -51,7 +51,7 @@
         </tbody>
     </table>
     <br>
-    <div class="table-responsive">
+   <!-- <div class="table-responsive">
         <strong>Certificados de Seguridad Marítima</strong>
 
         <table class="table table-hover">
@@ -66,11 +66,11 @@
                     <td>{{ $certificado->nombre_certificado }}</td>
                     <td>{{ $certificado->fecha_expedicion}}</td>
                     @empty
-                        <span class="badge badge-danger">Sin Tripulantes</span>
+                        <span class="badge badge-danger">Sin información</span>
                 </tr>
             @endforelse
         </table>
-    </div>
+    </div>-->
     <br>
     <strong>Tripulantes</strong>
     <div class="table-responsive">

@@ -683,7 +683,7 @@ class PermisoZarpeController extends Controller
         $validation = json_decode($request->session()->get('validacion'), true);
 
         $tripulantes=$request->session()->get('tripulantes');
-        $cantPasajeros = $validation['cantPassAbordo'];
+        $cantPasajeros = $validation['pasajerosRestantes'];
         $this->step = 6;
 
         return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('cantPasajeros', $cantPasajeros)->with('titulo', $this->titulo);
@@ -1000,7 +1000,7 @@ class PermisoZarpeController extends Controller
                             if(count($tripulantes) <= $validation['cant_pasajeros']-1){
                                 array_push($tripulantes, $trip);
                                 $request->session()->put('tripulantes', $tripulantes);
-                                $validation['cantPassAbordo']=$validation['cant_pasajeros']-count($tripulantes);
+                                $validation['cantPassAbordo']=$validation['cant_pasajeros'] - abs(count($tripulantes)+$validation['cantPassAbordo']) ;
                                 $request->session()->put('validacion', json_encode($validation));
                             }else{
                                 $InfoMarino = "FoundButMaxTripulationLimit";
@@ -1011,7 +1011,7 @@ class PermisoZarpeController extends Controller
                     }
                 }
         }
-        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros']];
+        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros'],$validation['cantPassAbordo']];
         echo json_encode($return);
         }
 

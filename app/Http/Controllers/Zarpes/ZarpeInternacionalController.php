@@ -413,8 +413,7 @@ class ZarpeInternacionalController extends Controller
         //$capitania = Capitania::all();
        // $descripcionNavegacion = DescripcionNavegacion::all();
        $valida = json_decode($request->session()->get('validacion'), true);
-
-       print_r($valida);
+ 
         $this->step = 3;
 
         return view('zarpes.zarpe_internacional.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('bandera', $bandera)->with('titulo', $this->titulo);
@@ -491,7 +490,7 @@ class ZarpeInternacionalController extends Controller
 
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes = $request->session()->get('tripulantes');
-        
+
         $this->step = 5;
         return view('zarpes.zarpe_internacional.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('codigo', $codigo)->with('titulo', $this->titulo);
 
@@ -896,7 +895,7 @@ class ZarpeInternacionalController extends Controller
                     }
                 }
         }
-        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros'],count($tripulantes),$validation['pasajerosRestantes'],$validation['cantPassAbordo']];
+        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros'],$validation['pasajerosRestantes'],$validation['cantPassAbordo']];
         echo json_encode($return);
         }
 
