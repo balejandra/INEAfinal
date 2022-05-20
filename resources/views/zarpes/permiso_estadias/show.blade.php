@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('permisosestadia.index') }}">Permisos de Estadia</a>
+                    <a href="{{ route('permisosestadia.index') }}">Permisos de Estadía</a>
                 </li>
                 <li class="breadcrumb-item ">Consulta</li>
             </ol>
@@ -22,7 +22,8 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Consultar Permiso de Estadia</strong>
+                                 <i class="fas fa-water"></i>
+                                 <strong>Consultar Permiso de Estadía</strong>
                                  <div class="card-header-actions">
                                      <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Listado</a>
                                  </div>

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table">
+    <table class="table table-bordered">
         <tbody>
         <tr>
             <th class="bg-light">Nro Solicitud:</th>

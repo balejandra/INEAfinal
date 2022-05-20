@@ -253,4 +253,20 @@ class UserController extends Controller
         echo json_encode($resp);
     }
 
+
+    public function indexUserDeleted(){
+        $users =User::onlyTrashed()->get();
+        //dd($users);
+
+        return view('publico.users.user_delete')
+            ->with('users', $users);
+    }
+
+    public function restoreUserDeleted($id){
+        $user_deleted=User::where('id',$id);
+        $user_deleted->restore();
+        Flash::success('Usuario restaurado exitosamente.');
+
+        return redirect(route('userDelete.index'));
+    }
 }
