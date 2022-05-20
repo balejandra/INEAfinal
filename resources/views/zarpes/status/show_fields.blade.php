@@ -12,9 +12,10 @@
         <th class="bg-light">Creado</th>
         <td>{{ $status->created_at }}</td>
     </tr>
-    <tr>
-        <th class="bg-light">Actualizado</th>
-        <td>{{ $status->updated_at }}</td>
-    </tr>
+    
     </tbody>
 </table>
+<div class="form-group col-sm-12 text-center">
+        
+        <a href="{{ route('status.index') }}" class="btn  btncancelarZarpes">Cancelar</a>
+    </div>

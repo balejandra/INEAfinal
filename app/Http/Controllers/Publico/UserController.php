@@ -15,7 +15,6 @@ use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Response;
 use Spatie\Permission\Models\Role;
@@ -60,10 +59,8 @@ class UserController extends Controller
     public function create()
     {
         $roles=Role::pluck('name','id');
-        $capitanias=Capitania::pluck('nombre','id');
         return view('publico.users.create')
-            ->with('roles',$roles)
-            ->with('capitanias',$capitanias);
+            ->with('roles',$roles);
     }
 
     /**
@@ -103,27 +100,6 @@ class UserController extends Controller
 
         $roles=$request->input('roles', []);
         $data->roles()->sync($roles);
-        $rol=Role::select('name')->where('id',$request->roles)->get();
-
-        if (($request->roles==5)||($request->roles==6)) {
-            $cap_user= new CapitaniaUser();
-            $cap_user->cargo=$rol[0]->name;
-            $cap_user->user_id=$data->id;
-            $cap_user->capitania_id=$request->capitanias;
-            $cap_user->save();
-
-            $est_user= new EstablecimientoNauticoUser();
-            $est_user->user_id=$data->id;
-            $est_user->establecimiento_nautico_id=$request->establecimientos;
-            $est_user->save();
-        } elseif (($request->roles==4)||($request->roles==7)||($request->roles==8)){
-
-            $cap_user= new CapitaniaUser();
-            $cap_user->cargo=$rol[0]->name;
-            $cap_user->user_id=$data->id;
-            $cap_user->capitania_id=$request->capitanias;
-            $cap_user->save();
-        }
 
         Flash::success('Usuario guardado exitosamente.');
 
@@ -140,7 +116,6 @@ class UserController extends Controller
     public function show($id)
     {
         $user = $this->userRepository->find($id);
-
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
 
@@ -160,9 +135,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $roles=Role::pluck('name','id');
-        $capitanias=Capitania::pluck('nombre','id');
         $user = $this->userRepository->find($id);
-        $establecimientos=EstablecimientoNautico::pluck('nombre','id');
 
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
@@ -172,9 +145,7 @@ class UserController extends Controller
 
         return view('publico.users.edit')
             ->with('user', $user)
-            ->with('roles',$roles)
-            ->with('capitanias',$capitanias)
-            ->with('establecimientos',$establecimientos);
+            ->with('roles',$roles);
     }
 
     /**
@@ -190,16 +161,6 @@ class UserController extends Controller
         $validated= $request->validate([
             'nombres' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => [
-                'required',
-                'max:50',
-                'confirmed',
-                Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->uncompromised(),
-            ],
         ]);
 
 
@@ -207,6 +168,20 @@ class UserController extends Controller
         $user->email= $request->email;
         $user->nombres = $request->nombres;
         if ($request->password_change) {
+            $validated= $request->validate([
+                'nombres' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'password' => [
+                    'required',
+                    'max:50',
+                    'confirmed',
+                    Password::min(8)
+                        ->mixedCase()
+                        ->letters()
+                        ->numbers()
+                        ->uncompromised(),
+                ],
+            ]);
             $user->password = Hash::make($request->password);
         }
         $user->tipo_usuario=$request->tipo_usuario;
@@ -214,31 +189,10 @@ class UserController extends Controller
         $user->update();
         $roles=$request->roles ;
         $user->roles()->sync($roles);
-        $rol=Role::select('name')->where('id',$request->roles)->get();
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
 
             return redirect(route('users.index'));
-        }
-
-        if (($request->roles==5)||($request->roles==6)) {
-            $cap_user= new CapitaniaUser();
-            $cap_user->cargo=$rol[0]->name;
-            $cap_user->user_id=$id;
-            $cap_user->capitania_id=$request->capitanias;
-            $cap_user->save();
-
-            $est_user= new EstablecimientoNauticoUser();
-            $est_user->user_id=$id;
-            $est_user->establecimiento_nautico_id=$request->establecimientos;
-            $est_user->save();
-        } elseif (($request->roles==4)||($request->roles==7)||($request->roles==8)){
-
-            $cap_user= new CapitaniaUser();
-            $cap_user->cargo=$rol[0]->name;
-            $cap_user->user_id=$id;
-            $cap_user->capitania_id=$request->capitanias;
-            $cap_user->save();
         }
 
         Flash::success('Usuario actualizado con éxito.');
@@ -264,7 +218,7 @@ class UserController extends Controller
 
             return redirect(route('users.index'));
         }
-
+        $capitania=CapitaniaUser::where('user_id',$id)->delete();
         $this->userRepository->delete($id);
 
         Flash::success('Usuario eliminado exitosamente.');

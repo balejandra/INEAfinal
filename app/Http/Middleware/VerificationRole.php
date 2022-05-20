@@ -13,7 +13,7 @@ class VerificationRole extends Middleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$guards)
     {
         if (is_null(\Spatie\Permission\Models\Role::where('name','Usuario web')->first())) {
             return redirect('error');

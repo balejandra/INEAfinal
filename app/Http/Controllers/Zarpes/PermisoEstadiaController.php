@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Zarpes\CreatePermisoEstadiaRequest;
 use App\Models\Publico\Capitania;
 use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\Paise;
 use App\Models\User;
 use App\Models\Zarpes\DocumentoPermisoEstadia;
 use App\Models\Zarpes\EstablecimientoNautico;
@@ -75,9 +76,11 @@ class PermisoEstadiaController extends AppBaseController
     {
         $Establecimientos = EstablecimientoNautico::all();
         $capitanias = Capitania::all();
+        $paises = Paise::all();
         return view('zarpes.permiso_estadias.create')
             ->with('establecimientos', $Establecimientos)
-            ->with('capitanias', $capitanias);
+            ->with('capitanias', $capitanias)
+            ->with('paises',$paises);
     }
 
     /**
@@ -87,8 +90,29 @@ class PermisoEstadiaController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreatePermisoEstadiaRequest $request)
+    public function store(Request $request)
     {
+        $validated= $request->validate([
+            'nombre_buque' => ['required', 'string', 'max:255'],
+            'nro_registro' => ['required', 'string', 'max:255'],
+            'tipo_buque' => ['required', 'string', 'max:255'],
+            'nacionalidad_buque' => ['required', 'string', 'max:255'],
+            'nombre_propietario' => ['required', 'string', 'max:255'],
+            'pasaporte_capitan' => ['required', 'string', 'max:255'],
+            'nombre_capitan' => ['required', 'string', 'max:255'],
+            'cant_tripulantes' => ['required', 'integer', 'max:255'],
+            'cant_pasajeros' => ['required', 'integer', 'max:255'],
+            'arqueo_bruto' => ['required', 'string', 'max:255'],
+            'eslora' => ['required', 'string', 'max:255'],
+            'potencia_kw' => ['required', 'string', 'max:255'],
+            'actividades' => ['required', 'string', 'max:255'],
+            'puerto_origen' => ['required', 'string', 'max:255'],
+            'capitania_id' => ['required', 'string', 'max:255'],
+            'tiempo_estadia' => ['required', 'string', 'max:255'],
+            [
+                'capitania_id.required'=>'El campo Circunscripcion Acuatica es requerido',]
+
+            ]);
 
         $matriculaexis=PermisoEstadia::where('nro_registro',$request->nro_registro)
             ->where('status_id',1)
@@ -98,6 +122,7 @@ class PermisoEstadiaController extends AppBaseController
 
             return redirect()->back();
         }else {
+
             $estadia = new PermisoEstadia();
             $estadia->nro_solicitud = $this->codigo($request->capitania_id);
             $estadia->cantidad_solicitud = '1';
@@ -126,7 +151,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento1 = new DocumentoPermisoEstadia();
                 $procedencia = $request->file('zarpe_procedencia');
                 $filenamepro = date('dmYGi') . $procedencia->getClientOriginalName();
-                $avatar1 = $procedencia->move(public_path() . '/permisoestadia/documentos', $filenamepro);
+                $avatar1 = $procedencia->move(public_path() . '/documentos/permisoestadia', $filenamepro);
                 $documento1->permiso_estadia_id = $estadia->id;
                 $documento1->documento = $filenamepro;
                 $documento1->recaudo = 'Zarpe de Procedencia';
@@ -136,7 +161,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento2 = new DocumentoPermisoEstadia();
                 $registro = $request->file('registro_embarcacion');
                 $filenamereg = date('dmYGi') . $registro->getClientOriginalName();
-                $avatar2 = $registro->move(public_path() . '/permisoestadia/documentos', $filenamereg);
+                $avatar2 = $registro->move(public_path() . '/documentos/permisoestadia', $filenamereg);
                 $documento2->permiso_estadia_id = $estadia->id;
                 $documento2->documento = $filenamereg;
                 $documento2->recaudo = 'Registro de Embarcacion';
@@ -146,7 +171,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento3 = new DocumentoPermisoEstadia();
                 $migracion = $request->file('despacho_aduana_procedencia');
                 $filenamemig = date('dmYGi') . $migracion->getClientOriginalName();
-                $avatar3 = $migracion->move(public_path() . '/permisoestadia/documentos', $filenamemig);
+                $avatar3 = $migracion->move(public_path() . '/documentos/permisoestadia', $filenamemig);
                 $documento3->permiso_estadia_id = $estadia->id;
                 $documento3->documento = $filenamemig;
                 $documento3->recaudo = 'Despacho de Aduana de Procedencia';
@@ -156,7 +181,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento4 = new DocumentoPermisoEstadia();
                 $pasaportes = $request->file('pasaportes_tripulantes');
                 $filenamepas = date('dmYGi') . $pasaportes->getClientOriginalName();
-                $avatar4 = $pasaportes->move(public_path() . '/permisoestadia/documentos', $filenamepas);
+                $avatar4 = $pasaportes->move(public_path() . '/documentos/permisoestadia', $filenamepas);
                 $documento4->permiso_estadia_id = $estadia->id;
                 $documento4->documento = $filenamepas;
                 $documento4->recaudo = 'Pasaportes de Tripulantes';
@@ -165,7 +190,7 @@ class PermisoEstadiaController extends AppBaseController
 
             $this->SendMail($estadia->id, 1);
             $this->SendMail($estadia->id, 0);
-            Flash::success('Solicitud de Permiso Estadia guardada satisfactoriamente.');
+            Flash::success('Solicitud de Permiso Estadia generado satisfactoriamente.');
 
             return redirect(route('permisosestadia.index'));
         }
@@ -173,16 +198,22 @@ class PermisoEstadiaController extends AppBaseController
 
     private function codigo($capitania_id)
     {
+        $capitania = Capitania::find($capitania_id);
+        $idcap=$capitania->id;
         $cantidadActual = PermisoEstadia::select(DB::raw('count(nro_solicitud) as cantidad'))
             ->where('cantidad_solicitud',1)
             ->where(DB::raw("(SUBSTR(nro_solicitud,6,4) = '" . date('Y') . "')"), '=', true)
+            ->Join('public.capitanias', function ($join) use ($idcap) {
+                $join->on('permiso_estadias.capitania_id', '=', 'public.capitanias.id')
+                    ->where('public.capitanias.id', '=',  $idcap);
+            })
             ->get();
 
         $capitania = Capitania::find($capitania_id);
 
         $correlativo = $cantidadActual[0]->cantidad + 1;
         $codigo = $capitania->sigla . "-" . date('Y') . date('m') . "-" . $correlativo;
-       // dd($codigo);
+       //dd($codigo);
         return $codigo;
     }
 
@@ -198,6 +229,7 @@ class PermisoEstadiaController extends AppBaseController
         $permisoEstadia = $this->permisoEstadiaRepository->find($id);
         $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
         $revisiones=EstadiaRevision::where('permiso_estadia_id',$id)->get();
+        $visita=VisitaPermisoEstadia::where('permiso_estadia_id',$id)->get();
         if (empty($permisoEstadia)) {
             Flash::error('Permiso Estadia not found');
 
@@ -207,7 +239,8 @@ class PermisoEstadiaController extends AppBaseController
         return view('zarpes.permiso_estadias.show')
             ->with('permisoEstadia', $permisoEstadia)
             ->with('documentos', $documentos)
-            ->with('revisiones',$revisiones);
+            ->with('revisiones',$revisiones)
+            ->with('visitas',$visita);
     }
 
     /**
@@ -256,7 +289,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento1 = new DocumentoPermisoEstadia();
             $seniat = $request->file('permiso_seniat');
             $filenamesen = date('dmYGi') . $seniat->getClientOriginalName();
-            $avatar1 = $seniat->move(public_path() . '/permisoestadia/documentos', $filenamesen);
+            $avatar1 = $seniat->move(public_path() . '/documentos/permisoestadia', $filenamesen);
             $documento1->permiso_estadia_id = $id;
             $documento1->documento = $filenamesen;
             $documento1->recaudo = 'Permiso de Admisión Temporal emitida por el SENIAT';
@@ -266,7 +299,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento2 = new DocumentoPermisoEstadia();
             $alicuota = $request->file('comprobante_alicuota');
             $filenamealic = date('dmYGi') . $alicuota->getClientOriginalName();
-            $avatar2 = $alicuota->move(public_path() . '/permisoestadia/documentos', $filenamealic);
+            $avatar2 = $alicuota->move(public_path() . '/documentos/permisoestadia', $filenamealic);
             $documento2->permiso_estadia_id = $id;
             $documento2->documento = $filenamealic;
             $documento2->recaudo = 'Comprobante de pago de Alícuota';
@@ -276,7 +309,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento3 = new DocumentoPermisoEstadia();
             $inspeccion = $request->file('inspeccion_visita');
             $filenameinsp = date('dmYGi') . $inspeccion->getClientOriginalName();
-            $avatar3 = $inspeccion->move(public_path() . '/permisoestadia/documentos', $filenameinsp);
+            $avatar3 = $inspeccion->move(public_path() . '/documentos/permisoestadia', $filenameinsp);
             $documento3->permiso_estadia_id = $id;
             $documento3->documento = $filenameinsp;
             $documento3->recaudo = 'Inspección por el Visitador';
@@ -286,7 +319,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $saime = $request->file('comprobante_saime');
             $filenamesai = date('dmYGi') . $saime->getClientOriginalName();
-            $avatar4 = $saime->move(public_path() . '/permisoestadia/documentos', $filenamesai);
+            $avatar4 = $saime->move(public_path() . '/documentos/permisoestadia', $filenamesai);
             $documento4->permiso_estadia_id = $id;
             $documento4->documento = $filenamesai;
             $documento4->recaudo = 'Comprobante de visita SAIME';
@@ -296,7 +329,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $insai = $request->file('comprobante_insai');
             $filenameins = date('dmYGi') . $insai->getClientOriginalName();
-            $avatar4 = $insai->move(public_path() . '/permisoestadia/documentos', $filenameins);
+            $avatar4 = $insai->move(public_path() . '/documentos/permisoestadia', $filenameins);
             $documento4->permiso_estadia_id = $id;
             $documento4->documento = $filenameins;
             $documento4->recaudo = 'Comprobante de visita INSAI';
@@ -306,7 +339,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $pestadia = $request->file('pago_permisoEstadia');
             $filenameest = date('dmYGi') . $pestadia->getClientOriginalName();
-            $avatar4 = $pestadia->move(public_path() . '/permisoestadia/documentos', $filenameest);
+            $avatar4 = $pestadia->move(public_path() . '/documentos/permisoestadia', $filenameest);
             $documento4->permiso_estadia_id = $id;
             $documento4->documento = $filenameest;
             $documento4->recaudo = 'Pago del Permiso Especial de Estadía';
@@ -316,7 +349,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $ochina = $request->file('comprobante_ochina');
             $filenameoch = date('dmYGi') . $ochina->getClientOriginalName();
-            $avatar4 = $ochina->move(public_path() . '/permisoestadia/documentos', $filenameoch);
+            $avatar4 = $ochina->move(public_path() . '/documentos/permisoestadia', $filenameoch);
             $documento4->permiso_estadia_id = $id;
             $documento4->documento = $filenameoch;
             $documento4->recaudo = 'Comprobante de pago a OCHINA';
@@ -496,14 +529,14 @@ class PermisoEstadiaController extends AppBaseController
         $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecapitan->name)
+            ->where('cargo', $rolecapitan->id)
             ->get();
         //dd($capitanDestino);-
 
         $coordinador = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecoordinador->name)
+            ->where('cargo', $rolecoordinador->id)
             ->get();
         //dd($coordinador);
         $mensaje = "";

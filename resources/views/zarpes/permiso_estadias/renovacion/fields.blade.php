@@ -92,7 +92,7 @@
     {!! Form::label('capitania_id', 'Circunscripcion Acuatica de Arribo:') !!}
     <select id="capitania_id" name="capitania_id"
             class="form-control custom-select" required>
-        <option value="0">Seleccione</option>
+        <option value="">Seleccione</option>
         @foreach ($capitanias as $capitania)
             <option value="{{$capitania->id}}">{{$capitania->nombre}} </option>
         @endforeach

@@ -29,7 +29,7 @@ class CreatePermisoZarpesTable extends Migration
             $table->foreign('establecimiento_nautico_id')->references('id')->on('establecimiento_nauticos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->string('coordenadas');
+            $table->string('coordenadas')->nullable();
             $table->foreignId('destino_capitania_id')->constrained('public.capitanias')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

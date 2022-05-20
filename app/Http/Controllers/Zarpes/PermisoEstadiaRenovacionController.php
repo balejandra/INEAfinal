@@ -127,7 +127,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $documento1 = new DocumentoPermisoEstadia();
             $procedencia = $request->file('zarpe_procedencia');
             $filenamepro = date('dmYGi') . $procedencia->getClientOriginalName();
-            $avatar1 = $procedencia->move(public_path() . '/permisoestadia/documentos', $filenamepro);
+            $avatar1 = $procedencia->move(public_path() . '/documentos/permisoestadia', $filenamepro);
             $documento1->permiso_estadia_id = $estadia->id;
             $documento1->documento = $filenamepro;
             $documento1->recaudo = 'Zarpe de Procedencia';
@@ -137,7 +137,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $documento2 = new DocumentoPermisoEstadia();
             $registro = $request->file('registro_embarcacion');
             $filenamereg = date('dmYGi') . $registro->getClientOriginalName();
-            $avatar2 = $registro->move(public_path() . '/permisoestadia/documentos', $filenamereg);
+            $avatar2 = $registro->move(public_path() . '/documentos/permisoestadia', $filenamereg);
             $documento2->permiso_estadia_id = $estadia->id;
             $documento2->documento = $filenamereg;
             $documento2->recaudo = 'Registro de Embarcacion';
@@ -147,7 +147,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $documento3 = new DocumentoPermisoEstadia();
             $migracion = $request->file('despacho_aduana_procedencia');
             $filenamemig = date('dmYGi') . $migracion->getClientOriginalName();
-            $avatar3 = $migracion->move(public_path() . '/permisoestadia/documentos', $filenamemig);
+            $avatar3 = $migracion->move(public_path() . '/documentos/permisoestadia', $filenamemig);
             $documento3->permiso_estadia_id = $estadia->id;
             $documento3->documento = $filenamemig;
             $documento3->recaudo = 'Despacho de Aduana de Procedencia';
@@ -157,7 +157,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $documento4 = new DocumentoPermisoEstadia();
             $pasaportes = $request->file('pasaportes_tripulantes');
             $filenamepas = date('dmYGi') . $pasaportes->getClientOriginalName();
-            $avatar4 = $pasaportes->move(public_path() . '/permisoestadia/documentos', $filenamepas);
+            $avatar4 = $pasaportes->move(public_path() . '/documentos/permisoestadia', $filenamepas);
             $documento4->permiso_estadia_id = $estadia->id;
             $documento4->documento = $filenamepas;
             $documento4->recaudo = 'Pasaportes de Tripulantes';
@@ -219,29 +219,38 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecapitan->name)
+            ->where('cargo', $rolecapitan->id)
             ->get();
 
 
         $coordinador = CapitaniaUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecoordinador->name)
+            ->where('cargo', $rolecoordinador->id)
             ->get();
         //  dd($coordinador);
 
         if ($tipo == 1) {
-            //mensaje para capitania origen
-            $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
+            if ( isset($coordinador[0]->email)) {
+                //mensaje para capitania origen
+                $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
     de Estadia en su jurisdicción que espera por su asignación de visita.";
-            $mailTo = $coordinador[0]->email;
-            $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+                $mailTo = $coordinador[0]->email;
+                $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+            }else {
+
+            }
+
         } else {
-            //mensaje para capitania destino
-            $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que
+            if ( isset($capitanDestino[0]->email)) {
+                //mensaje para capitania destino
+                $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que
     la siguiente embarcación Internacional tiene una solicitud para arribar a su jurisdicción.";
-            $mailTo = $capitanDestino[0]->email;
-            $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;
+                $mailTo = $capitanDestino[0]->email;
+                $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;
+            }else {
+
+            }
         }
 
         $data = [
@@ -252,7 +261,6 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             'apellidos_solic' => $solicitante->apellidos,
             'mensaje' => $mensaje,
         ];
-
         $email=new MailController();
         $view = 'emails.estadias.solicitud';
 

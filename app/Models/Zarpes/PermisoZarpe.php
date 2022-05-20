@@ -2,6 +2,7 @@
 
 namespace App\Models\Zarpes;
 
+use App\Models\Publico\Paise;
 use App\Models\Publico\Capitania;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -56,7 +57,9 @@ class PermisoZarpe extends Model implements Auditable
         'establecimiento_nautico_destino_id',
         'descripcion_navegacion_id',
         'permiso_estadia_id',
-        'fecha_llegada_escala'
+        'fecha_llegada_escala',
+        'paises_id',
+        'establecimiento_nautico_destino_zi'
     ];
 
     /**
@@ -76,7 +79,9 @@ class PermisoZarpe extends Model implements Auditable
          'establecimiento_nautico_destino_id'=> 'integer',
         'descripcion_navegacion_id'=> 'integer',
         'permiso_estadia_id'=>'integer',
-        'fecha_llegada_escala'=>'datetime'
+        'fecha_llegada_escala'=>'datetime',
+        'paises_id'=>'integer',
+        'establecimiento_nautico_destino_zi'=> 'string'
     ];
 
     /**
@@ -97,7 +102,8 @@ class PermisoZarpe extends Model implements Auditable
         'fecha_hora_regreso' => 'required',
         'status_id' => 'required',
         'establecimiento_nautico_destino_id'=> 'integer',
-        'descripcion_navegacion_id'=> 'integer'
+        'descripcion_navegacion_id'=> 'integer',
+        'paises_id'=>'integer'
 
     ];
 
@@ -145,6 +151,11 @@ class PermisoZarpe extends Model implements Auditable
     public function descripcion_navegacion():\Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(DescripcionNavegacion::class);
+    }
+
+    public function paises()
+    {
+        return $this->belongsTo(Paise::class);
     }
 
 }

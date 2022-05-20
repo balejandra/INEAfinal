@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
     <ol class="breadcrumb my-0 ms-2">
-        <li class="breadcrumb-item">Menus</li>
+        <li class="breadcrumb-item">{{$titulo}}</li>
     </ol>
         </nav>
     </div>
@@ -29,7 +29,7 @@
                      <div class="card">
                          <div class="card-header">
                              <i class="fa fa-align-justify"></i>
-                             <strong>Menus</strong>
+                             <strong>{{$titulo}}</strong>
                              <div class="card-header-actions">
                                  @can('crear-menu')
                                  <a class="btn btn-primary btn-sm"  href="{{ route('menus.create') }}">Nuevo</a>

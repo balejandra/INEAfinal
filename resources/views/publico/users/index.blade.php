@@ -21,7 +21,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-plus-square-o fa-lg"></i>
+                            <i class="fa fa-user fa-lg"></i>
                             <strong>Usuarios</strong>
                             @can('crear-usuario')
                             <div class="card-header-actions">

@@ -34,7 +34,8 @@ class Tripulante extends Model implements Auditable
     public $fillable = [
         'permiso_zarpe_id',
         'ctrl_documento_id',
-        'capitan'
+        'capitan',
+        'funcion'
     ];
 
     /**
@@ -46,7 +47,8 @@ class Tripulante extends Model implements Auditable
         'id' => 'integer',
         'permiso_zarpe_id'=>'integer',
         'ctrl_documento_id' => 'string',
-        'capitan' => 'boolean'
+        'capitan' => 'boolean',
+        'funcion' => 'string'
     ];
 
     /**
@@ -57,7 +59,9 @@ class Tripulante extends Model implements Auditable
     public static $rules = [
         'permiso_zarpe_id' => 'required',
         'ctrl_documento_id' => 'required',
-        'capitan' => 'required'
+        'capitan' => 'required',
+        'funcion' => 'required'
+
     ];
 
     public function permisozarpe()

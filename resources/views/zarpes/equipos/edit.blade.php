@@ -22,10 +22,10 @@
                  <div class="col-lg-12">
                       <div class="card">
                           <div class="card-header">
-                              <i class="fa fa-edit fa-lg"></i>
+                              <i class="fas fa-shield-alt"></i>
                               <strong>Editar Equipo</strong>
                               <div class="card-header-actions">
-                                  <a href="{{route('equipos.index')}} " class="btn btn-primary btn-sm">Listado</a>
+
                               </div>
                           </div>
                           <div class="card-body">

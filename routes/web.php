@@ -55,6 +55,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
 
+    Route::resource('capitaniaUsers', \App\Http\Controllers\Publico\CapitaniaUserController::class);
+
     Route::resource('auditables', \App\Http\Controllers\Publico\AuditsController::class);
 
     Route::delete('/coordenadasCapitania/{coordenadasCapitania}', [App\Http\Controllers\Publico\CoordenadasCapitaniaController::class, 'destroy'])->name('coordenadasCapitania.destroy');

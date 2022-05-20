@@ -22,13 +22,24 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Consulta</strong>
+                            <i class="fas fa-table"></i>
+                            <strong>Consultar Tabla de Mandos</strong>
                             <div class="card-header-actions">
-                                <a href= "{{route('tablaMandos.index')}} " class="btn btn-primary btn-sm">Listado</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            @include('zarpes.tabla_mando.show_fields')
+                            <div class="my-2">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6 p-0 border rounded">
+                                            @include('zarpes.tabla_mando.show_fields')
+
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

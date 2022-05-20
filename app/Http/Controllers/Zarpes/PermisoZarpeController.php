@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\DB;
 class PermisoZarpeController extends Controller
 {
     private $step;
-
+    private $titulo="Zarpe Nacional";
     public function __construct()
     {
         $this->step = 1;
@@ -48,28 +48,28 @@ class PermisoZarpeController extends Controller
     public function index()
     {
         if (auth()->user()->hasPermissionTo('listar-zarpes-todos')) {
-            $data = PermisoZarpe::all();
-            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
+            $data = PermisoZarpe::whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-generados')) {
             $user = auth()->id();
-            $data = PermisoZarpe::where('user_id', $user)->get();
-            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data);
+            $data = PermisoZarpe::where('user_id', $user)->whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
+            return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
             $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
-            $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id', $capitania)->get();
+            $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id', $capitania)->whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
             $establecimiento = EstablecimientoNautico::select('id')->whereIn('capitania_id', $capitania)->get();
-            $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->get();
+            $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
             return view('zarpes.permiso_zarpe.indexcapitan')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)
-                ->with('permisoDestinoZarpes', $datazarpedestino);
+                ->with('permisoDestinoZarpes', $datazarpedestino)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
             $establecimiento = EstablecimientoNauticoUser::select('establecimiento_nautico_id')->where('user_id', $user)->get();
-            $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->get();
+            $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
 
             return view('zarpes.permiso_zarpe.indexcomodoro')
-                ->with('permisoOrigenZarpes', $datazarpeorigen);
+                ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
         } else {
             return redirect(route('home'));
         }
@@ -77,13 +77,15 @@ class PermisoZarpeController extends Controller
 
     public function createStepOne(Request $request)
     {
+        $titulo="Zarpe Nacional";
         $request->session()->put('stepName', "Matrícula");
         $request->session()->put('matriculasPermisadas', ['']);
 
-        $request->session()->put('pasajeros', ['']);
-        $request->session()->put('tripulantes', [0]);
+        $request->session()->put('pasajeros', '');
+        $request->session()->put('tripulantes', '');
         $request->session()->put('validacion', '');
         $request->session()->put('validacionesSgm', '');
+        $request->session()->put('coordGadriales', ['','']);
 
         $solicitud = json_encode([
             "user_id" => auth()->id(),
@@ -106,12 +108,14 @@ class PermisoZarpeController extends Controller
         ]);
 
         $valida = [
-            "UAB" => '21212',
+            "UAB" => '',
             "cant_tripulantes" => 0,
             "cant_pasajeros" => 0,
-            "potencia_kw" => '12121',
+            "cantPassAbordo"=> 0,
+            "pasajerosRestantes"=>0,
+            "potencia_kw" => '',
             "cargos" => [
-                "cargo_desempena" => '122121',
+                "cargo_desempena" => '',
                 "titulacion_aceptada_minima" => '',
                 "titulacion_aceptada_maxima" => ''
             ]
@@ -123,7 +127,7 @@ class PermisoZarpeController extends Controller
 
         $request->session()->put('solicitud', $solicitud);
 
-        return view('zarpes.permiso_zarpe.create-step-one')->with('paso', $this->step);
+        return view('zarpes.permiso_zarpe.create-step-one')->with('paso', $this->step)->with('titulo', $this->titulo);
     }
 
 
@@ -157,9 +161,25 @@ class PermisoZarpeController extends Controller
     public function createStepTwo(Request $request)
     {
 
-        $this->step = 2;
 
-        return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula");
+        $solicitud= json_decode(session('solicitud'));
+        if ((isset($solicitud->bandera)))  {
+            $this->step = 2;
+            $siglas=Capitania::all();
+            if($solicitud->matricula==""){
+                $matriculaActual=['','',''];
+            }else{
+                $matriculaActual=explode('-',$solicitud->matricula);
+            }
+
+
+
+            return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', $this->step)->with('stepName', "Matrícula")->with("siglas", $siglas)->with("matriculaActual", $matriculaActual)->with('titulo', $this->titulo);
+
+
+        }else{
+            return redirect(route('permisoszarpes.createStepOne'));
+        }
 
     }
 
@@ -192,7 +212,12 @@ class PermisoZarpeController extends Controller
                         $val1 = "LICENCIA DE NAVEGACIÓN no encontrada";
                         $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA no encontrado";
                         $val3 = "ASIGNACIÓN DE NÚMERO ISMM no encontrado";
-                        $val3 = true;
+
+
+                        $nroCorrelativos=["licenciaNavegacion" => '',
+                                            "certificadoRadio"  => '',
+                                            "numeroIsmm" => '',
+                                            ];
                         $data2 = [
                             "data" => $data,
                             "validacionSgm" => [$val1, $val2, $val3],
@@ -218,6 +243,9 @@ class PermisoZarpeController extends Controller
                                             // dd($valida);
                                             $valida['potencia_kw'] = $validacionSgm[$i]->potencia_kw;
                                             $valida["cant_pasajeros"] = $validacionSgm[$i]->capacidad_personas;
+                                            $valida["pasajerosRestantes"] = $validacionSgm[$i]->capacidad_personas;
+                                            
+                                            $nroCorrelativos["licenciaNavegacion"]=$validacionSgm[$i]->nro_correlativo;
                                             $request->session()->put('validacion', json_encode($valida));
                                         }
                                         break;
@@ -231,17 +259,20 @@ class PermisoZarpeController extends Controller
                                             $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA vencido."; //encontrado pero vencido
                                         } else {
                                             $val2 = true;
+                                            $nroCorrelativos["certificadoRadio"]=$validacionSgm[$i]->nro_correlativo;
                                         }
                                         break;
                                     case "ASIGNACIÓN DE NÚMERO ISMM":
                                         $val3 = true;
-                                        break;
+                                        $nroCorrelativos["numeroIsmm"]=$validacionSgm[$i]->nro_correlativo;
+
+                                    break;
                                 }
                             }
 
                             $data2 = [
                                 "data" => $data,
-                                "validacionSgm" => [$val1, $val2, $val3],
+                                "validacionSgm" => [$val1, $val2, $val3,$nroCorrelativos],
                             ];
                             echo json_encode($data2);
                         } else {
@@ -256,9 +287,7 @@ class PermisoZarpeController extends Controller
 
     }
 
-    public function validarMatricula($mat){
 
-    }
 
     public function permissionCreateStepTwo(Request $request)
     {
@@ -309,7 +338,7 @@ class PermisoZarpeController extends Controller
             // dd($solicitud);
             return redirect()->route('permisoszarpes.createStepThree');
         }
-        
+
 
     }
 
@@ -320,7 +349,7 @@ class PermisoZarpeController extends Controller
 
         $this->step = 2;
 
-        return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', $this->step);
+        return view('zarpes.permiso_zarpe.extranjera.create-step-two')->with('paso', $this->step)->with('titulo', $this->titulo);
 
     }
 
@@ -371,6 +400,7 @@ class PermisoZarpeController extends Controller
 
         $valida["cant_tripulantes"] = $permisoEstadia[0]->cant_tripulantes;
         $valida["cant_pasajeros"] = $permisoEstadia[0]->cant_pasajeros;
+        $valida["pasajerosRestantes"] = $permisoEstadia[0]->cant_pasajeros;
         $valida["potencia_kw"] = $permisoEstadia[0]->potencia_kw;
         $valida["UAB"] = $permisoEstadia[0]->arqueo_bruto;
         $request->session()->put('validacion', json_encode($valida));
@@ -383,23 +413,29 @@ class PermisoZarpeController extends Controller
     public function createStepThree(Request $request)
     {
         $solicitud= json_decode(session('solicitud'));
-        $descripcionNav=$solicitud->descripcion_navegacion_id;
-        if ($descripcionNav == 2) {
-            $CapDependencias = DependenciaFederal::selectRaw('distinct(capitania_id)')->get();
-            $capitania = Capitania::whereIn('id', $CapDependencias)->get();
-        } else {
-            $capitania = Capitania::all();
+        if ((isset($solicitud->bandera) || ((isset($solicitud->matricula)))))  {
+            $descripcionNav=$solicitud->descripcion_navegacion_id;
+            if ($descripcionNav == 2) {
+                $CapDependencias = DependenciaFederal::selectRaw('distinct(capitania_id)')->get();
+                $capitania = Capitania::whereIn('id', $CapDependencias)->get();
+            } else {
+                $capitania = Capitania::all();
+            }
+
+            $solicitud = json_decode($request->session()->get('solicitud'), true);
+            $bandera = $solicitud['bandera'];
+            $TipoZarpes = TipoZarpe::all();
+            //$capitania = Capitania::all();
+            $descripcionNavegacion = DescripcionNavegacion::all();
+
+            $this->step = 3;
+
+            return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('descripcionNavegacion', $descripcionNavegacion)->with('bandera', $bandera)->with('titulo', $this->titulo);
+
+
+        }else{
+            return redirect(route('permisoszarpes.createStepOne'));
         }
-
-        $solicitud = json_decode($request->session()->get('solicitud'), true);
-        $bandera = $solicitud['bandera'];
-        $TipoZarpes = TipoZarpe::all();
-        //$capitania = Capitania::all();
-        $descripcionNavegacion = DescripcionNavegacion::all();
-
-        $this->step = 3;
-
-        return view('zarpes.permiso_zarpe.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('descripcionNavegacion', $descripcionNavegacion)->with('bandera', $bandera);
 
     }
 
@@ -424,23 +460,30 @@ class PermisoZarpeController extends Controller
 
     }
 
+
+
     public function createStepFour(Request $request)
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
+        if ((isset($solicitud['bandera'])) || ((isset($solicitud['descripcion_navegacion_id']))))  {
         $EstNauticos = EstablecimientoNautico::where('capitania_id', $solicitud['origen_capitania_id'])->get();
         if($solicitud['destino_capitania_id']!=''){
             $EstNauticosDestino = EstablecimientoNautico::where('capitania_id', $solicitud['destino_capitania_id'])->get();
             $CapDestinoFinal=Capitania::find($solicitud['destino_capitania_id']);
+            $idCapdestinoFinal=$CapDestinoFinal->id;
         }else{
-            $EstNauticosDestino = "";
+            $EstNauticosDestino = '';
             $CapDestinoFinal='';
+            $idCapdestinoFinal=0;
         }
-        
+
+        $capitaniasDestinoList = Capitania::all();
         $coordenadas = [];
         $coordenadasDep = [];
         $arr = ["capitania" => 0, "coords" => []];
         $arrDep = ["capitania" => 0, "coords" => []];
         $activaDependencias = false;
+        $showSelect="display:none";
 
         switch ($solicitud['descripcion_navegacion_id']) {
             case 1: //dentro de una circunscripción
@@ -463,6 +506,12 @@ class PermisoZarpeController extends Controller
                 $coordsDependencias = [];
 
                 break;
+            case 5://Hacia una dependencia federal de otra circunscripcion
+                    $coordCaps = CoordenadasCapitania::where('capitania_id', $solicitud['origen_capitania_id'])->get();
+                    $coordsDependencias = DependenciaFederal::select('latitud', 'longitud', 'capitania_id', 'dependencias_federales.id', 'dependencias_federales.nombre')->join('coordenadas_dependencias_federales', 'coordenadas_dependencias_federales.dependencias_federales_id', '=', 'dependencias_federales.id')->where('capitania_id', '!=',$solicitud['origen_capitania_id'])->get();
+                    $showSelect="display:block";
+                    $activaDependencias = true;
+            break;
         }
 
         if (count($coordCaps) > 0) {
@@ -506,8 +555,10 @@ class PermisoZarpeController extends Controller
             }
         }
         $this->step = 4;
-        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias', json_encode($coordenadasDep))->with('activaDependencias', $activaDependencias)->with('EstNauticosDestino', $EstNauticosDestino)->with('CapDestinoFinal', $CapDestinoFinal);
-
+        return view('zarpes.permiso_zarpe.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('coordCaps', json_encode($coordenadas))->with('coordsDependencias', json_encode($coordenadasDep))->with('activaDependencias', $activaDependencias)->with('EstNauticosDestino', $EstNauticosDestino)->with('CapDestinoFinal', $CapDestinoFinal)->with('capitaniasDestinoList', $capitaniasDestinoList)->with('showSelect', $showSelect)->with('idCapdestinoFinal', $idCapdestinoFinal)->with('titulo', $this->titulo);
+        }else{
+            return redirect(route('permisoszarpes.createStepOne'));
+        }
     }
 
     public function permissionCreateStepFour(Request $request)
@@ -531,21 +582,32 @@ class PermisoZarpeController extends Controller
                 'fecha_llegada_escala' => 'required',
                 'latitud' => 'required',
                 'longitud' => 'required',
-                'coordenadasDestino' => 'required',
+                'capitaniaDestino' => 'required',
                 'establecimientoNáuticoDestino' => 'required',
 
             ]);
         }
+
 
         $solicitud['establecimiento_nautico_id'] = $request->input('establecimientoNáuticoOrigen');
         $solicitud['establecimiento_nautico_destino_id'] = $request->input('establecimientoNáuticoDestino');
         $solicitud['fecha_hora_salida'] = $request->input('salida');
         $solicitud['fecha_hora_regreso'] = $request->input('regreso');
         $solicitud['coordenadas'] = json_encode([$request->input('latitud'), $request->input('longitud')]);
-        $solicitud['destino_capitania_id'] = $request->input('coordenadasDestino');
+        if($solicitud['descripcion_navegacion_id'] == 5){
+            $solicitud['destino_capitania_id'] = $request->input('capitaniaDestino');
+        }else{
+            $solicitud['destino_capitania_id'] = $request->input('capitaniaDestino');
+        }
+
+
         $solicitud['fecha_llegada_escala'] = $request->input('fecha_llegada_escala');
 
+        $request->session()->put('coordGadriales',  [$request->input('latitudGrad'),$request->input('longitudGrad')]);
         $request->session()->put('solicitud', json_encode($solicitud));
+
+
+
         $this->step = 5;
         return redirect()->route('permisoszarpes.createStepFive');
     }
@@ -554,128 +616,89 @@ class PermisoZarpeController extends Controller
     public function createStepFive(Request $request)
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
-//print_r($solicitud);
+        if ((isset($solicitud['bandera'])) || ((isset($solicitud['fecha_hora_salida']))) )  {
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes = $request->session()->get('tripulantes');
 
         $this->step = 5;
-        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation);
-
+        return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('titulo', $this->titulo);
+        }else{
+            return redirect(route('permisoszarpes.createStepOne'));
+        }
     }
 
     public function permissionCreateStepFive(Request $request)
     {
 
-        $request->session()->put('tripulantes', [0]);
-        $trip = [
-            "permiso_zarpe_id" => '',
-            "ctrl_documento_id" => '',
-            "capitan" => '',
-            "nombre" => '',
-            "cedula" => '',
-            "fecha_vencimiento" => '',
-            "fecha_emision" => '',
-            "documento" => ''
-        ];
-        $ctrldocumento = $request->input('ids', []);
-        $cap = $request->input('capitan', []);
-        $nombre = $request->input('nombre', []);
-        $cedula = $request->input('cedula', []);
-        $fecha_vencimiento = $request->input('fechaVence', []);
-        $fecha_emision = $request->input('fechaEmision', []);
-        $documento = $request->input('documento', []);
+       $validation = json_decode($request->session()->get('validacion'), true);
+       $tripulantes = $request->session()->get('tripulantes');
+       $validation['cantPassAbordo']=$validation['cant_pasajeros'] - abs(count($tripulantes)+$validation['cantPassAbordo']); 
+       $request->session()->put('validacion', json_encode($validation));
+        if (is_array($tripulantes) && (count($tripulantes) >= $validation['cant_tripulantes'] && count($tripulantes) <= $validation['cant_pasajeros'])) {
+             $capitan=0;
+            for ($i=0; $i < count($tripulantes); $i++) {
+                $indice=array_search("Capitán",$tripulantes[$i],false);
 
-
-        $tripulantes = $request->session()->get('tripulantes');
-        $validation = json_decode($request->session()->get('validacion'), true);
-
-        if (isset($ctrldocumento) && count($ctrldocumento) == $validation['cant_tripulantes']) {
-
-            for ($i = 0; $i < count($ctrldocumento); $i++) {
-                $trip["ctrl_documento_id"] = $ctrldocumento[$i];
-
-                if ($cap[$i] == "SI") {
-                    $trip["capitan"] = true;
-                } else {
-                    $trip["capitan"] = false;
+                if($indice!=false){
+                    $capitan++;
                 }
-
-                $trip["nombre"] = $nombre[$i];
-                $trip["cedula"] = $cedula[$i];
-                $trip["fecha_vencimiento"] = $fecha_vencimiento[$i];
-                $trip["fecha_emision"] = $fecha_emision[$i];
-                $trip["documento"] = $documento[$i];
-
-                $tripulantes[$i] = $trip;
             }
 
-            $request->session()->put('tripulantes', $tripulantes);
-            //$tr = json_decode($request->session()->get('tripulantes'), true);
-            $this->step = 6;
-            return redirect()->route('permisoszarpes.createStepSix');
+            if($capitan==1){
+                $this->step = 6;
+                return redirect()->route('permisoszarpes.createStepSix');
+
+            }elseif($capitan< 1){
+                $mensj ="Debe asignar un capitán para esta embarcación, por favor verifique";
+                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj)->with('titulo', $this->titulo);
+            }else{
+                $mensj ="No puede asignar más de un capitán para la embarcación";
+                return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj)->with('titulo', $this->titulo);
+            }
+
         } else {
             $this->step = 5;
+            if(!is_array($tripulantes)){
+                $mensj = "El listado de tripulantes es requerido, por favor verifique.";
+            }else if(count($tripulantes) < $validation['cant_tripulantes']){
+                $mensj = "La embarcación requiere un mínimo de ".$validation['cant_tripulantes']." tripulantes para navegar, por favor verifique.";
+            }else if(count($tripulantes) > $validation['cant_pasajeros']){
+                $mensj = "La embarcación requiere un máximo de ".$validation['cant_pasajeros']." personas a bordo que no debe ser excedido para navegar, por favor verifique.";
+            }else{
+                 $mensj ="Ha ocurrido un error al agregar a los tripulantes, contacte al administrador del sistema";
+            }
 
-            $mensj = "Los tripulantes de la embarcación son requeridos (cantidad de tripulantes " . $validation['cant_tripulantes'] . "), por favor verifique.";
 
-            return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj);
+            return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj)->with('titulo', $this->titulo);
+
 
         }
     }
 
     public function createStepSix(Request $request)
     {
-
+        $solicitud= json_decode(session('solicitud'));
+        if ((isset($solicitud->fecha_hora_salida)))  {
         $passengers = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
-        $cantPasajeros = $validation['cant_pasajeros'] - $validation['cant_tripulantes'];
-        $this->step = 6;
-        return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('cantPasajeros', $cantPasajeros);
 
+        $tripulantes=$request->session()->get('tripulantes');
+        $cantPasajeros = $validation['pasajerosRestantes'];
+        $this->step = 6;
+
+        return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('cantPasajeros', $cantPasajeros)->with('titulo', $this->titulo);
+        }else{
+            return redirect(route('permisoszarpes.createStepOne'));
+        }
     }
 
     public function permissionCreateStepSix(Request $request)
     {
-        $request->session()->put('pasajeros', [0]);
-        $pass = [
-            "nombres" => '',
-            "apellidos" => '',
-            "tipo_doc" => '',
-            "nro_doc" => '',
-            "sexo" => '',
-            "fecha_nacimiento" => '',
-            "menor_edad" => '',
-            "permiso_zarpe_id" => '',
-        ];
-        // $request->session()->put('pasajeros', {[]});
-        $passengers = $request->session()->get('pasajeros');
 
-        $nombres = $request->input('nombres', []);
-        $apellidos = $request->input('apellidos', []);
-        $tipodoc = $request->input('tipodoc', []);
-        $sexo = $request->input('sexo', []);
-        $menor = $request->input('menor', []);
-        $fechanac = $request->input('fechanac', []);
-        $nrodoc = $request->input('nrodoc', []);
 
-        for ($i = 0; $i < count($nrodoc); $i++) {
-            $pass["nombres"] = $nombres[$i];
-            $pass["apellidos"] = $apellidos[$i];
-            $pass["tipo_doc"] = $tipodoc[$i];
-            $pass["sexo"] = $sexo[$i];
-            $pass["fecha_nacimiento"] = $fechanac[$i];
-            $pass["nro_doc"] = $nrodoc[$i];
-            if ($menor[$i] == "SI") {
-                $pass["menor_edad"] = true;
-            } else {
-                $pass["menor_edad"] = false;
-            }
-            $passengers[$i] = $pass;
-        }
 
-        $request->session()->put('pasajeros', $passengers);
         $this->step = 7;
-        return redirect()->route('permisoszarpes.createStepSeven');
+        return redirect()->route('permisoszarpes.createStepSeven')->with('titulo', $this->titulo);
 
     }
 
@@ -683,13 +706,17 @@ class PermisoZarpeController extends Controller
     public function createStepSeven(Request $request)
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
+        if ((isset($solicitud['fecha_hora_salida'])))  {
         $equipos = Equipo::all();
         //  dd($equipos);
         $this->step = 7;
         return view('zarpes.permiso_zarpe.create-step-seven')
             ->with('paso', $this->step)
-            ->with('equipos', $equipos);
-
+            ->with('equipos', $equipos)
+            ->with('titulo', $this->titulo);
+        }else{
+            return redirect(route('permisoszarpes.createStepOne'));
+        }
     }
 
     public function store(Request $request)
@@ -714,6 +741,11 @@ class PermisoZarpeController extends Controller
 
             $tripulantes = $request->session()->get('tripulantes');
             for ($i = 0; $i < count($tripulantes); $i++) {
+                if($tripulantes[$i]["capitan"]=='SI'){
+                    $tripulantes[$i]["capitan"]=true;
+                }else{
+                    $tripulantes[$i]["capitan"]=false;
+                }
                 $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
                 $trip = Tripulante::create($tripulantes[$i]);
 
@@ -800,7 +832,7 @@ class PermisoZarpeController extends Controller
 
         $newDate = date("d/m/Y", strtotime($fecha));
         $newDate2 = date("d-m-Y", strtotime($fecha));
-        $newDate3 = date("Y-d-m", strtotime($fecha));
+        $newDate3 = date("Y-m-d", strtotime($fecha));
         $data = Saime_cedula::where('cedula', $cedula)
             ->whereIn('fecha_nacimiento', [$newDate,$newDate2,$newDate3])
            // ->where('sexo', $sexo)
@@ -817,13 +849,180 @@ class PermisoZarpeController extends Controller
         echo json_encode($data);
     }
 
+    public function deleteTripulante(Request $request){
+        $cedula=$_REQUEST['index'];
+        $borrado=false;
+        $tripulantes = $request->session()->get('tripulantes');
+        $validation = json_decode($request->session()->get('validacion'), true);
+
+       if(count($tripulantes)==1){
+                $tripulantes=[];
+                $request->session()->put('tripulantes', $tripulantes);
+                $validation['pasajerosRestantes']=abs(count($tripulantes)-$validation['cantPassAbordo']);
+                $request->session()->put('validacion', json_encode($validation));
+                $borrado =true;
+        }else{
+            if(is_array($tripulantes)){
+                for ($i=0; $i < count($tripulantes); $i++) {
+                    $indice=array_search($cedula,$tripulantes[$i],false);
+                    if($indice!=false){
+                        array_splice($tripulantes, $i, $i);
+                        $request->session()->put('tripulantes', $tripulantes);
+                        $validation['pasajerosRestantes']=abs(count($tripulantes)-$validation['cantPassAbordo']);
+                        $request->session()->put('validacion', json_encode($validation));
+                        $borrado =true;
+                    }
+                }
+            }
+        }
+
+        echo $borrado;
+    }
+
+    public function deletePassenger(Request $request){
+        $cedula=$_REQUEST['index'];
+        $borrado=false;
+        $pasajeros = $request->session()->get('pasajeros');
+        $validation = json_decode($request->session()->get('validacion'), true);
+        $tripulantes = $request->session()->get('tripulantes');
+
+        if(is_array($pasajeros)){
+            if(count($pasajeros)==1){
+                $pasajeros=[];
+                $request->session()->put('pasajeros', $pasajeros);
+                $validation['pasajerosRestantes']=abs(count($tripulantes)-$validation['cantPassAbordo']);
+                $request->session()->put('validacion', json_encode($validation));
+                $borrado =true;
+            }else{
+                for ($i=0; $i < count($pasajeros); $i++) {
+                    $indice=array_search($cedula,$pasajeros[$i],false);
+                    if($indice!=false){
+                        array_splice($pasajeros, $i, $i);
+                        $request->session()->put('pasajeros', $pasajeros);
+                        $validation['cantPassAbordo']=abs(count($tripulantes)-$validation['cantPassAbordo']);
+                        $request->session()->put('validacion', json_encode($validation));
+                        $borrado =true;
+                    }
+                }
+            }
+
+        }
+        echo $borrado;
+    }
+
+    public function validacionMarino(Request $request){
+        $cedula=$_REQUEST['cedula'];
+        $funcion=$_REQUEST['funcion'];
+        $vj = [];
+        $indice=false;
+        $tripulantes = $request->session()->get('tripulantes');
+        $capitanExiste=false;
+        switch ($funcion) {
+            case 'Capitán':
+                 $cap="SI";
+                 if(is_array($tripulantes) && count($tripulantes)>0){
+                    foreach ($tripulantes as $value) {
+                     //   print_r($value);
+                        if($value['capitan']=='SI'){
+                           $capitanExiste=true;
+                        }
+                    }
+                 }
+
+            break;
+            case 'Motorista':
+                 $cap="NO";
+            break;
+            case 'Marino':
+                 $cap="NO";
+            break;
+        }
+
+        if($capitanExiste){
+            $return = [$tripulantes, "", "",'capitanExiste',""];
+            echo json_encode($return);
+        }else{
+            $validation = json_decode($request->session()->get('validacion'), true);
+        $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
+         $InfoMarino = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
+
+       //  $request->session()->put('tripulantes', '');
+        if (is_null($InfoMarino->first())) {
+            $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
+        } else {
+            $emision=explode(' ',$InfoMarino[0]->fecha_emision);
+            $trip = [
+            "permiso_zarpe_id" => '',
+            "ctrl_documento_id" => $InfoMarino[0]->id,
+            "capitan" => $cap,
+            "nombre" => $InfoMarino[0]->nombre." ".$InfoMarino[0]->apellido,
+            "cedula" => $InfoMarino[0]->ci,
+            "fecha_vencimiento" => $InfoMarino[0]->fecha_vencimiento,
+            "fecha_emision" =>$emision[0],
+            "documento" => $InfoMarino[0]->documento,
+            "funcion"  => $funcion,
+            "solicitud"  => $InfoMarino[0]->solicitud,
+            ];
+
+            if(is_array($tripulantes)){
+                for ($i=0; $i < count($tripulantes); $i++) {
+                     $indice=array_search($cedula,$tripulantes[$i],false);
+
+                        if($indice!=false){
+                            $indice=true;
+                        }
+                }
+
+            }else{
+                $indice=false;
+                $tripulantes=[];
+            }
+
+            $fecha_actual = strtotime(date("d-m-Y H:i:00", time()));
+            $fecha_vence = strtotime($InfoMarino[0]->fecha_vencimiento);
+
+            if ($InfoMarino[0]->solicitud == 'Licencia' && ($fecha_actual > $fecha_vence)) {
+                    $InfoMarino = "FoundButDefeated"; //encontrado pero documento vencido
+                } else {
+
+                    $marinoAsignado = PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id')
+                        ->Join('tripulantes', 'permiso_zarpes.id', '=', 'tripulantes.permiso_zarpe_id')
+                        ->where('tripulantes.ctrl_documento_id', '=', $InfoMarino[0]->id)
+                        ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
+                        ->get();
+
+                    if (count($marinoAsignado) > 0) {
+                        $InfoMarino = "FoundButAssigned"; //encontrado pero asignado a otro barco
+                    } else {
+                        $vj = $this->validacionJerarquizacion($InfoMarino[0]->documento, $cap);
+
+                        if($indice==false && $vj[0]==true){
+                            if(count($tripulantes) <= $validation['cant_pasajeros']-1){
+                                array_push($tripulantes, $trip);
+                                $request->session()->put('tripulantes', $tripulantes);
+                                $validation['cantPassAbordo']=$validation['cant_pasajeros'] - abs(count($tripulantes)+$validation['cantPassAbordo']) ;
+                                $request->session()->put('validacion', json_encode($validation));
+                            }else{
+                                $InfoMarino = "FoundButMaxTripulationLimit";
+                            }
+
+                        }
+
+                    }
+                }
+        }
+        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros'],$validation['cantPassAbordo']];
+        echo json_encode($return);
+        }
+
+    }
 
     public function validarMarino(Request $request)
     {
         $cedula = $_REQUEST['cedula'];
        // $fecha = $_REQUEST['fecha'];
         $cap = $_REQUEST['cap'];
-       
+
         $vj = [];
         /*$newDate = date("d/m/Y", strtotime($fecha));
         $newDate2 = date("d-m-Y", strtotime($fecha));
@@ -873,14 +1072,18 @@ class PermisoZarpeController extends Controller
     {
         $ano = date('Y');
         $mes = date('m');
+        $estNautico = EstablecimientoNautico::find($solicitud['establecimiento_nautico_id']);
+        $capitania = Capitania::find($estNautico->capitania_id);
+        $idcap=$capitania->id;
 
         $cantidadActual = PermisoZarpe::select(DB::raw('count(nro_solicitud) as cantidad'))
             ->where(DB::raw("(SUBSTR(nro_solicitud, 6, 4) = '" . $ano . "')"), '=', true)
+            ->Join('establecimiento_nauticos', function ($join) use ($idcap) {
+                $join->on('permiso_zarpes.establecimiento_nautico_id', '=', 'establecimiento_nauticos.id')
+                    ->where('establecimiento_nauticos.capitania_id', '=',  $idcap);
+            })
             ->get();
 
-        $estNautico = EstablecimientoNautico::find($solicitud['establecimiento_nautico_id']);
-
-        $capitania = Capitania::find($estNautico->capitania_id);
         $correlativo = $cantidadActual[0]->cantidad + 1;
         $codigo = $capitania->sigla . "-" . $ano . $mes . "-" . $correlativo;
 
@@ -1020,13 +1223,22 @@ class PermisoZarpeController extends Controller
             $idstatus = Status::find(6);
             $zarpe->status_id = $idstatus->id;
             $zarpe->update();
-
-            ZarpeRevision::create([
-                'user_id' => auth()->user()->id,
-                'permiso_zarpe_id' => $id,
-                'accion' => $idstatus->nombre,
-                'motivo' => 'Anulada por el Usuario Solicitante'
-            ]);
+            if (isset($_GET['motivo'])) {
+                $motivo=$_GET['motivo'];
+                ZarpeRevision::create([
+                    'user_id' => auth()->user()->id,
+                    'permiso_zarpe_id' => $id,
+                    'accion' => $idstatus->nombre,
+                    'motivo' => $motivo
+                ]);
+            }else {
+                ZarpeRevision::create([
+                    'user_id' => auth()->user()->id,
+                    'permiso_zarpe_id' => $id,
+                    'accion' => $idstatus->nombre,
+                    'motivo' => 'Anulada por el Usuario Solicitante'
+                ]);
+            }
             Flash::error('Solicitud Anulada.');
             return redirect(route('permisoszarpes.index'));
         }
@@ -1042,9 +1254,21 @@ class PermisoZarpeController extends Controller
     public function show($id)
     {
         $permisoZarpe = PermisoZarpe::find($id);
-        $tripulantes = Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id', $id)->get();
+        if ($permisoZarpe->bandera=='extranjera') {
+            $buque=PermisoEstadia::where('id',$permisoZarpe->permiso_estadia_id)->first();
+        }else {
+            $buque=Renave_data::where('matricula_actual',$permisoZarpe->matricula)->first();
+        }
+        $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
+
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
-        $tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
+
+        $tripulantes2 = DB::table('zarpes.tripulantes')
+            ->join('gmar.licencias_titulos_gmar', DB::raw('CAST(licencias_titulos_gmar.id AS TEXT)'), '=', 'tripulantes.ctrl_documento_id')
+            ->where('permiso_zarpe_id', $id)
+            ->select('licencias_titulos_gmar.*', 'tripulantes.funcion')
+            ->get();
+
         $equipos = EquipoPermisoZarpe::where('permiso_zarpe_id', $id)->get();
         $revisiones = ZarpeRevision::where('permiso_zarpe_id', $id)->get();
 
@@ -1064,6 +1288,8 @@ class PermisoZarpeController extends Controller
 
         return view('zarpes.permiso_zarpe.show')
             ->with('permisoZarpe', $permisoZarpe)
+            ->with('buque',$buque)
+            ->with('certificados', $validacionSgm)
             ->with('tripulantes', $tripulantes2)
             ->with('pasajeros', $pasajeros)
             ->with('equipos', $equipos)
@@ -1072,7 +1298,7 @@ class PermisoZarpeController extends Controller
             ->with('comodoro', $establecimiento_user)
             ->with('descripcionNavegacion', $descipcionNavegacion)
             ->with('establecimientoDestino', $establecimiento_destino)
-            ->with('capitaniaOrigen', $capitaniaOrigen[0]);
+            ->with('capitaniaOrigen', $capitaniaOrigen[0])->with('titulo', $this->titulo);
     }
 
     public function SendMail($idsolicitud, $tipo)
@@ -1414,5 +1640,144 @@ class PermisoZarpeController extends Controller
         }
         echo json_encode($capitania);
     }
+
+
+public function AddDocumentos(Request $request){
+    $file = $request->file('partida_nacimiento');
+  // dd($file);
+    $partida_nacimiento='';
+        if ($request->hasFile('partida_nacimiento')) {
+
+                $partida = $request->file('partida_nacimiento');
+                $filename = date('dmYGi') . $partida->getClientOriginalName();
+                $avatar1 = $partida->move(public_path() . '/documentos/permisozarpe', $filename);
+                 $partida_nacimiento=$filename;
+
+
+        }
+
+        $autorizacion='';
+        if ($request->hasFile('autorizacion')) {
+
+                $autorizacion = $request->file('autorizacion');
+                $filenameaut= date('dmYGi') . $autorizacion->getClientOriginalName();
+                $avatar1 = $autorizacion->move(public_path() . '/documentos/permisozarpe', $filenameaut);
+                $autorizacion=$filenameaut;
+        }
+
+    $pasaporte_menor='';
+    if ($request->hasFile('pasaporte_menor')) {
+
+        $pasaporte_menor = $request->file('pasaporte_menor');
+        $filenamepasp= date('dmYGi') . $pasaporte_menor->getClientOriginalName();
+        $avatar1 = $pasaporte_menor->move(public_path() . '/documentos/permisozarpe', $filenamepasp);
+        $pasaporte_menor=$filenamepasp;
+    }
+
+    $pasaporte_mayor='';
+    if ($request->hasFile('pasaporte_mayor')) {
+
+        $pasaporte_mayor = $request->file('pasaporte_mayor');
+        $filenamepaspmay= date('dmYGi') . $pasaporte_mayor->getClientOriginalName();
+        $avatar1 = $pasaporte_mayor->move(public_path() . '/documentos/permisozarpe', $filenamepaspmay);
+        $pasaporte_mayor=$filenamepaspmay;
+    }
+
+         echo json_encode(['OK',$partida_nacimiento,$autorizacion,$pasaporte_menor,$pasaporte_mayor]);
+}
+
+    public function AddPassenger(Request $request){
+        $pasajeros = $request->session()->get('pasajeros');
+        $validation = json_decode($request->session()->get('validacion'), true);
+         $tripulantes=$request->session()->get('tripulantes');
+        $cantPasajeros = $validation['cant_pasajeros'] - count($tripulantes);
+        
+        $indice="";
+
+           if ($_REQUEST['menor'] == "SI") {
+                $menor = true;
+            } else {
+                $menor = false;
+            }
+
+
+
+
+            $HijoNumero=1;
+            if(is_array($pasajeros)){
+                for ($i=0; $i < count($pasajeros); $i++) {
+                   // $indice=array_search($_REQUEST['nrodoc'], $pasajeros[$i], false)
+                    if($pasajeros[$i]['nro_doc']==$_REQUEST['nrodoc'] && $_REQUEST['representante']!=$_REQUEST['nrodoc']){
+                        $indice=true;
+                    }
+
+                    if($pasajeros[$i]['representante']==$_REQUEST['representante']){
+                       $HijoNumero++;
+                    }
+                }
+
+            }else{
+                $indice=false;
+                $pasajeros=[];
+            }
+
+
+            if($_REQUEST['representante']==''){
+                $respresentante="N/A";
+            }else{
+                $respresentante=$_REQUEST['representante'];
+            }
+
+            if($_REQUEST['tipodoc']=="NC"){
+                $nrodoc=$_REQUEST['nrodoc']."-".$HijoNumero;
+            }else{
+                $nrodoc=$_REQUEST['nrodoc'];
+            }
+
+
+
+
+        $pass = [
+            "nombres" => $_REQUEST['nombres'],
+            "apellidos" => $_REQUEST['apellidos'],
+            "tipo_doc" => $_REQUEST['tipodoc'],
+            "nro_doc" => $nrodoc,
+            "sexo" =>$_REQUEST['sexo'],
+            "fecha_nacimiento" =>$_REQUEST['fechanac'],
+            "menor_edad" =>$menor,
+            "representante" =>$respresentante,
+            "permiso_zarpe_id" => '',
+            "partida_nacimiento"=> $_REQUEST['partida_nacimiento'],
+            "autorizacion"=> $_REQUEST['autorizacion'],
+            "pasaporte_menor"=> $_REQUEST['pasaporte_menor'],
+            "pasaporte_mayor"=> $_REQUEST['pasaporte_mayor']
+        ];
+
+
+
+        if($indice==false ){
+            if($validation['pasajerosRestantes']>0){
+                array_push($pasajeros, $pass);
+                $request->session()->put('pasajeros', $pasajeros);
+                $info="OK";
+               // $cantPasajeros=$cantPasajeros-count($pasajeros);
+                $validation['cantPassAbordo']=count($pasajeros);
+                $validation['pasajerosRestantes']=$validation['cant_pasajeros'] -abs(count($tripulantes)+$validation['cantPassAbordo']);
+                $request->session()->put('validacion', json_encode($validation));
+            }else{
+                $info = "MaxPassengerLimit";
+            }
+
+        }else{
+            $info="ExistInPassengerList";
+
+        }
+
+        $resp=[$info,$pass,count($pasajeros),$HijoNumero, $nrodoc, $_REQUEST['nrodoc']];
+        echo json_encode($resp);
+
+    }
+
+
 
 }

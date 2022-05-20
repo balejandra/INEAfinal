@@ -30,7 +30,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i>
+                            <i class="fa fa-address-card"></i>
                             <strong>Permisos</strong>
                             @can('crear-permiso')
                             <div class="card-header-actions">
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="card-body">
-                            <table class="table table-responsive-sm table-bordered table-striped" id="TablePermissions">
+                            <table class="table table-bordered table-striped" id="generic-table" style="width:100%">
                                 <thead>
                                 <tr>
                                     <th>ID</th>

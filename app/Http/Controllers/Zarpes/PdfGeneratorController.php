@@ -13,7 +13,8 @@ use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\Tripulante;
 use App\Models\Zarpes\EstablecimientoNautico;
 use App\Models\Zarpes\DescripcionNavegacion;
-
+use App\Models\Publico\Paise;
+use App\Models\Zarpes\TripulanteInternacional;
 
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class PdfGeneratorController extends Controller
         $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
         $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
         $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
-        
+
         $pdf=PDF::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip','estnauticoDestino','DescripcionNavegacion'));
         return $pdf->stream('zarpes.pdf');
     }
@@ -72,6 +73,65 @@ class PdfGeneratorController extends Controller
        $estadia=PermisoEstadia::find($id);
         $capitania= Capitania::where('id',$estadia->capitania_id)->first();
         $pdf=PDF::loadView('PDF.estadias.permiso', compact('estadia','capitania'))->stream();
+        return $pdf;
+
+    }
+
+    public function imprimirInternacional($id){
+        $zarpe= PermisoZarpe::find($id);
+        if ($zarpe->bandera=='extranjera') {
+            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+        }else {
+            $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
+        }
+        $trans= PermisoZarpe::all();
+        $zarpe= $trans->find($id);
+        $capitania= Capitania::where('id',$zarpe->establecimiento_nautico->capitania_id)->first();
+        $cantTrip=TripulanteInternacional::where('permiso_zarpe_id',$id)->get()->count();
+        $cantPas=Pasajero::where('permiso_zarpe_id',$id)->get()->count();
+        $tripulantes=TripulanteInternacional::select('*')->where('permiso_zarpe_id',$id)->get();
+       // dd($tripulantes);
+       // $trip= TripulanteInternacional::whereIn('id',$tripulantes)->first();
+       // $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
+       foreach($tripulantes as $tripulante){
+            if($tripulante->funcion=="Capitán"){
+                $trip=$tripulante;
+            }
+       }
+
+       $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
+        $pais= Paise::find($zarpe->paises_id);
+
+        $pdf=PDF::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip','DescripcionNavegacion','pais'));
+        return $pdf->stream('zarpes.pdf');
+    }
+
+    public function correoZI($id){
+        $zarpe= PermisoZarpe::find($id);
+        if ($zarpe->bandera=='extranjera') {
+            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+        }else {
+            $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
+        }
+        $trans= PermisoZarpe::all();
+        $zarpe= $trans->find($id);
+        $capitania= Capitania::where('id',$zarpe->establecimiento_nautico->capitania_id)->first();
+        $cantTrip=TripulanteInternacional::where('permiso_zarpe_id',$id)->get()->count();
+        $cantPas=Pasajero::where('permiso_zarpe_id',$id)->get()->count();
+        $tripulantes=TripulanteInternacional::select('*')->where('permiso_zarpe_id',$id)->get();
+        // dd($tripulantes);
+        // $trip= TripulanteInternacional::whereIn('id',$tripulantes)->first();
+        // $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
+        foreach($tripulantes as $tripulante){
+            if($tripulante->funcion=="Capitán"){
+                $trip=$tripulante;
+            }
+        }
+
+        $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
+        $pais= Paise::find($zarpe->paises_id);
+
+        $pdf=PDF::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania','cantPas','cantTrip','DescripcionNavegacion','pais'))->stream();
         return $pdf;
 
     }

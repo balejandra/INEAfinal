@@ -19,11 +19,12 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
+                         <i class="fa fa-building"></i>
                              <strong>Capitanias</strong>
                               @can('crear-capitania')
                              <div class="card-header-actions">
                                  <a class="btn btn-primary btn-sm"  href="{{ route('capitanias.create') }}">Nuevo</a>
+                                 <a class="btn btn-primary btn-sm"  href="{{ route('capitaniaUsers.index') }}">Usuarios de Capitanias</a>
                              </div>
                               @endcan
                          </div>

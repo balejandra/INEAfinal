@@ -42,7 +42,7 @@ class StatusZarpes extends Seeder
             ],
             [
                 'id'=>6,
-                'nombre'=>'Anulado Usuario',
+                'nombre'=>'Anulado',
                 'created_at'=>now()
             ],
             [

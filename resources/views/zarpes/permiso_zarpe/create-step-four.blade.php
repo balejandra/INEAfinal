@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Permisos de Zarpe</li>
+                <li class="breadcrumb-item">{{$titulo}}</li>
             </ol>
         </nav>
     </div>
@@ -29,9 +29,9 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe | Paso {{$paso}}</strong>
+                            <strong>Solicitud de Permisos de {{$titulo}} | Paso {{$paso}}</strong>
                             <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Listado</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Cancelar</a>
                             </div>
                         </div>
 
@@ -44,8 +44,10 @@
                                 @csrf
 @php
      $solicitud= json_decode(session('solicitud'));
-
+     $coordGrad=  session('coordGadriales') ;
+ 
 @endphp
+
                                 <div class="card">
                                     <div class="card-body">
                                         <div id="msjRuta"></div>
@@ -60,12 +62,13 @@
                                                 <div class="col-md-12 px-0 py-2">
                                                     <div class="form-group col-sm-12">
                                                         {!! Form::label('', 'Establecimiento náutico origen:') !!}
+                                                         
                                                         <select id="origen"
                                                                 name="establecimientoNáuticoOrigen"
-                                                                class="form-control custom-select">
+                                                                class="form-control custom-select" >
                                                             <option value="">Seleccione</option>
                                                             @foreach ($EstNauticos as $en)
-                                                                @if($solicitud->establecimiento_nautico_id==$en->id)
+                                                                @if($solicitud->establecimiento_nautico_id==$en->id || old('establecimientoNáuticoOrigen')==$en->id)
                                                                     @php
                                                                         $selecteden="selected='selected'";
                                                                     @endphp
@@ -95,14 +98,14 @@
                                                             @endphp
                                                         @else
                                                             @php
-                                                            $fechasal='';
+                                                            $fechasal=old('salida');
                                                             @endphp
                                                         @endif
 
                                                     {!! Form::label('salida', 'Fecha/hora salida:') !!}
                                                     <input type="datetime-local" id="salida" name="salida"
                                                            min="{{$fechaActual}}" class="form-control"
-                                                           onblur="compararFechas()" max="9999-12-31T23:59" value="{{$fechasal}}">
+                                                           onblur="compararFechas()" max="9999-12-31T23:59"   value="{{ $fechasal }}" >
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
@@ -119,7 +122,7 @@
                                                             @endphp
                                                     @else
                                                             @php
-                                                            $fechaesc='';
+                                                            $fechaesc=old('fecha_llegada_escala');
                                                             @endphp
                                                     @endif
 
@@ -140,17 +143,48 @@
                                                             @endphp
                                                     @else
                                                             @php
-                                                            $fechareg='';
+                                                            $fechareg=old('regreso');
                                                             @endphp
                                                     @endif
 
                                                     <input type="datetime-local" id="regreso" name="regreso"
                                                            class="form-control" max="9999-12-31T23:59" onblur="compararFechas()" value="{{$fechareg}}">
                                                 </div>
+                                                 
+                                                <div class="col-md-12 px-0" id="SelectCapitaniaDestinoDiv" style='{{$showSelect}}' >
+                                                    <div class="form-group col-sm-12 ">
+                                                        {!! Form::label('0', 'Capitanía de retorno final:') !!}
+
+
+                                                        <select id="capitaniaDestinoSelect"
+                                                                name="capitaniaDestinoSelect"
+                                                                 onchange="estNauticoDestinoSelect('')"
+                                                                class="form-control custom-select">
+
+                                                            <option value="">Seleccione</option>
+                                                             @if($capitaniasDestinoList!='')
+                                                             @foreach ($capitaniasDestinoList as $cdl )
+                                                                @if($idCapdestinoFinal==$cdl->id || old('capitaniaDestino')==$cdl->id)
+                                                                    @php
+                                                                    $selectedcap="selected='selected'";
+                                                                    @endphp
+                                                                @else
+                                                                    @php
+                                                                    $selectedcap='';
+                                                                    @endphp
+                                                                @endif 
+                                                                <option value="{{$cdl->id}}" {{$selectedcap}} >{{$cdl->nombre}} </option>
+                                                            @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-md-12 px-0">
-                                                    <div class="form-group col-sm-12 py-2">
+                                                    <div class="form-group col-sm-12 ">
                                                         {!! Form::label('0', 'Establecimiento náutico de retorno final:') !!}
+
+                                                        
                                                         <select id="estNautioDestino"
                                                                 name="establecimientoNáuticoDestino"
                                                                 title="Selección el punto de escala en el mapa para visualizar los establecimientos náuticos de la circunscripción de destino"
@@ -159,7 +193,7 @@
                                                             <option value="">Seleccione</option>
                                                             @if($EstNauticosDestino!='')
                                                             @foreach ($EstNauticosDestino as $endestino)
-                                                                @if($solicitud->establecimiento_nautico_destino_id==$endestino->id)
+                                                                @if($solicitud->establecimiento_nautico_destino_id==$endestino->id || old('establecimientoNáuticoDestino') ==$endestino->id )
                                                                     @php
                                                                         $selectedendestino="selected='selected'";
                                                                     @endphp
@@ -189,32 +223,56 @@
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
+                                                
                                                     <div class="form-group">
                                                         <label for="title">Latitud punto de escala:</label>
+                                                        <div id="latitudText" class="font-weight-bold">
+                                                             @if($coordGrad!='')
+                                                                {{$coordGrad[0]}}
+                                                                
+                                                            @endif
+                                                        </div>
                                                         @if($solicitud->coordenadas!='')
                                                             @php
                                                                 $sol= json_decode($solicitud->coordenadas);
-                                                             $lat=$sol[0];
-                                                             $lon=$sol[1];
+                                                              $lat=$sol[0];
+                                                              $lon=$sol[1];
                                                             @endphp
                                                     @else
                                                             @php
                                                             $lat=''; $lon='';
                                                             @endphp
                                                     @endif
-                                                        <input type="text" class="form-control" id="latitud"
+
+                                                   
+                                                        <input type="hidden" class="form-control" id="latitud"
                                                                readonly
                                                                name="latitud" data-lat="{{$lat}}" value="{{$lat}}">
+                                                        <input type="hidden" class="form-control" id="latitudGrad"      readonly
+                                                               name="latitudGrad"   value="{{$coordGrad[0]}}">
                                                     </div>
+                                                    
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
+                                                    
                                                     <div class="form-group">
                                                         <label for="title">Longitud punto de escala:</label>
-                                                        <input type="text" class="form-control"
+                                                        <div id="longitudText" class="font-weight-bold">
+                                                        @if($coordGrad!='')
+                                                            {{$coordGrad[1]}}
+                                                            
+                                                        @endif
+                                                        </div>
+                                                        <input type="hidden" class="form-control"
                                                                id="longitud" readonly
                                                                name="longitud" data-long="{{$lon}}" value="{{$lon}}">
+
+                                                        <input type="hidden" class="form-control"
+                                                               id="longitudGrad" readonly
+                                                               name="longitudGrad"   value="{{$coordGrad[1]}}">
                                                     </div>
+                                                    
 
                                                 </div>
                                                 @if($solicitud->destino_capitania_id!='')
@@ -227,7 +285,7 @@
                                                             @endphp
                                                         @endif
                                                 <input type="hidden" class="form-control"
-                                                       id="capitaniaDestino" name="coordenadasDestino" value="{{$capDestino}}">
+                                                       id="capitaniaDestino" name="capitaniaDestino" value="{{$capDestino}}">
                                             </div>
                                         </div>
                                     </div>
@@ -251,3 +309,18 @@
         </div>
     </div>
 @endsection
+@php
+    function coordenadasGrad($coordenada){
+        $gcoordenada=intval($coordenada);
+        $mcoordenada1=number_format(($coordenada-$gcoordenada)*60, 4, '.', '');
+        $mcoordenada2=intval($mcoordenada1);
+        $scoordenada1=number_format(($mcoordenada1-$mcoordenada2)*60, 4, '.', '');
+        $scoordenada2=number_format($scoordenada1,1,'.','');
+        $scoordenada2= abs($scoordenada2);
+        if($scoordenada2 < 10 ){
+            $scoordenada2='0'.$scoordenada2;
+        }
+         return abs($gcoordenada).'°'.abs($mcoordenada2).'\''.$scoordenada2.'"';
+
+    }
+@endphp

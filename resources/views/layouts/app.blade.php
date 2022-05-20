@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>@yield('titulo' )| {{ config('app.name') }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" href="{{asset('assets/bootstrap/dist/css/bootstrap.min.css')}}">
 
     <link href="{{asset('assets/vendors/style.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/simplebar/css/simplebar.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/DataTables/datatables.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/DataTables/dataTables.bootstrap5.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/fontawesome/css/all.css')}}">
     <link rel="stylesheet" href="{{asset('css/zarpesStyle.css')}}">
     <link rel="stylesheet" href="{{asset('assets/custom.css')}}">
@@ -48,13 +49,16 @@
 <script src="{{asset('assets/bootstrap/js/dist/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset('assets/DataTables/datatables.js')}}"></script>
 <script src="{{asset('js/functions.js')}}"></script>
+<script src="{{asset('js/zarpeInternacional.js')}}"></script>
 <script src="{{asset('assets/fontawesome/js/all.js')}}"></script>
+<script src="{{asset('js/dataTables.js')}}"></script>
 
 
 <!-- Plugins and scripts required by this view-->
 <script src="{{asset('assets/@coreui/coreui/js/coreui.bundle.min.js')}}"></script>
 <script src="{{asset('assets/vendors/simplebar/js/simplebar.min.js')}}"></script>
 <script src="{{asset('assets/@coreui/utils/js/coreui-utils.js')}}"></script>
+<script src="{{asset('assets/bootbox/bootbox.js')}}"></script>
 
 
 </html>

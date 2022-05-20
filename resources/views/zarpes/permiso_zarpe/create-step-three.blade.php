@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Permisos de Zarpe</li>
+                <li class="breadcrumb-item">{{$titulo}}</li>
             </ol>
         </nav>
     </div>
@@ -20,10 +20,10 @@
                      <div class="card">
                          <div class="card-header">
                              <i class="fas fa-ship"></i>
-                             <strong>Solicitud de Permisos de Zarpe | Paso 3</strong>
+                             <strong>Solicitud de Permisos de {{$titulo}} | Paso 3</strong>
 
                              <div class="card-header-actions">
-                                 <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Listado</a>
+                                 <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Cancelar</a>
 
                              </div>
 

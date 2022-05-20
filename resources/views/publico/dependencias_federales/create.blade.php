@@ -25,15 +25,22 @@
                                 <i class="fa fa-map" aria-hidden="true"></i>
                                 <strong>Crear Dependencia Federal</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('dependenciasfederales.index')}} " class="btn btn-primary btn-sm">Listado</a>
                                 </div>
                             </div>
                             <div class="card-body">
-                                {!! Form::open(['route' => 'dependenciasfederales.store']) !!}
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3"></div>
+                                    <div class=" border col-lg-6 col-md-12 col-sm-12 col-xs-12 p-3">
 
-                                   @include('publico.dependencias_federales.fields')
+                                        {!! Form::open(['route' => 'dependenciasfederales.store']) !!}
 
-                                {!! Form::close() !!}
+                                        @include('publico.dependencias_federales.fields')
+
+                                        {!! Form::close() !!}
+                                        </div>
+                                    <div class=" col-lg-3 col-md-3"></div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

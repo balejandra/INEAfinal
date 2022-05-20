@@ -32,7 +32,7 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
+                             <i class="fa fa-id-badge"></i>
                             <strong>Roles</strong>
                             @can('crear-rol')
                                 <div class="card-header-actions">
@@ -44,7 +44,7 @@
                         <div class="card-body">
 
 
-                            <table class="table table-striped table-bordered" style="width:100%" id="TableRoles">
+                            <table class="table table-striped table-bordered" style="width:100%" id="generic-table">
                                 <thead>
                                 <th>ID</th>
                                 <th>Nombre</th>

@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Menu Roles</li>
+                <li class="breadcrumb-item">{{$titulo}}</li>
             </ol>
         </nav>
     </div>
@@ -20,9 +20,9 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>
-                            Roles asociados a menus
+                            Roles asociados a {{$titulo}}
                             <div class="card-header-actions">
-                                <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
+                                <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -31,7 +31,7 @@
                                     <thead>
                                     <tr>
 
-                                        <th>Menu</th>
+                                        <th>Menú</th>
                                         <th>Rol Asociado</th>
                                     </tr>
                                     </thead>

@@ -1,6 +1,6 @@
 <!-- Nombre Field -->
 <div class="row">
-    
+
     <div class="form-group col-sm-6">
         {!! Form::label('nombre', 'Nombre:') !!}
         {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
@@ -9,7 +9,28 @@
     <!-- Capitanias Id Field -->
     <div class="form-group col-sm-6">
          {!! Form::label('capitania', 'Capitania:') !!}
-        {!! Form::select('capitania', $capitanias, null, ['class' => 'form-control','placeholder' => 'Seleccione']) !!}
+
+        <div class="form-group">
+        <select id="capitania"
+             name="capitania"
+             class="form-control custom-select">
+        <option value="">Seleccione</option>
+        @foreach ($capitanias as $key => $cap )
+        @if(isset($IDdependenciaFederal) && $IDdependenciaFederal==$key)
+             @php
+                $selectedcap="selected='selected'";
+            @endphp
+       @else
+         @php
+        $selectedcap='';
+            @endphp
+        @endif
+        <option value="{{$key}}" {{$selectedcap}} >{{$cap}}  </option>
+
+        @endforeach
+</select>
+            </div>
+
     </div>
 </div>
 
@@ -61,18 +82,18 @@
 <div class="row" >
     <!-- latitud Field -->
 
-    <div class="form-group col-sm-5">
+    <div class="form-group col-sm-6">
         {!! Form::label('Latitud', 'Latitud:') !!}
         {!! Form::text('latitud[]', null, ['class' => 'form-control']) !!}
     </div>
     <!-- longitud Field -->
-    <div class="form-group col-sm-5">
+    <div class="form-group col-sm-6">
         {!! Form::label('longitud', 'Longitud:') !!}
         {!! Form::text('longitud[]', null , ['class' => 'form-control']) !!}
     </div>
-    <div class="form-group col-sm-2 pt-4">
-     <!--   {!! Form::button('Agregar otras', ['class' => 'btn btn-success', 'onclick' => 'agregarCoordenadasDF()']) !!}-->
-    </div>
+   <!-- <div class="form-group col-sm-2 pt-4">
+         {!! Form::button('Agregar otras', ['class' => 'btn btn-success', 'onclick' => 'agregarCoordenadasDF()']) !!}
+    </div>-->
 
 </div>
 
@@ -85,7 +106,11 @@
 
 
 <!-- Submit Field -->
-<div class="form-group col-sm-12 text-center">
-    {!! Form::submit('Guardar', ['class' => 'btn  btn-primary']) !!}
-   
+<div class="row form-group  mt-4">
+    <div class="col text-center">
+        <a href="{{route('dependenciasfederales.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+    </div>
+    <div class=" col text-center">
+        {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+    </div>
 </div>

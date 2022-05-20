@@ -17,68 +17,91 @@
     </header>
      <div class="container-fluid">
           <div class="animated fadeIn">
-                @include('coreui-templates::common.errors')
+              @include('flash::message')
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-plus-square-o fa-lg"></i>
+                                <i class="fa fa-user fa-lg"></i>
                                 <strong>Crear Usuario</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('users.index')}} " class="btn btn-primary btn-sm">Listado</a>
+
                                 </div>
                             </div>
                             <div class="card-body">
-                                {!! Form::open(['route' => 'users.store']) !!}
+                            <div class="row ">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6 border rounded p-3">
 
-                                <!-- Email Field -->
-                                    <div class="form-group col-sm-6">
+
+                                {!! Form::open(['route' => 'users.store']) !!}
+                                <div class="row">
+                                <div class="form-group col-sm-6">
                                         {!! Form::label('email', 'Email:') !!}
-                                        {!! Form::email('email', null, ['class' => 'form-control','required']) !!}
+                                        <input type="email"
+                                               class="form-control {{ $errors->has("email")?"is-invalid":"" }}"
+                                               name="email"
+                                               value="{{ old('email') }}" placeholder="Email" required>
+                                        @error('email')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
+
 
                                     <!-- Nombres Field -->
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('nombres', 'Nombres:') !!}
                                         {!! Form::text('nombres', null, ['class' => 'form-control','required']) !!}
                                     </div>
+                                </div>
+                                <!-- Email Field -->
 
+                                <div class="row">
                                     <!-- Password Field -->
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('password', 'Contraseña:') !!}
-                                        <input type="password" class="form-control" id="password" name="password" required>
+                                        <input type="password" class="form-control {{ $errors->has('password')?'is-invalid':''}}" id="password" name="password" required>
+                                        @error('password')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+
                                         {!! Form::label('password', 'Confirmar Contraseña:') !!}
                                         <input type="password" name="password_confirmation" class="form-control" required
                                                placeholder={{ __('Confirm Password') }}>
                                     </div>
+                                </div>
 
+                                    <br>
 
                                     <div class="form-group col-sm-6">
                                         {!! Form::label('role id', 'Rol asignado:') !!}
 
                                         {!! Form::select('roles', $roles, null, ['class' => 'roles form-control custom-select','placeholder' => 'Puede asignar un Rol...','onchange="requeridos(); EstablecimientoUser();"','required']) !!}
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        {!! Form::label('capitania_id', 'Capitania Asignada:') !!}
-                                        {!! Form::select('capitanias', $capitanias, null, ['id'=>'capitanias','class' => ' form-control custom-select','placeholder' => 'Puede asignar una capitania...','onchange="EstablecimientoUser();"']) !!}
-                                    </div>
-
-                                    <div class="form-group col-sm-6">
-                                        {!! Form::label('0', 'Establecimiento náutico asignado:') !!}
-
-                                        <select id="establecimientos" name="establecimientos" title="" class="form-control custom-select">
-                                            <option value="">Puede asignar un Establecimiento...</option>
-
-                                        </select>
-                                    </div>
                                     <!-- Submit Field -->
-                                    <div class="form-group col-sm-12">
+
+
+                                    <div class="row form-group mt-4">
+                                        <div class="col text-center">
+                                            <a href="{{route('users.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+                                        </div>
+                                        <div class=" col text-center">
                                         {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+                                        </div>
                                     </div>
 
                                     <input type="text" name="tipo_usuario" value="interno" hidden>
 
                                 {!! Form::close() !!}
+
+
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+
                             </div>
                         </div>
                     </div>
