@@ -30,17 +30,17 @@
             {!! Form::text('cargo[]', null, ['class' => 'form-control']) !!}
         </div>
         <!-- longitud Field -->
-<div class="form-group col-4">
+<div class="form-group col-3">
 
     {!! Form::label('longitud', 'Titulación minima aceptada:') !!}
             {!! Form::text('titulacion_minima[]', null , ['class' => 'form-control']) !!}
         </div>
 
-        <div class="form-group col-4">
+        <div class="form-group col-3">
             {!! Form::label('longitud', 'Titulación máxima aceptada:') !!}
             {!! Form::text('titulacion_maxima[]', null, ['class' => 'form-control']) !!}
         </div>
-            <div class="form-group col-sm-1 pt-4">
+            <div class="form-group col-sm-2 pt-4">
                 {!! Form::button('Agregar', ['class' => 'btn btn-success', 'onclick' => 'agregarCargosMandos()']) !!}
             </div>
 

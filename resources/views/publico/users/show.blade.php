@@ -23,9 +23,9 @@
                     <div class="card">
                         <div class="card-header">
                         <i class="fa fa-user fa-lg"></i>
-                            <strong>Consulta de Usuario {{$user->nombres}}</strong>
+                            <strong>Consulta de Usuario</strong>
                             <div class="card-header-actions">
-                              
+
                             </div>
                         </div>
                         <div class="card-body">

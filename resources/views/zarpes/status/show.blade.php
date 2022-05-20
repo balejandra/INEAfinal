@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-clipboard-check fa-lg"></i>
-                            <strong>Consulta</strong>
+                            <strong>Consultar Estatus</strong>
                             <div class="card-header-actions">
 
                             </div>

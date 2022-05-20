@@ -23,7 +23,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-bars fa-lg"></i>
-                                <strong>Creación de {{$titulo}}</strong>
+                                <strong>Crear {{$titulo}}</strong>
 
                                 <div class="card-header-actions">
 

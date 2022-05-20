@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-table"></i>
-                            <strong>Consulta</strong>
+                            <strong>Consultar Tabla de Mandos</strong>
                             <div class="card-header-actions">
                             </div>
                         </div>
