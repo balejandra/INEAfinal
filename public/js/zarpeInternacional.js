@@ -598,7 +598,7 @@ function getMarinosZI(pass) {
                         if(nodataTrip==true){
                             tabla.innerHTML='';
                         }
-                        let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick='openModalZI("+pass['nro_doc']+")'><i class='fa fa-trash'></i></a></td></tr>";
+                        let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a></td></tr>";
                         tabla.innerHTML+=html;
                         msj.innerHTML="<div class='alert alert-success'>El tripulante se ha agregado de manera exitosa</div>";
 
@@ -670,6 +670,7 @@ function deleteTripulanteZI(){
 
 function openModalZI(cedula) {
     let btn=document.getElementById('btnDelete');
+    console.log('modalcedula', cedula);
     btn.setAttribute('data-ced', cedula);
     let ci=document.getElementById('ci');
         ci.innerHTML=cedula;

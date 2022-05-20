@@ -112,6 +112,7 @@ class PermisoZarpeController extends Controller
             "cant_tripulantes" => 0,
             "cant_pasajeros" => 0,
             "cantPassAbordo"=> 0,
+            "pasajerosRestantes"=>0,
             "potencia_kw" => '',
             "cargos" => [
                 "cargo_desempena" => '',
@@ -242,6 +243,8 @@ class PermisoZarpeController extends Controller
                                             // dd($valida);
                                             $valida['potencia_kw'] = $validacionSgm[$i]->potencia_kw;
                                             $valida["cant_pasajeros"] = $validacionSgm[$i]->capacidad_personas;
+                                            $valida["pasajerosRestantes"] = $validacionSgm[$i]->capacidad_personas;
+                                            
                                             $nroCorrelativos["licenciaNavegacion"]=$validacionSgm[$i]->nro_correlativo;
                                             $request->session()->put('validacion', json_encode($valida));
                                         }
@@ -397,6 +400,7 @@ class PermisoZarpeController extends Controller
 
         $valida["cant_tripulantes"] = $permisoEstadia[0]->cant_tripulantes;
         $valida["cant_pasajeros"] = $permisoEstadia[0]->cant_pasajeros;
+        $valida["pasajerosRestantes"] = $permisoEstadia[0]->cant_pasajeros;
         $valida["potencia_kw"] = $permisoEstadia[0]->potencia_kw;
         $valida["UAB"] = $permisoEstadia[0]->arqueo_bruto;
         $request->session()->put('validacion', json_encode($valida));
@@ -628,7 +632,7 @@ class PermisoZarpeController extends Controller
 
        $validation = json_decode($request->session()->get('validacion'), true);
        $tripulantes = $request->session()->get('tripulantes');
-       $validation['cantPassAbordo']=$validation['cant_pasajeros']-$validation['cant_tripulantes'];
+       $validation['cantPassAbordo']=$validation['cant_pasajeros'] - abs(count($tripulantes)+$validation['cantPassAbordo']); 
        $request->session()->put('validacion', json_encode($validation));
         if (is_array($tripulantes) && (count($tripulantes) >= $validation['cant_tripulantes'] && count($tripulantes) <= $validation['cant_pasajeros'])) {
              $capitan=0;
@@ -854,7 +858,7 @@ class PermisoZarpeController extends Controller
        if(count($tripulantes)==1){
                 $tripulantes=[];
                 $request->session()->put('tripulantes', $tripulantes);
-                $validation['cantPassAbordo']++;
+                $validation['pasajerosRestantes']=abs(count($tripulantes)-$validation['cantPassAbordo']);
                 $request->session()->put('validacion', json_encode($validation));
                 $borrado =true;
         }else{
@@ -864,8 +868,8 @@ class PermisoZarpeController extends Controller
                     if($indice!=false){
                         array_splice($tripulantes, $i, $i);
                         $request->session()->put('tripulantes', $tripulantes);
-                        $validation['cantPassAbordo']++;
-                         $request->session()->put('validacion', json_encode($validation));
+                        $validation['pasajerosRestantes']=abs(count($tripulantes)-$validation['cantPassAbordo']);
+                        $request->session()->put('validacion', json_encode($validation));
                         $borrado =true;
                     }
                 }
@@ -880,12 +884,13 @@ class PermisoZarpeController extends Controller
         $borrado=false;
         $pasajeros = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
+        $tripulantes = $request->session()->get('tripulantes');
 
         if(is_array($pasajeros)){
             if(count($pasajeros)==1){
                 $pasajeros=[];
                 $request->session()->put('pasajeros', $pasajeros);
-                $validation['cantPassAbordo']++;
+                $validation['pasajerosRestantes']=abs(count($tripulantes)-$validation['cantPassAbordo']);
                 $request->session()->put('validacion', json_encode($validation));
                 $borrado =true;
             }else{
@@ -894,7 +899,7 @@ class PermisoZarpeController extends Controller
                     if($indice!=false){
                         array_splice($pasajeros, $i, $i);
                         $request->session()->put('pasajeros', $pasajeros);
-                        $validation['cantPassAbordo']++;
+                        $validation['cantPassAbordo']=abs(count($tripulantes)-$validation['cantPassAbordo']);
                         $request->session()->put('validacion', json_encode($validation));
                         $borrado =true;
                     }
@@ -1686,6 +1691,7 @@ public function AddDocumentos(Request $request){
         $validation = json_decode($request->session()->get('validacion'), true);
          $tripulantes=$request->session()->get('tripulantes');
         $cantPasajeros = $validation['cant_pasajeros'] - count($tripulantes);
+        
         $indice="";
 
            if ($_REQUEST['menor'] == "SI") {
@@ -1750,12 +1756,13 @@ public function AddDocumentos(Request $request){
 
 
         if($indice==false ){
-            if(count($pasajeros) <= $cantPasajeros-1){
+            if($validation['pasajerosRestantes']>0){
                 array_push($pasajeros, $pass);
                 $request->session()->put('pasajeros', $pasajeros);
                 $info="OK";
-                $cantPasajeros=$cantPasajeros-count($pasajeros);
-                $validation['cantPassAbordo']=$cantPasajeros;
+               // $cantPasajeros=$cantPasajeros-count($pasajeros);
+                $validation['cantPassAbordo']=count($pasajeros);
+                $validation['pasajerosRestantes']=$validation['cant_pasajeros'] -abs(count($tripulantes)+$validation['cantPassAbordo']);
                 $request->session()->put('validacion', json_encode($validation));
             }else{
                 $info = "MaxPassengerLimit";
@@ -1766,7 +1773,7 @@ public function AddDocumentos(Request $request){
 
         }
 
-        $resp=[$info,$pass,$cantPasajeros,$HijoNumero, $nrodoc, $_REQUEST['nrodoc']];
+        $resp=[$info,$pass,count($pasajeros),$HijoNumero, $nrodoc, $_REQUEST['nrodoc']];
         echo json_encode($resp);
 
     }

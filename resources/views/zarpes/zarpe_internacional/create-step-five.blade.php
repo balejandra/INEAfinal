@@ -167,7 +167,7 @@
 
                                                             @endphp
                                                             <tr id="nodataTrip">
-                                                                <td colspan="5" class="text-center" id="nodata">Sin
+                                                                <td colspan="6" class="text-center" id="nodata">Sin
                                                                     registros para mostrar
                                                                 </td>
                                                             </tr>
@@ -190,7 +190,7 @@
                                                                     <td>{{$trip["doc"]}}</td>
                                                                     <td>
                                                                         <a href="#"
-                                                                           onclick="openModalZI({{$trip['nro_doc']}})">
+                                                                           onclick="openModalZI('{{$trip["nro_doc"]}}')">
                                                                             <i class="fa fa-trash"></i>
                                                                         </a>
 
