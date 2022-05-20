@@ -39,7 +39,7 @@
                                                 <input class="form-check-input" type="radio" name="tipo_persona" id="juridica" value="juridica"
                                                        onclick="javascript:showContent()" required>
                                                 <label class="form-check-label" for="juridica">
-                                                    Juridica
+                                                    Jurídica
                                                 </label>
                                             </div>
                                         </div>
@@ -51,7 +51,7 @@
                                                 </div>
                                                 <select class="form-select" aria-label="tipo_identificacion" id="tipo_identificacion"
                                                         name="tipo_identificacion" onchange="changetipodocumento();" required>
-                                                    <option value="cedula">Cedula</option>
+                                                    <option value="cedula">Cédula</option>
                                                     <option value="pasaporte">Pasaporte</option>
                                                 </select>
                                                 @if ($errors->has('tipo_identificacion'))
@@ -83,7 +83,7 @@
                                         <input type="text"
                                                class="form-control {{ $errors->has("numero_identificacion")?"is-invalid":"" }}"
                                                name="numero_identificacion" value="{{ old('numero_identificacion') }}"
-                                               placeholder="Numero de identificacion" id="numero_identificacion" required>
+                                               placeholder="Número de identificación" id="numero_identificacion" required>
                                         @error('numero_identificacion')
                                         <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -145,7 +145,7 @@
                                         <input type="text"
                                                class="form-control"
                                                name="telefono" value="{{ old('telefono') }}"
-                                               placeholder="Telefono" required>
+                                               placeholder="Teléfono" required>
                                     </div>
                                 </div>
                                 <!--////////// DIRECCION //////////////-->
@@ -159,7 +159,7 @@
                                         <input type="text"
                                                class="form-control"
                                                name="direccion" value="{{ old('direccion') }}"
-                                               placeholder="direccion" required>
+                                               placeholder="dirección" required>
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
