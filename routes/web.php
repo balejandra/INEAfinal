@@ -54,6 +54,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/roles/{role}/edit', [App\Http\Controllers\Publico\RoleController::class, 'edit'])->name('roles.edit');
     Route::put('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'update'])->name('roles.update');
     Route::delete('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::get('roleDelete.index',[\App\Http\Controllers\Publico\RoleController::class,'indexRoleDeleted'])->name('roleDelete.index');
+    Route::get('roleDeleted/{role}',[\App\Http\Controllers\Publico\RoleController::class,'restoreRoleDeleted'])->name('roleDeleted.restore');
+
 
     Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
 

@@ -37,6 +37,7 @@
                             @can('crear-rol')
                                 <div class="card-header-actions">
                                     <a class="btn btn-primary btn-sm"  href="{{ route('roles.create') }}">Nuevo</a>
+                                    <a class="btn btn-warning btn-sm"  href="{{ route('roleDelete.index') }}">Roles Eliminados</a>
                                 </div>
                             @endcan
 

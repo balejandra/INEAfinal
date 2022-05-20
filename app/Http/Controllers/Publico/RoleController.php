@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Flash;
 
 class RoleController extends Controller
 {
@@ -125,5 +126,21 @@ class RoleController extends Controller
         $role=Role::findOrFail($id);
         $role->delete();
         return back()->with('success','El registro se ha eliminado con éxito.');
+    }
+
+    public function indexRoleDeleted(){
+        $role =Role::onlyTrashed()->get();
+        //dd($users);
+
+        return view('publico.roles.rolesDeleted')
+            ->with('roles', $role);
+    }
+
+    public function restoreRoleDeleted($id){
+        $role_deleted=Role::where('id',$id);
+        $role_deleted->restore();
+        Flash::success('Rol restaurado exitosamente.');
+
+        return redirect(route('roleDelete.index'));
     }
 }
