@@ -218,7 +218,7 @@ class UserController extends Controller
 
             return redirect(route('users.index'));
         }
-
+        $capitania=CapitaniaUser::where('user_id',$id)->delete();
         $this->userRepository->delete($id);
 
         Flash::success('Usuario eliminado exitosamente.');
