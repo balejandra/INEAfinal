@@ -39,10 +39,11 @@
 </div>
 
 <!-- Button -->
-<div class="row">
-    <!-- Submit Field -->
-    <div class="form-group col-sm-12 text-center mt-3">
+<div class="row form-group  mt-4">
+    <div class="col text-center">
+        <a href="{{route('capitanias.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+    </div>
+    <div class=" col text-center">
         {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-
     </div>
 </div>

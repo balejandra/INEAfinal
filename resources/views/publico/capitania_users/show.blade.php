@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('capitaniaUsers.index') }}">Usuarios de Capitanias</a>
                 </li>
-                <li class="breadcrumb-item active">Detalle</li>
+                <li class="breadcrumb-item active">Consulta</li>
             </ol>
         </nav>
     </div>
@@ -22,9 +22,9 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
+                                 <i class="fas fa-user-tie"></i>
                                  <strong>Consultar Usuario de Capitania</strong>
                                  <div class="card-header-actions">
-                                     <a href= "{{route('capitaniaUsers.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                                  </div>
                              </div>
                              <div class="card-body">

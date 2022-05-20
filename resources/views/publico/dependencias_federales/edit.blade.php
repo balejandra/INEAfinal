@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item">
                     <a href="{!! route('dependenciasfederales.index') !!}">Dependencia Federal</a>
                 </li>
-                <li class="breadcrumb-item active">Edit</li>
+                <li class="breadcrumb-item active">Editar</li>
             </ol>
         </nav>
     </div>

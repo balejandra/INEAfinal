@@ -22,9 +22,8 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Consultar Auditoria - {{$auditable->id}}</strong>
+                                 <strong>Consultar Auditoria</strong>
                                  <div class="card-header-actions">
-                                     <a href= "{{route('auditables.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                                  </div>
                              </div>
                              <div class="card-body">

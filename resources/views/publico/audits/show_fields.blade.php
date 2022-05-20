@@ -53,3 +53,8 @@
         </tbody>
     </table>
 </div>
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <a href="{{route('auditables.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+    </div>
+</div>

@@ -23,9 +23,8 @@
                       <div class="card">
                           <div class="card-header">
                           <i class="fa fa-building"></i>
-                              <strong>Editar Capitanía {{$capitania->nombre}}</strong>
+                              <strong>Editar Capitanía</strong>
                               <div class="card-header-actions">
-                                  <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                               </div>
                           </div>
                           <div class="card-body">

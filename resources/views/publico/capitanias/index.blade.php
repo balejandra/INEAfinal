@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Consulta</li>
+                <li class="breadcrumb-item">Capitanias</li>
             </ol>
         </nav>
     </div>

@@ -25,7 +25,6 @@
                                 <i class="fa fa-map" aria-hidden="true"></i>
                                 <strong>Crear Dependencia Federal</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('dependenciasfederales.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                                 </div>
                             </div>
                             <div class="card-body">

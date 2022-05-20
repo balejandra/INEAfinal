@@ -23,10 +23,10 @@
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-id-badge fa-lg"></i>
-                                <strong>Consultar Rol - {{$role->name}}</strong>
+                                <strong>Consultar Rol</strong>
 
                                 <div class="card-header-actions">
-                                    
+
                                   </div>
                             </div>
                             <div class="card-body">

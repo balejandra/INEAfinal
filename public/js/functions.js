@@ -184,17 +184,17 @@ function agregarCargosMandos(){
 
 
     const divlon=document.createElement("div");
-    divlon.classList.add("form-group", "col-4");
+    divlon.classList.add("form-group", "col-3");
     divlon.innerHTML=`
             <input class="form-control" name="titulacion_minima[]" id="titmin`+cantAct+`"  type="text" placeholder="Titulación minima aceptada">`;
 
     const divtitmax=document.createElement("div");
-    divtitmax.classList.add("form-group", "col-4");
+    divtitmax.classList.add("form-group", "col-3");
     divtitmax.innerHTML=`
             <input class="form-control" name="titulacion_maxima[]" id="titmax`+cantAct+`"  type="text" placeholder="Titulación máxima aceptada">`;
 
     const divbtn=document.createElement("div");
-    divbtn.classList.add("form-group", "col-sm-1");
+    divbtn.classList.add("form-group", "col-sm-2");
     divbtn.innerHTML=`<button class="btn btn-danger" onclick="eliminarCargosMandos(`+cantAct+`,'')" type="button">Borrar</button>`;
 
     divrow.appendChild(divids);

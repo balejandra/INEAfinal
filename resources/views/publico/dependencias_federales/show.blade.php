@@ -22,7 +22,7 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Consulta de dependencia federal</strong>
+                                 <strong>Consultar Dependencia Federal</strong>
 
                                   <div class="card-header-actions">
                                     <a href= "{{route('dependenciasfederales.index')}} " class="btn btn-primary btn-sm">Cancelar</a>

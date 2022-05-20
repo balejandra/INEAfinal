@@ -23,7 +23,7 @@
                          <div class="card">
                              <div class="card-header">
                                  <i class="fas fa-shield-alt"></i>
-                                 <strong>Consulta</strong>
+                                 <strong>Consultar Equipo</strong>
                              </div>
                              <div class="card-body">
                                  <div class="my-2">

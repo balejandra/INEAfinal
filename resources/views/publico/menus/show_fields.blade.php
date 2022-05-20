@@ -8,8 +8,8 @@
                 @foreach($menuRols as $Roles)
 
                  @if($Roles->checked!='')
-                                                      
-                    <span class="badge badge-info"> 
+
+                    <span class="badge badge-info">
                         {{ $Roles->name}}
                     </span>
                 @endif
@@ -48,5 +48,10 @@
     </tbody>
 </table>
 
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <a href="{{route('menus.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
     </div>
 </div>

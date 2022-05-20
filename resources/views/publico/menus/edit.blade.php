@@ -23,7 +23,7 @@
                       <div class="card">
                           <div class="card-header">
                               <i class="fa fa-edit fa-lg"></i>
-                              <strong>Edición de {{$titulo}}</strong>
+                              <strong>Editar {{$titulo}}</strong>
 
                               <div class="card-header-actions">
 

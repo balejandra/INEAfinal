@@ -23,9 +23,8 @@
                          <div class="card">
                              <div class="card-header">
                              <i class="fa fa-bars fa-lg"></i>
-                                 <strong>Consultar {{$titulo}}  - {{$menu->name}}</strong>
+                                 <strong>Consultar {{$titulo}} </strong>
                                  <div class="card-header-actions">
-                                     <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                                  </div>
                              </div>
                              <div class="card-body">

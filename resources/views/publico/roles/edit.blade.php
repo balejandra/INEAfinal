@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-id-badge fa-lg"></i>
-                            <strong>Editar Roles</strong>
+                            <strong>Editar Rol</strong>
 
                             <div class="card-header-actions">
 
