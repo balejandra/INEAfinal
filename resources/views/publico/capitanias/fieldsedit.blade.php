@@ -16,11 +16,11 @@
         {!! Form::select('user',$user, null, ['class' => 'form-control custom-select']) !!}
     </div>
 </div>
- 
+
 
 {!! Form::label('coordenadas', 'Coordenas:') !!}
 @php($var=0)
-
+<div>
 @forelse($coordenadas as $key =>$coord)
 <div>
     {!! Form::hidden('deletes[]',  null, ['class' => 'form-control', 'id'=>'deletes'. $key]) !!}

@@ -27,9 +27,13 @@
                           </div>
                           <div class="card-body">
                               {!! Form::model($capitaniaUser, ['route' => ['capitaniaUsers.update', $capitaniaUser->id], 'method' => 'patch']) !!}
-
+                              <div class="row">
+                                  <div class="col-md-2"></div>
+                                  <div class="col-md-8 border rounded p-3">
                               @include('publico.capitania_users.fields')
-
+                                  </div>
+                                  <div class="col-md-2"></div>
+                              </div>
                               {!! Form::close() !!}
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Usuarios
+    Tabla de Mandos
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -22,17 +22,20 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-edit fa-lg"></i>
+                            <i class="fas fa-table"></i>
                             <strong>Editar Tabla de Mando</strong>
                             <div class="card-header-actions">
-                                <a href="{{route('tablaMandos.index')}} " class="btn btn-primary btn-sm">Listado</a>
                             </div>
                         </div>
                         <div class="card-body">
                             {!! Form::model($tablaMando, ['route' => ['tablaMandos.update', $tablaMando->id], 'method' => 'patch']) !!}
-
-                            @include('zarpes.tabla_mando.fields')
-
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8  border rounded p-3">
+                                    @include('zarpes.tabla_mando.fieldsedit')
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
                             {!! Form::close() !!}
                         </div>
                     </div>

@@ -26,7 +26,7 @@
                               <strong>Edición de {{$titulo}}</strong>
 
                               <div class="card-header-actions">
-                                 
+
                               </div>
                           </div>
                           <div class="card-body">
@@ -34,7 +34,7 @@
                           <div class="card-body">
                           <div class="row">
                                     <div class="col-lg-2 col-md-3"></div>
-                                    <div class=" border col-lg-8 col-md-12 col-sm-12 col-xs-12 ">                      
+                                    <div class=" border col-lg-8 col-md-12 col-sm-12 col-xs-12 p-3">
                               {!! Form::model($menu, ['route' => ['menus.update', $menu->id], 'method' => 'patch']) !!}
 
                               @include('publico.menus.fields')
@@ -43,7 +43,7 @@
                               </div>
                                     <div class=" col-lg-2 col-md-3"></div>
                                 </div>
-                             
+
                             </div>
                         </div>
                     </div>

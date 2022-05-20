@@ -24,11 +24,21 @@
                              <div class="card-header">
                                  <strong>Consultar Usuario de Capitania</strong>
                                  <div class="card-header-actions">
-                                     <a href= "{{route('capitaniaUsers.index')}} " class="btn btn-primary btn-sm">Listado de Usuarios de Capitanias</a>
+                                     <a href= "{{route('capitaniaUsers.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                                  </div>
                              </div>
                              <div class="card-body">
+                                 <div class="my-2">
+                                     <div class="container">
+                                         <div class="row">
+                                             <div class="col-md-3"></div>
+                                             <div class="col-md-6 p-0 border rounded">
                                  @include('publico.capitania_users.show_fields')
+                                             </div>
+                                             <div class="col-md-3"></div>
+                                         </div>
+                                     </div>
+                                 </div>
                              </div>
                          </div>
                      </div>

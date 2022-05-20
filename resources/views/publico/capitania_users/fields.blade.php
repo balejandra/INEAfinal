@@ -1,4 +1,5 @@
 <!-- Cargo Field -->
+<div class="row">
 <div class="form-group col-sm-6">
     {!! Form::label('cargo', 'Cargo:') !!}
     {!! Form::select('cargo',$roles, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un cargo']) !!}
@@ -6,7 +7,7 @@
 
 <!-- User Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('user_id', 'Usuario:') !!}
+    {!! Form::label('user_id', 'Email del Usuario:') !!}
     {!! Form::select('user_id',$users, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un usuario']) !!}
 </div>
 
@@ -17,7 +18,12 @@
 </div>
 
 <!-- Submit Field -->
-<div class="form-group col-sm-12">
-    {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('capitaniaUsers.index') }}" class="btn btn-secondary">Cancelar</a>
+    <div class="row form-group  mt-4">
+        <div class="col text-center">
+            <a href="{{route('capitaniaUsers.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+        </div>
+        <div class="col text-center">
+            {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+        </div>
+    </div>
 </div>

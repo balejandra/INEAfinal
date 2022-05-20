@@ -19,7 +19,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-list-ul fa-lg"></i>
+                            <i class="fas fa-shield-alt"></i>
                             <strong>Equipos</strong>
                             @can('crear-equipo')
                                 <div class="card-header-actions">

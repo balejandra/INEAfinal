@@ -27,7 +27,7 @@
                             <strong>Crear rol</strong>
 
                             <div class="card-header-actions">
-                              
+
                             </div>
 
                         </div>
@@ -82,13 +82,13 @@
                                         </div>
                                     </div>
 
-                                       
+
                                     </div>
                                     <div class="row  mt-4">
-                                        <div class="col-md-6 text-center">
+                                        <div class="col text-center">
                                             <a href="{{route('roles')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
                                         </div>
-                                        <div class="col-md-6 text-center  ">
+                                        <div class="col text-center  ">
                                             <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
                                         </div>
                                 </div>

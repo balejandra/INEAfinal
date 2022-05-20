@@ -8,6 +8,7 @@
     </tr>
     </thead>
     <tbody>
+
     @foreach($capitaniaUsers as $capitaniaUser)
         <tr>
             <td>{{ $capitaniaUser->cargos->name }}</td>
