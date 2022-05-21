@@ -243,7 +243,7 @@ function eliminarCargosMandos(id, idcoord){
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));
         let pasaporteMayor=document.getElementById('pasaporte_mayor').value;
-
+        
         if(tipozarpe=='ZI'){
          
            
@@ -265,6 +265,11 @@ function eliminarCargosMandos(id, idcoord){
         }
 
         if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="") {
+
+            if(calcularEdad(fechanac)<18){
+                msj.innerHTML='<div class="alert alert-danger">Debe agregar un pasajero mayor de edad, por favor verifique.</div>' ;
+                return false;
+            }
 
             if(tipodoc=="P"){
 
@@ -974,6 +979,10 @@ function deletePassenger(){
             if(response==true){
                 let tr=document.getElementById(cedula);
                 tr.remove();
+                var cantPass= document.getElementById("cantPasajeros");
+                let cant=parseInt(cantPass.getAttribute("data-cantPass"));
+                cantPass.innerHTML=cant+1;
+                
                 msj.innerHTML='<div class="alert alert-success">Pasajero eliminado con éxito.</div>' ;
 
             }else{
@@ -1322,10 +1331,12 @@ function eliminarTrip(){
     })// This will be called on success
         .done(function (response) {
 
-
-            if(response==true){
+            let respuesta=JSON.parse(response);
+            console.log('EliminarTrip',respuesta);
+            if(respuesta[0]==true){
                 let tr=document.getElementById('trip'+cedula);
                 tr.remove();
+              
                 msj.innerHTML='<div class="alert alert-success">Tripulante eliminado con éxito.</div>' ;
 
             }else{
@@ -1909,4 +1920,15 @@ function soloNumeros(event){
     if((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !==190  && event.keyCode !==110 && event.keyCode !==8 && event.keyCode !==9  ){
         return false;
     }
+}
+
+function calcularEdad(fecha_nacimiento) {
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha_nacimiento);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+    return edad;
 }

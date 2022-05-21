@@ -210,7 +210,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-12 py-2">
+                                                <div class="col-md-12 py-2" style="{{$show}}">
                                                     {!! Form::label('0', 'Circunscripción acuática de destino:') !!}
                                                     <div class="col-md-12 p-0 text-center"
                                                          id="capiDestino">

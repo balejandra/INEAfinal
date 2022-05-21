@@ -189,7 +189,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <th class="bg-light">CERT. NAC. DE SEGURIDAD
-                                                                    RADIOTELEFONICA
+                                                                    RADIOTELEFÓNICA
                                                                 </th>
                                                                 <td><input type="text" class="col-md-12"
                                                                            name="certificadoRadio" id="certificadoRadio"
