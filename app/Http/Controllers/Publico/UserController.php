@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Publico\CreateUserRequest;
 use App\Http\Requests\Publico\UpdateUserRequest;
-use App\Models\Publico\Capitania;
 use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\Menu_rol;
 use App\Models\Publico\Saime_cedula;
 use App\Models\User;
 use App\Models\Zarpes\EstablecimientoNautico;
-use App\Models\Zarpes\EstablecimientoNauticoUser;
 use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -58,7 +57,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles=Role::pluck('name','id');
+        $menu=Menu_rol::pluck('role_id');
+        $roles=Role::whereIn('id',$menu)->get();
+        $roles=$roles->pluck('name','id');
         return view('publico.users.create')
             ->with('roles',$roles);
     }

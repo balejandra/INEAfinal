@@ -186,7 +186,7 @@ function agregarCargosMandos(){
     const divlon=document.createElement("div");
     divlon.classList.add("form-group", "col-3");
     divlon.innerHTML=`
-            <input class="form-control" name="titulacion_minima[]" id="titmin`+cantAct+`"  type="text" placeholder="Titulación minima aceptada" required>`;
+            <input class="form-control" name="titulacion_minima[]" id="titmin`+cantAct+`"  type="text" placeholder="Titulación mínima aceptada" required>`;
 
     const divtitmax=document.createElement("div");
     divtitmax.classList.add("form-group", "col-3");
@@ -243,21 +243,21 @@ function eliminarCargosMandos(id, idcoord){
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));
         let pasaporteMayor=document.getElementById('pasaporte_mayor').value;
-        
+
         if(tipozarpe=='ZI'){
-         
-           
+
+
             console.log('ZI pasaporteMayor');
             if(pasaporteMayor==''){
                 msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido</div>' ;
                 return false;
-              
+
             }
         }else if(tipozarpe=='ZN'){
             if(pasaporteMayor=='' && tipodoc=="P"){
                 msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido</div>' ;
                 return false;
-              
+
             }
         }
         if(cantAct==0){
@@ -982,7 +982,7 @@ function deletePassenger(){
                 var cantPass= document.getElementById("cantPasajeros");
                 let cant=parseInt(cantPass.getAttribute("data-cantPass"));
                 cantPass.innerHTML=cant+1;
-                
+
                 msj.innerHTML='<div class="alert alert-success">Pasajero eliminado con éxito.</div>' ;
 
             }else{
@@ -1336,7 +1336,7 @@ function eliminarTrip(){
             if(respuesta[0]==true){
                 let tr=document.getElementById('trip'+cedula);
                 tr.remove();
-              
+
                 msj.innerHTML='<div class="alert alert-success">Tripulante eliminado con éxito.</div>' ;
 
             }else{

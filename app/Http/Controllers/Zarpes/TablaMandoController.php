@@ -54,8 +54,31 @@ class TablaMandoController extends Controller
      *
      * @return Response
      */
-    public function store(CreateTablaMandoRequest $request)
+    public function store(Request $request)
     {
+        $validated = $request->validate([
+            'UAB_minimo' => 'required|numeric',
+            'UAB_maximo' => 'required|numeric',
+            'cant_tripulantes' => 'required|numeric',
+            "titulacion_minima"    => "required|array|min:1",
+            "titulacion_minima.*"  => "required",
+            "cargo"    => "required|array|min:1",
+            "cargo.*"  => "required",
+            "titulacion_maxima"    => "required|array|min:1",
+            "titulacion_maxima.*"  => "required",
+        ],
+
+            [
+                'UAB_minimo.required' => 'El campo UAB mínimo es obligatorio',
+                'UAB_maximo.required' => 'El campo UAB máximo es obligatorio',
+                'cant_tripulantes.required' => 'El campo Cantidad de Tripulantes es obligatorio',
+                'titulacion_maxima.*.required' => 'El campo Titulación Máxima es obligatorio',
+                'cargo.*.required'=>'El campo Cargo es obligatorio',
+                'titulacion_minima.*.required'=>'El campo Titulación Minima es obligatorio',
+
+            ]
+        );
+
         $input = $request->all();
 
         $tablaMando = $this->tablaMandoRepository->create($input);
@@ -137,8 +160,31 @@ class TablaMandoController extends Controller
      *
      * @return Response
      */
-    public function update($id, UpdateTablaMandoRequest $request)
+    public function update($id, Request $request)
     {
+        $validated = $request->validate([
+            'UAB_minimo' => 'required|numeric',
+            'UAB_maximo' => 'required|numeric',
+            'cant_tripulantes' => 'required|numeric',
+            "titulacion_minima"    => "required|array|min:1",
+            "titulacion_minima.*"  => "required",
+            "cargo"    => "required|array|min:1",
+            "cargo.*"  => "required",
+            "titulacion_maxima"    => "required|array|min:1",
+            "titulacion_maxima.*"  => "required",
+        ],
+
+            [
+                'UAB_minimo.required' => 'El campo UAB mínimo es obligatorio',
+                'UAB_maximo.required' => 'El campo UAB máximo es obligatorio',
+                'cant_tripulantes.required' => 'El campo Cantidad de Tripulantes es obligatorio',
+                'titulacion_maxima.*.required' => 'El campo Titulación Máxima es obligatorio',
+                'cargo.*.required'=>'El campo Cargo es obligatorio',
+                'titulacion_minima.*.required'=>'El campo Titulación Minima es obligatorio',
+
+            ]
+        );
+        
         $tablaMando = $this->tablaMandoRepository->find($id);
 
         if (empty($tablaMando)) {

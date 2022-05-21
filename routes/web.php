@@ -48,6 +48,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/permissions/{permission}/edit', [App\Http\Controllers\Publico\PermissionController::class, 'edit'])->name('permissions.edit');
     Route::put('/permissions/{permission}', [App\Http\Controllers\Publico\PermissionController::class, 'update'])->name('permissions.update');
     Route::delete('/permissions/{permission}', [App\Http\Controllers\Publico\PermissionController::class, 'destroy'])->name('permissions.destroy');
+    Route::get('permissionDelete.index',[\App\Http\Controllers\Publico\PermissionController::class,'indexPermissionDeleted'])->name('permissionDelete.index');
+    Route::get('permissionDeleted/{menu}',[\App\Http\Controllers\Publico\PermissionController::class,'restorePermissionDeleted'])->name('permissionDeleted.restore');
 
 
     Route::get('/roles', [App\Http\Controllers\Publico\RoleController::class, 'index'])->name('roles')->middleware('auth');

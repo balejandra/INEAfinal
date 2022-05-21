@@ -35,6 +35,7 @@
                             @can('crear-permiso')
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{ route('permissions.create') }}">Nuevo</a>
+                                <a class="btn btn-warning btn-sm"  href="{{ route('permissionDelete.index') }}">Permisos Eliminados</a>
                             </div>
                             @endcan
                         </div>
