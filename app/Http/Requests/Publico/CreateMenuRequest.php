@@ -23,8 +23,4 @@ class CreateMenuRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
-        return Menu::$rules;
-    }
 }

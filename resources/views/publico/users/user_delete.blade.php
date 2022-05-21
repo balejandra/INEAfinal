@@ -15,14 +15,12 @@
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
-
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header btncancelarZarpes text-white">
                             <i class="fas fa-users-slash"></i>
-                            <strong>Usuarios Eliminados</strong>
+                            <strong >Usuarios Eliminados</strong>
                             @can('crear-usuario')
                                 <div class="card-header-actions">
                                     <a class="btn btn-primary btn-sm"  href="{{ route('users.index') }}">Volver a Usuarios</a>
@@ -46,7 +44,7 @@
                                         <td>{{ $user->nombres }}</td>
                                         <td>{{ $user->tipo_usuario }}</td>
                                         <td>
-                                            @can('consultar-usuario')
+                                            @can('eliminar-usuario')
                                                 <a class="btn btn-sm btn-warning" href="  {{ route('userDeleted.restore', [$user->id]) }}">
                                                     <i class="fas fa-trash-restore"></i>
                                                 </a>

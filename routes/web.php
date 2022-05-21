@@ -25,17 +25,20 @@ Route::get('error', function (){
 })->name('error');
 
 Route::get('consultasaime',[\App\Http\Controllers\Publico\UserController::class,'consulta'])->name('consultasaime');
-Route::get('userDelete.index',[\App\Http\Controllers\Publico\UserController::class,'indexUserDeleted'])->name('userDelete.index');
-Route::get('userDeleted/{user}',[\App\Http\Controllers\Publico\UserController::class,'restoreUserDeleted'])->name('userDeleted.restore');
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verified');
 
 Route::middleware(['auth' , 'verified'])->group(function () {
     Route::resource('menus', \App\Http\Controllers\Publico\MenuController::class)->middleware('auth');
+    Route::get('menuDelete.index',[\App\Http\Controllers\Publico\MenuController::class,'indexMenuDeleted'])->name('menuDelete.index');
+    Route::get('menuDeleted/{menu}',[\App\Http\Controllers\Publico\MenuController::class,'restoreMenuDeleted'])->name('menuDeleted.restore');
 
     Route::resource('menuRols', \App\Http\Controllers\Publico\Menu_rolController::class);
 
     Route::resource('users', \App\Http\Controllers\Publico\UserController::class);
+    Route::get('userDelete.index',[\App\Http\Controllers\Publico\UserController::class,'indexUserDeleted'])->name('userDelete.index');
+    Route::get('userDeleted/{user}',[\App\Http\Controllers\Publico\UserController::class,'restoreUserDeleted'])->name('userDeleted.restore');
+
     Route::get('EstablecimientoUser',[\App\Http\Controllers\Publico\UserController::class,'EstablecimientoUser'])->name('AsignarEstablecimiento');
 
     Route::get('/permissions', [App\Http\Controllers\Publico\PermissionController::class, 'index'])->name('permissions')->middleware('auth');

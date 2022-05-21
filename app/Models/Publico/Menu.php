@@ -62,19 +62,6 @@ class Menu extends Model implements Auditable
         'enabled' => 'boolean'
     ];
 
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'name' => 'required',
-        'url' => 'required',
-        'parent' => 'required',
-        'order' => 'required',
-        'enabled' => 'required'
-    ];
-
     public function menus_roles()
     {
         return $this->belongsToMany(Menu_rol::class,'menus_roles','menu_id');
@@ -127,7 +114,7 @@ class Menu extends Model implements Auditable
     {
         $menus = new Menu();
         $data = $menus->getPadres($front);
-         
+
         $menuAll = [];
         foreach ($data as $line) {
             $item = [ array_merge($line, ['submenu' => $menus->getHijos($data, $line) ]) ];

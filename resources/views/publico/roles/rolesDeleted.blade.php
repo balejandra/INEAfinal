@@ -29,9 +29,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header  btncancelarZarpes text-white">
                             <i class="fas fa-trash-restore"></i>
-                            <strong>Roles</strong>
+                            <strong>Roles Eliminados</strong>
                             @can('crear-rol')
                                 <div class="card-header-actions">
                                     <a class="btn btn-primary btn-sm"  href="{{ route('roles') }}">Volver a Roles</a>
