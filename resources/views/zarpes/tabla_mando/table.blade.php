@@ -2,7 +2,7 @@
     <thead>
         <th>UAB mínimo</th>
         <th>UAB máximo</th>
-        <th>Cantidad Tripulantes</th>
+        <th>Tripulantes</th>
         <th>Cargo</th>
         <th>Titulación Mínima</th>
         <th  style="width: max-content">Acciones</th>

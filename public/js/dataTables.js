@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#generic-table').DataTable({
         responsive: true,
-        fixedHeader: true,
+        autoWidth: true,
         language: {
             "url": "../assets/DataTables/es_es.json"
         },
@@ -11,10 +11,10 @@ $(document).ready(function() {
         ]
     });
 
-
     $('button[data-toggle="tab"]').on( 'shown.bs.tab', function (e) {
         $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
     } );
+
 
     $('table.display').DataTable({
         responsive: true,

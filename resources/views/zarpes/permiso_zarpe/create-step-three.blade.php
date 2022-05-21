@@ -40,7 +40,7 @@
 
 @php
     $solicitud= json_decode(session('solicitud'));
-    
+
     $tipozarpes=$solicitud->tipo_zarpe_id;
     $descripcion=$solicitud->descripcion_navegacion_id;
     $capitaniaOrigen=$solicitud->origen_capitania_id;
@@ -152,16 +152,16 @@
                     <div class="card-footer text-right">
                         <div class="row">
                             @if($bandera=='extranjera')
-                            <div class="col-md-6 text-left">
+                            <div class="col text-left">
 				                <a href="{{ route('permisoszarpes.CreateStepTwoE') }}" class="btn btn-primary pull-right">Anterior</a>
 				            </div>
                             @else
-                            <div class="col-md-6 text-left">
+                            <div class="col text-left">
 				                <a href="{{ route('permisoszarpes.CreateStepTwo') }}" class="btn btn-primary pull-right">Anterior</a>
 				            </div>
                             @endif
 
-				            <div class="col-md-6 text-right">
+				            <div class="col text-right">
 				                <button type="submit" class="btn btn-primary">Siguiente</button>
 				            </div>
 				        </div>

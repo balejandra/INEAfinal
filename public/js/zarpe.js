@@ -66,12 +66,18 @@ function getmatricula(siglas,destinacion,numero) {
                     manga=(respuesta[0].manga);
                     $("#manga").val(manga);
                     let licenciaNavegacion=valiacionSgm[3].licenciaNavegacion;
+                   let fechalicencia=valiacionSgm[4].fecha_vencimientolic;
                     let certificadoRadio=valiacionSgm[3].certificadoRadio;
+                   let fechacertificado=valiacionSgm[4].fecha_vencimientocert;
                     let numeroIsmm=valiacionSgm[3].numeroIsmm;
+                   let fechaIsmm=valiacionSgm[4].fecha_vencimientoismm;
 
                     $('#licenciaNavegacion').val(licenciaNavegacion);
+                   $('#fechalicencia').val(fechalicencia);
                     $('#certificadoRadio').val(certificadoRadio);
+                   $('#fechacertificado').val(fechacertificado);
                     $('#ismm').val(numeroIsmm);
+                   $('#fechaIsmm').val(fechaIsmm);
                }else{
                     if(valiacionSgm[0]!=true){
                         divError.innerHTML='<div class="alert alert-danger"> '+valiacionSgm[0]+' </div>';

@@ -144,83 +144,117 @@
                                                         <div class="text-center">
                                                             <h4>Datos de la embarcación</h4>
                                                         </div>
+                                                        <div class="row rounded border p-3 justify-content-center ">
+                                                        <div class="row row-cols-1 row-cols-md-3">
+                                                            <div class="col">
+                                                                <div class="card border-primary mb-3">
+                                                                    <div class="card-header">Matrícula:
+                                                                        <input type="text" id="matricula" class="w-50"
+                                                                               name="matricula" value="" readonly></div>
 
-                                                        <table class="table table-bordered" id="table-nooptionsXX" style="width:100%">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>Dato</th>
-                                                                <th>Resultado</th>
-                                                                <th>Dato</th>
-                                                                <th>Resultado</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <th width="25%" class="bg-light">MATRÍCULA</th>
-                                                                <td><input type="text" class="col-md-12" id="matricula"
-                                                                           name="matricula" value="" readonly></td>
-                                                                <th width="20%" class="bg-light">NOMBRE</th>
-                                                                <td><input type="text" class="col-md-12" id="nombre"
-                                                                           name="nombre" readonly></td>
-                                                            </tr>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Nombre:
+                                                                            <input type="text" id="nombre" class="w-50"
+                                                                            name="nombre" readonly>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="card border-primary mb-3">
+                                                                    <div class="card-header">Destinación:
+                                                                        <input type="text" name="destinacion" class="w-50"
+                                                                               id="destinacion" readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            <div class="row">
+                                                            <div class="col-sm-2">
+                                                                <div class="card border-primary mb-3">
+                                                                    <div class="card-header">UAB:
+                                                                        <input type="text" name="UAB" id="UAB" class="w-50"
+                                                                               readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <div class="card border-primary mb-3">
+                                                                    <div class="card-header">Eslora:
+                                                                        <input type="text" name="eslora" class="w-50" id="eslora" readonly></div>
 
-                                                            <tr>
-                                                                <th class="bg-light">DESTINACIÓN DEL BUQUE</th>
-                                                                <td><input type="text" class="col-md-12"
-                                                                           name="destinacion"
-                                                                           id="destinacion" readonly></td>
-                                                                <th class="bg-light">UAB</th>
-                                                                <td><input type="text" class="col-md-12" name="UAB"
-                                                                           id="UAB"
-                                                                           readonly></td>
-                                                            </tr>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <div class="card border-primary mb-3">
+                                                                    <div class="card-header">Manga:
+                                                                        <input type="text" name="manga" class="w-50"
+                                                                               id="manga" readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                                <div class="col">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header"> Propietario:
+                                                                            <input type="text"
+                                                                                   name="nombre_propietario" id="nombre_propietario" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Número de Identificación:
+                                                                            <input type="text"
+                                                                                   name="numero_identificacion"
+                                                                                   id="numero_identificacion" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-                                                            <tr>
-                                                                <th class="bg-light">PROPIETARIO</th>
-                                                                <td><input type="text" class="col-md-12"
-                                                                           name="nombre_propietario"
-                                                                           id="nombre_propietario"
-                                                                           readonly>
-                                                                    <input type="text" name="nombre_propietario"
-                                                                           id="nombre_propietario" hidden>
-                                                                </td>
-                                                                <th class="bg-light">CÉDULA / RIF</th>
-                                                                <td>
-                                                                    <input type="text" class="col-md-12"
-                                                                           name="numero_identificacion"
-                                                                           id="numero_identificacion" readonly>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="bg-light">ESLORA</th>
-                                                                <td><input type="text" class="col-md-12" name="eslora"
-                                                                           id="eslora" readonly></td>
-                                                                <th class="bg-light">MANGA</th>
-                                                                <td><input type="text" class="col-md-12" name="manga"
-                                                                           id="manga" readonly></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="bg-light">LICENCIA DE NAVEGACIÓN</th>
-                                                                <td><input type="text" class="col-md-12"
-                                                                           name="licenciaNavegacion"
-                                                                           id="licenciaNavegacion"
-                                                                           readonly></td>
-                                                                <th class="bg-light">ASIGNACIÓN DE NÚMERO ISMM</th>
-                                                                <td><input type="text" class="col-md-12" name="ismm"
-                                                                           id="ismm" readonly></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="bg-light">CERT. NAC. DE SEGURIDAD
-                                                                    RADIOTELEFONICA
-                                                                </th>
-                                                                <td><input type="text" class="col-md-12"
-                                                                           name="certificadoRadio" id="certificadoRadio"
-                                                                           readonly></td>
-                                                                <th class="bg-light"></th>
-                                                                <td></td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
+                                                            </div>
+                                                            <div class="row row-cols-1 row-cols-md-3">
+
+                                                                <div class="col">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Licencia de Navegación
+                                                                            <input type="text" name="licenciaNavegacion" class="w-75"
+                                                                                   id="licenciaNavegacion" readonly>
+                                                                            <br><br>
+                                                                            Fecha de Vencimiento:
+                                                                            <input type="text" class="w-50" name="fechalicencia"
+                                                                                   id="fechalicencia" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Asignación de Número ISMM:
+                                                                            <input type="text" name="ismm" id="ismm" readonly class="w-75">
+                                                                            <br><br>
+                                                                           Fecha de Vencimiento:
+                                                                            <input type="text" class="w-50" name="fechacertificado"
+                                                                                   id="fechacertificado" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Cert. Nac. de Seguridad
+                                                                            Radiotelefónica:
+                                                                            <input type="text" name="certificadoRadio" id="certificadoRadio"
+                                                                                   readonly class="w-75">
+                                                                            <br><br>
+                                                                            Fecha de Vencimiento:
+                                                                            <input type="text" class="w-50" name="fechaIsmm"
+                                                                                   id="fechaIsmm" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

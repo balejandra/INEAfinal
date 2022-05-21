@@ -244,8 +244,9 @@ class PermisoZarpeController extends Controller
                                             $valida['potencia_kw'] = $validacionSgm[$i]->potencia_kw;
                                             $valida["cant_pasajeros"] = $validacionSgm[$i]->capacidad_personas;
                                             $valida["pasajerosRestantes"] = $validacionSgm[$i]->capacidad_personas;
-                                            
+
                                             $nroCorrelativos["licenciaNavegacion"]=$validacionSgm[$i]->nro_correlativo;
+                                            $fechavenc["fecha_vencimientolic"]=$validacionSgm[$i]->fecha_vencimiento;
                                             $request->session()->put('validacion', json_encode($valida));
                                         }
                                         break;
@@ -260,11 +261,13 @@ class PermisoZarpeController extends Controller
                                         } else {
                                             $val2 = true;
                                             $nroCorrelativos["certificadoRadio"]=$validacionSgm[$i]->nro_correlativo;
+                                            $fechavenc["fecha_vencimientocert"]=$validacionSgm[$i]->fecha_vencimiento;
                                         }
                                         break;
                                     case "ASIGNACIÓN DE NÚMERO ISMM":
                                         $val3 = true;
                                         $nroCorrelativos["numeroIsmm"]=$validacionSgm[$i]->nro_correlativo;
+                                        $fechavenc["fecha_vencimientoismm"]=$validacionSgm[$i]->fecha_vencimiento;
 
                                     break;
                                 }
@@ -272,7 +275,7 @@ class PermisoZarpeController extends Controller
 
                             $data2 = [
                                 "data" => $data,
-                                "validacionSgm" => [$val1, $val2, $val3,$nroCorrelativos],
+                                "validacionSgm" => [$val1, $val2, $val3,$nroCorrelativos,$fechavenc],
                             ];
                             echo json_encode($data2);
                         } else {
@@ -633,8 +636,8 @@ class PermisoZarpeController extends Controller
 
        $validation = json_decode($request->session()->get('validacion'), true);
        $tripulantes = $request->session()->get('tripulantes');
-        
-        
+
+
        $request->session()->put('validacion', json_encode($validation));
         if (is_array($tripulantes) && (count($tripulantes) >= $validation['cant_tripulantes'] && count($tripulantes) <= $validation['cant_pasajeros'])) {
              $capitan=0;
@@ -683,9 +686,9 @@ class PermisoZarpeController extends Controller
         if ((isset($solicitud->fecha_hora_salida)))  {
         $passengers = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
-        
+
         $tripulantes=$request->session()->get('tripulantes');
-       
+
         $this->step = 6;
 
         return view('zarpes.permiso_zarpe.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('validation', $validation)->with('titulo', $this->titulo);
@@ -911,7 +914,7 @@ class PermisoZarpeController extends Controller
                         $request->session()->put('pasajeros', $pasajeros);
                         $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
                         $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
-                        
+
                         $request->session()->put('validacion', json_encode($validation));
                         $borrado =true;
                     }
@@ -1019,8 +1022,8 @@ class PermisoZarpeController extends Controller
                                 array_push($tripulantes, $trip);
                                 $request->session()->put('tripulantes', $tripulantes);
                                 $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros)); 
-                                
+                                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+
                                 $request->session()->put('validacion', json_encode($validation));
                             }else{
                                 $InfoMarino = "FoundButMaxTripulationLimit";
@@ -1711,7 +1714,7 @@ public function AddDocumentos(Request $request){
         $validation = json_decode($request->session()->get('validacion'), true);
          $tripulantes=$request->session()->get('tripulantes');
        // $cantPasajeros = $validation['cant_pasajeros'] - count($tripulantes);
-        
+
         $indice="";
 
            if ($_REQUEST['menor'] == "SI") {

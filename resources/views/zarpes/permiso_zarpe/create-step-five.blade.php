@@ -97,15 +97,14 @@
                                             </b>
                                         </div>
                                         <div class="row px-3">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" id="table-Trip" style="width:100%">
+                                                <table class="table table-bordered" id="example1" style="width:100%">
                                                     <thead>
                                                     <tr>
                                                         <th>Función</th>
                                                         <th>Cédula</th>
                                                         <th>Nombres y Apellidos</th>
-                                                        <th>fecha emisión</th>
-                                                        <th>Tipo Doc.</th>
+                                                        <th>Fecha Emisión</th>
+                                                        <th>Tipo Documento</th>
                                                         <th>Documento</th>
                                                         <th  class="text-center">Eliminar</th>
                                                     </tr>

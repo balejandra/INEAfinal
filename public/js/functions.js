@@ -1140,6 +1140,9 @@ function validacionMarino(){
 
                             if(validacion[0] ==true){ //verifico si está autorizado para navegar en la envarcación
                                 console.log('RESPUESTA',respuesta);
+
+
+
                                 let cantidad=respuesta.length;
                                 let fecha=respuesta[cantidad-1].fecha_vencimiento.substr(0, 10);
                                 let fecha2= fecha.split('-');
@@ -1149,14 +1152,30 @@ function validacionMarino(){
                                 fechaemision=fechaemision2[2]+"-"+fechaemision2[1]+"-"+fechaemision2[0];
                                 msj.innerHTML="";
 
-                                var html="<tr id='trip"+respuesta[cantidad-1].cedula+"'> <td>"+respuesta[cantidad-1].funcion+"</td><td>"+respuesta[cantidad-1].cedula+"</td> <td>"+respuesta[cantidad-1].nombre+"</td>   <td>"+fechaemision+"</td> <td>"+respuesta[cantidad-1].solicitud+"</td> <td>"+respuesta[cantidad-1].documento+"</td><td class='text-center'><a href='#' onclick='openModal("+respuesta[cantidad-1].cedula+")' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
-                                cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
-                                var nodata=document.getElementById('nodata');
 
-                                if(nodata!=null){
-                                    tabla.innerHTML="";
-                                }
-                                tabla.innerHTML+=html;
+                                $('#example1').DataTable({
+                                    responsive: true,
+                                    autoWidth: true,
+                                    language: {
+                                        "url": "../assets/DataTables/es_es.json"
+                                    },
+                                    "destroy": true,
+                                    "createdRow": function( row, data, dataIndex ) {
+                                        $(row).attr('id','trip'+respuesta[cantidad-1].cedula );
+                                    },
+                                    "data": respuesta,
+                                    "columns":[
+                                        {"data":'funcion', 'title': 'Función'},
+                                        {"data":'cedula'},
+                                        {"data":'nombre'},
+                                        {"data":'fecha_vencimiento'},
+                                        {"data":'solicitud'},
+                                        {"data":'documento'},
+                                        {"defaultContent": "<a href='#' onclick='openModal("+respuesta[cantidad-1].cedula+")' ><i class='fa fa-trash text-center' title='Eliminar'></i></a>"},
+                                    ],
+
+                                });
+
                                 document.getElementById('cedula').value="";
 
 
