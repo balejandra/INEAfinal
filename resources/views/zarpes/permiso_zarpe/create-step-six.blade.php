@@ -122,8 +122,8 @@
 
                                             <div class="col-md-12 py-2">
                                                 <b>Cantidad de pasajeros disponible para esta embarcación:</b>
-                                                <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
-                                                    {{ $cantPasajeros ?? '' }}
+                                                <span id="cantPasajeros" data-cantPass="{{  $validation['pasajerosRestantes'] }}">
+                                                    {{ $validation['pasajerosRestantes'] ?? '' }}
                                                 </span>
                                             </div>
 

@@ -518,7 +518,7 @@ if (doc){
 
 function getMarinosZI(pass) {
     let funcion= document.getElementById('funcion').value;
-    let tipodoc= document.getElementById('tipodoc').value;
+    let tipodoc= document.getElementById('tipodocZI').value;
     let nrodoc= document.getElementById('nrodoc').value;
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
@@ -530,9 +530,13 @@ function getMarinosZI(pass) {
     msj.innerHTML="";
 
 
-    if(funcion=='' || tipodoc =='' || nrodoc =='' || nombres == '' || apellidos == '' || rango==''){
+    if(funcion=='' || tipodoc =='' || nrodoc ==''){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
-    }else{
+    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || rango=='')){
+    
+        msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
+    
+    }else{ 
          msj.innerHTML='';
         if(tipodoc=='V'){
             ruta=route('validacionMarinoZI');
@@ -604,7 +608,7 @@ function getMarinosZI(pass) {
 
 
                         document.getElementById('funcion').value="";
-                        document.getElementById('tipodoc').value="";
+                        document.getElementById('tipodocZI').value="";
                         document.getElementById('nrodoc').value="";
                          document.getElementById('nombres').value="";
                          document.getElementById('apellidos').value="";
@@ -686,3 +690,19 @@ function closeModalZI() {
 
 
 
+
+
+
+$( "#tipodocZI" ).change(function () {
+    var str = "";
+    str =$( "#tipodocZI" ).val();
+ 
+    if(str=="P"){
+      $('.DatosRestantes').attr('style', 'display:block');
+    }else{
+        $('.DatosRestantes').attr('style', 'display:none');
+      
+    }
+
+  })
+  .change();
