@@ -95,6 +95,7 @@
 .text-norma{
     font-size: 16px;
     background: whitesmoke;
+    text-align: justify;
 }
 .card-acepto{
     background: #d5d5d5;

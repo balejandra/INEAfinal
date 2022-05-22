@@ -1927,6 +1927,33 @@ $(document).ready(function() {
         })
     });
 
+$('.confirmation_other').on('click', function(event) {
+    event.preventDefault();
+    var button = $(this);
+    accion=button.data('action');
+
+    bootbox.confirm({
+        title: "Confirmación",
+        message: "Está seguro que desea "+accion+" este registro?",
+        centerVertical:true,
+        animate:true,
+        buttons: {
+            confirm: {
+                label: 'Si',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if(result) {
+                window.location=button.data('route')
+            }
+        }
+    });
+})
 
 $(document).ready(function() {
     $("#solicitud").on("click", function() {
