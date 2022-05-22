@@ -157,7 +157,7 @@
                                                 <th>Bandera</th>
                                                 <th>Matrícula</th>
                                                 <th>Tipo Navegación</th>
-                                                <th>Status</th>
+                                                <th>Estatus</th>
                                                 <th>Acciones</th>
                                             </tr>
                                             </thead>

@@ -79,3 +79,29 @@ img.nav-avatar {
         margin: 0 30px !important;
     }
 }
+
+.input-transparente{
+    background: transparent;
+}
+
+.text-th{
+    font-weight: 600;
+}
+
+.let {
+    text-transform: lowercase;
+}
+
+.let:first-letter {
+    text-transform: uppercase;
+}
+
+.title p:first-of-type::before {
+    content: "";
+    position: absolute;
+    height: 5px;
+    background: #5ad67d;
+    width: 35px;
+    top: -0.75rem;
+    border-radius: 3px;
+}
