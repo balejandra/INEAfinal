@@ -67,8 +67,8 @@
                                         </td>
                                         <td>
                                             @can('eliminar-rol')
-                                                <a class="btn btn-sm btn-success"
-                                                   href=" {{route('roleDeleted.restore',$role->id)}}">
+                                                <a class="btn btn-sm btn-warning confirmation_other"
+                                                   data-route=" {{route('roleDeleted.restore',$role->id)}}" data-action="RESTAURAR">
                                                     <i class="fas fa-trash-restore"></i>
                                                 </a>
                                             @endcan

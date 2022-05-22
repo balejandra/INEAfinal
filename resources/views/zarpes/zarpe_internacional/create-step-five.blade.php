@@ -59,7 +59,7 @@
                                         </div>
                                         <div class="row margin">
 
-                                            <div class="col-sm-12 col-md-4 col-lg-3 px-1">
+                                            <div class="col-sm-2 px-1">
                                                 <div class="form-group">
                                                     <label>Función:</label>
                                                     <select id="funcion" name="funcion" class="form-control custom-select">
@@ -72,14 +72,14 @@
 
                                             </div>
 
-                                            <div class="col-sm-12 col-md-4 col-lg-3  px-1">
+                                            <div class="col-sm-2 px-1">
                                                 <div class="form-group">
                                                     <label for="title">Tipo documento:</label>
                                                     {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodocZI']) !!}
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-4 col-lg-3  px-1">
+                                            <div class="col-sm-3  px-1">
                                                 <div class="form-group">
                                                     <label for="title">Cédula/Pasaporte:</label>
                                                     <input type="text" class="form-control" id="nrodoc" name="nrodoc" maxlength="10">
@@ -87,14 +87,14 @@
                                             </div>
 
 
-                                            <div class="col-sm-12 col-md-4 col-lg-3  px-1 DatosRestantes">
+                                            <div class="col-sm-3  px-1 DatosRestantes">
                                                 <div class="form-group" >
                                                     <label for="title">Nombres:</label>
                                                     <input type="text" class="form-control" id="nombres" name="nombres"  onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-6 col-lg-3  px-1 DatosRestantes">
+                                            <div class="col-sm-3  px-1 DatosRestantes">
                                                 <div class="form-group">
                                                     <label for="title">Apellidos:</label>
                                                     <input type="text" class="form-control" id="apellidos" name="apellidos" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
@@ -102,20 +102,20 @@
                                             </div>
 
 
-                                            <div class="col-sm-12 col-md-4 col-lg-3  px-1 DatosRestantes">
+                                            <div class="col-sm-3  px-1 DatosRestantes">
                                                 <div class="form-group">
                                                     <label for="title">Rango:</label>
                                                     <input type="text" class="form-control" id="rango" name="rango" maxlength="35">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-6 col-lg-3 ">
+                                            <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label for="title">Pasaporte:</label>
                                                     <input type="file" class="form-control" id="doc" name="doc"  >
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 my-2 text-center">
+                                            <div class="col-sm-1 my-2 text-center">
                                                 <br>
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="AddPasportsMarinos()">

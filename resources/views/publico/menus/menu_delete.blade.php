@@ -53,7 +53,8 @@
                                         <td>{{ $menu->deleted_at }}</td>
                                         <td>
                                             @can('eliminar-menu')
-                                                <a class="btn btn-sm btn-warning" href="  {{ route('menuDeleted.restore', [$menu->id]) }}">
+                                                <a class="btn btn-sm btn-warning confirmation_other" data-route="{{ route('menuDeleted.restore', [$menu->id]) }}"
+                                                data-action="RESTAURAR">
                                                     <i class="fas fa-trash-restore"></i>
                                                 </a>
                                             @endcan

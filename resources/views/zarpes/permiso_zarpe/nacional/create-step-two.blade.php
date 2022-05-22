@@ -145,68 +145,69 @@
                                                             <h4>Datos de la Embarcación</h4>
                                                         </div>
                                                         <div class="row rounded border p-3 justify-content-center ">
-                                                        <div class="row row-cols-1 row-cols-md-3">
-                                                            <div class="col-sm-12 col-md-6 col-lg-4">
-                                                                <div class="card border-primary mb-3">
-                                                                    <div class="card-header">Matrícula:<br>
-                                                                        <input type="text" id="matricula" class="w-100"
-                                                                               name="matricula" value="" readonly></div>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                                <div class="card border-primary mb-3">
-                                                                        <div class="card-header">Nombre:<br>
-                                                                            <input type="text" id="nombre" class="w-100"
-                                                                            name="nombre" readonly>
-                                                                        </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                                <div class="card border-primary mb-3">
-                                                                    <div class="card-header">Destinación:<br>
-                                                                        <input type="text" name="destinacion" class="w-50"
-                                                                               id="destinacion" readonly>
+                                                            <div class="row row-cols-1 row-cols-md-3">
+                                                                <div class="col-x-12 col-md-6 col-lg-4">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Matrícula:<br>
+                                                                            <input type="text" id="matricula" class="w-100 input-transparente"
+                                                                                   name="matricula" value="" readonly></div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                            <div class="row ">
-                                                            <div class="col-sm-12 col-md-4  col-lg-4">
-                                                                <div class="card border-primary mb-3">
-                                                                    <div class="card-header">UAB:<br>
-                                                                        <input type="text" name="UAB" id="UAB" class="w-50"
-                                                                               readonly>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4  col-lg-4">
-                                                                <div class="card border-primary mb-3">
-                                                                    <div class="card-header">Eslora:<br>
-                                                                        <input type="text" name="eslora" class="w-50" id="eslora" readonly></div>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                                <div class="card border-primary mb-3">
-                                                                    <div class="card-header">Manga:<br>
-                                                                        <input type="text" name="manga" class="w-50"
-                                                                               id="manga" readonly>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                                 <div class="col-sm-12 col-md-4 col-lg-4">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Nombre:<br>
+                                                                            <input type="text" id="nombre" class="w-100 input-transparente"
+                                                                                   name="nombre" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Destinación:<br>
+                                                                            <input type="text" name="destinacion" class="w-50 input-transparente"
+                                                                                   id="destinacion" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row ">
+                                                                <div class="col-sm-12 col-md-4  col-lg-4">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">UAB:<br>
+                                                                            <input type="text" name="UAB" id="UAB" class="w-50 input-transparente"
+                                                                                   readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-4  col-lg-4">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Eslora:<br>
+                                                                            <input type="text" name="eslora" class="w-50 input-transparente" id="eslora" readonly></div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                                                    <div class="card border-primary mb-3">
+                                                                        <div class="card-header">Manga:<br>
+                                                                            <input type="text" name="manga" class="w-50 input-transparente"
+                                                                                   id="manga" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
                                                                     <div class="card border-primary mb-3">
                                                                         <div class="card-header"> Propietario:<br>
                                                                             <input type="text"
-                                                                                   name="nombre_propietario" id="nombre_propietario"  class="w-100" readonly>
+                                                                                   name="nombre_propietario" id="nombre_propietario"  class="w-50 input-transparente" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                                                <div class="col-sm-6">
                                                                     <div class="card border-primary mb-3">
                                                                         <div class="card-header">Número de Identificación:<br>
-                                                                            <input type="text"
+                                                                            <input type="text" class="w-50 input-transparente"
                                                                                    name="numero_identificacion"
                                                                                    id="numero_identificacion" readonly>
                                                                         </div>
@@ -215,15 +216,14 @@
 
                                                             </div>
                                                             <div class="row row-cols-1 row-cols-md-3">
-
                                                                 <div class="col-sm-12 col-md-6 col-lg-4">
                                                                     <div class="card border-primary mb-3">
                                                                         <div class="card-header">Licencia de Navegación:<br>
-                                                                            <input type="text" name="licenciaNavegacion" class="w-100"
+                                                                            <input type="text" name="licenciaNavegacion" class="w-100 input-transparente"
                                                                                    id="licenciaNavegacion" readonly>
                                                                             <br><br>
                                                                             Fecha de Vencimiento:<br>
-                                                                            <input type="text" class="w-50" name="fechalicencia"
+                                                                            <input type="text" class="w-50 input-transparente" name="fechalicencia"
                                                                                    id="fechalicencia" readonly>
                                                                         </div>
                                                                     </div>
@@ -231,10 +231,10 @@
                                                                 <div class="col-sm-12 col-md-6 col-lg-4">
                                                                     <div class="card border-primary mb-3">
                                                                         <div class="card-header">Asignación de Número ISMM:<br>
-                                                                            <input type="text" name="ismm" id="ismm" readonly class="w-100">
+                                                                            <input type="text" name="ismm" id="ismm" readonly class="w-100 input-transparente">
                                                                             <br><br>
-                                                                           Fecha de Vencimiento:<br>
-                                                                            <input type="text" class="w-50" name="fechacertificado"
+                                                                            Fecha de Vencimiento:<br>
+                                                                            <input type="text" class="w-50 input-transparente" name="fechacertificado"
                                                                                    id="fechacertificado" readonly>
                                                                         </div>
                                                                     </div>
@@ -244,15 +244,14 @@
                                                                         <div class="card-header border">Certificado Nacional de Seguridad
                                                                             Radiotelefónica:<br>
                                                                             <input type="text" name="certificadoRadio" id="certificadoRadio"
-                                                                                   readonly class="w-100">
+                                                                                   readonly class="w-100 input-transparente">
                                                                             <br><br>
                                                                             Fecha de Vencimiento:<br>
-                                                                            <input type="text" class="w-50" name="fechaIsmm"
+                                                                            <input type="text" class="w-50 input-transparente" name="fechaIsmm"
                                                                                    id="fechaIsmm" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </div>

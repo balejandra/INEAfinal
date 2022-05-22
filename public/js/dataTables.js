@@ -44,7 +44,16 @@ $(document).ready(function() {
         "info":     false
     });
 
-
+    $('table.nooptionsearch').DataTable({
+        responsive: true,
+        searching: false,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        "paging":   false,
+        "ordering": false,
+        "info":     false
+    });
 
     $('#table-nooptions-equipo').DataTable({
         "scrollX": true,
@@ -88,4 +97,3 @@ $(document).ready(function() {
 
 } );
 
- 

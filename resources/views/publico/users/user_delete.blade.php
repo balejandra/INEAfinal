@@ -45,7 +45,8 @@
                                         <td>{{ $user->tipo_usuario }}</td>
                                         <td>
                                             @can('eliminar-usuario')
-                                                <a class="btn btn-sm btn-warning" href="  {{ route('userDeleted.restore', [$user->id]) }}">
+                                                <a class="btn btn-sm btn-warning confirmation_other"  data-action="RESTAURAR"
+                                                   data-route="  {{ route('userDeleted.restore', [$user->id]) }}">
                                                     <i class="fas fa-trash-restore"></i>
                                                 </a>
                                             @endcan

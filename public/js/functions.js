@@ -267,7 +267,7 @@ function eliminarCargosMandos(id, idcoord){
             if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="") {
     console.log("EDAD", calcularEdad(fechanac));
                 if(calcularEdad(fechanac)<18){
-                    
+
                     msj.innerHTML='<div class="alert alert-danger">Debe agregar un pasajero mayor de edad, por favor verifique.</div>' ;
                     return false;
                 }else{
@@ -368,7 +368,7 @@ function eliminarCargosMandos(id, idcoord){
 
             }
 
-            
+
         }else if(tipozarpe=='ZN'){
             if(pasaporteMenor=='' && tipodoc=="P"){
                 msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido para el menor</div>' ;
@@ -378,7 +378,7 @@ function eliminarCargosMandos(id, idcoord){
         }
 
         if(calcularEdad(fechanac)>=18){
-                    
+
             msj.innerHTML='<div class="alert alert-danger">Debe agregar un pasajero menor de edad en este formulario, por favor verifique.</div>' ;
             return false;
         }
@@ -1175,7 +1175,7 @@ function validacionMarino(){
                                         $(row).attr('id','trip'+respuesta[cantidad-1].cedula );
                                     },
                                     "data": respuesta,
-                                    
+
                                     "columns":[
                                         {"data":'funcion', 'title': 'Función'},
                                         {"data":'cedula'},
@@ -1875,7 +1875,7 @@ $(document).ready(function() {
 
         bootbox.confirm({
             title: "Confirmación",
-            message: "Esta seguro que desea "+accion+" esta solicitud?",
+            message: "Está seguro que desea "+accion+" esta solicitud?",
             centerVertical:true,
             animate:true,
             buttons: {
@@ -1904,7 +1904,7 @@ $(document).ready(function() {
 
             bootbox.confirm({
                 title: "Confirmacion",
-                message: "Estas seguro que desea "+data+ " esta solicitud?",
+                message: "Está seguro que desea "+data+ " esta solicitud?",
                 animate:true,
                 buttons: {
                     confirm: {
@@ -1927,6 +1927,33 @@ $(document).ready(function() {
         })
     });
 
+$('.confirmation_other').on('click', function(event) {
+    event.preventDefault();
+    var button = $(this);
+    accion=button.data('action');
+
+    bootbox.confirm({
+        title: "Confirmación",
+        message: "Está seguro que desea "+accion+" este registro?",
+        centerVertical:true,
+        animate:true,
+        buttons: {
+            confirm: {
+                label: 'Si',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if(result) {
+                window.location=button.data('route')
+            }
+        }
+    });
+})
 
 $(document).ready(function() {
     $("#solicitud").on("click", function() {

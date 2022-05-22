@@ -239,6 +239,7 @@ class ZarpeInternacionalController extends Controller
                                             $valida["pasajerosRestantes"] = $validacionSgm[$i]->capacidad_personas;
 
                                             $nroCorrelativos["licenciaNavegacion"]=$validacionSgm[$i]->nro_correlativo;
+                                            $fechavenc["fecha_vencimientolic"]=$validacionSgm[$i]->fecha_vencimiento;
                                             $request->session()->put('validacion', json_encode($valida));
                                         }
                                         break;
@@ -253,18 +254,20 @@ class ZarpeInternacionalController extends Controller
                                         } else {
                                             $val2 = true;
                                             $nroCorrelativos["certificadoRadio"]=$validacionSgm[$i]->nro_correlativo;
+                                            $fechavenc["fecha_vencimientocert"]=$validacionSgm[$i]->fecha_vencimiento;
                                         }
                                         break;
                                     case "ASIGNACIÓN DE NÚMERO ISMM":
                                         $val3 = true;
                                          $nroCorrelativos["numeroIsmm"]=$validacionSgm[$i]->nro_correlativo;
+                                        $fechavenc["fecha_vencimientoismm"]=$validacionSgm[$i]->fecha_vencimiento;
                                         break;
                                 }
                             }
 
                             $data2 = [
                                 "data" => $data,
-                                "validacionSgm" => [$val1, $val2, $val3,$nroCorrelativos],
+                                "validacionSgm" => [$val1, $val2, $val3,$nroCorrelativos,$fechavenc],
                             ];
                             echo json_encode($data2);
                         } else {
@@ -395,7 +398,7 @@ class ZarpeInternacionalController extends Controller
         $valida["potencia_kw"] = $permisoEstadia[0]->potencia_kw;
         $valida["UAB"] = $permisoEstadia[0]->arqueo_bruto;
         $request->session()->put('validacion', json_encode($valida));
-       
+
         return redirect()->route('zarpeInternacional.createStepThree');
 
     }
@@ -414,7 +417,7 @@ class ZarpeInternacionalController extends Controller
         //$capitania = Capitania::all();
        // $descripcionNavegacion = DescripcionNavegacion::all();
        $valida = json_decode($request->session()->get('validacion'), true);
- 
+
         $this->step = 3;
 
         return view('zarpes.zarpe_internacional.create-step-three')->with('paso', $this->step)->with('TipoZarpes', $TipoZarpes)->with('capitanias', $capitania)->with('bandera', $bandera)->with('titulo', $this->titulo);
@@ -491,7 +494,7 @@ class ZarpeInternacionalController extends Controller
 
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes = $request->session()->get('tripulantes');
-        
+
         $this->step = 5;
         return view('zarpes.zarpe_internacional.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('codigo', $codigo)->with('titulo', $this->titulo);
 
@@ -502,7 +505,7 @@ class ZarpeInternacionalController extends Controller
 
 
         $validation = json_decode($request->session()->get('validacion'), true);
-        
+
         $tripulantes = $request->session()->get('tripulantes');
         $validation = json_decode($request->session()->get('validacion'), true);
 
@@ -556,7 +559,7 @@ class ZarpeInternacionalController extends Controller
         $passengers = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
         $cantPasajeros =  $validation['pasajerosRestantes'] ;
-        
+
         $this->step = 6;
         return view('zarpes.zarpe_internacional.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('validation', $validation)->with('titulo', $this->titulo);
 
@@ -602,7 +605,7 @@ class ZarpeInternacionalController extends Controller
             $codigo = $this->codigo($solicitud);
 
             $solicitud['nro_solicitud'] = $codigo;
-             
+
             $saveSolicitud = PermisoZarpe::create($solicitud);
 
             $tripulantes = $request->session()->get('tripulantes');
@@ -671,10 +674,10 @@ class ZarpeInternacionalController extends Controller
             $caopDestino = $this->SendMail($saveSolicitud->id, 0);
 
             if ($capOrigin == true || $caopDestino == true) {
-                Flash::success('Se ha generado la solocitud <b>
+                Flash::success('Se ha generado la solicitud <b>
             ' . $codigo . '</b> exitosamente y se han enviado los correos de notificación correspondientes');
             } else {
-                Flash::success('Se ha generado la solocitud <b> ' . $codigo . '</b> exitosamente.');
+                Flash::success('Se ha generado la solicitud <b> ' . $codigo . '</b> exitosamente.');
 
             }
 
@@ -778,7 +781,7 @@ class ZarpeInternacionalController extends Controller
             $pasajeros=[];
         }
 
-        
+
         switch ($funcion) {
             case 'Capitán':
                  $cap="SI";
@@ -799,7 +802,7 @@ class ZarpeInternacionalController extends Controller
                  $cap="NO";
             break;
         }
- 
+
 
         if($capitanExiste){
             $return = [$tripulantes, "", "",'capitanExiste',""];
@@ -840,7 +843,7 @@ class ZarpeInternacionalController extends Controller
             ];
 
             if(is_array($tripulantes)){
-                
+
                 $indice=true;
                 foreach ($tripulantes as $value) {
 
@@ -848,8 +851,8 @@ class ZarpeInternacionalController extends Controller
                         $indice=false;
                     }
                 }
-                
-                
+
+
             }else{
                 $indice=true;
                 $tripulantes=[];
@@ -879,14 +882,14 @@ class ZarpeInternacionalController extends Controller
                                 $InfoMarino = "TripulanteExiste";
                             }else{
 
-                            
+
                                 if($validation['pasajerosRestantes']>0){
                                 array_push($tripulantes, $trip);
                                 $request->session()->put('tripulantes', $tripulantes);
                                 $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros)); 
+                                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                                 $request->session()->put('validacion', json_encode($validation));
-                                
+
                                 $InfoMarino='OK';
                                 }else{
                                     $InfoMarino = "FoundButMaxTripulationLimit";
@@ -978,14 +981,14 @@ class ZarpeInternacionalController extends Controller
                 if ($tripExiste) {
                     $InfoMarino = "TripulanteExiste";
                 }else{
-                   
+
                         if($validation['pasajerosRestantes']>0){
                             array_push($tripulantes, $trip);
                             $request->session()->put('tripulantes', $tripulantes);
                             $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                            $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros)); 
+                            $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                             $request->session()->put('validacion', json_encode($validation));
-                             
+
                             $InfoMarino = "OK";
                              $vj=[true];
                         }else{
@@ -999,9 +1002,9 @@ class ZarpeInternacionalController extends Controller
                 array_push($tripulantes, $trip);
                 $request->session()->put('tripulantes', $tripulantes);
                 $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros)); 
+                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                 $request->session()->put('validacion', json_encode($validation));
-                  
+
                 $InfoMarino = "OK";
                  $vj=[true];
             }
@@ -1029,25 +1032,25 @@ class ZarpeInternacionalController extends Controller
                 $tripulantes=[];
                 $request->session()->put('tripulantes', $tripulantes);
                 $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros)); 
+                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                 $request->session()->put('validacion', json_encode($validation));
                 $borrado =[true, $validation['cantPassAbordo']];
         }else{
             if(is_array($tripulantes)){
-                
+
 
                 foreach ($tripulantes as $key=> $value) {
                     if($value['nro_doc']==$cedula){
 
                         array_splice($tripulantes, $key, 1);
                         $request->session()->put('tripulantes', $tripulantes);
-                        
+
                         $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                        $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros)); 
+                        $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                         $request->session()->put('validacion', json_encode($validation));
                         $borrado =[true, $validation['pasajerosRestantes'],$tripulantes];
 
-                       
+
                     }
                 }
             }
