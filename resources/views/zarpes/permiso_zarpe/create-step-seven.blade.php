@@ -44,25 +44,31 @@
                                                 </ul>
                                             </div>
                                         @endif
+                                            <style>
+                                                * {
+                                                    box-sizing: border-box;
+                                                }
+                                            </style>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-8 card-norma">
-                                                    <div class="card">
+                                            <div class="row declaracion">
+                                                <div class="blog-card">
+                                                    <div class="meta">
                                                         <div class="card-body text-norma">
                                                             “Declaro que la presente solicitud se hace bajo el estricto
                                                             cumplimiento de las normativas vigentes y las disposiciones
                                                             previstas por las leyes venezolanas”
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-4 card-norma">
-                                                    <div class="card">
-                                                        <div class="card-body card-acepto">
-
-                                                            <div class="form">
-                                                                <div class="inputGroup">
-                                                                    <input id="option1" name="option1" type="checkbox" required/>
-                                                                    <label for="option1">ACEPTO</label>
+                                                    <div class="description d-flex align-items-center">
+                                                        <div class="form">
+                                                            <div class="page__section page__custom-settings">
+                                                                <div class="page__toggle">
+                                                                    <label class="toggle">
+                                                                        <input class="toggle__input" type="checkbox" id="option1" name="option1" required>
+                                                                        <span class="toggle__label">
+                                                                          <span class="toggle__text">ACEPTO</span>
+                                                                        </span>
+                                                                    </label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -74,7 +80,7 @@
                                                 @media (min-width: 576px) {
                                                     .dataTables_wrapper {
                                                         margin: 0 auto;
-                                                        width: 75%;
+                                                        width: 70%;
                                                         align-content: center;
                                                     }
                                                 }
@@ -84,7 +90,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Equipo</th>
-                                                    <th style="width: 30%">Cantidad</th>
+                                                    <th style="width: 25%">Cantidad</th>
                                                     <th style="width: 30%">Otros</th>
                                                 </tr>
                                                 </thead>

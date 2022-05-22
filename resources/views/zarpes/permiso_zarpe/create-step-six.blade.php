@@ -128,14 +128,14 @@
                                             </div>
 
                                             <div class="table-responsive">
-                                                <table class="table table-bordered">
+                                                <table class="table table-bordered display" style="width: 100%;">
                                                     <thead>
                                                     <tr>
                                                         <th width="18%">Cédula</th>
                                                         <th>Nombres</th>
                                                         <th>Apellidos</th>
-                                                        <th width="5%">sexo</th>
-                                                        <th>Fecha nac.</th>
+                                                        <th width="5%">Sexo</th>
+                                                        <th width="10%">Fecha nacimiento</th>
                                                         <th width="5%">Menor</th>
                                                         <th width="5%">Representante</th>
                                                         <th width="5%">Acciones</th>
