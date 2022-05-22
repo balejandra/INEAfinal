@@ -159,7 +159,7 @@
                                         <input type="text"
                                                class="form-control"
                                                name="direccion" value="{{ old('direccion') }}"
-                                               placeholder="dirección" required>
+                                               placeholder="Dirección" required>
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>

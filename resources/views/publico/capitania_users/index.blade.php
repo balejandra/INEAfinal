@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">Usuarios de Capitanias</li>
+                <li class="breadcrumb-item">Usuarios de Capitanías</li>
             </ol>
         </nav>
     </div>
@@ -21,7 +21,7 @@
                      <div class="card">
                          <div class="card-header">
                              <i class="fas fa-user-tie"></i>
-                             Usuarios de Capitanias
+                             Usuarios de Capitanías
                              @can('crear-usuarios-capitanias')
                                  <div class="card-header-actions">
                                      <a class="btn btn-primary btn-sm"  href="{{ route('capitaniaUsers.create') }}">Nuevo</a>

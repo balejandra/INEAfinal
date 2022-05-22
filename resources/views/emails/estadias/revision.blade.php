@@ -5,8 +5,8 @@
     {{$mensaje}}
 
 @component('mail::panel')
-    <h2>Nombre Embarcacion: {{$nombre_buque}} </h2>
-    <h2>Buque Registro Nro: {{$matricula}} </h2>
+    <h2>Nombre Embarcación: {{$nombre_buque}} </h2>
+    <h2>Buque Registro Nro.: {{$matricula}} </h2>
     @if ($idstatus==2)
     <h2>Motivo Rechazo: {{$motivo}} </h2>
     @endif

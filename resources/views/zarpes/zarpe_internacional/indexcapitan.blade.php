@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-header bg-zarpes text-white">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe INTERNACIONAL</strong>
+                            <strong>Solicitud de Permisos de {{$titulo}}</strong>
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{ route('zarpeInternacional.createStepOne') }}">Nuevo</a>
                             </div>
@@ -47,12 +47,12 @@
                                     <table class="table table-striped table-bordered display" style="width:100%">
                                         <thead>
                                         <tr>
-                                            <th data-priority="1">Nro Solicitud</th>
+                                            <th data-priority="1">Nro. Solicitud</th>
                                             <th>Fecha de Solicitud</th>
                                             <th>Solicitante</th>
                                             <th>Bandera</th>
-                                            <th>Matricula</th>
-                                            <th>Tipo Navegacion</th>
+                                            <th>Matrícula</th>
+                                            <th>Tipo Navegación</th>
                                             <th data-priority="2">Status</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -152,11 +152,11 @@
                                                id="permisoZarpesdestino-table">
                                             <thead>
                                             <tr>
-                                                <th>Nro Solicitud</th>
+                                                <th>Nro. Solicitud</th>
                                                 <th>Solicitante</th>
                                                 <th>Bandera</th>
-                                                <th>Matricula</th>
-                                                <th>Tipo Navegacion</th>
+                                                <th>Matrícula</th>
+                                                <th>Tipo Navegación</th>
                                                 <th>Status</th>
                                                 <th>Acciones</th>
                                             </tr>

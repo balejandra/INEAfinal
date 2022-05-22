@@ -26,7 +26,7 @@
                         <div class='btn-group'>
                             {!! Form::open(['route' => ['capitanias.destroy', $capitania->id], 'method' => 'delete']) !!}
 
-                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el capitania $capitania->nombre ?')"]) !!}
+                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar la capitanía $capitania->nombre ?')"]) !!}
 
                             {!! Form::close() !!}
                         </div>

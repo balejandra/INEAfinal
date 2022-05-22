@@ -28,7 +28,7 @@
                     <div class='btn-group'>
                         {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
 
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el user $user->nombres ?')"]) !!}
+                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('¿Realmente desera eliminar el user $user->nombres ?')"]) !!}
 
                         {!! Form::close() !!}
                     </div>

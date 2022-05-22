@@ -34,7 +34,7 @@
                                  @can('crear-menu')
                                      <a class="btn btn-primary btn-sm"  href="{{ route('menus.create') }}">Nuevo</a>
                                  @endcan
-                                     <a class="btn btn-primary btn-sm"  href="{{ route('menuRols.index') }}">Listado de Roles y Menus</a>
+                                     <a class="btn btn-primary btn-sm"  href="{{ route('menuRols.index') }}">Listado de Roles y Menús</a>
                                      <a class="btn btn-warning btn-sm"  href="{{ route('menuDelete.index') }}">Menús Eliminados</a>
                              </div>
                          </div>

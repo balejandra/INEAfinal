@@ -32,7 +32,7 @@
 
                                 <th>Id</th>
                                 <th>Nombre</th>
-                                <th>Descripcion</th>
+                                <th>Descripción</th>
                                 <th>Url</th>
                                 <th>Padre</th>
                                 <th>Orden</th>

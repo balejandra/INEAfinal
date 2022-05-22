@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-header bg-zarpes text-white">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe INTERNACIONAL | Paso {{$paso}}</strong>
+                            <strong>Solicitud de Permisos de {{$titulo}} | Paso {{$paso}}</strong>
 
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm"

@@ -30,7 +30,7 @@
             <td>{{ $menu->url }}</td>
         </tr>
         <tr>
-            <th class="bg-light">Menu padre</th>
+            <th class="bg-light">Menú padre</th>
             <td><b>{{$parent[$menu->parent]}} </b> </td>
         </tr>
         <tr>

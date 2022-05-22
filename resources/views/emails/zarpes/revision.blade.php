@@ -3,7 +3,7 @@
     {{$mensaje}}
 @component('mail::panel')
     <h2>Nombre Embarcación: {{$nombre_buque}} </h2>
-    <h2>Buque Matricula Nro: {{$matricula}} </h2>
+    <h2>Buque Matrícula Nro: {{$matricula}} </h2>
     @if ($idstatus==1)
     <h2>Origen: {{$origen}} </h2>
     <h2>Destino: {{$destino}} </h2>

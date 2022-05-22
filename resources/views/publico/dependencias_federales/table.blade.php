@@ -29,7 +29,7 @@
                         &nbsp;&nbsp;&nbsp;
                     @endcan
                     @can('eliminar-dependencia')
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('¿Está seguto?')"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

@@ -3,7 +3,7 @@
 
         <th>Id</th>
         <th>Nombre</th>
-        <th>Descripcion</th>
+        <th>Descripción</th>
         <th>Url</th>
         <th>Padre</th>
         <th>Orden</th>
@@ -37,7 +37,7 @@
                 <div class='btn-group'>
                     {!! Form::open(['route' => ['menus.destroy', $menu->id], 'method' => 'delete']) !!}
 
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el menu $menu->name ?')"]) !!}
+                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el menú $menu->name ?')"]) !!}
 
                     {!! Form::close() !!}
                 </div>

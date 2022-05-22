@@ -12,7 +12,7 @@
     </div>
 
     <div class="form-group col-sm-4">
-        {!! Form::label('capitanes', 'Capitan:') !!}
+        {!! Form::label('capitanes', 'Capitán:') !!}
         {!! Form::select('user',$user, null, ['class' => 'form-control custom-select']) !!}
     </div>
 </div>

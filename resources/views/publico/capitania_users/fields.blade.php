@@ -13,7 +13,7 @@
 
 <!-- Capitania Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('capitania_id', 'Capitania:') !!}
+    {!! Form::label('capitania_id', 'Capitanía:') !!}
     {!! Form::select('capitania_id', $capitania, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione una capitania']) !!}
 </div>
 

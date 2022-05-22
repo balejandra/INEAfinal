@@ -7,8 +7,8 @@
     Detalles de la embarcación:
 
 @component('mail::panel')
-    <b>Nro de Solicitud:</b> {{$solicitud}} <br>
-    <b>Buque Matricula Nro:</b>  {{$matricula}} <br>
+    <b>Nro. de Solicitud:</b> {{$solicitud}} <br>
+    <b>Buque Matrícula Nro.:</b>  {{$matricula}} <br>
     <b>Solicitante:</b>  {{$nombres_solic}} {{$apellidos_solic}} <br>
     <b>Fecha y hora de salida:</b>  {{$fecha_salida}} <br>
     <b>Fecha y hora de regreso:</b>  {{$fecha_regreso}} <br>

@@ -3,7 +3,7 @@
     <table class="table">
         <tbody>
         <tr>
-            <th width='25%' class="bg-light">Nro de Solicitud</th>
+            <th width='25%' class="bg-light">Nro. de Solicitud</th>
             <td width='25%'>{{ $permisoZarpe->nro_solicitud }}</td>
             <th width='25%' class="bg-light col-md-2">Fecha de Solicitud</th>
             <td width='25%'>{{ $permisoZarpe->created_at}}</td>
@@ -15,7 +15,7 @@
             <td>{{ $permisoZarpe->user->nombres}} {{ $permisoZarpe->user->apellidos}}</td>
         </tr>
         <tr>
-            <th class="bg-light">Matricula Buque</th>
+            <th class="bg-light">Matrícula Buque</th>
             <td>{{ $permisoZarpe->matricula }}</td>
             <th class="bg-light">Nombre Buque</th>
             @if($permisoZarpe->bandera=='extranjera')
@@ -25,7 +25,7 @@
             @endif
         </tr>
         <tr>
-            <th class="bg-light">Tipo de Navegacion</th>
+            <th class="bg-light">Tipo de Navegación</th>
             <td>{{ $permisoZarpe->tipo_zarpe->nombre }}</td>
             <th class="bg-light">Descripcion de Navegación</th>
             <td><b>{{$descripcionNavegacion->descripcion}}</b></td>
@@ -109,7 +109,7 @@
             <tbody>
             <thead>
             <th>Nombres y Apellidos</th>
-            <th>Documentacion</th>
+            <th>Documentación</th>
             <th>Sexo</th>
             <th>menor</th>
             <th>Documentos</th>
@@ -203,7 +203,7 @@
             <thead>
             <tr>
                 <th>Nombre y Apellido</th>
-                <th>Accion</th>
+                <th>Acción</th>
                 <th>Motivo</th>
                 <th>Fecha</th>
             </tr>

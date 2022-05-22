@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('capitaniaUsers.index') !!}">Usuarios de Capitania</a>
+                    <a href="{!! route('capitaniaUsers.index') !!}">Usuarios de Capitanía</a>
                 </li>
                 <li class="breadcrumb-item active">Crear</li>
             </ol>
@@ -24,7 +24,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <i class="fas fa-user-tie"></i>
-                                <strong>Crear Usuario de Capitania</strong>
+                                <strong>Crear Usuario de Capitanía</strong>
                             </div>
                             <div class="card-body">
                                 <div class="row">
