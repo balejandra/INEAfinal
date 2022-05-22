@@ -43,14 +43,9 @@
 <div class="row">
 <div class="form-group col-sm-6">
     {!! Form::label('role id', 'Rol asignado:') !!}
-    <select name="roles" id="" title="dsdsf">
-        <option value="">Seleccione</option>
-        @foreach ($roles as $rol)
-            <option value="{{$rol->id}}">{{$rol->nombre}} </option>
-        @endforeach
-    </select>
     {!! Form::select('roles', $roles, null, ['class' => 'roles form-control custom-select',
-'placeholder' => 'Puede asignar un Rol...','onchange="requeridos();"', 'title'=>'dsflsf']) !!}
+'placeholder' => 'Puede asignar un Rol...','onchange="requeridos();"', 'title'=>'Si no encuentra su Rol en el listado, asegúrese que el mismo tenga un Menú asociado ']) !!}
+    <small class="text-muted fw-lighter">Si no encuentra su Rol en el listado, asegúrese que el mismo tenga un Menú asociado</small>
 </div>
 </div>
 

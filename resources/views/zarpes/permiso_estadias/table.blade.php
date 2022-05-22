@@ -158,7 +158,7 @@
                         @endphp
                         <div class="form-group col-sm-6">
                             {!! Form::label('fecha_visita', 'Fecha de Visita:') !!}
-                            <input type="date" name="fecha_visita" class="form-control" min="{{$fechaActual}}">
+                            <input type="date" name="fecha_visita" id="fecha_visita"  class="form-control" min="{{$fechaActual}}"  max="2999-09-21">
                         </div>
                     </div>
                 </div>

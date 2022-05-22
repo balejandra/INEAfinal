@@ -25,7 +25,6 @@ $(document).ready(function () {
 
     } else {
     }
-
 });
 
 function motivoRechazo() {
@@ -1985,3 +1984,4 @@ function calcularEdad(fecha_nacimiento) {
     }
     return edad;
 }
+
