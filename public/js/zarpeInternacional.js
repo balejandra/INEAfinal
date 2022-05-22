@@ -199,7 +199,7 @@ function getPermisoEstadiaZI(data) {
                     document.getElementById("tipo").innerHTML=resp[0].tipo_buque;
                     document.getElementById("nro_registro").innerHTML=resp[0].nro_registro;
                     var date = new Date(resp[0].vencimiento);
-                    vence = date.toLocaleString();
+                    vence = date.toLocaleDateString('es-VE');
                     document.getElementById("vigencia").innerHTML=vence;
 
                     document.getElementById("permiso_de_estadia").value=resp[0].id;
@@ -539,7 +539,7 @@ function getMarinosZI(pass) {
         flashMsj.setAttribute('class','');
         flashMsj.innerHTML="";
     }
-    
+
     let ErrorsFlash=document.getElementById('ErrorsFlash');
     if(ErrorsFlash != null){
         ErrorsFlash.setAttribute('class','');
@@ -690,7 +690,7 @@ function deleteTripulanteZI(){
         flashMsj.setAttribute('class','');
         flashMsj.innerHTML="";
     }
-     
+
     let ErrorsFlash=document.getElementById('ErrorsFlash');
     if(ErrorsFlash != null){
         ErrorsFlash.setAttribute('class','');

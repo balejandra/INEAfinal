@@ -3,7 +3,7 @@ $(document).ready(function() {
         responsive: true,
         autoWidth: true,
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
@@ -33,7 +33,7 @@ $(document).ready(function() {
         ]
     });
 
-    
+
     $('table.display2').DataTable({
         responsive: true,
         fixedHeader: true,
@@ -43,7 +43,7 @@ $(document).ready(function() {
             { responsivePriority: 2, targets: -1 }
         ],
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
@@ -55,7 +55,7 @@ $(document).ready(function() {
     $('#table-nooptions').DataTable({
         responsive: true,
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         "paging":   false,
         "ordering": false,
@@ -66,7 +66,7 @@ $(document).ready(function() {
         responsive: true,
         searching: false,
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         "paging":   false,
         "ordering": false,
@@ -77,7 +77,7 @@ $(document).ready(function() {
         fixedHeader: true,
         scrollX: true,
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         "paging":   false,
         "info":     false
@@ -87,7 +87,7 @@ $(document).ready(function() {
     $('#table-scroll').DataTable({
         "scrollX": true,
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         "paging":   false,
         "ordering": false,

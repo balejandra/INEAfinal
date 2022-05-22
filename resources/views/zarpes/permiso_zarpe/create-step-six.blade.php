@@ -128,7 +128,7 @@
                                             </div>
 
                                             <div class="table-responsive">
-                                                <table class="table table-bordered display" style="width: 100%;">
+                                                <table class="table table-bordered" id="table-scroll" style="width: 100%;">
                                                     <thead>
                                                     <tr>
                                                         <th width="18%">Cédula</th>
@@ -146,11 +146,6 @@
                                                         @php
                                                             $cant=0;
                                                         @endphp
-                                                        <tr>
-                                                            <td colspan="8" class="text-center">
-                                                                Sin registros para mostrar
-                                                            </td>
-                                                        </tr>
                                                     @else
                                                         @php
                                                             $cant=count($passengers);
