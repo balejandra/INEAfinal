@@ -59,9 +59,12 @@ class UserController extends Controller
     {
         $menu=Menu_rol::pluck('role_id');
         $roles=Role::whereIn('id',$menu)->get();
+        $roleExcl=Role::whereNotIn('id',$menu)->get();
+        //dd($roleExcl);
         $roles=$roles->pluck('name','id');
         return view('publico.users.create')
-            ->with('roles',$roles);
+            ->with('roles',$roles)
+            ->with('rolexcl',$roleExcl);
     }
 
     /**
