@@ -76,5 +76,11 @@ class LicenciasTitulosGmar extends Model
         'fecha_vencimiento' => 'required'
     ];
 
+    public function getCreatedAtAttribute($value){
+        return Carbon::parse($value)->format('d-m-Y H:i:s');
+    }
 
+    public function getUpdatedAtAttribute($value){
+        return Carbon::parse($value)->format('d-m-Y H:i:s');
+    }
 }

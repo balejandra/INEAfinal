@@ -73,4 +73,19 @@ $(document).ready(function() {
         "ordering": false,
         "info":     false
     });
+
+    $('#example1').DataTable({
+        responsive: true,
+        autoWidth: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        "paging":   false,
+        "ordering": false,
+        "info":     false
+    });
+
+
 } );
+
+ 

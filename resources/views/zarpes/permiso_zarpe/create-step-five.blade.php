@@ -97,7 +97,7 @@
                                             </b>
                                         </div>
                                         <div class="row px-3">
-                                                <table class="table table-bordered" id="example1" style="width:100%">
+                                                <table class="table table-bordered example1" id="example1" style="width:100%">
                                                     <thead>
                                                     <tr>
                                                         <th>Función</th>
