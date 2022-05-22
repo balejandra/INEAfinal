@@ -590,6 +590,9 @@ class PermisoZarpeController extends Controller
                 'capitaniaDestino' => 'required',
                 'establecimientoNáuticoDestino' => 'required',
 
+            ],
+            [
+                'establecimientoNáuticoDestino.required'=>'El campo Establecimiento náutico de retorno final es requerido, por favor verifique.'
             ]);
         }
 
