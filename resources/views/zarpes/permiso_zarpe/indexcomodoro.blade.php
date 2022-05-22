@@ -31,13 +31,13 @@
                             <table class="table table-striped table-bordered compact display" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>Nro. Solicitud</th>
+                                    <th data-priority="1">Nro. Solicitud</th>
                                     <th>Fecha de Solicitud</th>
                                     <th>Solicitante</th>
                                     <th>Bandera</th>
                                     <th>Matrícula</th>
                                     <th>Tipo Navegación</th>
-                                    <th>Status</th>
+                                    <th data-priority="2">Estatus</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
