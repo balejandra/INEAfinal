@@ -49,7 +49,6 @@
                                 <thead>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>guard</th>
                                 <th>Creado</th>
                                 <th>Permisos</th>
                                 <th class="text-center" width="15%">Acciones</th>
@@ -59,8 +58,7 @@
                                     <tr>
                                         <td> {{$role->id}} </td>
                                         <td>{{$role->name}} </td>
-                                        <td>{{$role->guard_name}} </td>
-                                        <td>{{$role->created_at->toFormattedDateString()}} </td>
+                                        <td>{{date_format($role->created_at,'d-m-Y')}} </td>
                                         <td width="45%">
                                             @forelse($role->permissions as $permission)
                                                 <span class="badge badge-info">{{$permission->name}} </span>

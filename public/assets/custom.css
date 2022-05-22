@@ -105,3 +105,8 @@ img.nav-avatar {
     top: -0.75rem;
     border-radius: 3px;
 }
+@media screen and (max-width: 800px) {
+    .table-grow {
+        width: 100% !important; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+}

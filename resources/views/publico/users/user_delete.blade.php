@@ -28,13 +28,18 @@
                             @endcan
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped table-bordered" id="generic-table" style="width:100%">
+                            <style>
+                                table.dataTable {
+                                    margin: 0 auto;
+                                }
+                            </style>
+                            <table class="table table-striped table-bordered table-grow" id="generic-table" style="width:70%">
                                 <thead>
-                                <th>Id</th>
+                                <th width="15%">Id</th>
                                 <th>Email</th>
                                 <th>Nombres</th>
-                                <th>Tipo de Usuario</th>
-                                <th>Acciones</th>
+                                <th width="15%">Tipo de Usuario</th>
+                                <th width="10%">Acciones</th>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
