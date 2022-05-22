@@ -41,12 +41,17 @@
                         </div>
 
                         <div class="card-body">
-                            <table class="table table-bordered table-striped" id="generic-table" style="width:100%">
+                            <style>
+                                table.dataTable {
+                                    margin: 0 auto;
+                                }
+                            </style>
+                            <table class="table table-bordered table-striped" id="generic-table" style="width:80%">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Guard</th>
+                                    <th width="25%">Nombre</th>
+                                    <th width="15%">Guardia</th>
                                     <th>Creado</th>
                                     <th>Acciones</th>
                                 </tr>
