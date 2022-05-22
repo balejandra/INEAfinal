@@ -1204,8 +1204,6 @@ function validacionMarino(){
 
                         break;
                     }
-
-
             }
 
         }).fail(function (response) {
@@ -1213,9 +1211,6 @@ function validacionMarino(){
             console.log(response);
         });
     }
-
-
-
 }
 
 

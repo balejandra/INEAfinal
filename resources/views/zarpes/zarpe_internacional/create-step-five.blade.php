@@ -101,7 +101,7 @@
                                                 </div>
                                             </div>
 
-                                         
+
                                             <div class="col-sm-12 col-md-4 col-lg-3  px-1 DatosRestantes">
                                                 <div class="form-group">
                                                     <label for="title">Rango:</label>

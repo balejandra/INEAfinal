@@ -124,16 +124,16 @@
                     <div class="card-footer text-right">
                         <div class="row">
                             @if($bandera=='extranjera')
-                            <div class="col-md-6 text-left">
+                            <div class="col text-left">
 				                <a href="{{ route('zarpeInternacional.CreateStepTwoE') }}" class="btn btn-primary pull-right">Anterior</a>
 				            </div>
                             @else
-                            <div class="col-md-6 text-left">
+                            <div class="col text-left">
 				                <a href="{{ route('zarpeInternacional.CreateStepTwo') }}" class="btn btn-primary pull-right">Anterior</a>
 				            </div>
                             @endif
 
-				            <div class="col-md-6 text-right">
+				            <div class="col text-right">
 				                <button type="submit" class="btn btn-primary">Siguiente</button>
 				            </div>
 				        </div>

@@ -59,7 +59,7 @@
                                                 <button type="button" class="btn btn-primary" onclick="getPermisoEstadia($('#permiso').val())">Verificar</button>
                                             </div>
                                         </div>
-
+                                                <br>
                                         	<div class="table-responsive" id="tableEstadiaVAl" style="display:none;" >
                                         		<table  class="table table-bordered table-small">
                                         			<tr>

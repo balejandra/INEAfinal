@@ -7,7 +7,7 @@
 
 <!-- Numero Registro Field -->
 <div class="form-group col-sm-4">
-    {!! Form::label('nro_registro', 'Nro de Registro del Buque:') !!}
+    {!! Form::label('nro_registro', 'Nro. de Registro del Buque:') !!}
     {!! Form::text('nro_registro', null, ['class' => 'form-control', 'required']) !!}
 </div>
 

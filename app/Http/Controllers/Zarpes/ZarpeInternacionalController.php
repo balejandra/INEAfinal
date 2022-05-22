@@ -405,7 +405,8 @@ class ZarpeInternacionalController extends Controller
     {
         $solicitud= json_decode(session('solicitud'));
 
-        $capitania = Capitania::all();
+        $coordsCapsAsign = CoordenadasCapitania::select('coordenadas_capitanias.capitania_id' )->distinct()->get();
+            $capitania = Capitania::whereIn('id', $coordsCapsAsign)->get();
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $bandera = $solicitud['bandera'];
@@ -1613,7 +1614,8 @@ class ZarpeInternacionalController extends Controller
             $CapDependencias = DependenciaFederal::selectRaw('distinct(capitania_id)')->get();
             $capitania = Capitania::whereIn('id', $CapDependencias)->get();
         } else {
-            $capitania = Capitania::all();
+            $coordsCapsAsign = CoordenadasCapitania::select('coordenadas_capitanias.capitania_id' )->distinct()->get();
+            $capitania = Capitania::whereIn('id', $coordsCapsAsign)->get();
         }
         echo json_encode($capitania);
     }
