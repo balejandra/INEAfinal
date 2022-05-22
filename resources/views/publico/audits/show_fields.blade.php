@@ -48,7 +48,7 @@
         </tr>
         <tr>
             <th class="bg-light">Fecha de Creación</th>
-            <td>{{ $auditable->created_at }}</td>
+            <td>{{ date_format($auditable->created_at,'d-m-Y') }}</td>
         </tr>
         </tbody>
     </table>

@@ -56,7 +56,8 @@ $(document).ready(function() {
     });
 
     $('#table-nooptions-equipo').DataTable({
-        "scrollX": true,
+        fixedHeader: true,
+        scrollX: true,
         language: {
             "url": "../assets/DataTables/es_es.json"
         },

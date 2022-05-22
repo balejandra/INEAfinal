@@ -77,16 +77,12 @@
                                             </div>
                                             <br>
                                             <style>
-                                                @media (min-width: 576px) {
-                                                    .dataTables_wrapper {
-                                                        margin: 0 auto;
-                                                        width: 70%;
-                                                        align-content: center;
-                                                    }
+                                                table.dataTable {
+                                                    margin: 0 auto;
                                                 }
                                             </style>
-                                            <div class="table-responsive justify-content-center">
-                                            <table class="table table-striped table-bordered" id="table-nooptions-equipo" >
+
+                                            <table class="table table-striped table-bordered table-grow" id="table-nooptions" style="width: 70%">
                                                 <thead>
                                                 <tr>
                                                     <th>Equipo</th>
@@ -116,7 +112,7 @@
                                                         </td>
 
                                                         <td>
-                                                            <div id="div_cant{{$equipo->id}}" style="display: none">
+                                                            <div id="div_cant{{$equipo->id}}" class="equipostab">
                                                             @if ($equipo->cantidad==true)
                                                                 <div class=" col-12 ">
                                                                     <input type="number" class="form-control"
@@ -132,7 +128,7 @@
                                                         </td>
 
                                                         <td>
-                                                            <div id="valores_otros{{$equipo->id}}" style="display: none">
+                                                            <div id="valores_otros{{$equipo->id}}" class="equipostab">
                                                             @if($equipo->otros!='ninguno')
 
 

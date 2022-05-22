@@ -110,3 +110,13 @@ img.nav-avatar {
         width: 100% !important; /* The width is 100%, when the viewport is 800px or smaller */
     }
 }
+
+.equipostab{
+    display: none;
+}
+
+@media screen and (max-width: 800px) {
+    .equipostab {
+       display: block;
+    }
+}
