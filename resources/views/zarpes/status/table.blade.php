@@ -1,4 +1,9 @@
-<table class="table table-striped table-bordered" id="generic-table" style="width:100%">
+<style>
+    table.dataTable {
+        margin: 0 auto;
+    }
+</style>
+<table class="table table-striped table-bordered" id="generic-table" style="width:60%">
     <thead>
     <th>ID</th>
     <th>Nombre</th>

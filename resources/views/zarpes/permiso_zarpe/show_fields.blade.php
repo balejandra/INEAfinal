@@ -201,7 +201,7 @@
     <br>
 
     <strong>Pasajeros</strong>
-    <table class="table table-hover nooptionsearch border" style="width: 100%">
+    <table class="table table-hover nooptionsearch border" style="width: 80%">
 
         <thead>
         <th>Nombres y Apellidos</th>
