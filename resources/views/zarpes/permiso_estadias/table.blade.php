@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered display" style="width:100%">
+<table class="table table-striped table-bordered display2" style="width:100%">
     <thead>
     <tr>
         <th data-priority="1">Nro. Solicitud</th>

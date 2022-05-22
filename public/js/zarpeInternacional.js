@@ -534,7 +534,17 @@ function getMarinosZI(pass) {
     let tabla=document.getElementById('marinosZI');
     let msj=document.getElementById('msjMarinoInt');
     msj.innerHTML="";
-
+    let flashMsj=document.getElementById('flashMsj');
+    if(flashMsj != null){
+        flashMsj.setAttribute('class','');
+        flashMsj.innerHTML="";
+    }
+    
+    let ErrorsFlash=document.getElementById('ErrorsFlash');
+    if(ErrorsFlash != null){
+        ErrorsFlash.setAttribute('class','');
+        ErrorsFlash.innerHTML="";
+    }
 
     if(funcion=='' || tipodoc =='' || nrodoc ==''){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
@@ -674,6 +684,18 @@ function deleteTripulanteZI(){
     let btn=document.getElementById('btnDelete');
     var cedula=btn.getAttribute('data-ced');
     let msj=document.getElementById('msjMarinoInt');
+    let flashMsj=document.getElementById('flashMsj');
+    console.log(flashMsj);
+    if(flashMsj != null){
+        flashMsj.setAttribute('class','');
+        flashMsj.innerHTML="";
+    }
+     
+    let ErrorsFlash=document.getElementById('ErrorsFlash');
+    if(ErrorsFlash != null){
+        ErrorsFlash.setAttribute('class','');
+        ErrorsFlash.innerHTML="";
+    }
     $.ajax({
         url: route('deleteTripulanteZI'),
         data: {index: cedula }

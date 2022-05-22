@@ -50,7 +50,7 @@
                                         @endif
 
                                         @if (isset($msj))
-                                            <div class="alert alert-danger">
+                                            <div  id="flashMsj" class="alert alert-danger">
                                                 {{$msj}}
                                             </div>
                                         @endif

@@ -14,7 +14,10 @@
     </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
+            <div >
             @include('flash::message')
+
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -40,7 +43,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         @if ($errors->any())
-                                            <div class="alert alert-danger">
+                                            <div  id="ErrorsFlash" class="alert alert-danger">
                                                 <ul>
                                                     @foreach ($errors->all() as $error)
                                                         <li>{{ $error }}</li>
@@ -50,7 +53,7 @@
                                         @endif
 
                                         @if (isset($msj))
-                                            <div class="alert alert-danger">
+                                            <div id="flashMsj" class="alert alert-danger">
                                                 {{$msj}}
                                             </div>
                                         @endif

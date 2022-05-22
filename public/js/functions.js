@@ -27,6 +27,7 @@ $(document).ready(function () {
     }
 
 });
+ 
 
 function motivoRechazo() {
     $motivo = $("#motivo1 option:selected").text();
@@ -1102,7 +1103,17 @@ function validacionMarino(){
     let funcion= document.getElementById('funcion').value;
     let msj=document.getElementById('msjMarino');
     let tabla=document.getElementById('marinos');
-
+    let flashMsj=document.getElementById('flashMsj');
+    if(flashMsj != null){
+        flashMsj.setAttribute('class','');
+        flashMsj.innerHTML="";
+    }
+     
+    let ErrorsFlash=document.getElementById('ErrorsFlash');
+    if(ErrorsFlash != null){
+        ErrorsFlash.setAttribute('class','');
+        ErrorsFlash.innerHTML="";
+    }
 
     if(cedula=="" || funcion==""){
         msj.innerHTML='<div class="alert alert-danger">Existen campos vacios en el formulario, por favor verifique.</div>' ;
@@ -1221,8 +1232,17 @@ function getMarinos() {
     msj.innerHTML="";
     const asset=msj.getAttribute('data-asset');
     msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif'   width='35px'> &nbsp; Comparando datos con registros existentes en gente de mar, por favor espere...</div>";
-
-
+    let flashMsj=document.getElementById('flashMsj');
+    if(flashMsj != null){
+        flashMsj.setAttribute('class','');
+        flashMsj.innerHTML="";
+    }
+     
+    let ErrorsFlash=document.getElementById('ErrorsFlash');
+    if(ErrorsFlash != null){
+        ErrorsFlash.setAttribute('class','');
+        ErrorsFlash.innerHTML="";
+    }
     let tabla=document.getElementById('marinos');
     let divMarinos=document.getElementById('dataMarinos');
     let cantMax=divMarinos.getAttribute('data-cantmaxima');
@@ -1351,6 +1371,18 @@ function eliminarTrip(){
     let btn=document.getElementById('btnDelete');
     var cedula=btn.getAttribute('data-ced');
     let msj=document.getElementById('msjMarino');
+    let flashMsj=document.getElementById('flashMsj');
+    if(flashMsj != null){
+        flashMsj.setAttribute('class','');
+        flashMsj.innerHTML="";
+    }
+     
+    let ErrorsFlash=document.getElementById('ErrorsFlash');
+    if(ErrorsFlash != null){
+        ErrorsFlash.setAttribute('class','');
+        ErrorsFlash.innerHTML="";
+    }
+    
     $.ajax({
         url: route('deleteTripulante'),
         data: {index: cedula }

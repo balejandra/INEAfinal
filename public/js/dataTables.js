@@ -3,7 +3,7 @@ $(document).ready(function() {
         responsive: true,
         autoWidth: true,
         language: {
-            "url": "../assets/DataTables/es_es.json"
+            "url": "../public/assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
@@ -33,11 +33,29 @@ $(document).ready(function() {
         ]
     });
 
+    
+    $('table.display2').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        "order": [[ 1, "desc" ]],
+        columnDefs: [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 2, targets: -1 }
+        ],
+        language: {
+            "url": "../public/assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+
 
     $('#table-nooptions').DataTable({
         responsive: true,
         language: {
-            "url": "../assets/DataTables/es_es.json"
+            "url": "../public/assets/DataTables/es_es.json"
         },
         "paging":   false,
         "ordering": false,
@@ -48,7 +66,7 @@ $(document).ready(function() {
         responsive: true,
         searching: false,
         language: {
-            "url": "../assets/DataTables/es_es.json"
+            "url": "../public/assets/DataTables/es_es.json"
         },
         "paging":   false,
         "ordering": false,
@@ -58,7 +76,7 @@ $(document).ready(function() {
     $('#table-nooptions-equipo').DataTable({
         "scrollX": true,
         language: {
-            "url": "../assets/DataTables/es_es.json"
+            "url": "../public/assets/DataTables/es_es.json"
         },
         "paging":   false,
         "info":     false
@@ -68,7 +86,7 @@ $(document).ready(function() {
     $('#table-scroll').DataTable({
         "scrollX": true,
         language: {
-            "url": "../assets/DataTables/es_es.json"
+            "url": "../public/assets/DataTables/es_es.json"
         },
         "paging":   false,
         "ordering": false,

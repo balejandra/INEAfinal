@@ -1769,7 +1769,8 @@ public function AddDocumentos(Request $request){
             }
 
 
-
+            $fechaNac=explode('-',$_REQUEST['fechanac']);
+            $fechaNac2=$fechaNac[2].'-'.$fechaNac[1].'-'.$fechaNac[0];
 
         $pass = [
             "nombres" => $_REQUEST['nombres'],
@@ -1777,7 +1778,7 @@ public function AddDocumentos(Request $request){
             "tipo_doc" => $_REQUEST['tipodoc'],
             "nro_doc" => $nrodoc,
             "sexo" =>$_REQUEST['sexo'],
-            "fecha_nacimiento" =>$_REQUEST['fechanac'],
+            "fecha_nacimiento" =>$fechaNac2,
             "menor_edad" =>$menor,
             "representante" =>$respresentante,
             "permiso_zarpe_id" => '',
