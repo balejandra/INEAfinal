@@ -209,9 +209,9 @@ class PermisoZarpeController extends Controller
 
 
                         $validacionSgm = TiposCertificado::where('matricula', $matricula)->get();
-                        $val1 = "LICENCIA DE NAVEGACIÓN no encontrada";
-                        $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA no encontrado";
-                        $val3 = "ASIGNACIÓN DE NÚMERO ISMM no encontrado";
+                        $val1 = "Licencia de Navegación no encontrada";
+                        $val2 = "Certificado Nacional De Seguridad Radiotelefónica no encontrado";
+                        $val3 = "Asignación De Número ISMM no encontrado";
 
 
                         $nroCorrelativos=["licenciaNavegacion" => '',
@@ -235,7 +235,7 @@ class PermisoZarpeController extends Controller
                                         $fecha_vence = $ano . "-" . $mes . "-" . $dia . " 00:00:00";
                                         $fecha_vence1 = strtotime($fecha_vence);
                                         if (($fecha_actual > $fecha_vence1)) {
-                                            $val1 = "LICENCIA DE NAVEGACIÓN vencida"; //encontrado pero vencido
+                                            $val1 = "Licencia de Navegación vencida"; //encontrado pero vencido
                                         } else {
                                             $val1 = true;
 
@@ -257,7 +257,7 @@ class PermisoZarpeController extends Controller
                                         $fecha_vence1 = strtotime($fecha_vence);
 
                                         if (($fecha_actual > $fecha_vence1)) {
-                                            $val2 = "CERTIFICADO NACIONAL DE SEGURIDAD RADIOTELEFONICA vencido."; //encontrado pero vencido
+                                            $val2 = "Certificado Nacional De Seguridad Radiotelefónica vencido."; //encontrado pero vencido
                                         } else {
                                             $val2 = true;
                                             $nroCorrelativos["certificadoRadio"]=$validacionSgm[$i]->nro_correlativo;
@@ -304,7 +304,7 @@ class PermisoZarpeController extends Controller
         $matricula = $request->input('matricula');
         $identificacion = $request->input('numero_identificacion');
         if ($identificacion != auth()->user()->numero_identificacion) {
-            Flash::error('Su usuario no puede realizar solicitudes a nombre del Buque Matricula ' . $matricula);
+            Flash::error('Su usuario no está autorizado realizar solicitudes a nombre del Buque Matricula ' . $matricula);
             return view('zarpes.permiso_zarpe.nacional.create-step-two')->with('paso', 2);
         }
 
@@ -1314,7 +1314,7 @@ class PermisoZarpeController extends Controller
         $descipcionNavegacion=DescripcionNavegacion::find($permisoZarpe->descripcion_navegacion_id);
         $capitaniaOrigen=Capitania::find($establecimiento);
         if (empty($permisoZarpe)) {
-            Flash::error('Permiso Zarpe not found');
+            Flash::error('Permiso Zarpe no encontrado');
 
             return redirect(route('permisoZarpes.index'));
         }

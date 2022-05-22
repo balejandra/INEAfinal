@@ -264,83 +264,85 @@ function eliminarCargosMandos(id, idcoord){
             pass.innerHTML="";
         }
 
-        if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="") {
-
-            if(calcularEdad(fechanac)<18){
-                msj.innerHTML='<div class="alert alert-danger">Debe agregar un pasajero mayor de edad, por favor verifique.</div>' ;
-                return false;
-            }
-
-            if(tipodoc=="P"){
-
-                if( $('#nombres').val()=="" ||  $('#apellidos').val()==""){
-                    //si no han llenado los nombres y apellidos
-                    msj.innerHTML='<div class="alert alert-danger">Los campos nombres y apellidos son requeridos</div>' ;
+            if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="") {
+    console.log("EDAD", calcularEdad(fechanac));
+                if(calcularEdad(fechanac)<18){
+                    
+                    msj.innerHTML='<div class="alert alert-danger">Debe agregar un pasajero mayor de edad, por favor verifique.</div>' ;
+                    return false;
                 }else{
-                    //si llenaron los nombres y apellidos
-                    let  pasajeroExiste=document.getElementById(cedula);
-                    if(pasajeroExiste==null){
-                        var html="<tr id='"+cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>NO</td> <td class='text-center'> N/A </td> <td> <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
 
-                        subirDocumentos('NO', tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html, '');
-                        msj.innerHTML="";
-                    }else{
-                        msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
-                    }
-                }
-            }else{
+                    if(tipodoc=="P"){
 
-                //si es venezolano mayor de edad
-                    $.ajax({
-                        url: route('consultasaime2'),
-                        data: {cedula: cedula, fecha:fechanac, sexo:sexo }
-
-                    })// This will be called on success
-                    .done(function (response) {
-
-                        var respuesta = JSON.parse(response);
-                        let tamano = respuesta.length;
-                        if (tamano == 0) {
-                            console.log(respuesta);
-                        } else {
-                            respuesta=respuesta[0];
-                            let sex='';
-                            respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
-                           let  pasajeroExiste=document.getElementById('pass'+respuesta.cedula);
-
+                        if( $('#nombres').val()=="" ||  $('#apellidos').val()==""){
+                            //si no han llenado los nombres y apellidos
+                            msj.innerHTML='<div class="alert alert-danger">Los campos nombres y apellidos son requeridos</div>' ;
+                        }else{
+                            //si llenaron los nombres y apellidos
+                            let  pasajeroExiste=document.getElementById(cedula);
                             if(pasajeroExiste==null){
-                                let nombres, apellidos;
-                                if (respuesta.nombre2==null) {nombres=respuesta.nombre1; }else{ nombres=respuesta.nombre1+" "+respuesta.nombre2;}
-                                if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
-                                $('#nombres').val(nombres);
-                                $('#apellidos').val(apellidos);
+                                var html="<tr id='"+cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>NO</td> <td class='text-center'> N/A </td> <td> <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
 
-
-                                    var html="<tr id='"+respuesta.cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td>NO</td> <td class='text-center'> N/A </td><td><a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
-
-                                //pass.innerHTML+=html;
-
-                                subirDocumentos("NO", tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html,'');
+                                subirDocumentos('NO', tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html, '');
                                 msj.innerHTML="";
                             }else{
                                 msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
-
                             }
-
-
                         }
-                        //alert(response);
-                    })
-                    .fail(function (response) {
-                        msj.innerHTML='<div class="alert alert-danger">No se encontraron coincidencias con los datos suministrados.</div>' ;
+                    }else{
 
-                    });
+                        //si es venezolano mayor de edad
+                            $.ajax({
+                                url: route('consultasaime2'),
+                                data: {cedula: cedula, fecha:fechanac, sexo:sexo }
 
+                            })// This will be called on success
+                            .done(function (response) {
+
+                                var respuesta = JSON.parse(response);
+                                let tamano = respuesta.length;
+                                if (tamano == 0) {
+                                    console.log(respuesta);
+                                } else {
+                                    respuesta=respuesta[0];
+                                    let sex='';
+                                    respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
+                                let  pasajeroExiste=document.getElementById('pass'+respuesta.cedula);
+
+                                    if(pasajeroExiste==null){
+                                        let nombres, apellidos;
+                                        if (respuesta.nombre2==null) {nombres=respuesta.nombre1; }else{ nombres=respuesta.nombre1+" "+respuesta.nombre2;}
+                                        if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
+                                        $('#nombres').val(nombres);
+                                        $('#apellidos').val(apellidos);
+
+
+                                            var html="<tr id='"+respuesta.cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td>NO</td> <td class='text-center'> N/A </td><td><a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
+
+                                        //pass.innerHTML+=html;
+
+                                        subirDocumentos("NO", tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html,'');
+                                        msj.innerHTML="";
+                                    }else{
+                                        msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
+
+                                    }
+
+
+                                }
+                                //alert(response);
+                            })
+                            .fail(function (response) {
+                                msj.innerHTML='<div class="alert alert-danger">No se encontraron coincidencias con los datos suministrados.</div>' ;
+
+                            });
+
+                    }
+                }
+
+            }else{
+                msj.innerHTML='<div class="alert alert-danger">Existen campos vacios en el formulario, por favor verifique...</div>' ;
             }
-
-        }else{
-             msj.innerHTML='<div class="alert alert-danger">Existen campos vacios en el formulario, por favor verifique...</div>' ;
-        }
 
      }
 
@@ -352,10 +354,11 @@ function eliminarCargosMandos(id, idcoord){
         let tipodoc= document.getElementById('tipodocmenor').value;
         let representante=document.getElementById('representanteMenor').value;
         var msj= document.getElementById('errorModalPass');
-
+        var msjMayor= document.getElementById('msj');
         let partidaNacimiento=document.getElementById('partida_nacimiento').value;
         let autorizacion=document.getElementById('autorizacion').value;
         let pasaporteMenor=document.getElementById('pasaporte_menor').value;
+        msjMayor.innerHTML="";
         if(tipozarpe=='ZI'){
 
             console.log('ZI pasaporye');
@@ -364,12 +367,20 @@ function eliminarCargosMandos(id, idcoord){
                 return false;
 
             }
+
+            
         }else if(tipozarpe=='ZN'){
             if(pasaporteMenor=='' && tipodoc=="P"){
                 msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido para el menor</div>' ;
                 return false;
 
             }
+        }
+
+        if(calcularEdad(fechanac)>=18){
+                    
+            msj.innerHTML='<div class="alert alert-danger">Debe agregar un pasajero menor de edad en este formulario, por favor verifique.</div>' ;
+            return false;
         }
 
         if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="" &&  partidaNacimiento!="") {

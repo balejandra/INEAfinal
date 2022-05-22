@@ -2,7 +2,7 @@
     <table class="table table-bordered">
         <tbody>
         <tr>
-            <th class="bg-light">Nro Solicitud:</th>
+            <th class="bg-light">Nro. Solicitud:</th>
             <td>{{ $permisoEstadia->nro_solicitud }}</td>
             <th class="bg-light">Solicitante</th>
             <td>{{ $permisoEstadia->user->nombres}} {{ $permisoEstadia->user->apellidos}}</td>
@@ -10,7 +10,7 @@
         <tr>
             <th class="bg-light">Nombre Buque</th>
             <td>{{ $permisoEstadia->nombre_buque }}</td>
-            <th class="bg-light">Numero Registro</th>
+            <th class="bg-light">Número Registro</th>
             <td>{{ $permisoEstadia->nro_registro }}</td>
         </tr>
         <tr>
@@ -28,11 +28,11 @@
         <tr>
             <th class="bg-light">Nombres completos del Capitán</th>
             <td>{{ $permisoEstadia->nombre_capitan }}</td>
-            <th class="bg-light">Numero Tripulantes</th>
+            <th class="bg-light">Número Tripulantes</th>
             <td>{{ $permisoEstadia->cant_tripulantes }}</td>
         </tr>
         <tr>
-            <th class="bg-light">Numero Pasajeros</th>
+            <th class="bg-light">Número Pasajeros</th>
             <td>{{ $permisoEstadia->cant_pasajeros }}</td>
             <th class="bg-light">Arqueo Bruto</th>
             <td>{{ $permisoEstadia->arqueo_bruto }}</td>
@@ -53,7 +53,7 @@
         <tr>
             <th class="bg-light">Circunscripción Acuática de Arribo</th>
             <td>{{ $permisoEstadia->capitania->nombre }}</td>
-            <th class="bg-light">Tiempo Estadia</th>
+            <th class="bg-light">Tiempo Estadía</th>
             <td>{{ $permisoEstadia->tiempo_estadia }}</td>
         </tr>
 

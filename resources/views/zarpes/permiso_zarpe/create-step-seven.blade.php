@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de {{$titulo}} | Paso {{$paso}}</strong>
+                            <strong>Solicitud de permisos de {{$titulo}} | Paso {{$paso}}</strong>
 
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Cancelar</a>

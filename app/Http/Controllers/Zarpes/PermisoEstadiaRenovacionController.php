@@ -59,7 +59,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
        // dd($count);
         $cantidadpermisos=$count+1;
         if ($cantidadpermisos==5) {
-            Flash::error('Usted ha alcanzado el limite de sus renovaciones');
+            Flash::error('Usted ha alcanzado el límite de sus renovaciones');
 
             return redirect(route('permisosestadia.index'));
         }
@@ -140,7 +140,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $avatar2 = $registro->move(public_path() . '/documentos/permisoestadia', $filenamereg);
             $documento2->permiso_estadia_id = $estadia->id;
             $documento2->documento = $filenamereg;
-            $documento2->recaudo = 'Registro de Embarcacion';
+            $documento2->recaudo = 'Registro de Embarcación';
             $documento2->save();
         }
         if ($request->hasFile('despacho_aduana_procedencia')) {
@@ -166,7 +166,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
 
         $this->SendMail($estadia->id, 1);
         $this->SendMail($estadia->id, 0);
-        Flash::success('Solicitud de Permiso Estadia guardada satisfactoriamente.');
+        Flash::success('Solicitud de Permiso Estadía guardada satisfactoriamente.');
 
         return redirect(route('permisosestadia.index'));
 
@@ -233,8 +233,8 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         if ($tipo == 1) {
             if ( isset($coordinador[0]->email)) {
                 //mensaje para capitania origen
-                $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
-    de Estadia en su jurisdicción que espera por su asignación de visita.";
+                $mensaje = "El sistema de control y gestión de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
+    de Estadía en su jurisdicción que espera por su asignación de visita.";
                 $mailTo = $coordinador[0]->email;
                 $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
             }else {
@@ -244,7 +244,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         } else {
             if ( isset($capitanDestino[0]->email)) {
                 //mensaje para capitania destino
-                $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que
+                $mensaje = "El sistema de control y gestión de zarpes del INEA le notifica que
     la siguiente embarcación Internacional tiene una solicitud para arribar a su jurisdicción.";
                 $mailTo = $capitanDestino[0]->email;
                 $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;

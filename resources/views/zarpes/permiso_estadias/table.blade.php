@@ -1,14 +1,14 @@
 <table class="table table-striped table-bordered display" style="width:100%">
     <thead>
     <tr>
-        <th data-priority="1">Nro Solicitud</th>
+        <th data-priority="1">Nro. Solicitud</th>
         <th>Fecha Solicitud</th>
         <th>Solicitante</th>
         <th>Nombre Buque</th>
-        <th>Nro Registro Buque</th>
+        <th>Nro. Registro Buque</th>
         <th>Puerto Origen</th>
         <th>Puerto Destino</th>
-        <th style="font-size: 12px; width: 5%">Días de Estadia aprobada en el País</th>
+        <th style="font-size: 12px; width: 5%">Días de Estadía aprobada en el País</th>
         <th data-priority="2">Status</th>
         <th style="width: max-content">Acciones</th>
     </tr>
@@ -122,7 +122,7 @@
                             <a class="btn btn-sm" style="background-color: #bf0063"
                                href="{{route('createrenovacion',$permisoEstadia->id)}}" data-toggle="tooltip"
                                data-bs-placement="bottom"
-                               title="Renovar Permiso de Estadia">
+                               title="Renovar Permiso de Estadía">
                                 <i class="fas fa-file-import"></i>
                             </a>
                         @endcan

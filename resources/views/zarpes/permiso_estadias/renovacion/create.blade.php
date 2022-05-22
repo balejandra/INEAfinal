@@ -11,9 +11,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('permisosestadia.index') !!}">Permiso Estadia</a>
+                    <a href="{!! route('permisosestadia.index') !!}">Permiso Estadía</a>
                 </li>
-                <li class="breadcrumb-item">Crear Renovacion</li>
+                <li class="breadcrumb-item">Crear Renovación</li>
             </ol>
         </nav>
     </div>

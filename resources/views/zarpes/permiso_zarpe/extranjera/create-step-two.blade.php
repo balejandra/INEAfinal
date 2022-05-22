@@ -22,7 +22,7 @@
                      <div class="card">
                          <div class="card-header">
                              <i class="fas fa-ship"></i>
-                             <strong>Solicitud de Permisos de Zarpe</strong>
+                             <strong>Solicitud de Permisos de {{$titulo}</strong>
                              <div class="card-header-actions">
                                  <a class="btn btn-primary btn-sm"  href="{{route('permisoszarpes.index')}}">Cancelar</a>
                              </div>
@@ -50,7 +50,7 @@
                                            <div class="row gy-2 gx-3 justify-content-center">
                                             <div class="col-auto">
                                                 <div class="form-group">
-                                                    <label for="title">Permiso de estadia:</label>
+                                                    <label for="title">Permiso de estadía:</label>
                                                     <input type="text" class="form-control" name="permiso" id="permiso">
                                                 </div>
                                             </div>

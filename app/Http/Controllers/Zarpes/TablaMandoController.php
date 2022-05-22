@@ -180,7 +180,7 @@ class TablaMandoController extends Controller
                 'cant_tripulantes.required' => 'El campo Cantidad de Tripulantes es obligatorio',
                 'titulacion_maxima.*.required' => 'El campo Titulación Máxima es obligatorio',
                 'cargo.*.required'=>'El campo Cargo es obligatorio',
-                'titulacion_minima.*.required'=>'El campo Titulación Minima es obligatorio',
+                'titulacion_minima.*.required'=>'El campo Titulación Mínima es obligatorio',
 
             ]
         );
@@ -188,7 +188,7 @@ class TablaMandoController extends Controller
         $tablaMando = $this->tablaMandoRepository->find($id);
 
         if (empty($tablaMando)) {
-            Flash::error('Tabla Mando not found');
+            Flash::error('Tabla Mando no encontrada');
 
             return redirect(route('tablaMandos.index'));
         }
@@ -239,7 +239,7 @@ class TablaMandoController extends Controller
             }
         }
 
-        Flash::success('Tabla Mando updated successfully.');
+        Flash::success('Tabla Mando actualizada satisfactoriamente.');
 
         return redirect(route('tablaMandos.index'));
     }
@@ -259,7 +259,7 @@ class TablaMandoController extends Controller
 
 
         if (empty($tablaMando)) {
-            Flash::error('Tabla Mando not found');
+            Flash::error('Tabla Mando no encontrada');
 
             return redirect(route('tablaMandos.index'));
         }
@@ -267,7 +267,7 @@ class TablaMandoController extends Controller
         $this->tablaMandoRepository->delete($id);
         $cargos=CargoTablaMando::where('tabla_mando_id',$id)->delete();
 
-        Flash::success('Tabla Mando deleted successfully.');
+        Flash::success('Tabla Mando eliminada satisfactoriamente.');
 
         return redirect(route('tablaMandos.index'));
     }

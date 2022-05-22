@@ -135,7 +135,7 @@
                                                         <th>Nombres</th>
                                                         <th>Apellidos</th>
                                                         <th width="5%">sexo</th>
-                                                        <th>Fecha nac.</th>
+                                                        <th>Fecha Nacimiento</th>
                                                         <th width="5%">Menor</th>
                                                         <th width="5%">Representante</th>
                                                         <th width="5%">Acciones</th>

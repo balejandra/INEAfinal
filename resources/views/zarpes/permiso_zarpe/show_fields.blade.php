@@ -20,7 +20,7 @@
     <table class="table">
         <tbody>
         <tr>
-            <th class="bg-light">Nro de Solicitud</th>
+            <th class="bg-light">Nro. de Solicitud</th>
             <td>{{ $permisoZarpe->nro_solicitud }}</td>
             <th class="bg-light">Fecha de Solicitud</th>
             <td>{{ $permisoZarpe->created_at}}</td>
@@ -32,7 +32,7 @@
             <td>{{ $permisoZarpe->bandera }}</td>
         </tr>
         <tr>
-            <th class="bg-light">Matricula Buque</th>
+            <th class="bg-light">Matrícula Buque</th>
             <td>{{ $permisoZarpe->matricula }}</td>
             <th class="bg-light">Nombre Buque</th>
             @if($permisoZarpe->bandera=='extranjera')
@@ -43,7 +43,7 @@
         </tr>
 
         <tr>
-            <th class="bg-light">Tipo de Navegacion</th>
+            <th class="bg-light">Tipo de Navegación</th>
             <td>{{ $permisoZarpe->tipo_zarpe->nombre }}</td>
             <th class="bg-light">Descripcion de Navegación</th>
             <td>{{$descripcionNavegacion->descripcion}}</td>
@@ -89,7 +89,7 @@
                     <td>{{ $certificado->nombre_certificado }}</td>
                     <td>{{ $certificado->fecha_expedicion}}</td>
                     @empty
-                        <span class="badge badge-danger">Sin Tripulantes</span>
+                        <span class="badge badge-danger">Sin información</span>
                 </tr>
             @endforelse
         </table>
@@ -103,7 +103,7 @@
                 <th>Nombres y Apellidos</th>
                 <th>Cédula</th>
                 <th>Documento</th>
-                <th>Posicion</th>
+                <th>Posición</th>
                 <th>Fecha vencimiento</th>
                 <th>Cargo que desempeña</th>
                 </thead>
@@ -129,7 +129,7 @@
             <tbody>
             <thead>
             <th>Nombres y Apellidos</th>
-            <th>Documentacion</th>
+            <th>Documentación</th>
             <th>Sexo</th>
             <th>menor</th>
             <th>Documentos</th>

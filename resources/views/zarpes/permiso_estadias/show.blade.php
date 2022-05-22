@@ -30,7 +30,7 @@
                              </div>
                              <div class="card-body">
                                  @include('zarpes.permiso_estadias.show_fields')
-                                 <strong>Asignación de Inspeccion</strong>
+                                 <strong>Asignación de Inspección</strong>
                                  <table class="table">
                                      <tbody>
                                      <thead>

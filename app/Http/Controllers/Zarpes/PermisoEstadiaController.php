@@ -110,7 +110,7 @@ class PermisoEstadiaController extends AppBaseController
             'capitania_id' => ['required', 'string', 'max:255'],
             'tiempo_estadia' => ['required', 'string', 'max:255'],
             [
-                'capitania_id.required'=>'El campo Circunscripcion Acuatica es requerido',]
+                'capitania_id.required'=>'El campo Circunscripción Acuática es requerido',]
 
             ]);
 
@@ -118,7 +118,7 @@ class PermisoEstadiaController extends AppBaseController
             ->where('status_id',1)
             ->first();
         if ($matriculaexis) {
-            Flash::error('Este Nro de Registro del Buque ya tiene una solicitud aprobada.');
+            Flash::error('Este Nro. de Registro del Buque ya tiene una solicitud aprobada.');
 
             return redirect()->back();
         }else {
@@ -164,7 +164,7 @@ class PermisoEstadiaController extends AppBaseController
                 $avatar2 = $registro->move(public_path() . '/documentos/permisoestadia', $filenamereg);
                 $documento2->permiso_estadia_id = $estadia->id;
                 $documento2->documento = $filenamereg;
-                $documento2->recaudo = 'Registro de Embarcacion';
+                $documento2->recaudo = 'Registro de Embarcación';
                 $documento2->save();
             }
             if ($request->hasFile('despacho_aduana_procedencia')) {
@@ -190,7 +190,7 @@ class PermisoEstadiaController extends AppBaseController
 
             $this->SendMail($estadia->id, 1);
             $this->SendMail($estadia->id, 0);
-            Flash::success('Solicitud de Permiso Estadia generado satisfactoriamente.');
+            Flash::success('Solicitud de Permiso Estadía generado satisfactoriamente.');
 
             return redirect(route('permisosestadia.index'));
         }
@@ -231,7 +231,7 @@ class PermisoEstadiaController extends AppBaseController
         $revisiones=EstadiaRevision::where('permiso_estadia_id',$id)->get();
         $visita=VisitaPermisoEstadia::where('permiso_estadia_id',$id)->get();
         if (empty($permisoEstadia)) {
-            Flash::error('Permiso Estadia not found');
+            Flash::error('Permiso Estadía no encontrado');
 
             return redirect(route('permisoEstadias.index'));
         }
@@ -256,7 +256,7 @@ class PermisoEstadiaController extends AppBaseController
         $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
         $capitanias = Capitania::all();
         if (empty($permisoEstadia)) {
-            Flash::error('Permiso Estadia not found');
+            Flash::error('Permiso Estadía no encontrado');
 
             return redirect(route('permisoEstadias.index'));
         }
@@ -280,7 +280,7 @@ class PermisoEstadiaController extends AppBaseController
         $permisoEstadia = $this->permisoEstadiaRepository->find($id);
 
         if (empty($permisoEstadia)) {
-            Flash::error('Permiso Estadia no encontrado');
+            Flash::error('Permiso Estadía no encontrado');
 
             return redirect(route('permisoEstadias.index'));
         }
@@ -364,7 +364,7 @@ class PermisoEstadiaController extends AppBaseController
             'user_id' => auth()->user()->id,
             'permiso_estadia_id' => $id,
             'accion' => $idstatus->nombre,
-            'motivo' => 'Pendiente para aprobacion'
+            'motivo' => 'Pendiente para aprobación'
         ]);
 
         Flash::success('Permiso Estadia actualizado satisfactoriamente.');
@@ -407,10 +407,10 @@ class PermisoEstadiaController extends AppBaseController
                    'fecha_visita'=>$fecha_visita,
                ];
                $view = 'emails.estadias.visita';
-               $subject = 'Solicitud de Estadia ' . $estadia->nro_solicitud;
+               $subject = 'Solicitud de Permiso de Estadía ' . $estadia->nro_solicitud;
                $email->mailZarpe($solicitante->email, $subject, $data, $view);
 
-               Flash::success('Visitador asignado y notificacion enviada al solicitante.');
+               Flash::success('Visitador asignado y notificación enviada al solicitante.');
                return redirect(route('permisosestadia.index'));
            } if ($status==='10') {
                 $estadia= PermisoEstadia::find($id);
@@ -445,7 +445,7 @@ class PermisoEstadiaController extends AppBaseController
                         'user_id' => auth()->user()->id,
                         'permiso_estadia_id' => $query->id,
                         'accion' => $status->nombre,
-                        'motivo' => 'Renovacion'
+                        'motivo' => 'Renovación'
                     ]);
 
                 }
@@ -461,20 +461,20 @@ class PermisoEstadiaController extends AppBaseController
                     'user_id' => auth()->user()->id,
                     'permiso_estadia_id' => $id,
                     'accion' => $idstatus->nombre,
-                    'motivo' => 'Estadia Aprobada'
+                    'motivo' => 'Estadía Aprobada'
                 ]);
 
         if ($estadia->cantidad_solicitud==4) {
-            $subject = 'Solicitud de Estadia Ultima Renovacion ' . $estadia->nro_solicitud;
+            $subject = 'Solicitud de Estadía Última Renovación ' . $estadia->nro_solicitud;
 
-            $mensaje="Su solicitud de Permiso de Estadia N°: ".$estadia->nro_solicitud." registrada ha sido ". $idstatus->nombre. ". Puede verificar
-    su documento de autorización de estadia en el archivo adjunto a este correo.
-    Se le recuerda que esta es su ultima renovacion.";
+            $mensaje="Su solicitud de Permiso de Estadía N°: ".$estadia->nro_solicitud." registrada ha sido ". $idstatus->nombre. ". Puede verificar
+    su documento de autorización de estadía en el archivo adjunto a este correo.
+    Se le recuerda que esta es su última renovación.";
 
         }else {
-            $subject = 'Solicitud de Estadia ' . $estadia->nro_solicitud;
-            $mensaje = "Su solicitud de Permiso de Estadia N°: " . $estadia->nro_solicitud . " registrada ha sido" . $idstatus->nombre . ". Puede verificar
-    su documento de autorización de estadia en el archivo adjunto a este correo.";
+            $subject = 'Solicitud de Estadía ' . $estadia->nro_solicitud;
+            $mensaje = "Su solicitud de Permiso de Estadía N°: " . $estadia->nro_solicitud . " registrada ha sido" . $idstatus->nombre . ". Puede verificar
+    su documento de autorización de estadía en el archivo adjunto a este correo.";
         }
 
         $this->SendMailAprobacion($estadia->id, $mensaje,$subject);
@@ -500,7 +500,7 @@ class PermisoEstadiaController extends AppBaseController
                     'accion' => $idstatus->nombre,
                     'motivo' => $motivo
                 ]);
-        $mensaje = "Su solicitud de Permiso de Estadia N°: " . $estadia->nro_solicitud . " registrada ha sido " . $idstatus->nombre;
+        $mensaje = "Su solicitud de Permiso de Estadía N°: " . $estadia->nro_solicitud . " registrada ha sido " . $idstatus->nombre;
                 $data = [
                     'solicitud' => $estadia->nro_solicitud,
                     'id'=>$id,
@@ -512,7 +512,7 @@ class PermisoEstadiaController extends AppBaseController
                     'mensaje' =>$mensaje,
                 ];
                 $view = 'emails.estadias.revision';
-                $subject = 'Solicitud de Estadia ' . $estadia->nro_solicitud;
+                $subject = 'Solicitud de Estadía ' . $estadia->nro_solicitud;
                 $email->mailZarpe($solicitante->email, $subject, $data, $view);
 
                 Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');

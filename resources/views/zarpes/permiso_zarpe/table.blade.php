@@ -5,8 +5,8 @@
         <th>Fecha de Solicitud</th>
         <th>Solicitante</th>
         <th>Bandera</th>
-        <th>Matricula</th>
-        <th>Tipo Navegacion</th>
+        <th>Matrícula</th>
+        <th>Tipo Navegación</th>
         <th data-priority="2">Status</th>
         <th>Acciones</th>
     </tr>

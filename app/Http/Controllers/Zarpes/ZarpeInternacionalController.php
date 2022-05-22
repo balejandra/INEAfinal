@@ -490,7 +490,7 @@ class ZarpeInternacionalController extends Controller
 
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes = $request->session()->get('tripulantes');
-        print_r($validation);
+        
         $this->step = 5;
         return view('zarpes.zarpe_internacional.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('codigo', $codigo)->with('titulo', $this->titulo);
 
@@ -555,7 +555,7 @@ class ZarpeInternacionalController extends Controller
         $passengers = $request->session()->get('pasajeros');
         $validation = json_decode($request->session()->get('validacion'), true);
         $cantPasajeros =  $validation['pasajerosRestantes'] ;
-        print_r($validation);
+        
         $this->step = 6;
         return view('zarpes.zarpe_internacional.create-step-six')->with('paso', $this->step)->with('passengers', $passengers)->with('validation', $validation)->with('titulo', $this->titulo);
 
