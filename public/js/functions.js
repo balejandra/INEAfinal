@@ -1164,11 +1164,12 @@ function validacionMarino(){
                                         $(row).attr('id','trip'+respuesta[cantidad-1].cedula );
                                     },
                                     "data": respuesta,
+                                    
                                     "columns":[
                                         {"data":'funcion', 'title': 'Función'},
                                         {"data":'cedula'},
                                         {"data":'nombre'},
-                                        {"data":'fecha_vencimiento'},
+                                        {"data":'fecha_emision'},
                                         {"data":'solicitud'},
                                         {"data":'documento'},
                                         {"defaultContent": "<a href='#' onclick='openModal("+respuesta[cantidad-1].cedula+")' ><i class='fa fa-trash text-center' title='Eliminar'></i></a>"},

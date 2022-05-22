@@ -1038,7 +1038,7 @@ class ZarpeInternacionalController extends Controller
                 foreach ($tripulantes as $key=> $value) {
                     if($value['nro_doc']==$cedula){
 
-                        array_splice($tripulantes, $key, $key);
+                        array_splice($tripulantes, $key, 1);
                         $request->session()->put('tripulantes', $tripulantes);
                         
                         $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));

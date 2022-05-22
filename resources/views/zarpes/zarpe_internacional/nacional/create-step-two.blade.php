@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Permisos de Zarpe INTERNACIONAL</li>
+                <li class="breadcrumb-item">{{$titulo}}</li>
             </ol>
         </nav>
     </div>
@@ -188,7 +188,7 @@
                                                                            id="ismm" readonly></td>
                                                             </tr>
                                                             <tr>
-                                                                <th class="bg-light">CERT. NAC. DE SEGURIDAD
+                                                                <th class="bg-light">CERTIFICADO NACIONAL DE SEGURIDAD
                                                                     RADIOTELEFÓNICA
                                                                 </th>
                                                                 <td><input type="text" class="col-md-12"

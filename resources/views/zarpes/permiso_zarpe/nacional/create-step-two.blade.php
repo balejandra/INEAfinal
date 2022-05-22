@@ -142,13 +142,13 @@
                                                 <div class="col">
                                                     <div id="table-buque" style="display: none;">
                                                         <div class="text-center">
-                                                            <h4>Datos de la embarcación</h4>
+                                                            <h4>Datos de la Embarcación</h4>
                                                         </div>
                                                         <div class="row rounded border p-3 justify-content-center ">
                                                         <div class="row row-cols-1 row-cols-md-3">
                                                             <div class="col">
                                                                 <div class="card border-primary mb-3">
-                                                                    <div class="card-header">Matrícula:
+                                                                    <div class="card-header">Matrícula:<br>
                                                                         <input type="text" id="matricula" class="w-50"
                                                                                name="matricula" value="" readonly></div>
 
@@ -156,7 +156,7 @@
                                                             </div>
                                                             <div class="col">
                                                                 <div class="card border-primary mb-3">
-                                                                        <div class="card-header">Nombre:
+                                                                        <div class="card-header">Nombre:<br>
                                                                             <input type="text" id="nombre" class="w-50"
                                                                             name="nombre" readonly>
                                                                         </div>
@@ -164,7 +164,7 @@
                                                             </div>
                                                             <div class="col">
                                                                 <div class="card border-primary mb-3">
-                                                                    <div class="card-header">Destinación:
+                                                                    <div class="card-header">Destinación:<br>
                                                                         <input type="text" name="destinacion" class="w-50"
                                                                                id="destinacion" readonly>
                                                                     </div>
@@ -172,24 +172,24 @@
                                                             </div>
                                                         </div>
                                                             <div class="row">
-                                                            <div class="col-sm-2">
+                                                            <div class="col-sm-2 col-md-4">
                                                                 <div class="card border-primary mb-3">
-                                                                    <div class="card-header">UAB:
+                                                                    <div class="card-header">UAB:<br>
                                                                         <input type="text" name="UAB" id="UAB" class="w-50"
                                                                                readonly>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-2">
+                                                            <div class="col-sm-2 col-md-4">
                                                                 <div class="card border-primary mb-3">
-                                                                    <div class="card-header">Eslora:
+                                                                    <div class="card-header">Eslora:<br>
                                                                         <input type="text" name="eslora" class="w-50" id="eslora" readonly></div>
 
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-2">
+                                                            <div class="col-sm-2 col-md-4">
                                                                 <div class="card border-primary mb-3">
-                                                                    <div class="card-header">Manga:
+                                                                    <div class="card-header">Manga:<br>
                                                                         <input type="text" name="manga" class="w-50"
                                                                                id="manga" readonly>
                                                                     </div>
@@ -197,7 +197,7 @@
                                                             </div>
                                                                 <div class="col">
                                                                     <div class="card border-primary mb-3">
-                                                                        <div class="card-header"> Propietario:
+                                                                        <div class="card-header"> Propietario:<br>
                                                                             <input type="text"
                                                                                    name="nombre_propietario" id="nombre_propietario" readonly>
                                                                         </div>
@@ -205,7 +205,7 @@
                                                                 </div>
                                                                 <div class="col">
                                                                     <div class="card border-primary mb-3">
-                                                                        <div class="card-header">Número de Identificación:
+                                                                        <div class="card-header">Número de Identificación:<br>
                                                                             <input type="text"
                                                                                    name="numero_identificacion"
                                                                                    id="numero_identificacion" readonly>
@@ -216,37 +216,37 @@
                                                             </div>
                                                             <div class="row row-cols-1 row-cols-md-3">
 
-                                                                <div class="col">
+                                                                <div class="col-sm-12 col-md-6 col-lg-2">
                                                                     <div class="card border-primary mb-3">
-                                                                        <div class="card-header">Licencia de Navegación
-                                                                            <input type="text" name="licenciaNavegacion" class="w-75"
+                                                                        <div class="card-header">Licencia de Navegación:<br>
+                                                                            <input type="text" name="licenciaNavegacion" class="col-sm-12 col-md-12 col-lg-12"
                                                                                    id="licenciaNavegacion" readonly>
                                                                             <br><br>
-                                                                            Fecha de Vencimiento:
-                                                                            <input type="text" class="w-50" name="fechalicencia"
+                                                                            Fecha de Vencimiento:<br>
+                                                                            <input type="text" class="col-sm-3 col-md-6 col-lg-6" name="fechalicencia"
                                                                                    id="fechalicencia" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col">
+                                                                <div class="col-sm-12 col-md-6 col-lg-2">
                                                                     <div class="card border-primary mb-3">
-                                                                        <div class="card-header">Asignación de Número ISMM:
-                                                                            <input type="text" name="ismm" id="ismm" readonly class="w-75">
+                                                                        <div class="card-header">Asignación de Número ISMM:<br>
+                                                                            <input type="text" name="ismm" id="ismm" readonly class="col-sm-12 col-md-12 col-lg-12">
                                                                             <br><br>
-                                                                           Fecha de Vencimiento:
-                                                                            <input type="text" class="w-50" name="fechacertificado"
+                                                                           Fecha de Vencimiento:<br>
+                                                                            <input type="text" class="col-sm-3 col-md-6 col-lg-6" name="fechacertificado"
                                                                                    id="fechacertificado" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col">
+                                                                <div class="col-sm-12 col-md-6 col-lg-2">
                                                                     <div class="card border-primary mb-3">
-                                                                        <div class="card-header">Cert. Nac. de Seguridad
-                                                                            Radiotelefónica:
+                                                                        <div class="card-header border">Certificado Nacional de Seguridad
+                                                                            Radiotelefónica:<br>
                                                                             <input type="text" name="certificadoRadio" id="certificadoRadio"
-                                                                                   readonly class="w-75">
+                                                                                   readonly class="col-sm-12 col-md-12 col-lg-12">
                                                                             <br><br>
-                                                                            Fecha de Vencimiento:
+                                                                            Fecha de Vencimiento:<br>
                                                                             <input type="text" class="w-50" name="fechaIsmm"
                                                                                    id="fechaIsmm" readonly>
                                                                         </div>

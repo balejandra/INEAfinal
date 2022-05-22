@@ -422,7 +422,8 @@ class PermisoZarpeController extends Controller
                 $CapDependencias = DependenciaFederal::selectRaw('distinct(capitania_id)')->get();
                 $capitania = Capitania::whereIn('id', $CapDependencias)->get();
             } else {
-                $capitania = Capitania::all();
+                $coordsCapsAsign = CoordenadasCapitania::select('coordenadas_capitanias.capitania_id' )->distinct()->get();
+                $capitania = Capitania::whereIn('id', $coordsCapsAsign)->get();
             }
 
             $solicitud = json_decode($request->session()->get('solicitud'), true);
@@ -479,7 +480,7 @@ class PermisoZarpeController extends Controller
             $CapDestinoFinal='';
             $idCapdestinoFinal=0;
         }
-
+        
         $capitaniasDestinoList = Capitania::all();
         $coordenadas = [];
         $coordenadasDep = [];
@@ -877,7 +878,8 @@ class PermisoZarpeController extends Controller
                 for ($i=0; $i < count($tripulantes); $i++) {
                     $indice=array_search($cedula,$tripulantes[$i],false);
                     if($indice!=false){
-                        array_splice($tripulantes, $i, $i);
+                        array_splice($tripulantes, $i, 1);
+                        
                         $request->session()->put('tripulantes', $tripulantes);
                         $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                         $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
@@ -910,7 +912,7 @@ class PermisoZarpeController extends Controller
                 for ($i=0; $i < count($pasajeros); $i++) {
                     $indice=array_search($cedula,$pasajeros[$i],false);
                     if($indice!=false){
-                        array_splice($pasajeros, $i, $i);
+                        array_splice($pasajeros, $i, 1);
                         $request->session()->put('pasajeros', $pasajeros);
                         $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
                         $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
@@ -972,6 +974,8 @@ class PermisoZarpeController extends Controller
             $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
         } else {
             $emision=explode(' ',$InfoMarino[0]->fecha_emision);
+            list($ano, $mes, $dia) = explode("-", $emision[0]);
+            $emision[0]=$dia.'-'.$mes.'-'.$ano;
             $trip = [
             "permiso_zarpe_id" => '',
             "ctrl_documento_id" => $InfoMarino[0]->id,
@@ -1059,7 +1063,13 @@ class PermisoZarpeController extends Controller
         } else {*/
             $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
 
-            $data2 = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
+            $data2 = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get()->map(function ($reporte) {
+                $data2 = Carbon::parse($data2->date_pago);
+                $data2->fecha_emision = $date->format('d').'-'.$date->format('m').'-'.$date->format('Y');
+                 
+                return $data2;
+            });
+            ;
             if (is_null($data2->first())) {
                 $data2 = "gmarNotFound"; // no encontrado en Gmar
             } else {
@@ -1659,7 +1669,8 @@ class PermisoZarpeController extends Controller
             $CapDependencias = DependenciaFederal::selectRaw('distinct(capitania_id)')->get();
             $capitania = Capitania::whereIn('id', $CapDependencias)->get();
         } else {
-            $capitania = Capitania::all();
+            $coordsCapsAsign = CoordenadasCapitania::select('coordenadas_capitanias.capitania_id' )->distinct()->get();
+            $capitania = Capitania::whereIn('id', $coordsCapsAsign)->get();
         }
         echo json_encode($capitania);
     }
