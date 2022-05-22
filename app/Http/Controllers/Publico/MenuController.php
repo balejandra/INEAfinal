@@ -110,7 +110,7 @@ class MenuController extends AppBaseController
 
 
        // Flash::success('Menú guardado con éxito.');
-        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.')->with('titulo', $this->titulo);
+        return redirect()->route('menus.index')->with('success','Menú creado correctamente.')->with('titulo', $this->titulo);
         //return redirect(route('menus.index'));
     }
 

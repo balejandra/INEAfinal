@@ -188,6 +188,17 @@ class PermisoEstadiaController extends AppBaseController
                 $documento4->save();
             }
 
+            if ($request->hasFile('nominacion_agencia')) {
+                $documento5 = new DocumentoPermisoEstadia();
+                $nominacion = $request->file('nominacion_agencia');
+                $filenamenom = date('dmYGi') . $nominacion->getClientOriginalName();
+                $avatar5 = $nominacion->move(public_path() . '/documentos/permisoestadia', $filenamenom);
+                $documento5->permiso_estadia_id = $estadia->id;
+                $documento5->documento = $filenamenom;
+                $documento5->recaudo = 'Nominación Agencia Naviera';
+                $documento5->save();
+            }
+
             $this->SendMail($estadia->id, 1);
             $this->SendMail($estadia->id, 0);
             Flash::success('Solicitud de Permiso Estadía generado satisfactoriamente.');
@@ -367,7 +378,7 @@ class PermisoEstadiaController extends AppBaseController
             'motivo' => 'Pendiente para aprobación'
         ]);
 
-        Flash::success('Permiso Estadia actualizado satisfactoriamente.');
+        Flash::success('Recaudos cargados satisfactoriamente.');
 
         return redirect(route('permisosestadia.index'));
     }

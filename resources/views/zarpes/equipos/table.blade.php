@@ -1,6 +1,12 @@
-<table class="table table-striped table-bordered" id="generic-table" style="width:100%">
+<style>
+    table.dataTable {
+        margin: 0 auto;
+    }
+</style>
+<table class="table table-striped table-bordered table-grow" id="generic-table" style="width:80%">
     <thead>
     <tr>
+        <th>ID</th>
         <th>Equipo</th>
         <th>Cantidad</th>
         <th>Otros</th>
@@ -10,6 +16,7 @@
     <tbody>
     @foreach($equipos as $equipo)
         <tr>
+            <td>{{ $equipo->id }}</td>
             <td>{{ $equipo->equipo }}</td>
             @if ($equipo->cantidad===true)
                 <td>Verdadero</td>

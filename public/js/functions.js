@@ -25,7 +25,6 @@ $(document).ready(function () {
 
     } else {
     }
-
 });
  
 
@@ -2017,3 +2016,4 @@ function calcularEdad(fecha_nacimiento) {
     }
     return edad;
 }
+

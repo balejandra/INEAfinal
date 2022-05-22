@@ -1,7 +1,12 @@
-<table class="table table-striped table-bordered" id="generic-table" style="width:100%">
+<style>
+    table.dataTable {
+        margin: 0 auto;
+    }
+</style>
+<table class="table table-striped table-bordered table-grow" id="generic-table" style="width:60%">
     <thead>
     <tr>
-        <th>Nombre</th>
+        <th>Nomb re</th>
         <th>Capitanías</th>
         <th>Acciones</th>
     </tr>

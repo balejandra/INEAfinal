@@ -46,13 +46,12 @@
                                     margin: 0 auto;
                                 }
                             </style>
-                            <table class="table table-bordered table-striped" id="generic-table" style="width:80%">
+                            <table class="table table-bordered table-striped table-grow" id="generic-table" style="width:50%;height:auto;">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th width="25%">Nombre</th>
-                                    <th width="15%">Guardia</th>
-                                    <th>Creado</th>
+                                    <th width="10%">ID</th>
+                                    <th width="35%">Nombre</th>
+                                    <th width="30%">Creado</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
@@ -61,7 +60,6 @@
                                     <tr>
                                         <td> {{$permission->id}} </td>
                                         <td>{{$permission->name}} </td>
-                                        <td>{{$permission->guard_name}} </td>
                                         <td>{{$permission->created_at}} </td>
                                         <td>
                                             @can('editar-menu')

@@ -36,37 +36,37 @@
                                 <div class="form-group col-sm-4">
                                     {!! Form::label('permiso_seniat', 'Permiso de Admisión Temporal emitida por el SENIAT:') !!}
                                     <input type="file" class="form-control" name="permiso_seniat"
-                                           id="permiso_seniat" accept="application/pdf" required>
+                                           id="permiso_seniat" accept="application/pdf, image/*" required>
                                 </div>
                                 <div class="form-group col-sm-4">
-                                    {!! Form::label('comprobante_alicuota', 'Comprobante de pago de Alícuota:') !!}
+                                    {!! Form::label('comprobante_alicuota', 'Comprobante de Pago de Alícuota:') !!}
                                     <input type="file" class="form-control" name="comprobante_alicuota"
-                                           id="comprobante_alicuota" accept="application/pdf"required>
+                                           id="comprobante_alicuota" accept="application/pdf, image/*"required>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     {!! Form::label('inspeccion_visita', 'Inspección por el Visitador:') !!}
                                     <input type="file" class="form-control" name="inspeccion_visita"
-                                           id="inspeccion_visita" accept="application/pdf" required>
+                                           id="inspeccion_visita" accept="application/pdf, image/*" required>
                                 </div>
                                 <div class="form-group col-sm-4">
-                                    {!! Form::label('comprobante_saime', 'Comprobante de visita SAIME:') !!}
+                                    {!! Form::label('comprobante_saime', 'Comprobante de Visita SAIME:') !!}
                                     <input type="file" class="form-control" name="comprobante_saime"
-                                           id="comprobante_saime" accept="application/pdf" required>
+                                           id="comprobante_saime" accept="application/pdf, image/*" required>
                                 </div>
                                 <div class="form-group col-sm-4">
-                                    {!! Form::label('comprobante_insai', 'Comprobante de visita INSAI:') !!}
+                                    {!! Form::label('comprobante_insai', 'Comprobante de Visita INSAI:') !!}
                                     <input type="file" class="form-control" name="comprobante_insai"
-                                           id="comprobante_insai" accept="application/pdf" required>
+                                           id="comprobante_insai" accept="application/pdf, image/*" required>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     {!! Form::label('pago_permisoEstadia', 'Pago del Permiso Especial de Estadía:') !!}
                                     <input type="file" class="form-control" name="pago_permisoEstadia"
-                                           id="pago_permisoEstadia" accept="application/pdf" required>
+                                           id="pago_permisoEstadia" accept="application/pdf, image/*" required>
                                 </div>
                                 <div class="form-group col-sm-4">
-                                    {!! Form::label('comprobante_ochina', 'Comprobante de pago a OCHINA:') !!}
+                                    {!! Form::label('comprobante_ochina', 'Comprobante de Pago a OCHINA:') !!}
                                     <input type="file" class="form-control" name="comprobante_ochina"
-                                           id="pago_permisoEstadia" accept="application/pdf" required>
+                                           id="pago_permisoEstadia" accept="application/pdf, image/*" required>
                                 </div>
                             </div>
                             <br>
