@@ -37,7 +37,7 @@
                                     <th>Bandera</th>
                                     <th>Matrícula</th>
                                     <th>Tipo Navegación</th>
-                                    <th data-priority="2">Status</th>
+                                    <th data-priority="2">Estatus</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
