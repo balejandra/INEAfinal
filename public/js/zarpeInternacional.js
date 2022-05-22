@@ -533,10 +533,10 @@ function getMarinosZI(pass) {
     if(funcion=='' || tipodoc =='' || nrodoc ==''){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
     }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || rango=='')){
-    
+
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
-    
-    }else{ 
+
+    }else{
          msj.innerHTML='';
         if(tipodoc=='V'){
             ruta=route('validacionMarinoZI');
@@ -587,7 +587,7 @@ function getMarinosZI(pass) {
                 break;
                 case 'gmarNotFound':
                     msj.innerHTML="<div class='alert alert-danger'>La cédula suministrada no pertenecea a un marino venezolano.</div>";
-                    
+
                 break;
                 case 'OK':
 
@@ -595,16 +595,38 @@ function getMarinosZI(pass) {
                     pass=pass[pass.length-1];
                         console.log("vlaid:::",validacion[0]);
                      if(validacion[0] ==true){
-                        
+
 
                         var nodataTrip = !!document.getElementById("nodataTrip");
 
                         if(nodataTrip==true){
                             tabla.innerHTML='';
                         }
-                        let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a></td></tr>";
-                        tabla.innerHTML+=html;
-                        msj.innerHTML="<div class='alert alert-success'>El tripulante se ha agregado de manera exitosa</div>";
+                        //let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a></td></tr>";
+                       // tabla.innerHTML+=html;
+                         $('#tableTripulantes').DataTable({
+                             responsive: true,
+                             autoWidth: true,
+                             language: {
+                                 "url": "../assets/DataTables/es_es.json"
+                             },
+                             "destroy": true,
+                             "createdRow": function( row, data, dataIndex ) {
+                                 $(row).attr('id',pass['nro_doc'] );
+                             },
+                             "data": respuesta[0],
+                             "columns":[
+                                 {"data":'funcion'},
+                                 {"data":'tipo_doc'},
+                                 {"data":'nro_doc'},
+                                 {"defaultContent": pass['nombres']+" "+pass['apellidos']},
+                                 {"data":'rango'},
+                                 {"data":'nombres'},
+
+                                    ],
+
+                         });
+                         msj.innerHTML="<div class='alert alert-success'>El tripulante se ha agregado de manera exitosa</div>";
 
 
                         document.getElementById('funcion').value="";
@@ -696,12 +718,12 @@ function closeModalZI() {
 $( "#tipodocZI" ).change(function () {
     var str = "";
     str =$( "#tipodocZI" ).val();
- 
+
     if(str=="P"){
       $('.DatosRestantes').attr('style', 'display:block');
     }else{
         $('.DatosRestantes').attr('style', 'display:none');
-      
+
     }
 
   })
