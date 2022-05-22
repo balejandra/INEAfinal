@@ -156,7 +156,7 @@
     @if ($permisoZarpe->bandera=='nacional')
         <strong>Certificados de Seguridad Marítima</strong>
 
-        <table class="table table-hover nooptionsearch border" style="width: 80%">
+        <table class="table table-hover nooptionsearch border table-grow" style="width: 80%">
             <thead>
             <th>Tipo de Certificado</th>
             <th>Número de Certificado</th>
@@ -176,7 +176,7 @@
 
     <strong>Tripulantes</strong>
 
-    <table class="table table-hover nooptionsearch border" style="width: 100%">
+    <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
         <th>Nombres y Apellidos</th>
         <th>Cédula</th>
@@ -201,7 +201,7 @@
     <br>
 
     <strong>Pasajeros</strong>
-    <table class="table table-hover nooptionsearch border" style="width: 80%">
+    <table class="table table-hover nooptionsearch border table-grow" style="width: 80%">
 
         <thead>
         <th>Nombres y Apellidos</th>
@@ -254,7 +254,7 @@
     <br>
 
     <strong>Equipos de Seguridad</strong>
-    <table class="table table-hover nooptionsearch border" style="width: 60%">
+    <table class="table table-hover nooptionsearch border table-grow" style="width: 60%">
         <thead>
         <tr>
             <th>Equipo</th>
@@ -286,7 +286,7 @@
     <br>
 
     <strong>Historial de revisiones</strong>
-    <table class="table table-hover nooptionsearch border" style="width: 100%">
+    <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
         <tr>
             <th>Nombre y Apellido</th>

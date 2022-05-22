@@ -32,7 +32,7 @@
                         <div class="card-body">
                             @include('zarpes.permiso_estadias.show_fields')
                             <strong>Asignación de Inspección</strong>
-                            <table class="table table-hover nooptionsearch border" style="width: 50%">
+                            <table class="table table-hover nooptionsearch border table-grow" style="width: 50%">
                                 <thead>
                                 <tr>
                                     <th>Nombre del Visitador</th>
@@ -51,7 +51,7 @@
                             <br>
 
                             <strong>Historial de Revisiones</strong>
-                            <table class="table table-hover nooptionsearch border" style="width: 100%">
+                            <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
                                 <thead>
                                 <tr>
                                     <th>Nombre y Apellido</th>
