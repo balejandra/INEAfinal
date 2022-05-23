@@ -84,7 +84,6 @@ class CapitaniaController extends AppBaseController
                 'nombre.required' => 'El campo Nombre es obligatorio',
                 'sigla.required' => 'El campo Sigla es obligatorio',
                 'capitanes.required' => 'El campo Capitán es obligatorio',
-                'titulacion_maxima.*.required' => 'El campo Titulación Máxima es obligatorio',
                 'latitud.*.required'=>'El campo latitud es obligatorio',
                 'longitud.*.required'=>'El campo Longitud es obligatorio',
 
@@ -203,7 +202,6 @@ class CapitaniaController extends AppBaseController
                 'nombre.required' => 'El campo Nombre es obligatorio',
                 'sigla.required' => 'El campo Sigla es obligatorio',
                 'capitanes.required' => 'El campo Capitán es obligatorio',
-                'titulacion_maxima.*.required' => 'El campo Titulación Máxima es obligatorio',
                 'latitud.*.required'=>'El campo latitud es obligatorio',
                 'longitud.*.required'=>'El campo Longitud es obligatorio',
 
