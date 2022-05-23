@@ -331,14 +331,6 @@
                 </a>
             @endif
         @endcan
-        @if(($permisoZarpe->status->id=='1'))
-        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
-           onclick="modalanularzarpe({{$permisoZarpe->id}},'{{$permisoZarpe->nro_solicitud}}')"
-           data-toggle="tooltip"
-           data-bs-placement="bottom" title="Anular Solicitud">
-            Anular <i class="fas fa-window-close"></i>
-        </a>
-        @endif
     @can('informar-arribo')
         @if ($permisoZarpe->status->id==5)
             <a class="btn btn-warning confirmation"
