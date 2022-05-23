@@ -79,7 +79,6 @@
                             <i class="fas fa-file-pdf"></i>
                         </a>
                     @endif
-
             </td>
         </tr>
     @endforeach
