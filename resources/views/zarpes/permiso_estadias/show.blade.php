@@ -43,7 +43,7 @@
                                 @foreach($visitas as $visita)
                                     <tr>
                                         <td>{{$visita->nombre_visitador}}</td>
-                                        <td>{{date_format($visita->fecha_visita,'Y-m-d')}}</td>
+                                        <td>{{date_format($visita->fecha_visita,'d-m-Y')}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

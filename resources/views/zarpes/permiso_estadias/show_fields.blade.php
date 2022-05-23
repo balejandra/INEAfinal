@@ -15,7 +15,7 @@
                     Fecha de Solicitud
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->created_at}}
+                    {{ date_format($permisoEstadia->created_at,'d-m-Y')}}
                 </div>
             </div>
         </div>
