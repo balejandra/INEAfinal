@@ -29,12 +29,16 @@
                         </div>
 
                         <div class="card-body">
-                            <table class="table table-bordered table-striped" id="generic-table" style="width:100%">
+                            <style>
+                                table.dataTable {
+                                    margin: 0 auto;
+                                }
+                            </style>
+                            <table class="table table-bordered table-striped table-grow" id="generic-table" style="width:50%">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre</th>
-                                    <th>Guard</th>
                                     <th>Eliminado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -44,8 +48,7 @@
                                     <tr>
                                         <td> {{$permission->id}} </td>
                                         <td>{{$permission->name}} </td>
-                                        <td>{{$permission->guard_name}} </td>
-                                        <td>{{$permission->deleted_at}} </td>
+                                        <td>{{date_format($permission->deleted_at,'d-m-Y')}} </td>
                                         <td>
                                             @can('eliminar-permiso')
                                                 <a class="btn btn-sm btn-warning confirmation_other"  data-action="RESTAURAR"
