@@ -2021,9 +2021,18 @@ $('.confirmation_other').on('click', function(event) {
 $(document).ready(function() {
     $("#solicitud").on("click", function() {
         var condiciones = $("#option1").is(":checked");
+        var chalecos = $(".CHALECOS").is(":checked");
         if (!condiciones) {
             bootbox.alert({
                 message: "Debe Aceptar las Condiciones!",
+                size: 'small',
+                centerVertical:true,
+                animate:true,
+            });
+        }
+        if (!chalecos) {
+            bootbox.alert({
+                message: "Marque la casilla, Para generar la solicitud es obligatorio incluir la cantidad de salvavidas que tiene en la embarcación!",
                 size: 'small',
                 centerVertical:true,
                 animate:true,
