@@ -67,7 +67,7 @@
                                     <div class="col-md-4">
 
                                         <div class="form-group">
-                                            <label for="title">Tipo de navegación:</label>
+                                            <label for="title">Tipo de Navegación:</label>
 
                                             <select id="tipo_de_navegacion" name="tipo_de_navegacion" class="form-control custom-select">
                                             <option value="">Seleccione</option>
@@ -93,7 +93,7 @@
                                 <div class="col-md-4">
 
                                         <div class="form-group">
-                                            <label for="title">Capitanía de origen:</label>
+                                            <label for="title">Capitanía de Origen:</label>
 
                                             <select id="capitania" name="capitania" class="form-control custom-select">
                                             <option value="">Seleccione</option>

@@ -77,7 +77,7 @@
 
                                             <div class="col-sm-2 px-1">
                                                 <div class="form-group">
-                                                    <label for="title">Tipo documento:</label>
+                                                    <label for="title">Tipo Documento:</label>
                                                     {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodocZI']) !!}
                                                 </div>
                                             </div>
@@ -114,7 +114,7 @@
 
                                             <div class="col-sm-4 DatosRestantes">
                                                 <div class="form-group">
-                                                    <label for="title">Documento de acreditación:</label>
+                                                    <label for="title">Documento de Acreditación:</label>
                                                     <input type="file" class="form-control" id="documentoAcreditacion" name="documentoAcreditacion"  >
                                                 </div>
                                             </div>
