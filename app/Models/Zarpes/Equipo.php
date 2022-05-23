@@ -13,6 +13,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @version February 19, 2022, 11:54 pm UTC
  *
  * @property string $equipo
+* @property string $cantidad
+ * @property string $otros
  */
 class Equipo extends Model implements Auditable
 {

@@ -43,9 +43,23 @@ class EquipoController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-
-        $equipo = Equipo::create($input);
+        $validated = $request->validate([
+            'equipo' => 'required|max:255'
+        ]);
+        $cantidad=false;
+        if ($request->cantidad) {
+           $cantidad=true;
+        }else {
+            $cantidad=false;
+        }
+        if ($request->otros==null) {
+            $request->otros='ninguno';
+        }
+        $equipo=new Equipo();
+        $equipo->equipo = $request->equipo;
+        $equipo->cantidad = $cantidad;
+        $equipo->otros = $request->otros;
+        $equipo->save();
 
         Flash::success('Equipo guardado satisfactoriamente.');
 
@@ -110,15 +124,23 @@ class EquipoController extends Controller
             return redirect(route('equipos.index'));
         }
         //dd($request);
-        $equipo->equipo=$request->input('equipo');
-
-        if (is_null($request->cantidad)) {
-            $equipo->cantidad=false;
-        } else {
-            $equipo->cantidad=true;
+        $validated = $request->validate([
+            'equipo' => 'required|max:255'
+        ]);
+        $cantidad=false;
+        if ($request->cantidad) {
+            $cantidad=true;
+        }else {
+            $cantidad=false;
         }
-        $equipo->otros=$request->input('otros');
+        if ($request->otros==null) {
+            $request->otros='ninguno';
+        }
+        $equipo->equipo = $request->equipo;
+        $equipo->cantidad = $cantidad;
+        $equipo->otros = $request->otros;
         $equipo->save();
+
 
         Flash::success('Equipo actualizado satisfactoriamente.');
 
