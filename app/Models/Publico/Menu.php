@@ -78,12 +78,14 @@ class Menu extends Model implements Auditable
             return $this->whereHas('roles', function ($query) {
                 $query->where('role_id', Auth::user()->roles()->first()['id']);
             })
+                ->where('enabled',true)
                 ->orderby('parent')
                 ->orderby('order')
                 ->get()
                 ->toArray();
         } else {
             return $this->orderby('menu_id')
+                ->where('enabled',true)
                 ->orderby('order')
                 ->get()
                 ->toArray();

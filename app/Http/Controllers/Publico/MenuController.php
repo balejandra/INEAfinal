@@ -39,10 +39,13 @@ class MenuController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $menus = $this->menuRepository->all();
-
+        $menuspadre=Menu::where('parent',0)->get();
+        $menushijos = Menu::where('parent','<>',0)->get();
+        $parent=Menu::pluck('name','id')->toArray();
         return view('publico.menus.index')
-            ->with('menus', $menus)
+            ->with('menushijos', $menushijos)
+            ->with('menuspadre', $menuspadre)
+            ->with('parent',$parent)
             ->with('titulo', $this->titulo);
     }
 
