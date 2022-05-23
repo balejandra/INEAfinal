@@ -132,7 +132,7 @@
                                             </div>
 
                                             <div class="table-responsive">
-                                                <table class="table table-bordered">
+                                                <table class="table table-bordered"  id="table-scroll" style="width: 100%;">
                                                     <thead>
                                                     <tr>
                                                         <th width="18%">Cédula</th>

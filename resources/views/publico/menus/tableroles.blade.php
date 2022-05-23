@@ -26,11 +26,14 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive-sm">
-                                <table class="table table-responsive-sm table-bordered table-striped " id="menusroles-table">
+                            <style>
+                                table.dataTable {
+                                    margin: 0 auto;
+                                }
+                            </style>
+                            <table class="table table-striped table-bordered table-grow" style="width:70%" id="generic-table">
                                     <thead>
                                     <tr>
-
                                         <th>Menú</th>
                                         <th>Rol Asociado</th>
                                     </tr>
@@ -64,7 +67,6 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                            </div>
                         </div>
                     </div>
                 </div>

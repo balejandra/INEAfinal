@@ -70,15 +70,15 @@ class UserController extends Controller
     /**
      * Store a newly created User in storage.
      *
-     * @param CreateUserRequest $request
+     * @param Request $request
      *
      * @return Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
         $validated= $request->validate([
-            'nombres' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:users'],
+            'nombres' => 'required|string|max:255',
+            'email' => 'required|string|email:rfc,dns|max:255|unique:users',
             'password' => [
                 'required',
                 'max:50',
@@ -163,8 +163,8 @@ class UserController extends Controller
     public function update($id, Request $request)
     {
         $validated= $request->validate([
-            'nombres' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'nombres' => 'required|string|max:255',
+            'email' => 'required|string|email:rfc,dns|max:255',
         ]);
 
 
@@ -174,7 +174,7 @@ class UserController extends Controller
         if ($request->password_change) {
             $validated= $request->validate([
                 'nombres' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255'],
+                'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
                 'password' => [
                     'required',
                     'max:50',

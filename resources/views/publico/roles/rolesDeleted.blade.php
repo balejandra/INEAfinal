@@ -40,13 +40,16 @@
 
                         </div>
                         <div class="card-body">
+                            <style>
+                                table.dataTable {
+                                    margin: 0 auto;
+                                }
+                            </style>
 
-
-                            <table class="table table-striped table-bordered" style="width:100%" id="generic-table">
+                            <table class="table table-striped table-bordered table-grow" style="width:80%" id="generic-table">
                                 <thead>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>guard</th>
                                 <th>Eliminado</th>
                                 <th>Permisos</th>
                                 <th class="text-center" width="15%">Acciones</th>
@@ -56,8 +59,7 @@
                                     <tr>
                                         <td> {{$role->id}} </td>
                                         <td>{{$role->name}} </td>
-                                        <td>{{$role->guard_name}} </td>
-                                        <td>{{$role->deleted_at->toFormattedDateString()}} </td>
+                                        <td>{{date_format($role->deleted_at,'d-m-Y')}} </td>
                                         <td width="45%">
                                             @forelse($role->permissions as $permission)
                                                 <span class="badge badge-info">{{$permission->name}} </span>

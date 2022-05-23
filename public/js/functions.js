@@ -282,9 +282,17 @@ function eliminarCargosMandos(id, idcoord){
                             //si llenaron los nombres y apellidos
                             let  pasajeroExiste=document.getElementById(cedula);
                             if(pasajeroExiste==null){
-                                var html="<tr id='"+cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>NO</td> <td class='text-center'> N/A </td> <td> <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
+                                let nuevafechanac;
+                                let date1 = new Date(fechanac);
+                                let day1 = `0${date1.getDate()+1}`.slice(-2); //("0"+date.getDate()).slice(-2);
+                                let month1 = `0${date1.getMonth() + 1}`.slice(-2);
+                                let year1 = date1.getFullYear();
+                                nuevafechanac=`${day1}-${month1}-${year1}`
+                                console.log(`${day1}-${month1}-${year1}`);
 
-                                subirDocumentos('NO', tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html, '');
+                                var html="<tr id='"+cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+nuevafechanac+"</td> <td>NO</td> <td class='text-center'> N/A </td> <td> <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
+
+                                subirDocumentos('NO', tipodoc, cedula, nuevafechanac, sexo, $('#nombres').val(), $('#apellidos').val(), html, '');
                                 msj.innerHTML="";
                             }else{
                                 msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -317,13 +325,18 @@ function eliminarCargosMandos(id, idcoord){
                                         $('#nombres').val(nombres);
                                         $('#apellidos').val(apellidos);
 
-                                        var date = new Date(respuesta.fecha_nacimiento);
-                                        var fechanaci = date.toLocaleDateString('es-VE');
-                                            var html="<tr id='"+respuesta.cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+fechanaci+"</td> <td>NO</td> <td class='text-center'> N/A </td><td><a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
+                                        let nuevafechanac;
+                                        let date1 = new Date(fechanac);
+                                        let day1 = `0${date1.getDate()+1}`.slice(-2); //("0"+date.getDate()).slice(-2);
+                                        let month1 = `0${date1.getMonth() + 1}`.slice(-2);
+                                        let year1 = date1.getFullYear();
+                                        nuevafechanac=`${day1}-${month1}-${year1}`
+                                        console.log(`${day1}-${month1}-${year1}`);
+                                            var html="<tr id='"+respuesta.cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+nuevafechanac+"</td> <td>NO</td> <td class='text-center'> N/A </td><td><a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
 
                                         //pass.innerHTML+=html;
 
-                                        subirDocumentos("NO", tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html,'');
+                                        subirDocumentos("NO", tipodoc, cedula, nuevafechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html,'');
                                         msj.innerHTML="";
                                     }else{
                                         msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
@@ -352,6 +365,13 @@ function eliminarCargosMandos(id, idcoord){
 
         let cedula= document.getElementById('numero_identificacionMenor').value;
         let fechanac= document.getElementById('fecha_nacimientoMenor').value;
+         let nuevafechanac;
+         let date1 = new Date(fechanac);
+         let day1 = `0${date1.getDate()+1}`.slice(-2); //("0"+date.getDate()).slice(-2);
+         let month1 = `0${date1.getMonth() + 1}`.slice(-2);
+         let year1 = date1.getFullYear();
+         nuevafechanac=`${day1}-${month1}-${year1}`
+         console.log(`${day1}-${month1}-${year1}`);
         let sexo= document.getElementById('sexoMenor').value;
         let tipodoc= document.getElementById('tipodocmenor').value;
         let representante=document.getElementById('representanteMenor').value;
@@ -398,7 +418,7 @@ function eliminarCargosMandos(id, idcoord){
                     if(pasajeroExiste==null){
                         //var html="<tr id='"+cedula+"' data-menor='SI'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombresMenor').val()+"</td> <td>"+$('#apellidosMenor').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>SI</td> <td class='text-center'> N/A </td> <td>  <a href='#' onclick='openModalPassengers("+tipodoc+","+cedula+", 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
 
-                        subirDocumentos('SI', tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(), '', representante);
+                        subirDocumentos('SI', tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(), '', representante);
 
                         msj.innerHTML="";
                         $('#numero_identificacionMenor').val("");
@@ -429,7 +449,7 @@ function eliminarCargosMandos(id, idcoord){
                             //si no han llenado los nombres y apellidos
                             msj.innerHTML='<div class="alert alert-danger">Los campos nombres y apellidos son requeridos</div>' ;
                         }else{
-                         subirDocumentos('SI', tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(), '', representante);
+                         subirDocumentos('SI', tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(), '', representante);
                         msj.innerHTML="";
                         $('#numero_identificacionMenor').val("");
                                 $('#fecha_nacimientoMenor').val("");
@@ -472,7 +492,7 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#apellidosMenor').val(apellidos);
 
 
-                                subirDocumentos("SI", tipodoc, cedula, fechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(),'',representante);
+                                subirDocumentos("SI", tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(),'',representante);
                                 msj.innerHTML="";
 
                                 $('#numero_identificacionMenor').val("");

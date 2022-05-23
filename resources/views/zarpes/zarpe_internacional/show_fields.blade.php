@@ -306,7 +306,7 @@
             </a>
         @endcan
     @endif
-    @if(($permisoZarpe->status->id=='1'))
+        @if(($permisoZarpe->status->id=='1') && (date_format($permisoZarpe->fecha_hora_salida,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
         @can('informar-navegacion')
             <a class="btn btn-warning confirmation"
                data-route=" {{route('statusInt',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}"
@@ -314,14 +314,25 @@
                data-action="INFORMAR NAVEGACIÓN de">
                 Informar Navegación <i class="fas fa-water"></i>
             </a>
-            <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
-               onclick="modalanularzarpe({{$permisoZarpe->id}},'{{$permisoZarpe->nro_solicitud}}')"
-               data-toggle="tooltip"
-               data-bs-placement="bottom" title="Anular Solicitud">
-                Anular <i class="fas fa-window-close"></i>
-            </a>
         @endcan
     @endif
+        @can('informar-navegacion')
+            @if(($permisoZarpe->status->id=='1'))
+                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
+                   onclick="modalanularzarpe({{$permisoZarpe->id}},'{{$permisoZarpe->nro_solicitud}}')" data-toggle="tooltip"
+                   data-bs-placement="bottom" title="Anular Solicitud">
+                    Anular <i class="fas fa-window-close"></i>
+                </a>
+            @endif
+        @endcan
+        @if(($permisoZarpe->status->id=='1'))
+        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
+           onclick="modalanularzarpe({{$permisoZarpe->id}},'{{$permisoZarpe->nro_solicitud}}')"
+           data-toggle="tooltip"
+           data-bs-placement="bottom" title="Anular Solicitud">
+            Anular <i class="fas fa-window-close"></i>
+        </a>
+        @endif
     @can('informar-arribo')
         @if ($permisoZarpe->status->id==5)
             <a class="btn btn-warning confirmation"

@@ -82,11 +82,11 @@
                                                 }
                                             </style>
 
-                                            <table class="table table-striped table-bordered table-grow" id="table-nooptions" style="width: 70%">
+                                            <table class="table table-striped table-bordered table-grow" id="table-nooptions" style="width: 60%">
                                                 <thead>
                                                 <tr>
                                                     <th>Equipo</th>
-                                                    <th style="width: 25%">Cantidad</th>
+                                                    <th style="width: 20%">Cantidad</th>
                                                     <th style="width: 30%">Otros</th>
                                                 </tr>
                                                 </thead>

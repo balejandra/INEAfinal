@@ -90,8 +90,8 @@
                                                     <i class="fa fa-search"></i>
                                                 </a>
                                                 @endcan
-                                                    @if(($permisoOrigenZarpe->status->id=='1'))
-                                                        @can('informar-navegacion')
+                                                @if(($permisoZarpe->status->id=='1') && (date_format($permisoZarpe->fecha_hora_salida,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
+                                                @can('informar-navegacion')
                                                             <a class="btn btn-sm btn-warning"
                                                                href=" {{route('status',[$permisoOrigenZarpe->id,'navegando',$permisoOrigenZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip"
                                                                data-bs-placement="bottom"
@@ -110,6 +110,15 @@
                                                             </a>
                                                         @endcan
                                                     @endif
+                                                @can('informar-navegacion')
+                                                    @if(($permisoOrigenZarpe->status->id=='1'))
+                                                        <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
+                                                           onclick="modalanularzarpe({{$permisoOrigenZarpe->id}},'{{$permisoOrigenZarpe->nro_solicitud}}')" data-toggle="tooltip"
+                                                           data-bs-placement="bottom" title="Anular Solicitud">
+                                                            <i class="fas fa-window-close"></i>
+                                                        </a>
+                                                    @endif
+                                                @endcan
                                                 @if (($permisoOrigenZarpe->status->id==1)||($permisoOrigenZarpe->status->id==4)||($permisoOrigenZarpe->status->id==5))
                                                     <a class="btn btn-sm btn-dark"
                                                        href="{{route('zarpepdf',$permisoOrigenZarpe->id)}}"

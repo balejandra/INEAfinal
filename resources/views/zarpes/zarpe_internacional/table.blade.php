@@ -45,7 +45,7 @@
                         <i class="fa fa-search"></i>
                     </a>
                 @endcan
-                    @if(($permisoZarpe->status->id=='1'))
+                    @if(($permisoZarpe->status->id=='1') && (date_format($permisoZarpe->fecha_hora_salida,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
                         @can('informar-navegacion')
                             <a class="btn btn-sm btn-warning confirmation"
                                data-route=" {{route('statusInt',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}"

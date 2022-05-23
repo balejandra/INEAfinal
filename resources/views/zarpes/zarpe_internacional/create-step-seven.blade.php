@@ -77,20 +77,16 @@
                                                 </div>
                                                 <br>
                                             <style>
-                                                @media (min-width: 576px) {
-                                                    .dataTables_wrapper {
-                                                        margin: 0 auto;
-                                                        width: 75%;
-                                                        align-content: center;
-                                                    }
+                                                table.dataTable {
+                                                    margin: 0 auto;
                                                 }
                                             </style>
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-bordered" id="table-nooptions-equipo">
+                                                <table class="table table-striped table-bordered table-grow" id="table-nooptions" style="width: 60%">
                                                     <thead>
                                                     <tr>
                                                         <th>Equipo</th>
-                                                        <th style="width: 30%">Cantidad</th>
+                                                        <th style="width: 20%">Cantidad</th>
                                                         <th style="width: 30%">Otros</th>
                                                     </tr>
                                                     </thead>

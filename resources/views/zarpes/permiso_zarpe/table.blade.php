@@ -44,15 +44,17 @@
                         <i class="fa fa-search"></i>
                     </a>
                 @endcan
-                    @if(($permisoZarpe->status->id=='1'))
-                        @can('informar-navegacion')
+                    @can('informar-navegacion')
+                    @if(($permisoZarpe->status->id=='1') && (date_format($permisoZarpe->fecha_hora_salida,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
+
                             <a class="btn btn-sm btn-warning confirmation"
                                data-route=" {{route('status',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip"
                                data-bs-placement="bottom" data-action="INFORMAR NAVEGACION de" title="Informar Navegacion">
                                 <i class="fas fa-water"></i>
                             </a>
-                        @endcan
+
                     @endif
+                    @endcan
                     @can('informar-arribo')
                         @if ($permisoZarpe->status->id==5)
                             <a class="btn btn-sm btn-warning confirmation"
