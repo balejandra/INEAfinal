@@ -385,6 +385,7 @@ class PermisoEstadiaController extends AppBaseController
 
     public function updateStatus($id, $status)
     {
+        
         $email = new MailController();
            if ($status=== "9") {
                $visitador = $_GET['visitador'];
