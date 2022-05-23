@@ -385,7 +385,12 @@ function eliminarCargosMandos(id, idcoord){
 
             console.log('ZI pasaporye');
             if(pasaporteMenor==''){
-                msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido para el menor</div>' ;
+                msj.innerHTML='<div class="alert alert-danger">El documento Pasaporte es requerido para el menor</div>' ;
+                return false;
+
+            }
+            if(partidaNacimiento==''){
+                msj.innerHTML='<div class="alert alert-danger">El documento Partida de Nacimiento es requerido para el menor</div>' ;
                 return false;
 
             }
@@ -393,7 +398,12 @@ function eliminarCargosMandos(id, idcoord){
 
         }else if(tipozarpe=='ZN'){
             if(pasaporteMenor=='' && tipodoc=="P"){
-                msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido para el menor</div>' ;
+                msj.innerHTML='<div class="alert alert-danger">El documento Pasaporte es requerido para el menor</div>' ;
+                return false;
+
+            }
+            if(partidaNacimiento==''){
+                msj.innerHTML='<div class="alert alert-danger">El documento Partida de Nacimiento es requerido para el menor</div>' ;
                 return false;
 
             }
