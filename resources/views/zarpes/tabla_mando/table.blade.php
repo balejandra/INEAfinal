@@ -1,10 +1,10 @@
 <table class="table table-striped table-bordered" id="generic-table" style="width:100%">
     <thead>
-        <th>UAB minimo</th>
-        <th>UAB maximo</th>
+        <th>UAB mínimo</th>
+        <th>UAB máximo</th>
         <th>Tripulantes</th>
         <th>Cargo</th>
-        <th>Titulacion Minima</th>
+        <th>Titulación Mínima</th>
         <th  style="width: max-content">Acciones</th>
     </thead>
     <tbody>

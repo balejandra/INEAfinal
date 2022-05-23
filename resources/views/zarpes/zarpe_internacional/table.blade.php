@@ -1,13 +1,13 @@
 <table class="table table-striped table-bordered display" style="width:100%" >
     <thead>
     <tr>
-        <th data-priority="1">Nro Solicitud</th>
+        <th data-priority="1">Nro. Solicitud</th>
         <th>Fecha de Solicitud</th>
         <th>Solicitante</th>
         <th>Bandera</th>
-        <th>Matricula</th>
-        <th>Tipo Navegacion</th>
-        <th data-priority="2">Status</th>
+        <th>Matrícula</th>
+        <th>Tipo Navegación</th>
+        <th data-priority="2">Estatus</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -45,7 +45,7 @@
                         <i class="fa fa-search"></i>
                     </a>
                 @endcan
-                    @if(($permisoZarpe->status->id=='1'))
+                    @if(($permisoZarpe->status->id=='1') && (date_format($permisoZarpe->fecha_hora_salida,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
                         @can('informar-navegacion')
                             <a class="btn btn-sm btn-warning confirmation"
                                data-route=" {{route('statusInt',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}"
@@ -79,7 +79,6 @@
                             <i class="fas fa-file-pdf"></i>
                         </a>
                     @endif
-
             </td>
         </tr>
     @endforeach

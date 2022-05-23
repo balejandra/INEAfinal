@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Auditoria</li>
+                <li class="breadcrumb-item">Auditoría</li>
             </ol>
         </nav>
     </div>
@@ -20,7 +20,7 @@
                      <div class="card">
                          <div class="card-header">
                              <i class="fa fa-align-justify"></i>
-                             Auditoria
+                             Auditoría
                          </div>
                          <div class="card-body">
                              @include('publico.audits.table')

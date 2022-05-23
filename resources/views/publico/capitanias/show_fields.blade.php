@@ -15,7 +15,7 @@
             <td> {{$capitania->sigla}}</td>
         </tr>
         <tr>
-            <th class="bg-light">Capitan asignado</th>
+            <th class="bg-light">Capitán asignado</th>
             <td>
 
                 @if(count($capitan)>0)
@@ -26,7 +26,7 @@
                 </td>
         </tr>
         <tr>
-            <th class="bg-light">Correo Capitan asignado</th>
+            <th class="bg-light">Correo Capitán asignado</th>
             <td>
                 @if(count($capitan)>0)
                     {{$capitan[0]->email}}

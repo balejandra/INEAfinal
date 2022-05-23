@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Flash;
 
 class RoleController extends Controller
 {
@@ -53,10 +55,12 @@ class RoleController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|unique:roles|max:255',
-
+            'permissions'=>'required'
         ],
-        [
-        'name.unique'=>'Rol ya registrado',
+            [
+                'name.unique'=>'Rol ya registrado',
+                'permissions.required'=>'Es obligatorio asignar permisos al Rol'
+
             ]
     );
 
@@ -100,9 +104,17 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+
         $validated = $request->validate([
-            'name' => 'required',
-        ]);
+            'name' =>  ['required', 'max:255', Rule::unique('roles')->ignore($role['id'])],
+            'permissions'=>'required'
+        ],
+            [
+                'name.unique'=>'Rol ya registrado',
+                'permissions.required'=>'Es obligatorio asignar permisos al Rol'
+
+            ]
+        );
 
         $role->update($request->only('name'));
         $role->permissions()->sync($request->input('permissions', [] ));
@@ -125,5 +137,21 @@ class RoleController extends Controller
         $role=Role::findOrFail($id);
         $role->delete();
         return back()->with('success','El registro se ha eliminado con éxito.');
+    }
+
+    public function indexRoleDeleted(){
+        $role =Role::onlyTrashed()->get();
+        //dd($users);
+
+        return view('publico.roles.rolesDeleted')
+            ->with('roles', $role);
+    }
+
+    public function restoreRoleDeleted($id){
+        $role_deleted=Role::where('id',$id);
+        $role_deleted->restore();
+        Flash::success('Rol restaurado exitosamente.');
+
+        return redirect(route('roleDelete.index'));
     }
 }

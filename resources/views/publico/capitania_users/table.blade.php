@@ -3,7 +3,7 @@
     <tr>
         <th>Cargo</th>
         <th>Usuario</th>
-        <th>Capitania</th>
+        <th>Capitanía</th>
         <th>Acciones</th>
     </tr>
     </thead>

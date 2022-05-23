@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Capitanias</li>
+                <li class="breadcrumb-item">Capitanías</li>
             </ol>
         </nav>
     </div>
@@ -20,7 +20,7 @@
                      <div class="card">
                          <div class="card-header">
                          <i class="fa fa-building"></i>
-                             <strong>Capitanias</strong>
+                             <strong>Capitanías</strong>
                               @can('crear-capitania')
                              <div class="card-header-actions">
                                  <a class="btn btn-primary btn-sm"  href="{{ route('capitanias.create') }}">Nuevo</a>

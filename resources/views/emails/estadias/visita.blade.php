@@ -2,11 +2,11 @@
 
     Saludos,
 
-    Su Solicitud de Permiso de Estadia se le ha asignado un visitador, con el siguiente detalle:
+    Su Solicitud de Permiso de Estadía se le ha asignado un visitador, con el siguiente detalle:
 
 @component('mail::panel')
-    <b>Nro de Solicitud:</b> {{$solicitud}} <br>
-    <b>Buque Registro Nro:</b>  {{$matricula}} <br>
+    <b>Nro. de Solicitud:</b> {{$solicitud}} <br>
+    <b>Buque Registro Nro.:</b>  {{$matricula}} <br>
     <b>Solicitante:</b>  {{$nombres_solic}} {{$apellidos_solic}} <br>
     <b>Visitador:</b>  {{$visitador}} <br>
     <b>Fecha de Visita:</b>  {{$fecha_visita}} <br>

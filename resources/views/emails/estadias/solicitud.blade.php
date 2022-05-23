@@ -5,9 +5,9 @@
     {{$mensaje}}
 
 @component('mail::panel')
-    <h2>Nro de Solicitud: {{$solicitud}} </h2>
-    <h2>Nombre Embarcacion: {{$nombre_buque}} </h2>
-    <h2>Buque Registro Nro: {{$matricula}} </h2>
+    <h2>Nro. de Solicitud: {{$solicitud}} </h2>
+    <h2>Nombre Embarcación: {{$nombre_buque}} </h2>
+    <h2>Buque Registro Nro.: {{$matricula}} </h2>
     <h2>Solicitante: {{$nombres_solic}} {{$apellidos_solic}}</h2>
 @endcomponent
 @component('mail::subcopy')

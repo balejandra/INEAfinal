@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table">
+    <table class="table table-bordered">
         <tbody>
         <tr>
         <tr>
@@ -35,7 +35,7 @@
             <td>{{ $auditable->url }}</td>
         </tr>
         <tr>
-            <th class="bg-light">Direccion IP</th>
+            <th class="bg-light">Dirección IP</th>
             <td>{{ $auditable->ip_address }}</td>
         </tr>
         <tr>
@@ -47,8 +47,8 @@
             <td>{{ $auditable->user_agent }}</td>
         </tr>
         <tr>
-            <th class="bg-light">Fecha de Creacion</th>
-            <td>{{ $auditable->created_at }}</td>
+            <th class="bg-light">Fecha de Creación</th>
+            <td>{{ date_format($auditable->created_at,'d-m-Y') }}</td>
         </tr>
         </tbody>
     </table>

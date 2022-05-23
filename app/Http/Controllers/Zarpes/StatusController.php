@@ -43,6 +43,9 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'nombre' => 'required|max:255'
+        ]);
         $input = $request->all();
 
         $status = Status::create($input);
@@ -102,6 +105,9 @@ class StatusController extends Controller
      */
     public function update($id, Request $request)
     {
+        $validated = $request->validate([
+            'nombre' => 'required|max:255'
+        ]);
         $status = Status::find($id);
 
         if (empty($status)) {

@@ -66,12 +66,18 @@ function getmatricula(siglas,destinacion,numero) {
                     manga=(respuesta[0].manga);
                     $("#manga").val(manga);
                     let licenciaNavegacion=valiacionSgm[3].licenciaNavegacion;
+                   let fechalicencia=valiacionSgm[4].fecha_vencimientolic;
                     let certificadoRadio=valiacionSgm[3].certificadoRadio;
+                   let fechacertificado=valiacionSgm[4].fecha_vencimientocert;
                     let numeroIsmm=valiacionSgm[3].numeroIsmm;
+                   let fechaIsmm=valiacionSgm[4].fecha_vencimientoismm;
 
                     $('#licenciaNavegacion').val(licenciaNavegacion);
+                   $('#fechalicencia').val(fechalicencia);
                     $('#certificadoRadio').val(certificadoRadio);
+                   $('#fechacertificado').val(fechacertificado);
                     $('#ismm').val(numeroIsmm);
+                   $('#fechaIsmm').val(fechaIsmm);
                }else{
                     if(valiacionSgm[0]!=true){
                         divError.innerHTML='<div class="alert alert-danger"> '+valiacionSgm[0]+' </div>';
@@ -122,13 +128,13 @@ function getPermisoEstadia(data) {
     })// This will be called on success
     .done(function (response) {
         let resp=JSON.parse(response);
-
+        console.log(resp);
             if(resp=="sinCoincidencias"){
                 divError.innerHTML='<div class="alert alert-danger"> Número de permiso de estadía no encontrado. </div>';
                     tableEstadiaVAl.style.display='none';
 
             }else if(resp=='permisoPorCerrar'){
-                divError.innerHTML='<div class="alert alert-danger">La embarcación con el número de registro <b>'+resp[0].nro_registro+'</b> posee una solicitud de permiso de zarpe que no ha sido cerrada, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
+                divError.innerHTML='<div class="alert alert-danger">La embarcación con el número de registro <b>'+data+'</b> posee una solicitud de permiso de zarpe que no ha sido cerrada, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
 
                     tableEstadiaVAl.style.display='none';
             }else{
@@ -148,7 +154,7 @@ function getPermisoEstadia(data) {
                     document.getElementById("tipo").innerHTML=resp[0].tipo_buque;
                     document.getElementById("nro_registro").innerHTML=resp[0].nro_registro;
                     var date = new Date(resp[0].vencimiento);
-                    vence = date.toLocaleString();
+                    vence = date.toLocaleDateString('es-VE');
                     document.getElementById("vigencia").innerHTML=vence;
 
                     document.getElementById("permiso_de_estadia").value=resp[0].id;
@@ -178,5 +184,7 @@ function soloNumeros(event){
         return false;
     }
 }
+
+
 
 

@@ -9,7 +9,7 @@
         <td> {{ $capitaniaUser->user->email }}</td>
     </tr>
     <tr>
-        <th class="bg-light">Capitania</th>
+        <th class="bg-light">Capitanía</th>
         <td> {{ $capitaniaUser->capitania->nombre }}</td>
     </tr>
     <tr>

@@ -73,7 +73,82 @@ let longSel=divMap.getAttribute('data-coordLongSel');
 if(latSel!='' && longSel!=''){
     newMarker(latSel, longSel); 
 } 
+/*if(localStorage.getItem("latSelLocal")!='' && localStorage.getItem("longSelLocal")!=''){
+    let la=localStorage.getItem("latSelLocal");
+    let lo=localStorage.getItem("longSelLocal");
+    
+    markerLocalStorage(la, lo);
+     
 
+function markerLocalStorage(la, lo){
+            
+         var latInput=document.getElementById('latitud'); 
+         var longInput=document.getElementById('longitud'); 
+         var latText=document.getElementById('latitudText'); 
+         var longText=document.getElementById('longitudText'); 
+          
+         let dataLat='';    
+         let dataLong='';
+         if(latInput!=null && dataLong!=null){
+             dataLat=latInput.getAttribute("data-lat");
+             dataLong=longInput.getAttribute('data-long');
+             latInput.value=la;
+             longInput.value=lo;
+             latInput.setAttribute('data-lat',la);
+              longInput.setAttribute('data-long',lo);
+         }
+         
+        if(dataLat!="" && dataLong!=""){
+             offMapClick(dataLat,dataLong); //borro el marcador anterior del mapa
+         } 
+ 
+          
+         if(longText!=null && longText!=null){
+             latText.innerHTML=coordenadasGrad(la)+"N";
+             longText.innerHTML=coordenadasGrad(lo)+"W";
+             document.getElementById('latitudGrad').value=coordenadasGrad(la)+"N";
+             document.getElementById('longitudGrad').value=coordenadasGrad(lo)+"W";
+         } 
+         
+  
+          newMarker(la, lo); //Creo la nueva marca en el mapa
+          let idCapitania;
+          
+ 
+ 
+           if(activarDep){
+             circles.forEach(function(cir){
+                  
+               var distancia= getKilometros(marca ,cir._latlng.lat, cir._latlng.lng);
+ 
+                   if(distancia<10){
+                     // si la distancia es menor a diez km es porque esta dentro del citculo
+                     console.log("distancia",distancia, cir.options.capitaniaid);
+                     idCapitania=cir.options.capitaniaid;
+                     document.getElementById('capitaniaDestino').value=idCapitania; 
+                     estNauticoDestinoSelect(idCapitania);
+                     
+                   }else{
+                     idCapitania=false;
+                   }
+ 
+              });
+           }else{
+             polygon.forEach(function(pol){
+                 idCapitania=isMarkerInsidePolygon(marca, pol);
+                 if(idCapitania!=false){
+                     document.getElementById('capitaniaDestino').value=idCapitania; 
+                     estNauticoDestinoSelect(idCapitania);
+                 }else{
+                     idCapitania=false;
+                 }
+ 
+              });
+           }
+          
+      };
+ 
+}*/
 let idcapDestino=divMap.getAttribute("data-idcapdestino");
 
 
@@ -164,6 +239,12 @@ let idcapDestino=divMap.getAttribute("data-idcapdestino");
     		 marca=L.marker([lat, long]).addTo(mymap)
 	    .bindPopup('Punto de escala de la navegación')
 	    .openPopup();
+       /* if (typeof(Storage) !== "undefined") {
+            // LocalStorage disponible
+            localStorage.setItem("latSelLocal", lat);
+            localStorage.setItem("longSelLocal", long);
+
+        } */
     }
 
 
@@ -235,5 +316,7 @@ function isMarkerInsidePolygon(marker, campus) {
  //var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community' });
 
  
+
+
 </script>
         

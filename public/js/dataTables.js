@@ -1,9 +1,9 @@
 $(document).ready(function() {
     $('#generic-table').DataTable({
         responsive: true,
-        fixedHeader: true,
+        autoWidth: true,
         language: {
-            "url": "../assets/DataTables/es_es.json"
+            "url": "../public/assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
@@ -11,10 +11,10 @@ $(document).ready(function() {
         ]
     });
 
-
     $('button[data-toggle="tab"]').on( 'shown.bs.tab', function (e) {
         $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
     } );
+
 
     $('table.display').DataTable({
         responsive: true,
@@ -34,6 +34,24 @@ $(document).ready(function() {
     });
 
 
+    $('table.display2').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        "order": [[ 1, "desc" ]],
+        columnDefs: [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 2, targets: -1 }
+        ],
+        language: {
+            "url": "../public/assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+
+
     $('#table-nooptions').DataTable({
         responsive: true,
         language: {
@@ -44,10 +62,20 @@ $(document).ready(function() {
         "info":     false
     });
 
-
+    $('table.nooptionsearch').DataTable({
+        responsive: true,
+        searching: false,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        "paging":   false,
+        "ordering": false,
+        "info":     false
+    });
 
     $('#table-nooptions-equipo').DataTable({
-        "scrollX": true,
+        fixedHeader: true,
+        scrollX: true,
         language: {
             "url": "../assets/DataTables/es_es.json"
         },
@@ -63,7 +91,11 @@ $(document).ready(function() {
         },
         "paging":   false,
         "ordering": false,
-        "info":     false
+        "info":     false,
+        columnDefs: [ {
+            targets: 4,
+            render: $.fn.dataTable.render.moment('YYYY-MM-DD','DD-MM-YYYY' )
+        } ],
     });
 
     $('#table-paginate').DataTable({
@@ -73,4 +105,18 @@ $(document).ready(function() {
         "ordering": false,
         "info":     false
     });
+
+    $('#example1').DataTable({
+        responsive: true,
+        autoWidth: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        "paging":   false,
+        "ordering": false,
+        "info":     false
+    });
+
+
 } );
+

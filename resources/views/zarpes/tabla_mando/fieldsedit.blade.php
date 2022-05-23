@@ -1,20 +1,20 @@
 <!-- Uab Minimo Field -->
 <div class="row">
 <div class="form-group col-sm-4">
-    {!! Form::label('UAB_minimo', 'Uab Minimo:') !!}
-    {!! Form::number('UAB_minimo', null, ['class' => 'form-control']) !!}
+    {!! Form::label('UAB_minimo', 'UAB Mínimo:') !!}
+    {!! Form::number('UAB_minimo', null, ['class' => 'form-control','required']) !!}
 </div>
 
 <!-- Uab Maximo Field -->
 <div class="form-group col-sm-4">
-    {!! Form::label('UAB_maximo', 'Uab Max imo:') !!}
-    {!! Form::number('UAB_maximo', null, ['class' => 'form-control']) !!}
+    {!! Form::label('UAB_maximo', 'UAB Máximo:') !!}
+    {!! Form::number('UAB_maximo', null, ['class' => 'form-control','required']) !!}
 </div>
 
 <!-- Cant Tripulantes Field -->
 <div class="form-group col-sm-4">
-    {!! Form::label('cant_tripulantes', 'Cant Tripulantes:') !!}
-    {!! Form::number('cant_tripulantes', null, ['class' => 'form-control']) !!}
+    {!! Form::label('cant_tripulantes', 'Cantidad Tripulantes:') !!}
+    {!! Form::number('cant_tripulantes', null, ['class' => 'form-control','required']) !!}
 </div>
 </div>
 <br>
@@ -27,7 +27,7 @@
     </div>
     <div class="form-group col-sm-3">
 
-        {!! Form::label('longitud', 'Titulación minima aceptada:') !!}
+        {!! Form::label('longitud', 'Titulación mínima aceptada:') !!}
     </div>
     <div class="form-group col-sm-3">
         {!! Form::label('longitud', 'Titulación máxima aceptada:') !!}

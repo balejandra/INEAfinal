@@ -284,7 +284,7 @@
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
             <b>
-            Este documento tendrá validez por 24 horas, a partir de la fecha estimada de zarpe y solo lo autorizará navegar en los lapsos y lugares descritos.
+            Este documento tendrá validez por 24 horas, a partir de la fecha estimada de zarpe y sólo lo autorizará navegar en los lapsos y lugares descritos.
             </b>
             <br>
             <i>

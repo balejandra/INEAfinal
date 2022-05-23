@@ -49,16 +49,16 @@
                                         </div>
 
                                         <div class="row px-0 mx-0">
-                                            <div class="col-md-3 my-1">
+                                            <div class="col-sm-2 my-1">
                                                 <div class="form-group">
-                                                    <label for="title">Tipo doc..:</label>
+                                                    <label for="title">Tipo Documento:</label>
                                                     {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3 my-1">
+                                            <div class="col-sm-2 my-1">
                                                 <div class="form-group">
-                                                    <label for="numero_identificacion">Cédula / Pasaporte</label>
+                                                    <label for="numero_identificacion">Cédula / Pasaporte:</label>
                                                     <input type="text" class="form-control" id="numero_identificacion"
                                                            placeholder="Cédula / Pasaporte" maxlength="10">
                                                 </div>
@@ -66,7 +66,7 @@
 
                                             <div class="col-md-2 my-1">
                                                 <div class="form-group">
-                                                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                                                    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
                                                     <input type="date" class="form-control" id="fecha_nacimiento"
                                                            placeholder="Fecha de nacimiento" maxlength="10"
                                                            value="{{ old('fecha_nacimiento') }}" max='{{date("Y-m-d")}}'
@@ -83,7 +83,7 @@
                                             </div>
 
                                             <div class="col-md-3  my-1 DatosRestantes">
-                                                <label for="nombres">Nombres</label>
+                                                <label for="nombres">Nombres:</label>
                                                 <div class="input-group">
 
                                                     <input type="text" class="form-control" id="nombres"
@@ -92,7 +92,7 @@
                                             </div>
 
                                             <div class="col-md-3  my-1 DatosRestantes">
-                                                <label for="nombres">Apellidos</label>
+                                                <label for="nombres">Apellidos:</label>
                                                 <div class="input-group">
 
                                                     <input type="text" class="form-control" id="apellidos"
@@ -100,14 +100,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4  my-1 ">
-                                                <label for="documento">Pasaporte</label>
+                                            <div class="col-sm-3  my-1 ">
+                                                <label for="documento">Pasaporte:</label>
                                                 <div class="input-group">
                                                     <input type="file" class="form-control" name="pasaporte_mayor"
                                                            id="pasaporte_mayor" accept="application/pdf, image/*">
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 text-center my-1">
+                                            <div class="col-sm-1 text-center my-1">
                                                 <br>
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="getDataPassengers('ZI')">
@@ -126,20 +126,20 @@
 
                                             <div class="col-md-12 py-2">
                                                 <b>Cantidad de pasajeros disponible para esta embarcación:</b>
-                                                <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
-                                                    {{ $cantPasajeros ?? '' }}
+                                                <span id="cantPasajeros" data-cantPass="{{  $validation['pasajerosRestantes'] }}">
+                                                    {{ $validation['pasajerosRestantes'] ?? '' }}
                                                 </span>
                                             </div>
 
                                             <div class="table-responsive">
-                                                <table class="table table-bordered">
+                                                <table class="table table-bordered"  id="table-scroll" style="width: 100%;">
                                                     <thead>
                                                     <tr>
                                                         <th width="18%">Cédula</th>
                                                         <th>Nombres</th>
                                                         <th>Apellidos</th>
-                                                        <th width="5%">sexo</th>
-                                                        <th>Fecha nac.</th>
+                                                        <th width="5%">Sexo</th>
+                                                        <th>Fecha Nacimiento</th>
                                                         <th width="5%">Menor</th>
                                                         <th width="5%">Representante</th>
                                                         <th width="5%">Acciones</th>
@@ -298,14 +298,14 @@
                     <div class="row px-0 mx-0">
                         <div class="col-md-2 my-1 px-1">
                             <div class="form-group">
-                                <label for="title">Tipo doc.:</label>
+                                <label for="title">Tipo Documento:</label>
                                 {!! Form::select('tipodocmenor', ['V'=>'Cédula', 'P'=>'Pasaporte', 'NC'=>'No cedulado'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodocmenor']) !!}
                             </div>
 
                         </div>
 
                         <div class="col  my-1">
-                            <label for="numero_identificacion">Cédula / Pasaporte</label>
+                            <label for="numero_identificacion">Cédula / Pasaporte:</label>
                             <div class="input-group">
 
                                 <input type="text" class="form-control" id="numero_identificacionMenor"
@@ -314,7 +314,7 @@
                         </div>
 
                         <div class="col my-1">
-                            <label for="fecha_nacimientoMenor">Fecha de nacimiento</label>
+                            <label for="fecha_nacimientoMenor">Fecha de Nacimiento:</label>
                             <div class="input-group">
 
                                 <input type="date" class="form-control" id="fecha_nacimientoMenor"
@@ -337,7 +337,7 @@
 
 
                         <div class="col  my-1 DatosRestantes2">
-                            <label for="nombres">Nombres</label>
+                            <label for="nombres">Nombres:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="nombresMenor" placeholder="Nombres"
                                        name="nombresMenor" maxlength="40">
@@ -345,7 +345,7 @@
                         </div>
 
                         <div class="col  my-1 DatosRestantes2">
-                            <label for="nombres">Apellidos</label>
+                            <label for="nombres">Apellidos:</label>
                             <div class="input-group">
 
                                 <input type="text" class="form-control" id="apellidosMenor" placeholder="Apellidos"
@@ -357,7 +357,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-6">
-                            {!! Form::label('documento_1', 'Partida de nacimiento (Obligatorio):') !!}
+                            {!! Form::label('documento_1', 'Partida de Nacimiento (Obligatorio):') !!}
                             <input type="file" class="form-control" name="partida_nacimiento" id="partida_nacimiento"
                                    accept="application/pdf, image/*" required>
                         </div>

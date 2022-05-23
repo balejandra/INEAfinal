@@ -36,7 +36,7 @@ class CapitaniaUserController extends AppBaseController
     public function index(Request $request)
     {
         $capitaniaUsers = $this->capitaniaUserRepository->all();
-       
+
         return view('publico.capitania_users.index')
             ->with('capitaniaUsers', $capitaniaUsers);
     }
@@ -60,22 +60,35 @@ class CapitaniaUserController extends AppBaseController
     /**
      * Store a newly created CapitaniaUser in storage.
      *
-     * @param CreateCapitaniaUserRequest $request
+     * @param Request $request
      *
      * @return Response
      */
-    public function store(CreateCapitaniaUserRequest $request)
+    public function store(Request$request)
     {
+        $validated = $request->validate([
+            'cargo' => 'required|string',
+            'user_id' => 'required|string',
+            'capitania_id'=>'required',
+        ],
+
+            [
+                'cargo.required' => 'El campo Cargo es obligatorio.',
+                'user_id.required' => 'El campo Email del Usuario es obligatorio.',
+                'capitania_id.required' => 'El campo Capitanía es obligatorio.',
+
+            ]);
+
         $verification=CapitaniaUser::where('cargo',$request->cargo)->where('capitania_id',$request->capitania_id)->get();
         if (isset($verification[0])) {
-            Flash::error('La capitania ya tiene asignado este rol.');
+            Flash::error('La Capitanía ya tiene asignado este Rol.');
             return redirect()->back();
         }else {
             $input = $request->all();
 
             $capitaniaUser = $this->capitaniaUserRepository->create($input);
 
-            Flash::success('Capitania User saved successfully.');
+            Flash::success('Usuario de Capitanía guardado satisfactoriamente.');
 
             return redirect(route('capitaniaUsers.index'));
         }
@@ -94,7 +107,7 @@ class CapitaniaUserController extends AppBaseController
         $capitaniaUser = $this->capitaniaUserRepository->find($id);
 
         if (empty($capitaniaUser)) {
-            Flash::error('Capitania User not found');
+            Flash::error('Usuario de Capitanía no encontrado');
 
             return redirect(route('capitaniaUsers.index'));
         }
@@ -117,7 +130,7 @@ class CapitaniaUserController extends AppBaseController
         $roles=Role::pluck('name','id');
 
         if (empty($capitaniaUser)) {
-            Flash::error('Capitania User not found');
+            Flash::error('Usuario de Capitanía no encontrado');
 
             return redirect(route('capitaniaUsers.index'));
         }
@@ -137,25 +150,38 @@ class CapitaniaUserController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateCapitaniaUserRequest $request)
+    public function update($id, Request $request)
     {
+        $validated = $request->validate([
+            'cargo' => 'required|string',
+            'user_id' => 'required|string',
+            'capitania_id'=>'required',
+        ],
+
+            [
+                'cargo.required' => 'El campo Cargo es obligatorio.',
+                'user_id.required' => 'El campo Email del Usuario es obligatorio.',
+                'capitania_id.required' => 'El campo Capitanía es obligatorio.',
+
+            ]);
+
         $verification=CapitaniaUser::where('cargo',$request->cargo)->where('capitania_id',$request->capitania_id)->get();
         $ver=$verification->except([$id]);
         if (isset($ver[0])) {
-            Flash::error('La capitania ya tiene asignado este rol.');
+            Flash::error('La Capitanía ya tiene asignado este Rol.');
             return redirect()->back();
         }else {
             $capitaniaUser = $this->capitaniaUserRepository->find($id);
 
             if (empty($capitaniaUser)) {
-                Flash::error('Capitania User not found');
+                Flash::error('Usuario de Capitanía no encontrado');
 
                 return redirect(route('capitaniaUsers.index'));
             }
 
             $capitaniaUser = $this->capitaniaUserRepository->update($request->all(), $id);
 
-            Flash::success('Capitania User updated successfully.');
+            Flash::success('Usuario de Capitanía actualizado satisfactoriamente.');
 
             return redirect(route('capitaniaUsers.index'));
         }
@@ -176,14 +202,14 @@ class CapitaniaUserController extends AppBaseController
         $capitaniaUser = $this->capitaniaUserRepository->find($id);
 
         if (empty($capitaniaUser)) {
-            Flash::error('Capitania User not found');
+            Flash::error('Usuario de Capitanía no encontrado');
 
             return redirect(route('capitaniaUsers.index'));
         }
 
         $this->capitaniaUserRepository->delete($id);
 
-        Flash::success('Capitania User deleted successfully.');
+        Flash::success('Usuario de Capitanía eliminado satisfactoriamente.');
 
         return redirect(route('capitaniaUsers.index'));
     }

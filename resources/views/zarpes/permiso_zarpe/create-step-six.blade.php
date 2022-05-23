@@ -51,7 +51,7 @@
                                         <div class="row px-0 mx-0">
                                             <div class="col-md-3 my-1">
                                                 <div class="form-group">
-                                                    <label for="title">Tipo doc..:</label>
+                                                    <label for="title">Tipo doc.:</label>
                                                     {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
                                                 </div>
                                             </div>
@@ -66,7 +66,7 @@
 
                                             <div class="col-md-2 my-1">
                                                 <div class="form-group">
-                                                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                                                    <label for="fecha_nacimiento">Fecha de Nacimiento</label>
                                                     <input type="date" class="form-control" id="fecha_nacimiento"
                                                            placeholder="Fecha de nacimiento" maxlength="10"
                                                            value="{{ old('fecha_nacimiento') }}" max='{{date("Y-m-d")}}'
@@ -87,7 +87,7 @@
                                                 <div class="input-group">
 
                                                     <input type="text" class="form-control" id="nombres"
-                                                           placeholder="Nombres" name="nombres" maxlength="40">
+                                                           placeholder="Nombres" name="nombres" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
@@ -96,7 +96,7 @@
                                                 <div class="input-group">
 
                                                     <input type="text" class="form-control" id="apellidos"
-                                                           placeholder="Apellidos" name="apellidos" maxlength="40">
+                                                           placeholder="Apellidos" name="apellidos" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
@@ -122,20 +122,20 @@
 
                                             <div class="col-md-12 py-2">
                                                 <b>Cantidad de pasajeros disponible para esta embarcación:</b>
-                                                <span id="cantPasajeros" data-cantPass='{{ $cantPasajeros }}'>
-                                                    {{ $cantPasajeros ?? '' }}
+                                                <span id="cantPasajeros" data-cantPass="{{  $validation['pasajerosRestantes'] }}">
+                                                    {{ $validation['pasajerosRestantes'] ?? '' }}
                                                 </span>
                                             </div>
 
                                             <div class="table-responsive">
-                                                <table class="table table-bordered">
+                                                <table class="table table-bordered" id="table-scroll" style="width: 100%;">
                                                     <thead>
                                                     <tr>
                                                         <th width="18%">Cédula</th>
                                                         <th>Nombres</th>
                                                         <th>Apellidos</th>
-                                                        <th width="5%">sexo</th>
-                                                        <th>Fecha nac.</th>
+                                                        <th width="5%">Sexo</th>
+                                                        <th width="10%">Fecha Nacimiento</th>
                                                         <th width="5%">Menor</th>
                                                         <th width="5%">Representante</th>
                                                         <th width="5%">Acciones</th>
@@ -146,11 +146,6 @@
                                                         @php
                                                             $cant=0;
                                                         @endphp
-                                                        <tr>
-                                                            <td colspan="8" class="text-center">
-                                                                Sin registros para mostrar
-                                                            </td>
-                                                        </tr>
                                                     @else
                                                         @php
                                                             $cant=count($passengers);
@@ -162,7 +157,7 @@
                                                                 <td>{{$position["nombres"]}}</td>
                                                                 <td>{{$position["apellidos"]}}</td>
                                                                 <td class="text-center">{{$position["sexo"]}}</td>
-                                                                <td>{{$position["fecha_nacimiento"]}}</td>
+                                                                <td>{{$position["fecha_nacimiento"],'d-m-Y'}}</td>
                                                                 @if($position["menor_edad"]==1)
                                                                     <td class="text-center">SI</td>
                                                                 @else
@@ -336,7 +331,7 @@
                             <label for="nombres">Nombres</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="nombresMenor" placeholder="Nombres"
-                                       name="nombresMenor" maxlength="40">
+                                       name="nombresMenor" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                             </div>
                         </div>
 
@@ -345,7 +340,7 @@
                             <div class="input-group">
 
                                 <input type="text" class="form-control" id="apellidosMenor" placeholder="Apellidos"
-                                       name="apellidosMenor" maxlength="40">
+                                       name="apellidosMenor" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                             </div>
                         </div>
 

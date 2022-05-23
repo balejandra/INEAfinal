@@ -189,7 +189,7 @@
         <p class=" text-center mbr-text display-7">
             REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
             MINISTERIO DEL PODER POPULAR PARA EL TRANSPORTE<br>
-            INSTITUTO NACIONAL DE LOS ESPACIOS ACUATICOS<br>
+            INSTITUTO NACIONAL DE LOS ESPACIOS ACUÁTICOS<br>
             CAPITANÍA DE PUERTO DE <u>{{$estadia->capitania->nombre}}</u>  <br>
             <br>
             <span style="font-size: 20px; font-weight: bold">PERMISO DE ESTADÍA</span><br>
@@ -259,10 +259,10 @@
             <tr>
                 <th>ESLORA <br>Lenght</th>
                 <th>POTENCIA KW <br>KW Power</th>
-                <th>CAPITAN <br>Capitain</th>
+                <th>CAPITÁN <br>Capitain</th>
                 <th>Pasaporte <br>Passport Nro</th>
-                <th>NUMERO DE TRIPULANTES <br>Number of Crew members</th>
-                <th>NUMERO DE PASAJEROS <br>Number of Passengers</th>
+                <th>NÚMERO DE TRIPULANTES <br>Number of Crew members</th>
+                <th>NÚMERO DE PASAJEROS <br>Number of Passengers</th>
             </tr>
             <tr>
                 <td>{{$estadia->eslora}}</td>
@@ -276,8 +276,8 @@
                 <th>ACTIVIDADES A REALIZAR<br>Ship’spurpose</th>
                 <th colspan="2">PROCEDENCIA <br>Port of origin</th>
                 <th>DESTINO <br>Port of destination</th>
-                <th>TIEMPO DE ESTADIA <br>Permanency</th>
-                <th>VALIDO HASTA <br>Valid until</th>
+                <th>TIEMPO DE ESTADÍA <br>Permanency</th>
+                <th>VÁLIDO HASTA <br>Valid until</th>
             </tr>
             <tr>
                 <td>{{$estadia->actividades}}</td>

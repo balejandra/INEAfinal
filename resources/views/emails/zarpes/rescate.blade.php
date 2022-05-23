@@ -2,12 +2,12 @@
 
     Saludos
 
-    Notificacion URGENTE, la siguiente embarcacion presenta 2 horas de retraso de su arribo a destino programado
+    Notificacion URGENTE, la siguiente embarcación presenta 2 horas de retraso de su arribo a destino programado
 
 @component('mail::panel')
-    <h2>Nro de Solicitud: {{$codigo}} </h2>
+    <h2>Nro. de Solicitud: {{$codigo}} </h2>
     <br>
-    <h2>Buque Matricula Nro: {{$buque}} </h2>
+    <h2>Buque Matrícula Nro: {{$buque}} </h2>
     <br>
     <h2>Fecha Llegada: {{$hora_llegada}} </h2>
 @endcomponent

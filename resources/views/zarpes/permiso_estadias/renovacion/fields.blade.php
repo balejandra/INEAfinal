@@ -7,7 +7,7 @@
 
 <!-- Numero Registro Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('nro_registro', 'Nro de Registro del Buque:') !!}
+    {!! Form::label('nro_registro', 'Nro. de Registro del Buque:') !!}
     {!! Form::text('nro_registro', $permiso->nro_registro, ['class' => 'form-control', 'required','readonly']) !!}
 </div>
 
@@ -34,13 +34,13 @@
 
 <!-- Pasaporte Capitan Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('pasaporte_capitan', 'Nro. Pasaporte del Capitan:') !!}
+    {!! Form::label('pasaporte_capitan', 'Nro. Pasaporte del Capitán:') !!}
     {!! Form::text('pasaporte_capitan', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Nombrescompletos Capitan Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('nombre_capitan', 'Nombre y Apellido del Capitan:') !!}
+    {!! Form::label('nombre_capitan', 'Nombre y Apellido del Capitán:') !!}
     {!! Form::text('nombre_capitan', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
@@ -89,7 +89,7 @@
 
 <!-- Ultimo Puertovisitado Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('capitania_id', 'Circunscripcion Acuatica de Arribo:') !!}
+    {!! Form::label('capitania_id', 'Circunscripción Acuática de Arribo:') !!}
     <select id="capitania_id" name="capitania_id"
             class="form-control custom-select" required>
         <option value="">Seleccione</option>

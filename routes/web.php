@@ -30,10 +30,15 @@ Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->nam
 
 Route::middleware(['auth' , 'verified'])->group(function () {
     Route::resource('menus', \App\Http\Controllers\Publico\MenuController::class)->middleware('auth');
+    Route::get('menuDelete.index',[\App\Http\Controllers\Publico\MenuController::class,'indexMenuDeleted'])->name('menuDelete.index');
+    Route::get('menuDeleted/{menu}',[\App\Http\Controllers\Publico\MenuController::class,'restoreMenuDeleted'])->name('menuDeleted.restore');
 
     Route::resource('menuRols', \App\Http\Controllers\Publico\Menu_rolController::class);
 
     Route::resource('users', \App\Http\Controllers\Publico\UserController::class);
+    Route::get('userDelete.index',[\App\Http\Controllers\Publico\UserController::class,'indexUserDeleted'])->name('userDelete.index');
+    Route::get('userDeleted/{user}',[\App\Http\Controllers\Publico\UserController::class,'restoreUserDeleted'])->name('userDeleted.restore');
+
     Route::get('EstablecimientoUser',[\App\Http\Controllers\Publico\UserController::class,'EstablecimientoUser'])->name('AsignarEstablecimiento');
 
     Route::get('/permissions', [App\Http\Controllers\Publico\PermissionController::class, 'index'])->name('permissions')->middleware('auth');
@@ -43,6 +48,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/permissions/{permission}/edit', [App\Http\Controllers\Publico\PermissionController::class, 'edit'])->name('permissions.edit');
     Route::put('/permissions/{permission}', [App\Http\Controllers\Publico\PermissionController::class, 'update'])->name('permissions.update');
     Route::delete('/permissions/{permission}', [App\Http\Controllers\Publico\PermissionController::class, 'destroy'])->name('permissions.destroy');
+    Route::get('permissionDelete.index',[\App\Http\Controllers\Publico\PermissionController::class,'indexPermissionDeleted'])->name('permissionDelete.index');
+    Route::get('permissionDeleted/{menu}',[\App\Http\Controllers\Publico\PermissionController::class,'restorePermissionDeleted'])->name('permissionDeleted.restore');
 
 
     Route::get('/roles', [App\Http\Controllers\Publico\RoleController::class, 'index'])->name('roles')->middleware('auth');
@@ -52,6 +59,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/roles/{role}/edit', [App\Http\Controllers\Publico\RoleController::class, 'edit'])->name('roles.edit');
     Route::put('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'update'])->name('roles.update');
     Route::delete('/roles/{role}', [App\Http\Controllers\Publico\RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::get('roleDelete.index',[\App\Http\Controllers\Publico\RoleController::class,'indexRoleDeleted'])->name('roleDelete.index');
+    Route::get('roleDeleted/{role}',[\App\Http\Controllers\Publico\RoleController::class,'restoreRoleDeleted'])->name('roleDeleted.restore');
+
 
     Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
 

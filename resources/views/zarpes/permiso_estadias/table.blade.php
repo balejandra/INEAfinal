@@ -1,15 +1,15 @@
-<table class="table table-striped table-bordered display" style="width:100%">
+<table class="table table-striped table-bordered display2" style="width:100%">
     <thead>
     <tr>
-        <th data-priority="1">Nro Solicitud</th>
+        <th data-priority="1">Nro. Solicitud</th>
         <th>Fecha Solicitud</th>
         <th>Solicitante</th>
         <th>Nombre Buque</th>
-        <th>Nro Registro Buque</th>
+        <th>Nro. Registro Buque</th>
         <th>Puerto Origen</th>
         <th>Puerto Destino</th>
-        <th style="font-size: 12px; width: 5%">Días de Estadia aprobada en el País</th>
-        <th data-priority="2">Status</th>
+        <th style="font-size: 12px; width: 5%">Días de Estadía aprobada en el País</th>
+        <th data-priority="2">Estatus</th>
         <th style="width: max-content">Acciones</th>
     </tr>
     </thead>
@@ -122,7 +122,7 @@
                             <a class="btn btn-sm" style="background-color: #bf0063"
                                href="{{route('createrenovacion',$permisoEstadia->id)}}" data-toggle="tooltip"
                                data-bs-placement="bottom"
-                               title="Renovar Permiso de Estadia">
+                               title="Renovar Permiso de Estadía">
                                 <i class="fas fa-file-import"></i>
                             </a>
                         @endcan
@@ -151,9 +151,14 @@
                             {!! Form::label('visitador', 'Nombres y Apellidos del Visitador:') !!}
                             {!! Form::text('visitador', null, ['class' => 'form-control', 'required']) !!}
                         </div>
+                        @php
+                            $fechaActual=new DateTime();
+                            $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
+                            $fechaActual=$fechaActual->format('Y-m-d');
+                        @endphp
                         <div class="form-group col-sm-6">
                             {!! Form::label('fecha_visita', 'Fecha de Visita:') !!}
-                            <input type="date" name="fecha_visita" class="form-control" min="{{date('Y-m-d')}}">
+                            <input type="date" name="fecha_visita" id="fecha_visita"  class="form-control" min="{{$fechaActual}}" max="9999-12-31" required>
                         </div>
                     </div>
                 </div>

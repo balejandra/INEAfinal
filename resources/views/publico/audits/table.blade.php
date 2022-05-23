@@ -21,7 +21,7 @@
             <td>{{ $auditable->auditable_id }}</td>
             <td>{{ json_encode($auditable->old_values )}}</td>
             <td>{{ json_encode($auditable->new_values) }}</td>
-            <td>{{ $auditable->created_at }}</td>
+            <td>{{ date_format($auditable->created_at,'d-m-Y') }}</td>
             <td>
                 <div class='btn-group'>
                     <a href="{{ route('auditables.show', [$auditable->id]) }}" class="btn btn-sm btn-success">

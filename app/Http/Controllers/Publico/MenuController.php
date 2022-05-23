@@ -10,6 +10,7 @@ use App\Repositories\Publico\MenuRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Validation\Rule;
 use Response;
 use Spatie\Permission\Models\Role;
 
@@ -41,7 +42,8 @@ class MenuController extends AppBaseController
         $menus = $this->menuRepository->all();
 
         return view('publico.menus.index')
-            ->with('menus', $menus)->with('titulo', $this->titulo);
+            ->with('menus', $menus)
+            ->with('titulo', $this->titulo);
     }
 
 
@@ -63,7 +65,8 @@ class MenuController extends AppBaseController
 
         return view('publico.menus.create')
             ->with('roles',$menuRols)
-            ->with('parent',$parent)->with('titulo', $this->titulo);
+            ->with('parent',$parent)
+            ->with('titulo', $this->titulo);
     }
 
     /**
@@ -73,8 +76,25 @@ class MenuController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateMenuRequest $request)
+    public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|unique:menus|max:255',
+            'url'=>'required|max:255',
+            'parent'=> 'required|max:255',
+            'enabled'=> 'required|max:255',
+            'role'=>'required',
+            'order'=>'required'
+        ],
+            [
+                'name.unique'=>'Menú ya registrado',
+                'name.required'=>'El campo Nombre es obligatorio',
+                'order.required'=>'El campo Orden es obligatorio',
+                'parent.required'=>'El campo Menu Padre es obligatorio',
+                'role.required'=>'Es obligatorio asignar un rol al Menú'
+
+            ]
+        );
 
         $menu= Menu::create($request->except(['role']));
         $roles = $menu->roles()->sync($request['role']);
@@ -90,7 +110,7 @@ class MenuController extends AppBaseController
 
 
        // Flash::success('Menú guardado con éxito.');
-        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.')->with('titulo', $this->titulo);
+        return redirect()->route('menus.index')->with('success','Menú creado correctamente.')->with('titulo', $this->titulo);
         //return redirect(route('menus.index'));
     }
 
@@ -123,7 +143,11 @@ class MenuController extends AppBaseController
             //return redirect(route('menus.index'));
         }
 
-        return view('publico.menus.show')->with('menu', $menu)->with('parent', $parent)->with('menuRols', $menuRols)->with('titulo', $this->titulo);
+        return view('publico.menus.show')
+            ->with('menu', $menu)
+            ->with('parent', $parent)
+            ->with('menuRols', $menuRols)
+            ->with('titulo', $this->titulo);
     }
 
     /**
@@ -161,9 +185,9 @@ class MenuController extends AppBaseController
 
         return view('publico.menus.edit')
             ->with('menu', $menu)
-           // ->with('roles',$roles)
             ->with('parent',$parent)
-            ->with('roles',$menuRols)->with('titulo', $this->titulo);
+            ->with('roles',$menuRols)
+            ->with('titulo', $this->titulo);
     }
 
     /**
@@ -174,14 +198,32 @@ class MenuController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateMenuRequest $request)
+    public function update($id, Request $request)
     {
+        $validated = $request->validate([
+            'name' => ['required', 'max:255', Rule::unique('menus')->ignore($id)],
+            'url'=>'required|max:255',
+            'parent'=> 'required|max:255',
+            'enabled'=> 'required|max:255',
+            'role'=>'required',
+            'order'=>'required'
+        ],
+            [
+                'name.unique'=>'Menú ya registrado',
+                'name.required'=>'El campo Nombre es obligatorio',
+                'order.required'=>'El campo Orden es obligatorio',
+                'parent.required'=>'El campo Menu Padre es obligatorio',
+                'role.required'=>'Es obligatorio asignar un rol al Menú'
+
+            ]
+        );
         $menu = $this->menuRepository->find($id);
 
         if (empty($menu)) {
             //Flash::error('Menú no encontrado');
 
-            return redirect()->route('menus.index')->with('error','Menu no encontrado');
+            return redirect()->route('menus.index')
+                ->with('error','Menu no encontrado');
         }
         //var_dump($request['role']);
         $menu = $this->menuRepository->update($request->all(), $id);
@@ -190,7 +232,9 @@ class MenuController extends AppBaseController
         $roles = $menu->roles()->sync($request['role']);
 
        // Flash::success('Menú actualizado correctamente.');
-        return redirect()->route('menus.index')->with('success','Menú actualizado correctamente.')->with('titulo', $this->titulo);
+        return redirect()->route('menus.index')
+            ->with('success','Menú actualizado correctamente.')
+            ->with('titulo', $this->titulo);
 
        // return redirect(route('menus.index'));
     }
@@ -211,7 +255,9 @@ class MenuController extends AppBaseController
         if (empty($menu)) {
             //Flash::error('Menú no encontrado');
 
-            return redirect()->route('menus.index')->with('error','Menu no encontrado')->with('titulo', $this->titulo);
+            return redirect()->route('menus.index')
+                ->with('error','Menu no encontrado')
+                ->with('titulo', $this->titulo);
 
         }
 
@@ -220,6 +266,23 @@ class MenuController extends AppBaseController
 
         //Flash::success('Menú eliminado con éxito.');
 
-        return redirect()->route('menus.index')->with('success','Menu eliminado con exito.')->with('titulo', $this->titulo);
+        return redirect()->route('menus.index')
+            ->with('success','Menu eliminado con exito.')
+            ->with('titulo', $this->titulo);
+    }
+
+    public function indexMenuDeleted(){
+        $menus =Menu::onlyTrashed()->get();
+        return view('publico.menus.menu_delete')
+            ->with('menus', $menus)
+            ->with('titulo', $this->titulo);
+    }
+
+    public function restoreMenuDeleted($id){
+        $user_deleted=Menu::where('id',$id);
+        $user_deleted->restore();
+        Flash::success('Menú restaurado exitosamente.');
+
+        return redirect(route('menuDelete.index'));
     }
 }

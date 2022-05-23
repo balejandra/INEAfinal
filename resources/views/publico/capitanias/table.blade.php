@@ -1,9 +1,14 @@
-    <table class="table table-striped table-bordered" id="capitanias-table" style="width:100%">
+<style>
+    table.dataTable {
+        margin: 0 auto;
+    }
+</style>
+    <table class="table table-striped table-bordered table-grow" id="generic-table" style="width:50%">
         <thead>
         <tr>
-            <th>Nombre</th>
+            <th >Nom bre</th>
             <th>Sigla</th>
-            <th>Acciones</th>
+            <th width="30%">Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -11,7 +16,7 @@
             <tr>
                 <td>{{ $capitania->nombre }}</td>
                 <td>{{ $capitania->sigla }}</td>
-                <td width="20%">
+                <td>
                     @can('consultar-capitania')
                         <a class="btn btn-sm btn-success" href="  {{ route('capitanias.show', [$capitania->id]) }}">
                             <i class="fa fa-search"></i>
@@ -26,7 +31,7 @@
                         <div class='btn-group'>
                             {!! Form::open(['route' => ['capitanias.destroy', $capitania->id], 'method' => 'delete']) !!}
 
-                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el capitania $capitania->nombre ?')"]) !!}
+                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar la capitanía $capitania->nombre ?')"]) !!}
 
                             {!! Form::close() !!}
                         </div>

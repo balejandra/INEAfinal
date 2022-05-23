@@ -35,18 +35,23 @@
                             @can('crear-permiso')
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{ route('permissions.create') }}">Nuevo</a>
+                                <a class="btn btn-warning btn-sm"  href="{{ route('permissionDelete.index') }}">Permisos Eliminados</a>
                             </div>
                             @endcan
                         </div>
 
                         <div class="card-body">
-                            <table class="table table-bordered table-striped" id="generic-table" style="width:100%">
+                            <style>
+                                table.dataTable {
+                                    margin: 0 auto;
+                                }
+                            </style>
+                            <table class="table table-bordered table-striped table-grow" id="generic-table" style="width:50%;height:auto;">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Guard</th>
-                                    <th>Creado</th>
+                                    <th width="10%">ID</th>
+                                    <th width="35%">Nombre</th>
+                                    <th width="30%">Creado</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
@@ -55,7 +60,6 @@
                                     <tr>
                                         <td> {{$permission->id}} </td>
                                         <td>{{$permission->name}} </td>
-                                        <td>{{$permission->guard_name}} </td>
                                         <td>{{$permission->created_at}} </td>
                                         <td>
                                             @can('editar-menu')

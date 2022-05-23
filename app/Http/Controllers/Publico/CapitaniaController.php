@@ -68,8 +68,28 @@ class CapitaniaController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateCapitaniaRequest $request)
+    public function store(Request $request)
     {
+        $validated = $request->validate([
+            'nombre' => 'required|string',
+            'sigla' => 'required|string',
+            'capitanes'=>'required',
+            "latitud"    => "required|array|min:1",
+            "latitud.*"  => "required",
+            "longitud"    => "required|array|min:1",
+            "longitud.*"  => "required",
+        ],
+
+            [
+                'nombre.required' => 'El campo Nombre es obligatorio',
+                'sigla.required' => 'El campo Sigla es obligatorio',
+                'capitanes.required' => 'El campo Capitán es obligatorio',
+                'latitud.*.required'=>'El campo latitud es obligatorio',
+                'longitud.*.required'=>'El campo Longitud es obligatorio',
+
+            ]
+        );
+
         $input = $request->all();
 
         $capitania = $this->capitaniaRepository->create($input);
@@ -168,6 +188,24 @@ class CapitaniaController extends AppBaseController
      */
     public function update($id, Request $request, Capitania $cap)
     {
+        $validated = $request->validate([
+            'nombre' => 'required|string',
+            'sigla' => 'required|string',
+            'capitanes'=>'required',
+            "latitud"    => "required|array|min:1",
+            "latitud.*"  => "required",
+            "longitud"    => "required|array|min:1",
+            "longitud.*"  => "required",
+        ],
+
+            [
+                'nombre.required' => 'El campo Nombre es obligatorio',
+                'sigla.required' => 'El campo Sigla es obligatorio',
+                'capitanes.required' => 'El campo Capitán es obligatorio',
+                'latitud.*.required'=>'El campo latitud es obligatorio',
+                'longitud.*.required'=>'El campo Longitud es obligatorio',
+
+            ]);
         $capi = $this->capitaniaRepository->update($request->all(), $id);
         $rolecapitan=Role::find(4);
        if ($request->user==0) {

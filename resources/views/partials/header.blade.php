@@ -23,7 +23,7 @@
                        <a class="dropdown-item" href="#">
                            <a href="#" class="dropdown-item btn btn-default btn-flat"
                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                               <i class="fa fa-lock"></i> Cerrar Sesion
+                               <i class="fa fa-lock"></i> Cerrar Sesión
                            </a>
                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                @csrf

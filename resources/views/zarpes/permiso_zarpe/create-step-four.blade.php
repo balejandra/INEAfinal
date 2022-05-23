@@ -104,8 +104,8 @@
 
                                                     {!! Form::label('salida', 'Fecha/hora salida:') !!}
                                                     <input type="datetime-local" id="salida" name="salida"
-                                                           min="{{$fechaActual}}" class="form-control"
-                                                           onblur="compararFechas()" max="9999-12-31T23:59"   value="{{ $fechasal }}" >
+                                                           min="{{$fechaActual}}" class="form-control formatoFecha"
+                                                           onblur="compararFechas()" max="9999-12-31T23:59"  value="{{ $fechasal }}" >
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
@@ -182,7 +182,7 @@
 
                                                 <div class="col-md-12 px-0">
                                                     <div class="form-group col-sm-12 ">
-                                                        {!! Form::label('0', 'Establecimiento náutico de retorno final:') !!}
+                                                        {!! Form::label('', 'Establecimiento náutico de retorno final:') !!}
 
                                                         
                                                         <select id="estNautioDestino"
@@ -210,7 +210,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-12 py-2">
+                                                <div class="col-md-12 py-2" style="{{$show}}">
                                                     {!! Form::label('0', 'Circunscripción acuática de destino:') !!}
                                                     <div class="col-md-12 p-0 text-center"
                                                          id="capiDestino">
@@ -240,7 +240,7 @@
                                                             @endphp
                                                     @else
                                                             @php
-                                                            $lat=''; $lon='';
+                                                            $lat=old('latitud'); $lon=old('longitud');
                                                             @endphp
                                                     @endif
 

@@ -1,11 +1,11 @@
 <table class="table">
     <tbody>
     <tr>
-        <th class="bg-light">Uab Minimo</th>
+        <th class="bg-light">Uab Mínimo</th>
         <td>{{ $tablaMando->UAB_minimo }}</td>
     </tr>
     <tr>
-        <th class="bg-light">Uab Maximo</th>
+        <th class="bg-light">Uab Máximo</th>
         <td>{{ $tablaMando->UAB_maximo }}</td>
     </tr>
     <tr>
@@ -23,7 +23,7 @@
 
     <thead>
     <th>Cargo</th>
-    <th>Titulacion Minima</th>
+    <th>Titulacion Mínima</th>
     <th>Titulacion Máxima</th>
     </thead>
     <tbody>

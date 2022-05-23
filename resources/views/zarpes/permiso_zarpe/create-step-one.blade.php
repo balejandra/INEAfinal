@@ -50,9 +50,9 @@
                                         @endif
 
                                         <div class="row">
-                                            <div class="col-md-4 text-right"></div>
+                                            <div class="col-md-5 text-right"></div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="title">Bandera:</label>
                                                     <select name="bandera" id="bandera" class="form-control custom-select" placeholder='Seleccione'>
@@ -62,7 +62,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4"></div>
+                                            <div class="col-md-5"></div>
                                         </div>
                                     </div>
 

@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Publico\CreateUserRequest;
 use App\Http\Requests\Publico\UpdateUserRequest;
-use App\Models\Publico\Capitania;
 use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\Menu_rol;
 use App\Models\Publico\Saime_cedula;
 use App\Models\User;
 use App\Models\Zarpes\EstablecimientoNautico;
-use App\Models\Zarpes\EstablecimientoNauticoUser;
 use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -58,23 +57,28 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles=Role::pluck('name','id');
+        $menu=Menu_rol::pluck('role_id');
+        $roles=Role::whereIn('id',$menu)->get();
+        $roleExcl=Role::whereNotIn('id',$menu)->get();
+        //dd($roleExcl);
+        $roles=$roles->pluck('name','id');
         return view('publico.users.create')
-            ->with('roles',$roles);
+            ->with('roles',$roles)
+            ->with('rolexcl',$roleExcl);
     }
 
     /**
      * Store a newly created User in storage.
      *
-     * @param CreateUserRequest $request
+     * @param Request $request
      *
      * @return Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
         $validated= $request->validate([
-            'nombres' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:users'],
+            'nombres' => 'required|string|max:255',
+            'email' => 'required|string|email:rfc,dns|max:255|unique:users',
             'password' => [
                 'required',
                 'max:50',
@@ -159,8 +163,8 @@ class UserController extends Controller
     public function update($id, Request $request)
     {
         $validated= $request->validate([
-            'nombres' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'nombres' => 'required|string|max:255',
+            'email' => 'required|string|email:rfc,dns|max:255',
         ]);
 
 
@@ -170,7 +174,7 @@ class UserController extends Controller
         if ($request->password_change) {
             $validated= $request->validate([
                 'nombres' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255'],
+                'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
                 'password' => [
                     'required',
                     'max:50',
@@ -253,4 +257,20 @@ class UserController extends Controller
         echo json_encode($resp);
     }
 
+
+    public function indexUserDeleted(){
+        $users =User::onlyTrashed()->where('tipo_usuario','interno')->get();
+        //dd($users);
+
+        return view('publico.users.user_delete')
+            ->with('users', $users);
+    }
+
+    public function restoreUserDeleted($id){
+        $user_deleted=User::where('id',$id);
+        $user_deleted->restore();
+        Flash::success('Usuario restaurado exitosamente.');
+
+        return redirect(route('userDelete.index'));
+    }
 }

@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-header bg-zarpes text-white">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe INTERNACIONAL</strong>
+                            <strong>Solicitud de Permisos de {{$titulo}}</strong>
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{ route('zarpeInternacional.createStepOne') }}">Nuevo</a>
                             </div>
@@ -47,13 +47,13 @@
                                     <table class="table table-striped table-bordered display" style="width:100%">
                                         <thead>
                                         <tr>
-                                            <th data-priority="1">Nro Solicitud</th>
+                                            <th data-priority="1">Nro. Solicitud</th>
                                             <th>Fecha de Solicitud</th>
                                             <th>Solicitante</th>
                                             <th>Bandera</th>
-                                            <th>Matricula</th>
-                                            <th>Tipo Navegacion</th>
-                                            <th data-priority="2">Status</th>
+                                            <th>Matrícula</th>
+                                            <th>Tipo Navegación</th>
+                                            <th data-priority="2">Estatus</th>
                                             <th>Acciones</th>
                                         </tr>
                                         </thead>
@@ -107,20 +107,25 @@
                                                             <i class="fa fa-search"></i>
                                                         </a>
                                                     @endcan
-                                                    @if(($permisoOrigenZarpe->status->id=='1'))
+                                                        @if(($permisoOrigenZarpe->status->id=='1') && (date_format($permisoOrigenZarpe->fecha_hora_salida,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
                                                         @can('informar-navegacion')
                                                             <a class="btn btn-sm btn-warning confirmation"
                                                                data-route=" {{route('statusInt',[$permisoOrigenZarpe->id,'navegando',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
                                                                data-toggle="tooltip" data-bs-placement="bottom" title="Informar Navegación y Cerrar" data-action="INFORMAR NAVEGACIÓN de">
                                                                 <i class="fas fa-water"></i>
                                                             </a>
-                                                                <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
-                                                                   onclick="modalanularzarpe({{$permisoOrigenZarpe->id}},'{{$permisoOrigenZarpe->nro_solicitud}}')" data-toggle="tooltip"
-                                                                   data-bs-placement="bottom" title="Anular Solicitud">
-                                                                    <i class="fas fa-window-close"></i>
-                                                                </a>
+
                                                         @endcan
                                                     @endif
+                                                        @can('informar-navegacion')
+                                                        @if(($permisoOrigenZarpe->status->id=='1'))
+                                                        <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
+                                                           onclick="modalanularzarpe({{$permisoOrigenZarpe->id}},'{{$permisoOrigenZarpe->nro_solicitud}}')" data-toggle="tooltip"
+                                                           data-bs-placement="bottom" title="Anular Solicitud">
+                                                            <i class="fas fa-window-close"></i>
+                                                        </a>
+                                                        @endif
+                                                        @endcan
                                                     @if(($permisoOrigenZarpe->status->id=='5'))
                                                         @can('anular-sar')
                                                             <a class="btn btn-sm btn-outline-danger confirmation"
@@ -152,12 +157,12 @@
                                                id="permisoZarpesdestino-table">
                                             <thead>
                                             <tr>
-                                                <th>Nro Solicitud</th>
+                                                <th>Nro. Solicitud</th>
                                                 <th>Solicitante</th>
                                                 <th>Bandera</th>
-                                                <th>Matricula</th>
-                                                <th>Tipo Navegacion</th>
-                                                <th>Status</th>
+                                                <th>Matrícula</th>
+                                                <th>Tipo Navegación</th>
+                                                <th>Estatus</th>
                                                 <th>Acciones</th>
                                             </tr>
                                             </thead>
