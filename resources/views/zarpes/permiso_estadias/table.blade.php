@@ -9,7 +9,7 @@
         <th>Puerto Origen</th>
         <th>Puerto Destino</th>
         <th style="font-size: 12px; width: 5%">Días de Estadía aprobada en el País</th>
-        <th data-priority="2">Status</th>
+        <th data-priority="2">Estatus</th>
         <th style="width: max-content">Acciones</th>
     </tr>
     </thead>

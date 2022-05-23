@@ -16,7 +16,7 @@
                     Fecha de Solicitud
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoZarpe->created_at}}
+                    {{date_format($permisoZarpe->created_at,'d-m-Y')}}
                 </div>
             </div>
         </div>
