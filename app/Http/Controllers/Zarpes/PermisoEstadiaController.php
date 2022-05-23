@@ -63,7 +63,7 @@ class PermisoEstadiaController extends AppBaseController
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
         } else {
-            return redirect(route('home'));
+            return view('unauthorized');
         }
     }
 

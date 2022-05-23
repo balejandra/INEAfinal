@@ -71,7 +71,7 @@ class PermisoZarpeController extends Controller
             return view('zarpes.permiso_zarpe.indexcomodoro')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
         } else {
-            return redirect(route('home'));
+            return view('unauthorized');
         }
     }
 
@@ -480,7 +480,7 @@ class PermisoZarpeController extends Controller
             $CapDestinoFinal='';
             $idCapdestinoFinal=0;
         }
-        
+
         $capitaniasDestinoList = Capitania::all();
         $coordenadas = [];
         $coordenadasDep = [];
@@ -879,7 +879,7 @@ class PermisoZarpeController extends Controller
                     $indice=array_search($cedula,$tripulantes[$i],false);
                     if($indice!=false){
                         array_splice($tripulantes, $i, 1);
-                        
+
                         $request->session()->put('tripulantes', $tripulantes);
                         $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                         $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
@@ -1066,7 +1066,7 @@ class PermisoZarpeController extends Controller
             $data2 = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get()->map(function ($reporte) {
                 $data2 = Carbon::parse($data2->date_pago);
                 $data2->fecha_emision = $date->format('d').'-'.$date->format('m').'-'.$date->format('Y');
-                 
+
                 return $data2;
             });
             ;
