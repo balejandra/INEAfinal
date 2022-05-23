@@ -1710,7 +1710,7 @@ function estNauticoDestinoSelect(idCapitania){
                 let estabecimientos=respuesta[1];
                 document.getElementById('capiDestino').innerHTML=" <b>"+respuesta[0].nombre+" </b>";
                 let select=document.getElementById("estNautioDestino");
-                let options="<option value='0'>Seleccione</option>";
+                let options="<option value=''>Seleccione</option>";
                 for (var i = 0; i < estabecimientos.length; i++) {
                     options+="<option value='"+estabecimientos[i].id+"'>"+estabecimientos[i].nombre+"</option>"
                 }

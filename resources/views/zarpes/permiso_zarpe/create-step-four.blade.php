@@ -182,7 +182,7 @@
 
                                                 <div class="col-md-12 px-0">
                                                     <div class="form-group col-sm-12 ">
-                                                        {!! Form::label('0', 'Establecimiento náutico de retorno final:') !!}
+                                                        {!! Form::label('', 'Establecimiento náutico de retorno final:') !!}
 
                                                         
                                                         <select id="estNautioDestino"
@@ -240,7 +240,7 @@
                                                             @endphp
                                                     @else
                                                             @php
-                                                            $lat=''; $lon='';
+                                                            $lat=old('latitud'); $lon=old('longitud');
                                                             @endphp
                                                     @endif
 

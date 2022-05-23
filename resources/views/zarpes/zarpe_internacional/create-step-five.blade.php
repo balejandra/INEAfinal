@@ -90,14 +90,14 @@
                                             </div>
 
 
-                                            <div class="col-sm-3  px-1 DatosRestantes">
+                                            <div class="col-sm-2  px-1 DatosRestantes">
                                                 <div class="form-group" >
                                                     <label for="title">Nombres:</label>
                                                     <input type="text" class="form-control" id="nombres" name="nombres"  onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-3  px-1 DatosRestantes">
+                                            <div class="col-sm-2  px-1 DatosRestantes">
                                                 <div class="form-group">
                                                     <label for="title">Apellidos:</label>
                                                     <input type="text" class="form-control" id="apellidos" name="apellidos" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
@@ -112,12 +112,19 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-4 DatosRestantes">
+                                                <div class="form-group">
+                                                    <label for="title">Documento de acreditación:</label>
+                                                    <input type="file" class="form-control" id="documentoAcreditacion" name="documentoAcreditacion"  >
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label for="title">Pasaporte:</label>
                                                     <input type="file" class="form-control" id="doc" name="doc"  >
                                                 </div>
                                             </div>
+
                                             <div class="col-sm-1 my-2 text-center">
                                                 <br>
                                                 <button type="button" class="btn btn-primary"
@@ -151,7 +158,7 @@
                                                         <th>Cédula / Pasaporte</th>
                                                         <th>Nombres y Apellidos</th>
                                                         <th>Rango</th>
-                                                        <th>Documento</th>
+                                                        <th>Documentos</th>
                                                         <th>Acciones</th>
 
                                                     </tr>
@@ -182,7 +189,6 @@
                                                             @foreach($tripulantes as $trip)
 
                                                                 <tr id='{{$trip["nro_doc"]}}'>
-
 
                                                                     <td> {{$trip["funcion"]}} </td>
 

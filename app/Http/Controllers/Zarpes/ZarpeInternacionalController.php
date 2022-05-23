@@ -289,6 +289,9 @@ class ZarpeInternacionalController extends Controller
         $validatedData = $request->validate([
             'matricula' => 'required',
             //  'UAB' => 'required',
+        ],
+        [
+            'matricula.required'=>'El campo matrícula es obligatorio'
         ]);
         $validation = json_decode($request->session()->get('validacion'), true);
         $UAB = $request->input('UAB');
@@ -375,9 +378,13 @@ class ZarpeInternacionalController extends Controller
 
         $permiso = $request->input('permiso');
         $validatedData = $request->validate([
-            'permiso' => 'required',
+            
             'permiso_de_estadia' => 'required',
             'numero_de_registro' => 'required',
+        ],
+        [ 
+            'permiso_de_estadia.required'=>'El campo Permiso de estadía es obligatorio',
+            'numero_de_registro.required'=>'Número de registro no encontrado'
         ]);
         $idpermiso = $_REQUEST['permiso_de_estadia'];
         $matricula = $_REQUEST['numero_de_registro'];
@@ -430,6 +437,11 @@ class ZarpeInternacionalController extends Controller
             'tipo_de_navegacion' => 'required',
             'capitania' => 'required',
 
+        ],
+        [ 
+            'tipo_de_navegacion.required'=>'El campo Tipo de Navegación es obligatorio',
+           
+            'capitania.required'=>'El campo Capitanía es obligatorio'
         ]);
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
@@ -466,11 +478,13 @@ class ZarpeInternacionalController extends Controller
                 'salida' => 'required',
                 'llegada' => 'required',
                 'país_de_destino' => 'required',
-                'estNauticoDestinoZI'=>['required', 'string', 'max:255'],
-                 [
-                'estNauticoDestinoZI.required'=>'El campo establecimiento naútico de destino es requerido']
+                'estNauticoDestinoZI'=>'required',
+            ],
+             [
+                'estNauticoDestinoZI.required'=>'El campo Establecimiento naútico de destino es requerido'
 
             ]);
+ 
 
         $solicitud['establecimiento_nautico_id'] = $request->input('establecimientoNáuticoOrigen');
         $solicitud['establecimiento_nautico_destino_id'] =  $request->input('establecimientoNáuticoOrigen');
@@ -770,6 +784,8 @@ class ZarpeInternacionalController extends Controller
         $funcion=$_REQUEST['funcion'];
         $doc=$_REQUEST['doc'];
         $nrodoc=$_REQUEST['nrodoc'];
+        $docAcreditacion=$_REQUEST['docAcreditacion'];
+
 
 
         $vj = [];
@@ -839,6 +855,7 @@ class ZarpeInternacionalController extends Controller
                 "funcion" => $funcion,
                 "rango" =>$InfoMarino[0]->documento,
                 "doc" => $doc,
+                "documento_acreditacion"=>$docAcreditacion
 
             ];
 
@@ -1625,7 +1642,7 @@ class ZarpeInternacionalController extends Controller
 
     public function AddDocumentosMarinosZI(Request $request){
 
-
+        
         $pasaporte='';
         if ($request->hasFile('doc')) {
 
@@ -1633,11 +1650,23 @@ class ZarpeInternacionalController extends Controller
             $fileNamePass= date('dmYGi') . $pasaporte->getClientOriginalName();
             $avatar1 = $pasaporte->move(public_path() . '/documentos/zarpeinternacional', $fileNamePass);
             $pasaporte=$fileNamePass;
-            echo json_encode(['OK',$fileNamePass]);
+            $resp1= ['OK',$fileNamePass];
         }else{
-            echo json_encode(['errorFile','']);
+            $resp1= ['errorFile',''];
         }
 
+        $docAcreditacion="";
+        if ($request->hasFile('documentoAcreditacion')) {
+
+            $docAcreditacion = $request->file('documentoAcreditacion');
+            $fileNameDocAc= date('dmYGi') . $docAcreditacion->getClientOriginalName();
+            $avatar2 = $docAcreditacion->move(public_path() . '/documentos/zarpeinternacional', $fileNameDocAc);
+            $docAcreditacion=$fileNameDocAc;
+            $resp2= ['OK',$fileNameDocAc];
+        }else{
+            $resp2= ['errorFile',''];
+        }
+        echo json_encode([$resp1,$resp2]);
 
     }
 

@@ -488,9 +488,42 @@ function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
 
 function AddPasportsMarinos(){
     let doc=document.getElementById('doc').files[0];
-if (doc){
+    let docAcreditacion=document.getElementById('documentoAcreditacion').files[0];
+console.log('documentoAcreditacion',documentoAcreditacion);
+    let tipodoc=document.getElementById('tipodocZI').value;
+    console.log("tipoDOC", tipodoc);
+     switch(tipodoc){
+        case 'P':
+        
+            if (!doc){
+                let msj=document.getElementById('msjMarinoInt');
+                msj.innerHTML="";
+                msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el pasaporte.</div>";
+                return false;
+            }
+            if (!docAcreditacion){
+                let msj=document.getElementById('msjMarinoInt');
+                msj.innerHTML="";
+                msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el documento de acreditación.</div>";
+                return false;
+            }
+
+        break;
+        case 'V': 
+            if (!doc){
+                let msj=document.getElementById('msjMarinoInt');
+                msj.innerHTML="";
+                msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el pasaporte.</div>";
+                return false;
+            }
+        break;
+         
+
+     }
+ 
     var formData = new FormData();
     formData.append('doc', doc);
+    formData.append('documentoAcreditacion', docAcreditacion);
 
 
     $.ajax({
@@ -504,20 +537,28 @@ if (doc){
         processData: false
     }).done(function (response){
         var resps=JSON.parse(response);
-        if(resps[0] =='OK'){
+        console.log('RESPDOCS',resps);
+        var documentos;
+        if(tipodoc=='P'){
+            if(resps[0][0] =='OK' || resps[1][0] =='OK'){
 
-            pasaporteName=resps;
+                pasaporteName=resps;
+                documentos=[resps[0][1],resps[1][1]];
+                getMarinosZI(documentos);
+            } 
+        }else{
+            if(resps[0][0] =='OK'){
 
-            getMarinosZI(pasaporteName);
+                pasaporteName=resps;
+                documentos=[resps[0][1],resps[1][1]];
+                getMarinosZI(documentos);
+            }
         }
 
-    });
-}else{
-    let msj=document.getElementById('msjMarinoInt');
-    msj.innerHTML="";
-    msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el pasaporte.</div>";
-}
+        
 
+    });
+ 
 
 }
 
@@ -529,7 +570,8 @@ function getMarinosZI(pass) {
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
     let rango= document.getElementById('rango').value;
-    let doc=pass[1];
+    let doc=pass[0];
+    let docAcreditacion=pass[1];
     let ruta='';
     let tabla=document.getElementById('marinosZI');
     let msj=document.getElementById('msjMarinoInt');
@@ -569,7 +611,8 @@ function getMarinosZI(pass) {
             nombres:nombres,
             apellidos:apellidos,
             rango:rango,
-            doc:doc
+            doc:doc,
+            docAcreditacion:docAcreditacion
         }
 
         })// This will be called on success

@@ -43,7 +43,7 @@ $(document).ready(function() {
             { responsivePriority: 2, targets: -1 }
         ],
         language: {
-            "url": "../assets/DataTables/es_es.json"
+            "url": "../public/assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [

@@ -70,11 +70,11 @@
                                                     <label for="title">Tipo de Navegación:</label>
 
                                                     <select id="tipo_de_navegacion" name="tipo_de_navegacion"
-                                                            class="form-control custom-select">
+                                                            class="form-control custom-select" >
                                                         <option value="">Seleccione</option>
 
                                                         @foreach ($TipoZarpes as $tz)
-                                                            @if($tipozarpes==$tz->id)
+                                                            @if($tipozarpes==$tz->id || $tz->id ==old('tipo_de_navegacion'))
                                                                 @php
                                                                     $selectedtz="selected='selected'";
                                                                 @endphp
@@ -102,7 +102,7 @@
                                                             onchange="getCapitania();">
                                                         <option value="">Seleccione</option>
                                                         @foreach($descripcionNavegacion as $dn)
-                                                            @if($descripcion==$dn->id)
+                                                            @if($descripcion==$dn->id || $dn->id ==old('descripcion_de_navegacion'))
                                                                 @php
                                                                     $selecteddn="selected='selected'";
                                                                 @endphp
@@ -134,7 +134,7 @@
                                                         <option value="">Seleccione</option>
 
                                                         @foreach ($capitanias as $capitania)
-                                                            @if($capitaniaOrigen==$capitania->id)
+                                                            @if($capitaniaOrigen==$capitania->id || $capitania->id ==old('capitania'))
                                                                 @php
                                                                     $selectedcap="selected='selected'";
                                                                 @endphp

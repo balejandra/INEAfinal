@@ -298,6 +298,9 @@ class PermisoZarpeController extends Controller
         $validatedData = $request->validate([
             'matricula' => 'required',
             //  'UAB' => 'required',
+        ],
+        [
+            'matricula.required'=>'El campo matrícula es obligatorio'
         ]);
         $validation = json_decode($request->session()->get('validacion'), true);
         $UAB = $request->input('UAB');
@@ -358,6 +361,8 @@ class PermisoZarpeController extends Controller
 
     public function validationStepTwoE(Request $request)
     {
+        
+         
         $permiso = $_REQUEST['permiso'];
 
         $permisoEstadia = PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
@@ -387,6 +392,10 @@ class PermisoZarpeController extends Controller
             'permiso' => 'required',
             'permiso_de_estadia' => 'required',
             'numero_de_registro' => 'required',
+        ],
+        [ 
+            'permiso_de_estadia.required'=>'El campo Permiso de estadía es obligatorio',
+            'numero_de_registro.required'=>'El campo Número de registro es obligatorio'
         ]);
         $idpermiso = $_REQUEST['permiso_de_estadia'];
         $matricula = $_REQUEST['numero_de_registro'];
@@ -450,6 +459,11 @@ class PermisoZarpeController extends Controller
             'descripcion_de_navegacion' => 'required',
             'capitania' => 'required',
 
+        ],
+        [ 
+            'tipo_de_navegacion.required'=>'El campo Tipo de Navegación es obligatorio',
+            'descripcion_de_navegacion.required'=>'El campo Descripción de Navegación es obligatorio',
+            'capitania.required'=>'El campo Capitanía es obligatorio'
         ]);
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
@@ -570,31 +584,23 @@ class PermisoZarpeController extends Controller
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
 
-        if ($solicitud['descripcion_navegacion_id'] == 4) {
+          
             $validatedData = $request->validate([
                 'establecimientoNáuticoOrigen' => 'required',
                 'salida' => 'required',
                 'fecha_llegada_escala' => 'required',
                 'regreso' => 'required',
-                'latitud' => 'required',
-                'longitud' => 'required',
-            ]);
-        } else {
-            $validatedData = $request->validate([
-                'establecimientoNáuticoOrigen' => 'required',
-                'salida' => 'required',
-                'regreso' => 'required',
-                'fecha_llegada_escala' => 'required',
-                'latitud' => 'required',
-                'longitud' => 'required',
                 'capitaniaDestino' => 'required',
                 'establecimientoNáuticoDestino' => 'required',
+                'latitud' => 'required',
+                'longitud' => 'required',
 
             ],
             [
-                'establecimientoNáuticoDestino.required'=>'El campo Establecimiento náutico de retorno final es requerido, por favor verifique.'
+                'capitaniaDestino.required'=>'El campo Circunscripción acuática de destino es obligatorio',
+                'establecimientoNáuticoDestino.required'=>'El campo Establecimiento náutico de retorno final es obligatorio'
             ]);
-        }
+        
 
 
         $solicitud['establecimiento_nautico_id'] = $request->input('establecimientoNáuticoOrigen');
