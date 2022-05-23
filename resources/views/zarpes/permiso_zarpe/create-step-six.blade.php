@@ -135,7 +135,7 @@
                                                         <th>Nombres</th>
                                                         <th>Apellidos</th>
                                                         <th width="5%">Sexo</th>
-                                                        <th width="10%">Fecha nacimiento</th>
+                                                        <th width="10%">Fecha Nacimiento</th>
                                                         <th width="5%">Menor</th>
                                                         <th width="5%">Representante</th>
                                                         <th width="5%">Acciones</th>
@@ -157,7 +157,7 @@
                                                                 <td>{{$position["nombres"]}}</td>
                                                                 <td>{{$position["apellidos"]}}</td>
                                                                 <td class="text-center">{{$position["sexo"]}}</td>
-                                                                <td>{{$position["fecha_nacimiento"]}}</td>
+                                                                <td>{{$position["fecha_nacimiento"],'d-m-Y'}}</td>
                                                                 @if($position["menor_edad"]==1)
                                                                     <td class="text-center">SI</td>
                                                                 @else

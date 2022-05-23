@@ -73,7 +73,7 @@ class ZarpeInternacionalController extends Controller
             return view('zarpes.zarpe_internacional.indexcomodoro')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
         } else {
-            return redirect(route('home'));
+            return view('unauthorized');
         }
     }
 

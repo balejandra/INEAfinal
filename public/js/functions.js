@@ -26,7 +26,7 @@ $(document).ready(function () {
     } else {
     }
 });
- 
+
 
 function motivoRechazo() {
     $motivo = $("#motivo1 option:selected").text();
@@ -230,6 +230,7 @@ function eliminarCargosMandos(id, idcoord){
     function getDataPassengers(tipozarpe) {
         let cedula= document.getElementById('numero_identificacion').value;
         let fechanac= document.getElementById('fecha_nacimiento').value;
+
         let sexo= document.getElementById('sexo').value;
         let tipodoc= document.getElementById('tipodoc').value;
 
@@ -316,8 +317,9 @@ function eliminarCargosMandos(id, idcoord){
                                         $('#nombres').val(nombres);
                                         $('#apellidos').val(apellidos);
 
-
-                                            var html="<tr id='"+respuesta.cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+respuesta.fecha_nacimiento+"</td> <td>NO</td> <td class='text-center'> N/A </td><td><a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
+                                        var date = new Date(respuesta.fecha_nacimiento);
+                                        var fechanaci = date.toLocaleDateString('es-VE');
+                                            var html="<tr id='"+respuesta.cedula+"' data-menor='NO'> <td>"+tipodoc+"-"+respuesta.cedula+"</td> <td>"+nombres+"</td> <td>"+apellidos+"</td> <td>"+sex+"</td>  <td>"+fechanaci+"</td> <td>NO</td> <td class='text-center'> N/A </td><td><a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 2)' ><i class='fa fa-user' title='Agregar menor representado'></i></a> &nbsp;&nbsp; <a href='#' onclick='openModalPassengers("+tipodoc+",'"+respuesta.cedula+"', 1)' ><i class='fa fa-trash' title='Eliminar'></i></a></td> </tr>";
 
                                         //pass.innerHTML+=html;
 
@@ -1107,7 +1109,7 @@ function validacionMarino(){
         flashMsj.setAttribute('class','');
         flashMsj.innerHTML="";
     }
-     
+
     let ErrorsFlash=document.getElementById('ErrorsFlash');
     if(ErrorsFlash != null){
         ErrorsFlash.setAttribute('class','');
@@ -1236,7 +1238,7 @@ function getMarinos() {
         flashMsj.setAttribute('class','');
         flashMsj.innerHTML="";
     }
-     
+
     let ErrorsFlash=document.getElementById('ErrorsFlash');
     if(ErrorsFlash != null){
         ErrorsFlash.setAttribute('class','');
@@ -1375,13 +1377,13 @@ function eliminarTrip(){
         flashMsj.setAttribute('class','');
         flashMsj.innerHTML="";
     }
-     
+
     let ErrorsFlash=document.getElementById('ErrorsFlash');
     if(ErrorsFlash != null){
         ErrorsFlash.setAttribute('class','');
         ErrorsFlash.innerHTML="";
     }
-    
+
     $.ajax({
         url: route('deleteTripulante'),
         data: {index: cedula }
