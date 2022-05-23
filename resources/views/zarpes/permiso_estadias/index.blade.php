@@ -20,7 +20,7 @@
                      <div class="card">
                          <div class="card-header">
                              <i class="fas fa-water"></i>
-                             Permisos de Estadía
+                             <strong>Solicitud de Permisos de Estadía</strong>
                              @can('crear-estadia')
                                  <div class="card-header-actions">
                                      <a class="btn btn-primary btn-sm"  href="{{ route('permisosestadia.create') }}">Nuevo</a>
