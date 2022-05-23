@@ -3,7 +3,7 @@ $(document).ready(function() {
         responsive: true,
         autoWidth: true,
         language: {
-            "url": "../assets/DataTables/es_es.json"
+            "url": "../public/assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
