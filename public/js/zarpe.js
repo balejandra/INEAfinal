@@ -128,13 +128,13 @@ function getPermisoEstadia(data) {
     })// This will be called on success
     .done(function (response) {
         let resp=JSON.parse(response);
-
+        console.log(resp);
             if(resp=="sinCoincidencias"){
                 divError.innerHTML='<div class="alert alert-danger"> Número de permiso de estadía no encontrado. </div>';
                     tableEstadiaVAl.style.display='none';
 
             }else if(resp=='permisoPorCerrar'){
-                divError.innerHTML='<div class="alert alert-danger">La embarcación con el número de registro <b>'+resp[0].nro_registro+'</b> posee una solicitud de permiso de zarpe que no ha sido cerrada, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
+                divError.innerHTML='<div class="alert alert-danger">La embarcación con el número de registro <b>'+data+'</b> posee una solicitud de permiso de zarpe que no ha sido cerrada, debe cerrar cualquier permiso de zarpe solicitado previamente para poder realizar uno nuevo.</div>';
 
                     tableEstadiaVAl.style.display='none';
             }else{
