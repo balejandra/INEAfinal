@@ -375,7 +375,7 @@
             </div>
         @endif
     @endcan
-    @if(($permisoZarpe->status->id==1))
+        @if(($permisoZarpe->status->id=='1') && (date_format($permisoZarpe->fecha_hora_salida,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
         @can('informar-navegacion')
             <a class="btn btn-warning confirmation"
                data-route=" {{route('status',[$permisoZarpe->id,'navegando',$permisoZarpe->establecimiento_nautico_id])}}"
@@ -384,6 +384,15 @@
             </a>
         @endcan
     @endif
+        @can('informar-navegacion')
+            @if ($permisoZarpe->status->id==1)
+                <a class="btn btn-danger confirmation"
+                   data-route="{{route('status',[$permisoZarpe->id,'anular-usuario',0])}}" data-toggle="tooltip"
+                   data-bs-placement="bottom" title="Anular Solicitud" data-action="ANULAR" >
+                    Anular <i class="fas fa-window-close"></i>
+                </a>
+            @endif
+        @endcan
     @can('informar-arribo')
         @if ($permisoZarpe->status->id==5)
             <a class="btn btn-warning confirmation"

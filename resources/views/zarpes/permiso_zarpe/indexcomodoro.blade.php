@@ -90,20 +90,23 @@
                                                     <i class="fa fa-search"></i>
                                                 </a>
                                                 @endcan
-                                                    @if(($permisoOrigenZarpe->status->id=='1'))
+                                                @if(($permisoOrigenZarpe->status->id=='1') && (date_format($permisoOrigenZarpe->fecha_hora_salida,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
                                                         @can('informar-navegacion')
                                                             <a class="btn btn-sm btn-warning confirmation"
                                                                data-route=" {{route('status',[$permisoOrigenZarpe->id,'navegando',$permisoOrigenZarpe->establecimiento_nautico_id])}}" data-toggle="tooltip"
                                                                data-bs-placement="bottom" data-action="INFORMAR NAVEGACIÓN de" title="Informar Navegacion">
                                                                 <i class="fas fa-water"></i>
                                                             </a>
+                                                    @endif
+                                                        @if(($permisoOrigenZarpe->status->id=='1'))
                                                         <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-anular"
                                                            onclick="modalanularzarpe({{$permisoOrigenZarpe->id}},'{{$permisoOrigenZarpe->nro_solicitud}}')" data-toggle="tooltip"
                                                            data-bs-placement="bottom" title="Anular Solicitud">
                                                             <i class="fas fa-window-close"></i>
                                                         </a>
+                                                        @endif
                                                         @endcan
-                                                    @endif
+
                                                     @if(($permisoOrigenZarpe->status->id=='5'))
                                                         @can('anular-sar')
                                                             <a class="btn btn-sm btn-outline-danger confirmation"
