@@ -163,7 +163,7 @@
         <th>Nombres y Apellidos</th>
         <th>Cédula</th>
         <th>Rango</th>
-        <th class="text-center">Pasaporte</th>
+        <th>Documentos</th>
         </thead>
         <tbody>
         @foreach($tripulantes as $tripulante)
@@ -172,12 +172,18 @@
                 <td>{{$tripulante->nombres}} {{$tripulante->apellidos}} </td>
                 <td>{{$tripulante->tipo_doc}}-{{$tripulante->nro_doc}}</td>
                 <td>{{$tripulante->rango}} </td>
-                <td class="text-center">
+                <td>
                     @if ($tripulante->doc)
                         <a class="document-link" title="Pasaporte"
                            href="{{asset('documentos/zarpeinternacional/'.$tripulante->doc)}}" target="_blank">
                             Pasaporte</a>
                     @endif
+                        <br>
+                        @if ($tripulante->documento_acreditacion)
+                            <a class="document-link" title="Documento Acreditación"
+                               href="{{asset('documentos/zarpeinternacional/'.$tripulante->documento_acreditacion)}}" target="_blank">
+                                Documento de Acreditación</a>
+                        @endif
                 </td>
         @endforeach
         </tbody>
