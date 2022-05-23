@@ -91,7 +91,11 @@ $(document).ready(function() {
         },
         "paging":   false,
         "ordering": false,
-        "info":     false
+        "info":     false,
+        columnDefs: [ {
+            targets: 4,
+            render: $.fn.dataTable.render.moment('YYYY-MM-DD','DD-MM-YYYY' )
+        } ],
     });
 
     $('#table-paginate').DataTable({

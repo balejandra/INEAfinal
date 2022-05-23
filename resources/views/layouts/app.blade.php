@@ -54,7 +54,7 @@
 <script src="{{asset('assets/fontawesome/js/all.js')}}"></script>
 <script src="{{asset('js/dataTables.js')}}"></script>
 <script src="{{asset('assets/DataTables/DataTables-1.10.25/js/dataTables.bootstrap5.js')}}"></script>
-
+<script src="{{asset('assets/DataTables/DateTime-1.1.2/datetime.js')}}"></script>
 
 <!-- Plugins and scripts required by this view-->
 <script src="{{asset('assets/@coreui/coreui/js/coreui.bundle.min.js')}}"></script>
