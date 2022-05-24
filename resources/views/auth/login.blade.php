@@ -61,7 +61,7 @@
                     <div class="card-body text-center">
                         <div>
                             <h2>{{__('Sign up')}}</h2>
-                            <p>No tienes cuenta, registrate aquí.</p>
+                            <p>No tienes cuenta, regístrate aquí.</p>
                                 <a class="btn btn-primary active mt-3" href="{{ url('/register') }}">{{ __('Register') }}</a>
                         </div>
                     </div>
