@@ -378,11 +378,11 @@ class ZarpeInternacionalController extends Controller
 
         $permiso = $request->input('permiso');
         $validatedData = $request->validate([
-            
+
             'permiso_de_estadia' => 'required',
             'numero_de_registro' => 'required',
         ],
-        [ 
+        [
             'permiso_de_estadia.required'=>'El campo Permiso de estadía es obligatorio',
             'numero_de_registro.required'=>'Número de registro no encontrado'
         ]);
@@ -438,9 +438,9 @@ class ZarpeInternacionalController extends Controller
             'capitania' => 'required',
 
         ],
-        [ 
+        [
             'tipo_de_navegacion.required'=>'El campo Tipo de Navegación es obligatorio',
-           
+
             'capitania.required'=>'El campo Capitanía es obligatorio'
         ]);
 
@@ -484,7 +484,7 @@ class ZarpeInternacionalController extends Controller
                 'estNauticoDestinoZI.required'=>'El campo Establecimiento naútico de destino es requerido'
 
             ]);
- 
+
 
         $solicitud['establecimiento_nautico_id'] = $request->input('establecimientoNáuticoOrigen');
         $solicitud['establecimiento_nautico_destino_id'] =  $request->input('establecimientoNáuticoOrigen');
@@ -1642,7 +1642,7 @@ class ZarpeInternacionalController extends Controller
 
     public function AddDocumentosMarinosZI(Request $request){
 
-        
+
         $pasaporte='';
         if ($request->hasFile('doc')) {
 

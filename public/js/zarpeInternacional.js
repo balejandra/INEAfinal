@@ -494,7 +494,7 @@ console.log('documentoAcreditacion',documentoAcreditacion);
     console.log("tipoDOC", tipodoc);
      switch(tipodoc){
         case 'P':
-        
+
             if (!doc){
                 let msj=document.getElementById('msjMarinoInt');
                 msj.innerHTML="";
@@ -509,7 +509,7 @@ console.log('documentoAcreditacion',documentoAcreditacion);
             }
 
         break;
-        case 'V': 
+        case 'V':
             if (!doc){
                 let msj=document.getElementById('msjMarinoInt');
                 msj.innerHTML="";
@@ -517,10 +517,10 @@ console.log('documentoAcreditacion',documentoAcreditacion);
                 return false;
             }
         break;
-         
+
 
      }
- 
+
     var formData = new FormData();
     formData.append('doc', doc);
     formData.append('documentoAcreditacion', docAcreditacion);
@@ -545,7 +545,7 @@ console.log('documentoAcreditacion',documentoAcreditacion);
                 pasaporteName=resps;
                 documentos=[resps[0][1],resps[1][1]];
                 getMarinosZI(documentos);
-            } 
+            }
         }else{
             if(resps[0][0] =='OK'){
 
@@ -555,10 +555,10 @@ console.log('documentoAcreditacion',documentoAcreditacion);
             }
         }
 
-        
+
 
     });
- 
+
 
 }
 
@@ -619,13 +619,12 @@ function getMarinosZI(pass) {
         .done(function (response) {
           //  alert(response);
             respuesta = JSON.parse(response);
-            console.log(respuesta);
-            console.log(respuesta[0].length);
+
+
             var validacion=respuesta[1];
-            console.log("resppos UNO::", respuesta[1]);
             switch(respuesta[3]){
                 case 'TripulanteExiste':
-                    msj.innerHTML="<div class='alert alert-danger'>El tripulante que intenta agregar ya se encuanta en el listado, por favor verifique.</div>";
+                    msj.innerHTML="<div class='alert alert-danger'>El tripulante que intenta agregar ya se encuentra en el listado, por favor verifique.</div>";
 
                 break;
                 case 'capitanExiste':
@@ -653,9 +652,9 @@ function getMarinosZI(pass) {
                 break;
                 case 'OK':
 
-                    var pass=respuesta[0];
-                    pass=pass[pass.length-1];
-                        console.log("vlaid:::",validacion[0], pass);
+                  //  let cantidad=respuesta1.length;
+
+
                      if(validacion[0] ==true){
 
 
@@ -666,7 +665,9 @@ function getMarinosZI(pass) {
                         }
                         //let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a></td></tr>";
                        // tabla.innerHTML+=html;
-                         $('#tableTripulantes').DataTable({
+                         pass1=respuesta[0];
+                         pass1=pass1[pass1.length-1];
+                         $('#example2').DataTable({
                              responsive: true,
                              autoWidth: true,
                              language: {
@@ -701,7 +702,7 @@ function getMarinosZI(pass) {
                                 "data":"nro_doc",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `<a href='#' onclick=\"openModalZI('"+${row.nro_doc}+"')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
+                                        return `<a href='#' onclick=\"openModalZI('${row.nro_doc}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
                                     }
                                 }
                                  
