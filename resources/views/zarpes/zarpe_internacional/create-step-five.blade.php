@@ -150,8 +150,7 @@
                                                 Cantidad mínima de tripulantes abordo: {{$cantTrip}}
                                             </div>
 
-                                            <div class="table-responsive">
-                                                <table class="table" id="tableTripulantes">
+                                                <table class="table table-bordered example1" id="example2" style="width:100%">
                                                     <thead>
                                                     <tr>
                                                         <th>Función</th>

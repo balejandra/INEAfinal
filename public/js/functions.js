@@ -385,7 +385,12 @@ function eliminarCargosMandos(id, idcoord){
 
             console.log('ZI pasaporye');
             if(pasaporteMenor==''){
-                msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido para el menor</div>' ;
+                msj.innerHTML='<div class="alert alert-danger">El documento Pasaporte es requerido para el menor</div>' ;
+                return false;
+
+            }
+            if(partidaNacimiento==''){
+                msj.innerHTML='<div class="alert alert-danger">El documento Partida de Nacimiento es requerido para el menor</div>' ;
                 return false;
 
             }
@@ -393,7 +398,12 @@ function eliminarCargosMandos(id, idcoord){
 
         }else if(tipozarpe=='ZN'){
             if(pasaporteMenor=='' && tipodoc=="P"){
-                msj.innerHTML='<div class="alert alert-danger">El documento pasaporte es requerido para el menor</div>' ;
+                msj.innerHTML='<div class="alert alert-danger">El documento Pasaporte es requerido para el menor</div>' ;
+                return false;
+
+            }
+            if(partidaNacimiento==''){
+                msj.innerHTML='<div class="alert alert-danger">El documento Partida de Nacimiento es requerido para el menor</div>' ;
                 return false;
 
             }
@@ -2011,9 +2021,18 @@ $('.confirmation_other').on('click', function(event) {
 $(document).ready(function() {
     $("#solicitud").on("click", function() {
         var condiciones = $("#option1").is(":checked");
+        var chalecos = $(".CHALECOS").is(":checked");
         if (!condiciones) {
             bootbox.alert({
                 message: "Debe Aceptar las Condiciones!",
+                size: 'small',
+                centerVertical:true,
+                animate:true,
+            });
+        }
+        if (!chalecos) {
+            bootbox.alert({
+                message: "Marque la casilla, Para generar la solicitud es obligatorio incluir la cantidad de salvavidas que tiene en la embarcación!",
                 size: 'small',
                 centerVertical:true,
                 animate:true,
