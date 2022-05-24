@@ -663,6 +663,7 @@ function getMarinosZI(pass) {
                         //let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a></td></tr>";
                        // tabla.innerHTML+=html;
                          pass1=respuesta[0];
+                         console.log(pass1);
                          pass1=pass1[pass1.length-1];
                          $('#example2').DataTable({
                              responsive: true,
