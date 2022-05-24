@@ -190,7 +190,7 @@
             REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
             MINISTERIO DEL PODER POPULAR PARA EL TRANSPORTE<br>
             INSTITUTO NACIONAL DE LOS ESPACIOS ACUÁTICOS<br>
-            CAPITANÍA DE PUERTO DE <u>{{$estadia->capitania->nombre}}</u>  <br>
+            CAPITANÍA DE PUERTO DE <span style="text-transform: uppercase">{{$estadia->capitania->nombre}}</span>  <br>
             <br>
             <span style="font-size: 20px; font-weight: bold">PERMISO DE ESTADÍA</span><br>
             <span class="display-7">TEMPORAL PERMANENCY AUTHORIZATION</span><br>
