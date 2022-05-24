@@ -48,16 +48,16 @@ class PermisoZarpeController extends Controller
     public function index()
     {
         if (auth()->user()->hasPermissionTo('listar-zarpes-todos')) {
-            $data = PermisoZarpe::whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
+            $data = PermisoZarpe::where('descripcion_navegacion_id','<>', 4)->get();
             return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-generados')) {
             $user = auth()->id();
-            $data = PermisoZarpe::where('user_id', $user)->whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
+            $data = PermisoZarpe::where('user_id', $user)->where('descripcion_navegacion_id','<>', 4)->get();
             return view('zarpes.permiso_zarpe.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
             $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
-            $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id', $capitania)->whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
+            $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id', $capitania)->where('descripcion_navegacion_id','<>', 4)->get();
             $establecimiento = EstablecimientoNautico::select('id')->whereIn('capitania_id', $capitania)->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
             return view('zarpes.permiso_zarpe.indexcapitan')
@@ -66,7 +66,7 @@ class PermisoZarpeController extends Controller
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
             $establecimiento = EstablecimientoNauticoUser::select('establecimiento_nautico_id')->where('user_id', $user)->get();
-            $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->whereIn('descripcion_navegacion_id', [1,2,3,5])->get();
+            $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id','<>', 4)->get();
 
             return view('zarpes.permiso_zarpe.indexcomodoro')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
@@ -361,8 +361,8 @@ class PermisoZarpeController extends Controller
 
     public function validationStepTwoE(Request $request)
     {
-        
-         
+
+
         $permiso = $_REQUEST['permiso'];
 
         $permisoEstadia = PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
@@ -393,7 +393,7 @@ class PermisoZarpeController extends Controller
             'permiso_de_estadia' => 'required',
             'numero_de_registro' => 'required',
         ],
-        [ 
+        [
             'permiso_de_estadia.required'=>'El campo Permiso de estadía es obligatorio',
             'numero_de_registro.required'=>'El campo Número de registro es obligatorio'
         ]);
@@ -460,7 +460,7 @@ class PermisoZarpeController extends Controller
             'capitania' => 'required',
 
         ],
-        [ 
+        [
             'tipo_de_navegacion.required'=>'El campo Tipo de Navegación es obligatorio',
             'descripcion_de_navegacion.required'=>'El campo Descripción de Navegación es obligatorio',
             'capitania.required'=>'El campo Capitanía es obligatorio'
@@ -584,7 +584,7 @@ class PermisoZarpeController extends Controller
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
 
-          
+
             $validatedData = $request->validate([
                 'establecimientoNáuticoOrigen' => 'required',
                 'salida' => 'required',
@@ -600,7 +600,7 @@ class PermisoZarpeController extends Controller
                 'capitaniaDestino.required'=>'El campo Circunscripción acuática de destino es obligatorio',
                 'establecimientoNáuticoDestino.required'=>'El campo Establecimiento náutico de retorno final es obligatorio'
             ]);
-        
+
 
 
         $solicitud['establecimiento_nautico_id'] = $request->input('establecimientoNáuticoOrigen');
