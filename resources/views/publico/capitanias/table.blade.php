@@ -6,7 +6,7 @@
     <table class="table table-striped table-bordered table-grow" id="generic-table" style="width:50%">
         <thead>
         <tr>
-            <th >Nom bre</th>
+            <th >Nombre</th>
             <th>Sigla</th>
             <th width="30%">Acciones</th>
         </tr>

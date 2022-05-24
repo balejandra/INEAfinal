@@ -54,9 +54,9 @@
                                                     <div class="blog-card">
                                                         <div class="meta">
                                                             <div class="card-body text-norma">
-                                                                “Declaro que la presente solicitud se hace bajo el estricto
-                                                                cumplimiento de las normativas vigentes y las disposiciones
-                                                                previstas por las leyes venezolanas”
+                                                                Declaro y doy fe que la información relacionada con los equipos de seguridad marítima
+                                                                y ayudas a la navegación expuestos en esta solicitud son los existentes a bordo del buque
+                                                                y estarán disponibles durante la navegación en el zarpe solicitado.
                                                             </div>
                                                         </div>
                                                         <div class="description d-flex align-items-center">
@@ -66,7 +66,7 @@
                                                                         <label class="toggle">
                                                                             <input class="toggle__input" type="checkbox" id="option1" name="option1" required>
                                                                             <span class="toggle__label">
-                                                                          <span class="toggle__text">ACEPTO</span>
+                                                                          <span class="toggle__text">DOY FE</span>
                                                                         </span>
                                                                         </label>
                                                                     </div>
@@ -99,7 +99,7 @@
                                                                            name="equipo[] " id='{{$equipo->id}}' value="{{$equipo->id}}"
                                                                            style="margin-left: auto;"
                                                                            onclick="equipocheck('{{$equipo->id}}','{{$equipo->cantidad}}','{{$equipo->otros}}')">
-                                                                    <label class="form-check-label"
+                                                                    <label class="form-check-label {{$equipo->equipo}}"
                                                                            for="flexSwitchCheckDefault"
                                                                            style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
 

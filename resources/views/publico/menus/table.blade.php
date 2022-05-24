@@ -4,11 +4,11 @@
         <th>Id</th>
         <th>Nombre</th>
         <th>Descripción</th>
-        <th>Url</th>
+        <th>Ruta</th>
         <th>Padre</th>
         <th>Orden</th>
         <th>Icono</th>
-        <th width="3%">Hab ilitado</th>
+        <th>Habilitado</th>
         <th>Acciones</th>
     </thead>
     <tbody>
