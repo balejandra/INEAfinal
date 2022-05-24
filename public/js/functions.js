@@ -1204,7 +1204,8 @@ function validacionMarino(){
                                     },
                                     "destroy": true,
                                     "createdRow": function( row, data, dataIndex ) {
-                                        $(row).attr('id','trip'+respuesta[cantidad-1].cedula );
+                                          
+                                        $(row).attr('id','trip'+data.cedula );
                                     },
                                     "data": respuesta,
 
@@ -1215,7 +1216,14 @@ function validacionMarino(){
                                         {"data":'fecha_emision'},
                                         {"data":'solicitud'},
                                         {"data":'documento'},
-                                        {"defaultContent": "<a href='#' onclick='openModal("+respuesta[cantidad-1].cedula+")' ><i class='fa fa-trash text-center' title='Eliminar'></i></a>"},
+                                        {
+                                            "data":"cedula",
+                                                render: function ( data, type, row ) {
+                                                    // esto es lo que se va a renderizar como html
+                                                     
+                                                    return `<a href='#' onclick=\"openModal('${row.cedula}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
+                                                }
+                                        },
                                     ],
 
                                 });

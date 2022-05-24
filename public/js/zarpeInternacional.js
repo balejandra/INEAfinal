@@ -648,11 +648,14 @@ function getMarinosZI(pass) {
                     msj.innerHTML="<div class='alert alert-danger'>La cédula suministrada no pertenecea a un marino venezolano.</div>";
 
                 break;
+                case 'FoundButAssigned':
+                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. '+nrodoc+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
+                break;
                 case 'OK':
 
                     var pass=respuesta[0];
                     pass=pass[pass.length-1];
-                        console.log("vlaid:::",validacion[0]);
+                        console.log("vlaid:::",validacion[0], pass);
                      if(validacion[0] ==true){
 
 
@@ -671,16 +674,37 @@ function getMarinosZI(pass) {
                              },
                              "destroy": true,
                              "createdRow": function( row, data, dataIndex ) {
-                                 $(row).attr('id',pass['nro_doc'] );
+                                 $(row).attr('id',data.nro_doc );
                              },
                              "data": respuesta[0],
                              "columns":[
                                  {"data":'funcion'},
-                                 {"defaultContent": pass['tipo_doc']+"-"+pass['nro_doc']},
-                                 {"defaultContent": pass['nombres']+" "+pass['apellidos']},
+                                 {
+                                    "data":"tipo_doc",
+                                    render: function ( data, type, row ) {
+                                        // esto es lo que se va a renderizar como html
+                                        return `${row.tipo_doc} ${row.nro_doc}`; 
+                                    }
+                                 },
+                                  {
+                                    "data":"nombres",
+                                    render: function ( data, type, row ) {
+                                        // esto es lo que se va a renderizar como html
+                                        return `${row.nombres}  ${row.apellidos}`; 
+                                    }
+                                 },
+                                
                                  {"data":'rango'},
                                  {"data":'doc'},
-                                 {"defaultContent": "<a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a>"},
+                                 
+                                {
+                                "data":"nro_doc",
+                                    render: function ( data, type, row ) {
+                                        // esto es lo que se va a renderizar como html
+                                        return `<a href='#' onclick=\"openModalZI('"+${row.nro_doc}+"')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
+                                    }
+                                }
+                                 
                              ],
 
                          });
