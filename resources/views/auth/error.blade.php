@@ -13,7 +13,7 @@
                 <div class="card" >
                     <div class="card-body text-center">
                         <h4 class="card-title ">Ha ocurrido un Error</h4>
-                        <p class="card-text text-left">Por favor contacte a Soporte Tecnico</p>
+                        <p class="card-text text-left">Por favor contacte a Soporte Técnico</p>
                     </div>
                 </div>
             </div>

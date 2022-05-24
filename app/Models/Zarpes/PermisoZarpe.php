@@ -2,6 +2,7 @@
 
 namespace App\Models\Zarpes;
 
+use App\Models\Publico\Paise;
 use App\Models\Publico\Capitania;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $fecha_hora_salida
  * @property string $fecha_hora_regreso
  * @property unsignedBigInteger $status_id
+ * @property unsignedBigInteger $permiso_estadia_id
  */
 class PermisoZarpe extends Model implements Auditable
 {
@@ -52,6 +54,12 @@ class PermisoZarpe extends Model implements Auditable
         'fecha_hora_salida',
         'fecha_hora_regreso',
         'status_id',
+        'establecimiento_nautico_destino_id',
+        'descripcion_navegacion_id',
+        'permiso_estadia_id',
+        'fecha_llegada_escala',
+        'paises_id',
+        'establecimiento_nautico_destino_zi'
     ];
 
     /**
@@ -67,7 +75,13 @@ class PermisoZarpe extends Model implements Auditable
         'coordenadas' => 'string',
         'fecha_hora_salida' => 'datetime',
         'fecha_hora_regreso' => 'datetime',
-         'user_id' => 'integer'
+         'user_id' => 'integer',
+         'establecimiento_nautico_destino_id'=> 'integer',
+        'descripcion_navegacion_id'=> 'integer',
+        'permiso_estadia_id'=>'integer',
+        'fecha_llegada_escala'=>'datetime',
+        'paises_id'=>'integer',
+        'establecimiento_nautico_destino_zi'=> 'string'
     ];
 
     /**
@@ -87,6 +101,10 @@ class PermisoZarpe extends Model implements Auditable
         'fecha_hora_salida' => 'required',
         'fecha_hora_regreso' => 'required',
         'status_id' => 'required',
+        'establecimiento_nautico_destino_id'=> 'integer',
+        'descripcion_navegacion_id'=> 'integer',
+        'paises_id'=>'integer'
+
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -129,4 +147,15 @@ class PermisoZarpe extends Model implements Auditable
     public function zarperevisions(){
         return $this->hasMany(ZarpeRevision::class);
     }
+
+    public function descripcion_navegacion():\Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(DescripcionNavegacion::class);
+    }
+
+    public function paises()
+    {
+        return $this->belongsTo(Paise::class);
+    }
+
 }

@@ -3,12 +3,18 @@
     Roles
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{!! route('roles') !!}">Roles</a>
-        </li>
-        <li class="breadcrumb-item">Crear</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('roles') !!}">Roles</a>
+                </li>
+                <li class="breadcrumb-item">Crear</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('coreui-templates::common.errors')
@@ -17,11 +23,11 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <i class="fa fa-plus-square-o fa-lg"></i>
+                            <i class="fa fa-id-badge fa-lg"></i>
                             <strong>Crear rol</strong>
 
                             <div class="card-header-actions">
-                                <a href="{{route('roles')}} " class="btn btn-primary btn-sm">Listado de roles</a>
+
                             </div>
 
                         </div>
@@ -29,15 +35,15 @@
 
                         <div class="row justify-content-center">
                             <div class="col-md-2"></div>
-                            <div class="col-md-8 border rounded py-3">
+                            <div class="col-md-8 col-lg-8 col-sm-12 border rounded py-3">
 
                             <form action="{{route('roles.store')}} " method="post" class="needs-validation" novalidate>
                                 @csrf
                                 <div class="form-row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 col-lg-4">
                                         <div class="form-group">
                                             <label for="nombre">Nombre:</label>
-                                            <input type="text" class="form-control" id="name"
+                                            <input type="text" class="form-control " id="name"
                                                    placeholder="Nombre del rol" name="name" value="{{ old('name') }}"
                                                    required>
                                             @if($errors->has('name'))
@@ -67,7 +73,7 @@
 
                                                     <div class="form-check form-switch col-sm-4 ">
 
-                                                        <input class="form-check-input" type="checkbox" name="role" id='role' value="{{$id}}" style="margin-left: auto;">
+                                                        <input class="form-check-input" type="checkbox" name="permissions[]" id='{{$id}}' value="{{$id}}" style="margin-left: auto;">
                                                         <label class="form-check-label" for="flexSwitchCheckDefault" style="margin-inline-start: 30px;">{{$permission}}</label>
 
                                                     </div>
@@ -75,9 +81,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 text-center mt-4">
-                                        <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
+
+
                                     </div>
+                                    <div class="row  mt-4">
+                                        <div class="col text-center">
+                                            <a href="{{route('roles')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+                                        </div>
+                                        <div class="col text-center  ">
+                                            <button type="submit" class="btn btn-primary btn-bg-inea">Guardar</button>
+                                        </div>
                                 </div>
                             </form>
 

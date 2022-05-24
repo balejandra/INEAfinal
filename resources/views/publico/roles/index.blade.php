@@ -3,9 +3,15 @@
     Roles
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Roles</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Roles</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
              @include('flash::message')
@@ -26,11 +32,12 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
+                             <i class="fa fa-id-badge"></i>
                             <strong>Roles</strong>
                             @can('crear-rol')
                                 <div class="card-header-actions">
                                     <a class="btn btn-primary btn-sm"  href="{{ route('roles.create') }}">Nuevo</a>
+                                    <a class="btn btn-warning btn-sm"  href="{{ route('roleDelete.index') }}">Roles Eliminados</a>
                                 </div>
                             @endcan
 
@@ -38,12 +45,11 @@
                         <div class="card-body">
 
 
-                            <table class="table table-striped table-bordered" style="width:100%" id="TableRoles">
+                            <table class="table table-striped table-bordered" style="width:100%" id="generic-table">
                                 <thead>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>guard</th>
-                                <th>Created_at</th>
+                                <th>Creado</th>
                                 <th>Permisos</th>
                                 <th class="text-center" width="15%">Acciones</th>
                                 </thead>
@@ -52,8 +58,7 @@
                                     <tr>
                                         <td> {{$role->id}} </td>
                                         <td>{{$role->name}} </td>
-                                        <td>{{$role->guard_name}} </td>
-                                        <td>{{$role->created_at->toFormattedDateString()}} </td>
+                                        <td>{{date_format($role->created_at,'d-m-Y')}} </td>
                                         <td width="45%">
                                             @forelse($role->permissions as $permission)
                                                 <span class="badge badge-info">{{$permission->name}} </span>

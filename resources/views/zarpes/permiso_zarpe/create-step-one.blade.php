@@ -3,9 +3,15 @@
     Zarpes
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Zarpe</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">{{$titulo}}</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -14,10 +20,10 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe | Paso {{$paso}}</strong>
+                            <strong>Solicitud de Permisos de {{$titulo}} | Paso {{$paso}}</strong>
 
                             <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Listado</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Cancelar</a>
                             </div>
 
                         </div>
@@ -44,19 +50,19 @@
                                         @endif
 
                                         <div class="row">
-                                            <div class="col-md-4 text-right"><label for="title">Bandera:</label></div>
+                                            <div class="col-md-5 text-right"></div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
-                                            
+                                                    <label for="title">Bandera:</label>
                                                     <select name="bandera" id="bandera" class="form-control custom-select" placeholder='Seleccione'>
                                                         <option value="nacional">NACIONAL</option>
-                                                        <option value="extranjera" disabled>EXTRANJERA</option>
-                                                        
+                                                        <option value="extranjera" >EXTRANJERA</option>
+
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4"></div>
+                                            <div class="col-md-5"></div>
                                         </div>
                                     </div>
 

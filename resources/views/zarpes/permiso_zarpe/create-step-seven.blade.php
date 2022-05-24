@@ -3,9 +3,15 @@
     Zarpes
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos de Zarpe</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">{{$titulo}}</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -14,10 +20,10 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-ship"></i>
-                            <strong>Solicitud de Permisos de Zarpe | Paso {{$paso}}</strong>
+                            <strong>Solicitud de permisos de {{$titulo}} | Paso {{$paso}}</strong>
 
                             <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Listado</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Cancelar</a>
                             </div>
                         </div>
 
@@ -38,24 +44,50 @@
                                                 </ul>
                                             </div>
                                         @endif
+                                            <style>
+                                                * {
+                                                    box-sizing: border-box;
+                                                }
+                                            </style>
                                         <div class="form-group">
-                                            <div class="container">
-                                                <h3 class="text-center">Declaracion de cumplimiento de normativas</h3>
-
-                                                <p class="text-justify">Por medio de la presente declaro que la presente
-                                                    solicitud se hace bajo el estricto cumplimiento de las normativas
-                                                    vigentes y las disposiciones previstas por las leyes
-                                                    venezolanas.</p>
-
-                                                <p>Asi mismo declaro poseer en la embarcacion los siguientes equipos de
-                                                    seguridad raqueridos por la normativa vigente:</p>
+                                            <div class="row declaracion">
+                                                <div class="blog-card">
+                                                    <div class="meta">
+                                                        <div class="card-body text-norma">
+                                                            “Declaro que la presente solicitud se hace bajo el estricto
+                                                            cumplimiento de las normativas vigentes y las disposiciones
+                                                            previstas por las leyes venezolanas”
+                                                        </div>
+                                                    </div>
+                                                    <div class="description d-flex align-items-center">
+                                                        <div class="form">
+                                                            <div class="page__section page__custom-settings">
+                                                                <div class="page__toggle">
+                                                                    <label class="toggle">
+                                                                        <input class="toggle__input" type="checkbox" id="option1" name="option1" required>
+                                                                        <span class="toggle__label">
+                                                                          <span class="toggle__text">ACEPTO</span>
+                                                                        </span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <table class="table table-striped table-bordered" id="equipos">
+                                            <br>
+                                            <style>
+                                                table.dataTable {
+                                                    margin: 0 auto;
+                                                }
+                                            </style>
+
+                                            <table class="table table-striped table-bordered table-grow" id="table-nooptions" style="width: 60%">
                                                 <thead>
                                                 <tr>
                                                     <th>Equipo</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Otros</th>
+                                                    <th style="width: 20%">Cantidad</th>
+                                                    <th style="width: 30%">Otros</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -63,78 +95,93 @@
                                                     <tr>
                                                         <td>
                                                             <div class="form-check form-switch col-12">
-                                                                <input class="form-check-input equipo" type="checkbox" name="equipo[] "
-                                                                       id='equipo' value="{{$equipo->id}}"
-                                                                       style="margin-left: auto;" data-cant="{{$equipo->cantidad}}" data-otrs="{{$equipo->otros}}" >
-                                                                <label class="form-check-label" for="flexSwitchCheckDefault"
+                                                                <input class="form-check-input equipo {{$equipo->equipo}}" type="checkbox"
+                                                                       name="equipo[] " id='{{$equipo->id}}' value="{{$equipo->id}}"
+                                                                       style="margin-left: auto;"
+                                                                       onclick="equipocheck('{{$equipo->id}}','{{$equipo->cantidad}}','{{$equipo->otros}}')">
+                                                                <label class="form-check-label"
+                                                                       for="flexSwitchCheckDefault"
                                                                        style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
 
-                                                                 <input type="text" class="form-control col-sm-7" id="{{$equipo->id}}selected" name="{{$equipo->id}}selected" value="false" hidden>
+                                                                <input type="text" class="form-control col-sm-7"
+                                                                       id="{{$equipo->id}}selected"
+                                                                       name="{{$equipo->id}}selected" value="false"
+                                                                       hidden>
+
                                                             </div>
                                                         </td>
 
                                                         <td>
+                                                            <div id="div_cant{{$equipo->id}}" class="equipostab">
                                                             @if ($equipo->cantidad==true)
                                                                 <div class=" col-12 ">
-                                                                    <input type="number" class="form-control" id="{{$equipo->id}}cantidad" name="{{$equipo->id}}cantidad">
+                                                                    <input type="number" class="form-control"
+                                                                           id="{{$equipo->id}}cantidad"
+                                                                           name="{{$equipo->id}}cantidad">
                                                                 </div>
                                                             @else
                                                                 <div class=" col-12 ">
                                                                     NO APLICA
                                                                 </div>
-                                                                @endif
-
+                                                            @endif
+                                                            </div>
                                                         </td>
 
                                                         <td>
+                                                            <div id="valores_otros{{$equipo->id}}" class="equipostab">
                                                             @if($equipo->otros!='ninguno')
-                                                           
-                                                                
-                                                                    <div class=" form-inline">
-                                                                        <label for="inputEmail4" class="col-sm-5" style="text-transform: uppercase;">
-                                                                            @if($equipo->otros=="fecha_ultima_inspeccion")
-                                                                                Fecha de última inspección
 
-                                                                                @php
+
+                                                                <div class=" form-inline">
+                                                                    <label for="inputEmail4" class="col-sm-12"
+                                                                           style="text-transform: uppercase;">
+                                                                        @if($equipo->otros=="fecha_ultima_inspeccion")
+                                                                            Fecha de última inspección
+
+                                                                            @php
                                                                                 $type="date";
                                                                                 $max="max=".date('Y-m-d').""
-                                                                                @endphp
+                                                                            @endphp
 
-                                                                            @else
-                                                                                {{$equipo->otros}}
-                                                                                @php
+                                                                        @else
+                                                                            {{$equipo->otros}}
+                                                                            @php
                                                                                 $type="text";
                                                                                 $max="";
-                                                                                @endphp
+                                                                            @endphp
 
-                                                                            @endif
-                                                                            
+                                                                        @endif
 
-                                                                        </label>
-                                                                        <input type="{{$type}}" class="form-control col-sm-7" id="{{$equipo->id}}valores_otros" name="{{$equipo->id}}valores_otros" {{$max}} >
-                                                                        <input type="text" class="form-control col-sm-7" id="otros" name="{{$equipo->id}}otros" value="{{$equipo->otros}}" hidden>
-                                                                    </div>
-                                                                 
+
+                                                                    </label>
+                                                                    <input type="{{$type}}"
+                                                                           class="form-control col-sm-7"
+                                                                           id="{{$equipo->id}}valores_otros"
+                                                                           name="{{$equipo->id}}valores_otros" {{$max}} >
+                                                                    <input type="text" class="form-control col-sm-7"
+                                                                           id="otros" name="{{$equipo->id}}otros"
+                                                                           value="{{$equipo->otros}}" hidden>
+                                                                </div>
+
                                                             @endif
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
                                             </table>
-
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="card-footer text-right">
-                                        <div class="row">
-                                            <div class="col-md-6 text-left">
-                                                <a href="{{ route('permisoszarpes.createStepSix') }}"
-                                                   class="btn btn-primary pull-right">Anterior</a>
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                <button type="submit" class="btn btn-primary">Generar solicitud</button>
-                                            </div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <div class="row">
+                                        <div class="col text-left">
+                                            <a href="{{ route('permisoszarpes.createStepSix') }}"
+                                               class="btn btn-primary pull-right">Anterior</a>
+                                        </div>
+                                        <div class="col text-right">
+                                            <button type="submit" id="solicitud" class="btn btn-primary">Generar solicitud</button>
                                         </div>
                                     </div>
                                 </div>

@@ -44,7 +44,12 @@ class Pasajero extends Model implements Auditable
         'sexo',
         'fecha_nacimiento',
         'menor_edad',
-        'permiso_zarpe_id'
+        'permiso_zarpe_id',
+        'representante',
+        'partida_nacimiento',
+        'autorizacion',
+        'pasaporte_menor',
+        'pasaporte_mayor'
     ];
 
     /**
@@ -60,7 +65,12 @@ class Pasajero extends Model implements Auditable
         'nro_doc' => 'string',
         'sexo' => 'string',
         'fecha_nacimiento' => 'date',
-        'menor_edad' => 'boolean'
+        'menor_edad' => 'boolean',
+        'representante'=> 'string',
+        'partida_nacimiento'=> 'string',
+        'autorizacion'=> 'string',
+        'pasaporte_menor'=> 'string',
+        'pasaporte_mayor'=> 'string'
     ];
 
     /**
@@ -76,7 +86,12 @@ class Pasajero extends Model implements Auditable
         'sexo' => 'required',
         'fecha_nacimiento' => 'required',
         'menor_edad' => 'required',
-        'permiso_zarpe_id' => 'required'
+        'permiso_zarpe_id' => 'required',
+        'representante'=> 'required',
+        'partida_nacimiento'=> 'required',
+        'autorizacion'=> 'required',
+        'pasaporte_menor'=> 'required',
+        'pasaporte_mayor'=> 'required',
     ];
 
     public function permisozarpe()

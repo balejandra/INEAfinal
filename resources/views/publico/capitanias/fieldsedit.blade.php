@@ -1,27 +1,26 @@
 <div class="row" >
     <!-- Nombre Field -->
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-4">
         {!! Form::label('nombre', 'Nombre:') !!}
         {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
     </div>
 
     <!-- Sigla Field -->
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-4">
         {!! Form::label('sigla', 'Sigla:') !!}
         {!! Form::text('sigla', null, ['class' => 'form-control']) !!}
     </div>
-</div>
-<div class="row" >
-    <!-- Nombre Field -->
-    <div class="form-group col-sm-6">
-        {!! Form::label('capitanes', 'Capitan:') !!}
-        {!! Form::select('capitanes',$capitanes, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un capitan']) !!}
+
+    <div class="form-group col-sm-4">
+        {!! Form::label('capitanes', 'Capitán:') !!}
+        {!! Form::select('user',$user, null, ['class' => 'form-control custom-select']) !!}
     </div>
 </div>
 
+
 {!! Form::label('coordenadas', 'Coordenas:') !!}
 @php($var=0)
-
+<div>
 @forelse($coordenadas as $key =>$coord)
 <div>
     {!! Form::hidden('deletes[]',  null, ['class' => 'form-control', 'id'=>'deletes'. $key]) !!}
@@ -83,9 +82,12 @@
 <div  id="coords" data-cant='1'>
 
 </div>
-<div class="row">
-<!-- Submit Field -->
-    <div class="form-group col-sm-12 text-center">
-        {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+    <div class="row form-group  mt-4">
+        <div class="col text-center">
+            <a href="{{route('capitanias.index')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+        </div>
+        <div class=" col text-center">
+            {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+        </div>
     </div>
 </div>

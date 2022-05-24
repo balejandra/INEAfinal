@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Publico\CreateUserRequest;
 use App\Http\Requests\Publico\UpdateUserRequest;
+use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\Menu_rol;
 use App\Models\Publico\Saime_cedula;
 use App\Models\User;
+use App\Models\Zarpes\EstablecimientoNautico;
 use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Response;
 use Spatie\Permission\Models\Role;
 
@@ -53,19 +57,43 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles=Role::pluck('name','id');
-        return view('publico.users.create')->with('roles',$roles);
+        $menu=Menu_rol::pluck('role_id');
+        $roles=Role::whereIn('id',$menu)->get();
+        $roleExcl=Role::whereNotIn('id',$menu)->get();
+        //dd($roleExcl);
+        $roles=$roles->pluck('name','id');
+        return view('publico.users.create')
+            ->with('roles',$roles)
+            ->with('rolexcl',$roleExcl);
     }
 
     /**
      * Store a newly created User in storage.
      *
-     * @param CreateUserRequest $request
+     * @param Request $request
      *
      * @return Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
+        $validated= $request->validate([
+            'nombres' => 'required|string|max:255',
+            'email' => 'required|string|email:rfc,dns|max:255|unique:users',
+            'password' => [
+                'required',
+                'max:50',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->uncompromised(),
+            ],
+        ],
+            [
+                'email.unique'=>'Email ya registrado',
+            ]);
+
         $data= new User();
         $data->email= $request->email;
         $data->nombres = $request->nombres;
@@ -73,10 +101,10 @@ class UserController extends Controller
         $data->tipo_usuario=$request->tipo_usuario;
         $data->email_verified_at= now();
         $data->save();
-        $input = $request->all();
 
         $roles=$request->input('roles', []);
         $data->roles()->sync($roles);
+
         Flash::success('Usuario guardado exitosamente.');
 
         return redirect(route('users.index'));
@@ -92,7 +120,6 @@ class UserController extends Controller
     public function show($id)
     {
         $user = $this->userRepository->find($id);
-
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
 
@@ -133,19 +160,44 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function update($id, UpdateUserRequest $request)
+    public function update($id, Request $request)
     {
-        $user = $this->userRepository->find($id);
+        $validated= $request->validate([
+            'nombres' => 'required|string|max:255',
+            'email' => 'required|string|email:rfc,dns|max:255',
+        ]);
 
+
+        $user= User::find($id);
+        $user->email= $request->email;
+        $user->nombres = $request->nombres;
+        if ($request->password_change) {
+            $validated= $request->validate([
+                'nombres' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
+                'password' => [
+                    'required',
+                    'max:50',
+                    'confirmed',
+                    Password::min(8)
+                        ->mixedCase()
+                        ->letters()
+                        ->numbers()
+                        ->uncompromised(),
+                ],
+            ]);
+            $user->password = Hash::make($request->password);
+        }
+        $user->tipo_usuario=$request->tipo_usuario;
+        $user->email_verified_at= now();
+        $user->update();
+        $roles=$request->roles ;
+        $user->roles()->sync($roles);
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
 
             return redirect(route('users.index'));
         }
-
-        $user = $this->userRepository->update($request->all(), $id);
-        $roles=$request->roles ;
-        $user->roles()->sync($roles);
 
         Flash::success('Usuario actualizado con éxito.');
 
@@ -170,7 +222,7 @@ class UserController extends Controller
 
             return redirect(route('users.index'));
         }
-
+        $capitania=CapitaniaUser::where('user_id',$id)->delete();
         $this->userRepository->delete($id);
 
         Flash::success('Usuario eliminado exitosamente.');
@@ -182,11 +234,13 @@ class UserController extends Controller
         $cedula=$_REQUEST['cedula'];
         $fecha=$_REQUEST['fecha'];
         $newDate = date("d/m/Y", strtotime($fecha));
+        $newDate2 = date("d-m-Y", strtotime($fecha));
+        $newDate3 = date("Y-m-d", strtotime($fecha));
         $data= Saime_cedula::where('cedula',$cedula)
-            ->where('fecha_nacimiento',$newDate)
+            ->whereIn('fecha_nacimiento',[$newDate,$newDate2,$newDate3])
             ->get();
         if (is_null($data->first())) {
-            dd('error');
+           // dd('error');
             $data=response()->json([
                 'status'=>3,
                 'msg' => $exception->getMessage(),
@@ -194,5 +248,29 @@ class UserController extends Controller
             ], 200);
         }
             echo json_encode($data);
+    }
+
+    public function EstablecimientoUser(Request $request){
+        $idcap= $_REQUEST['idcap'];
+        $EstNauticos = EstablecimientoNautico::where('capitania_id', $idcap)->get();
+        $resp=[$EstNauticos];
+        echo json_encode($resp);
+    }
+
+
+    public function indexUserDeleted(){
+        $users =User::onlyTrashed()->where('tipo_usuario','interno')->get();
+        //dd($users);
+
+        return view('publico.users.user_delete')
+            ->with('users', $users);
+    }
+
+    public function restoreUserDeleted($id){
+        $user_deleted=User::where('id',$id);
+        $user_deleted->restore();
+        Flash::success('Usuario restaurado exitosamente.');
+
+        return redirect(route('userDelete.index'));
     }
 }

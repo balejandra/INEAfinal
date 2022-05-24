@@ -3,12 +3,18 @@
     Capitanias
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-         <a href="{!! route('capitanias.index') !!}">Capitania</a>
-      </li>
-      <li class="breadcrumb-item">Crear</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('capitanias.index') !!}">Capitanía</a>
+                </li>
+                <li class="breadcrumb-item">Crear</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
      <div class="container-fluid">
           <div class="animated fadeIn">
                 @include('coreui-templates::common.errors')
@@ -16,18 +22,25 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-plus-square-o fa-lg"></i>
-                                <strong>Crear Capitania</strong>
+                            <i class="fa fa-building"></i>
+                                <strong>Crear Capitanía</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Listado de Capitanias</a>
                                 </div>
                             </div>
                             <div class="card-body">
-                                {!! Form::open(['route' => 'capitanias.store']) !!}
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8 border rounded p-3">
+                                    {!! Form::open(['route' => 'capitanias.store']) !!}
 
-                                   @include('publico.capitanias.fields')
+                                        @include('publico.capitanias.fields')
 
-                                {!! Form::close() !!}
+                                        {!! Form::close() !!}
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>

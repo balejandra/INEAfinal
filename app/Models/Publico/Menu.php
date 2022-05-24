@@ -62,19 +62,6 @@ class Menu extends Model implements Auditable
         'enabled' => 'boolean'
     ];
 
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'name' => 'required',
-        'url' => 'required',
-        'parent' => 'required',
-        'order' => 'required',
-        'enabled' => 'required'
-    ];
-
     public function menus_roles()
     {
         return $this->belongsToMany(Menu_rol::class,'menus_roles','menu_id');
@@ -91,12 +78,14 @@ class Menu extends Model implements Auditable
             return $this->whereHas('roles', function ($query) {
                 $query->where('role_id', Auth::user()->roles()->first()['id']);
             })
+                ->where('enabled',true)
                 ->orderby('parent')
                 ->orderby('order')
                 ->get()
                 ->toArray();
         } else {
             return $this->orderby('menu_id')
+                ->where('enabled',true)
                 ->orderby('order')
                 ->get()
                 ->toArray();
@@ -127,7 +116,7 @@ class Menu extends Model implements Auditable
     {
         $menus = new Menu();
         $data = $menus->getPadres($front);
-         
+
         $menuAll = [];
         foreach ($data as $line) {
             $item = [ array_merge($line, ['submenu' => $menus->getHijos($data, $line) ]) ];

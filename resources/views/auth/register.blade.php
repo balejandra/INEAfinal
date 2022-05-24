@@ -12,6 +12,10 @@
                 <span>
                     <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">
                 </span>
+
+                <div id="errorRegister" data-asset="{{asset('images/')}}">
+
+                </div>
                 <div class="card mx-4">
                     <div class="card-body p-4">
 
@@ -35,42 +39,56 @@
                                                 <input class="form-check-input" type="radio" name="tipo_persona" id="juridica" value="juridica"
                                                        onclick="javascript:showContent()" required>
                                                 <label class="form-check-label" for="juridica">
-                                                    Juridica
+                                                    Jurídica
                                                 </label>
+                                            </div>
+                                        </div>
+                                        <!--- ////// TIPO DOCUMENTO ///// -->
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-passport"></i></span>
+                                                </div>
+                                                <select class="form-select" aria-label="tipo_identificacion" id="tipo_identificacion"
+                                                        name="tipo_identificacion" onchange="changetipodocumento();" required>
+                                                    <option value="cedula">Cédula</option>
+                                                    <option value="pasaporte">Pasaporte</option>
+                                                </select>
+                                                @if ($errors->has('tipo_identificacion'))
+                                                    <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('tipo_identificacion') }}</strong>
+                                            </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
-                                <!--- ////// TIPO DOCUMENTO ///// -->
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-passport"></i></span>
-                                        </div>
-                                        <select class="form-select" aria-label="tipo_identificacion" id="tipo_identificacion"
-                                                name="tipo_identificacion" onchange="changetipodocumento();" required>
-                                            <option value="cedula">Cedula</option>
-                                            <option value="pasaporte">Pasaporte</option>
-                                        </select>
-                                        @if ($errors->has('tipo_identificacion'))
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $errors->first('tipo_identificacion') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
+
+
                                 <!--- /////// NUMERO DE IDENTIFICACION /////// -->
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="input-group mb-3">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="input-group mb-4">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-id-card"></i></span>
                                         </div>
+                                        <div style="width: 25%; display: none" id="pref_rif">
+                                            <select class="form-select "  aria-label="prefijo" id="prefijo" name="prefijo">
+                                                <option value="J">J</option>
+                                                <option value="G">G</option>
+                                                <option value="V">V</option>
+                                            </select>
+                                        </div>
+
                                         <input type="text"
                                                class="form-control {{ $errors->has("numero_identificacion")?"is-invalid":"" }}"
                                                name="numero_identificacion" value="{{ old('numero_identificacion') }}"
-                                               placeholder="Numero de identificacion" id="numero_identificacion" required>
-                                    </div>
+                                               placeholder="Número de identificación" id="numero_identificacion" required>
+                                        @error('numero_identificacion')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                        </div>
+
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
                                 <!-- /////// FECHA DE NACIMIENTO ///// -->
@@ -127,7 +145,7 @@
                                         <input type="text"
                                                class="form-control"
                                                name="telefono" value="{{ old('telefono') }}"
-                                               placeholder="Telefono" required>
+                                               placeholder="Teléfono" required>
                                     </div>
                                 </div>
                                 <!--////////// DIRECCION //////////////-->
@@ -141,7 +159,7 @@
                                         <input type="text"
                                                class="form-control"
                                                name="direccion" value="{{ old('direccion') }}"
-                                               placeholder="direccion" required>
+                                               placeholder="Dirección" required>
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
@@ -152,9 +170,12 @@
                                             <span class="input-group-text"><i class="fas fa-at"></i></span>
                                         </div>
                                         <input type="email"
-                                               class="form-control"
+                                               class="form-control {{ $errors->has("email")?"is-invalid":"" }}"
                                                name="email"
                                                value="{{ old('email') }}" placeholder="Email" required>
+                                        @error('email')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <!--////////// PASSWORD //////////////-->
@@ -168,6 +189,9 @@
                                         <input type="password"
                                                class="form-control {{ $errors->has('password')?'is-invalid':''}}"
                                                name="password" placeholder="Contraseña" required>
+                                        @error('password')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <!--////////// PASSWORD CONFIRMATION //////////////-->
@@ -182,11 +206,12 @@
                                                placeholder={{ __('Confirm Password') }}>
                                     </div>
                                 </div>
-
+                                
                                 <!--////////// BOTON //////////////-->
                                 <button type="submit" class="btn btn-primary btn-block btn-flat" id="btonregister" disabled>{{ __('Register') }}</button>
+                              
                                 <a href="{{ url('/login') }}"
-                                   class="text-center">{{ __('I already have a membership')}}</a>
+                                   class="text-center  mt-3">{{ __('I already have a membership')}}</a>
 
                             </div>
                         </form>

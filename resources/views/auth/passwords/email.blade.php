@@ -24,7 +24,7 @@
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                      <i class="icon-user"></i>
+                                    <i class="fas fa-user"></i>
                                     </span>
                                 </div>
                                 <input type="email" class="form-control {{ $errors->has('email')?'is-invalid':'' }}" name="email" value="{{ old('email') }}"

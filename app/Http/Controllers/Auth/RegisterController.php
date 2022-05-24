@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vageneral\AgenciaNavieraVigente;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\Rules\Password;
 use Spatie\Permission\Models\Role;
+use Flash;
 
 
 class RegisterController extends Controller
@@ -56,16 +59,30 @@ class RegisterController extends Controller
 
         return Validator::make($data, [
             'nombres' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:users'],
             'apellidos' => ['string', 'max:255'],
             'tipo_identificacion' => ['required','string', 'max:20'],
-            'numero_identificacion' => ['required','string', 'max:20'],
+            'numero_identificacion' => ['required','string', 'max:20','unique:users'],
             'fecha_nacimiento' => ['date', 'max:50'],
             'telefono' => ['required', 'string', 'max:20'],
             'direccion' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'max:50',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->uncompromised(),
+            ],
             'tipo_usuario' => ['string', 'max:20'],
-        ]);
+        ],
+            [
+                'email.unique'=>'Email ya registrado',
+                'numero_identificacion.unique'=>'Numero de Identificacion ya registrado',
+                'password.'
+            ]);
     }
 
 
@@ -77,6 +94,7 @@ class RegisterController extends Controller
      */
     protected function create(array $input)
     {
+
         if ($input['tipo_persona']=="natural"){
         $user = User::create([
             'nombres' => $input['nombres'],
@@ -95,20 +113,44 @@ class RegisterController extends Controller
         event(new Registered($user));
         return $user;
         }else if($input['tipo_persona']=="juridica"){
-            $user = User::create([
-                'nombres' => $input['nombres'],
-                'tipo_identificacion' => $input['tipo_identificacion'],
-                'numero_identificacion' => $input['numero_identificacion'],
-                'telefono' => $input['telefono'],
-                'direccion' => $input['direccion'],
-                'email' => $input['email'],
-                'password' => Hash::make($input['password']),
-                'tipo_usuario' => 'Usuario web'
-            ]);
-            $role = Role::where('name', 'Usuario web')->first();
-            $user->roles()->sync($role->id);
-            event(new Registered($user));
-            return $user;
+            $rif=$input['prefijo']."-".$input['numero_identificacion'];
+            //dd($rif);
+            $naviera=AgenciaNavieraVigente::where('rifemp',$rif)->get()->last();
+           // $naviera=AgenciaNavieraVigente::all();
+           // dd($naviera);
+                if (is_null($naviera)) {
+                    $user = User::create([
+                        'nombres' => $input['nombres'],
+                        'tipo_identificacion' => $input['tipo_identificacion'],
+                        'numero_identificacion' => $input['prefijo']."-".$input['numero_identificacion'],
+                        'telefono' => $input['telefono'],
+                        'direccion' => $input['direccion'],
+                        'email' => $input['email'],
+                        'password' => Hash::make($input['password']),
+                        'tipo_usuario' => 'Usuario web'
+                    ]);
+                    $role = Role::where('name', 'Usuario web')->first();
+                    $user->roles()->sync($role->id);
+                    event(new Registered($user));
+                    return $user;
+                }else {
+                    $user = User::create([
+                        'nombres' => $input['nombres'],
+                        'tipo_identificacion' => $input['tipo_identificacion'],
+                        'numero_identificacion' => $input['prefijo']."-".$input['numero_identificacion'],
+                        'telefono' => $input['telefono'],
+                        'direccion' => $input['direccion'],
+                        'email' => $input['email'],
+                        'password' => Hash::make($input['password']),
+                        'tipo_usuario' => 'Usuario web'
+                    ]);
+                    $role = Role::where('id', 8)->first();
+                    $user->roles()->sync($role->id);
+                    event(new Registered($user));
+                    return $user;
+                }
+
+
         }
     }
 

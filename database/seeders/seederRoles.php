@@ -18,6 +18,10 @@ class seederRoles extends Seeder
             'Usuario web',
             'Admin',
             'Capitán',
+            'comodoro_aprobador',
+            'Comodoro',
+            'Coordinador de operaciones',
+            'Agencia naviera'
         ];
 
         foreach($roles as $role){

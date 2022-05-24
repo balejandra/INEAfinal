@@ -3,12 +3,18 @@
     Roles
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{!! route('roles') !!}">Roles</a>
-        </li>
-        <li class="breadcrumb-item active1">Editar</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('roles') !!}">Roles</a>
+                </li>
+                <li class="breadcrumb-item active1">Editar</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('coreui-templates::common.errors')
@@ -16,22 +22,24 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-edit fa-lg"></i>
-                            <strong>Editar Roles</strong>
+                            <i class="fa fa-id-badge fa-lg"></i>
+                            <strong>Editar Rol</strong>
 
                             <div class="card-header-actions">
-                                <a href="{{route('roles')}} " class="btn btn-primary btn-sm">Listado de roles</a>
+
                             </div>
                         </div>
                         <div class="card-body">
-
+                        <div class="row  ">
+                            <div class="col-md-2  "></div>
+                            <div class="col-md-8 col-lg-8 col-sm-12 border rounded py-3">
 
                             <form action="{{route('roles.update', $role->id)}} " method="post" class="needs-validation"
                                   novalidate>
                                 @csrf
                                 @method('PUT')
                                 <div class="form-row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 col-lg-4">
                                         <div class="form-group">
                                             <label for="nombre">Nombre :</label>
                                             <input type="text" class="form-control" id="name"
@@ -50,7 +58,7 @@
                                         <div class="container">
                                             <div class="row">
                                                 @foreach($permissions as $id => $permission)
-                                                    <div class="col-3">
+                                                    <div class="col-sm-3">
                                                         <div class="form-check form-switch form-check-inline mt-sm-2"
                                                              style="float:left">
                                                             <input class="form-check-input form-field-acceptconditions"
@@ -68,11 +76,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 text-center mt-4">
+
+
+
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col text-center">
+                                        <a href="{{route('roles')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+                                    </div>
+                                    <div class="col text-center">
                                         <button type="submit" class="btn btn-primary btn-bg-inea">Modificar</button>
                                     </div>
                                 </div>
                             </form>
+                            </div>
+                            </div>
+
+
+                            <div class="col-md-2"></div>
+
                         </div>
                     </div>
                 </div>

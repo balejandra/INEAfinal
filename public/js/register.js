@@ -9,10 +9,14 @@ function showContent() {
         $("#apellidosdivint").remove();
         $("#nombres").val("");
         $('#btonregister').prop('disabled', false);
+
     var sel = document.getElementById('tipo_identificacion');
     $("#tipo_identificacion").empty()
     sel.options[0] = new Option('RIF', 'rif');
     $("#tipo_identificacion").val("rif");
+
+    pref=document.getElementById('pref_rif')
+    pref.style.display='block';
 }
 
 function showContentNatural() {
@@ -47,6 +51,8 @@ function showContentNatural() {
     $("#tipo_identificacion").empty()
     sel.options[0] = new Option('Cedula', 'cedula');
     sel.options[1] = new Option('Pasaporte', 'pasaporte');
+    pref=document.getElementById('pref_rif')
+    pref.style.display='none';
 }
 
 function changetipodocumento() {
@@ -84,13 +90,17 @@ function changetipodocumento() {
 
 }
     function getEmployees(data1,data2) {
+        let msj=document.getElementById('errorRegister');
+        const asset=msj.getAttribute('data-asset');
+        msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='35px' class='mr-2'> Comparando datos con registros existentes en SAIME, por favor espere...</div>";
     $.ajax({
         url: route('consultasaime'),
-        data: {cedula: data1, fecha:data2 }
-
+        data: {cedula: data1, fecha:data2 },
     })// This will be called on success
+        
         .done(function (response) {
-          //  alert(response);
+          console.log(response,'bien');
+          msj.innerHTML="";
             respuesta = JSON.parse(response);
             let tamano = respuesta.length;
             if (tamano == 0) {
@@ -102,9 +112,11 @@ function changetipodocumento() {
         })
 
         // This will be called on error
-        .fail(function (response) {
+        .fail(function (response) { console.log(response,'error');
             datosbasicos(JSON.parse(0));
-            alert('No se ha encontrado la cedula o la fecha de nacimiento');
+            let error=document.getElementById('errorRegister');
+            error.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias en el SAIME con los datos suministrados</div>';
+           // alert('No se ha encontrado la cedula o la fecha de nacimiento');
         });
 
 }

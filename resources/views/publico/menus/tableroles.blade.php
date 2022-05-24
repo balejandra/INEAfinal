@@ -3,11 +3,15 @@
     Menus y Roles
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Menu Roles</li>
-    </ol>
-
-   
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">{{$titulo}}</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -16,18 +20,21 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>
-                            Roles asociados a menus
+                            Roles asociados a {{$titulo}}
                             <div class="card-header-actions">
-                                <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Listado de Menus</a>
+                                <a href= "{{route('menus.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive-sm">
-                                <table class="table table-responsive-sm table-bordered table-striped " id="menusroles-table">
+                            <style>
+                                table.dataTable {
+                                    margin: 0 auto;
+                                }
+                            </style>
+                            <table class="table table-striped table-bordered table-grow" style="width:70%" id="generic-table">
                                     <thead>
                                     <tr>
-                                         
-                                        <th>Menu</th>
+                                        <th>Menú</th>
                                         <th>Rol Asociado</th>
                                     </tr>
                                     </thead>
@@ -36,15 +43,15 @@
                                     @foreach($count as $menuRol)
                                         @php($rol='')
                                         <tr>
-                                             
+
                                             <td >
                                                 {{ $menuRol->name}}
                                             </td>
                                             <td>
                                             @forelse($menuRols as $Roles)
                                                 @if($Roles->name_menu==$menuRol->name and  $rol!=$Roles->name_role)
-                                                      
-                                                    <span class="badge badge-info"> 
+
+                                                    <span class="badge badge-info">
                                                         {{ $Roles->name_role}}
                                                     </span>
                                                 @endif
@@ -53,14 +60,13 @@
                                                     Sin roles asignados
                                                 </span>
 
-                                                
+
                                             @endforelse
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
-                            </div>
                         </div>
                     </div>
                 </div>

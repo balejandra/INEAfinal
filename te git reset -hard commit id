@@ -1,0 +1,241 @@
+[33mcommit 53c01f517368f3d462c986d704187330c69782e5[m[33m ([m[1;36mHEAD -> [m[1;32mdevelopAle[m[33m, [m[1;31morigin/developAle[m[33m)[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 23 19:38:37 2022 -0500
+
+    Renovacion estadia dice uno que terminada
+
+[33mcommit a70d15bd303a04d82544161cfbf1c46eb613fce3[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 23 11:09:54 2022 -0500
+
+    WIP Renovacion Estadia
+
+[33mcommit 2138fc85f8978e86d4ffc9a87b8866a6101ad271[m
+Merge: 2f5998be a61a3a84
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 23 10:31:21 2022 -0500
+
+    Merge branch 'develop' of https://github.com/balejandra/INEAfinal into developAle
+
+[33mcommit 2f5998befe61d60c7c0d11df61c17cfec5bca9d1[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 23 10:31:10 2022 -0500
+
+    WIP Renovacion Estadia
+
+[33mcommit a61a3a845678b79adf89af3fc976a736de7e4d31[m
+Merge: 88e6a504 c28e4e58
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Wed Mar 23 16:23:40 2022 +0100
+
+    Merge branch 'developAle' of https://github.com/balejandra/INEAfinal into develop
+
+[33mcommit 88e6a5043c71bbee22ee4e859c0fa72cae1195d9[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Wed Mar 23 16:23:12 2022 +0100
+
+    Modificacion de pdf de permiso de zarpe
+
+[33mcommit 676b19a3c28e6290fe8b32edceb95c8e1991ec11[m
+Merge: c28e4e58 2f959bde
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 23 08:30:47 2022 -0500
+
+    Merge branch 'develop' of https://github.com/balejandra/INEAfinal into developAle
+
+[33mcommit c28e4e58af080fa9e5f5c17e064951e056a23e60[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 23 08:30:29 2022 -0500
+
+    Cambio nombre recaudo SENIAT
+
+[33mcommit e41854e64b5483c812cbaab8df7defb1bc4ec81e[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Tue Mar 22 19:43:52 2022 -0500
+
+    Mensajes
+
+[33mcommit fb1e1bfb91d0183ba0bde07671f2a15ebdf7326b[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Tue Mar 22 19:39:48 2022 -0500
+
+    Permiso Estadia, crud estatus y equipos
+
+[33mcommit 2f959bdeec2b240224a28123a2bd8a2e487f203a[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Tue Mar 22 20:09:30 2022 -0400
+
+    Creacion de crud de dependencias federales
+
+[33mcommit 03ab5dacbaae76e86933d01949f0bcd4806ff84d[m
+Merge: 32d4c6b6 139e9683
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Tue Mar 22 12:49:45 2022 -0400
+
+    Unificación develop y developAle
+
+[33mcommit 32d4c6b61d775161d8c37f6ba8b331e11bb20599[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Tue Mar 22 12:35:03 2022 -0400
+
+    Modificación de seccion de permisos de zarpe para bandera extrangera
+
+[33mcommit 139e96835b278d31bdd5d172b82560c11355134c[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Tue Mar 22 11:33:12 2022 -0500
+
+    Eslora, potencia y pasajeros
+
+[33mcommit 01bbc5bd52f1e3c14c0977e03f8258681722760b[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Tue Mar 22 10:50:31 2022 -0500
+
+    Errores
+
+[33mcommit 1a7096808c01ae8b511077224ce415ad446d2760[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Tue Mar 22 10:02:39 2022 -0500
+
+    Dependencias Federales CRUD
+
+[33mcommit ef6feb80239106b148a6416252a6cd41573cd41b[m
+Merge: 37a48fcf 51a7f09c
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Tue Mar 22 08:56:16 2022 -0500
+
+    Merge branch 'develop' of https://github.com/balejandra/INEAfinal into developAle
+
+[33mcommit 37a48fcfa48f5ea3e64e75ae71cfa8ccb0ca9220[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Tue Mar 22 08:55:53 2022 -0500
+
+    Dependencias Federales sin terminar
+
+[33mcommit 51a7f09cf5f77e0db763708368b974efbddd4f37[m
+Merge: 595b5403 73c348a6
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Tue Mar 22 09:50:23 2022 -0400
+
+    Modificación de seccion de permisos de zarpe para bandera extrangera
+
+[33mcommit 595b5403d5739eda35e85b6a6bad081d069deaf3[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Tue Mar 22 06:55:30 2022 -0400
+
+    Modificación de funcionamiento de status en listado de zarpes
+
+[33mcommit 73c348a6b7c6574356a67ec6f66111346e347456[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Mon Mar 21 19:38:45 2022 -0500
+
+    Registro de agencias navieras
+
+[33mcommit 19dfeb54d3d46e93bd64a397a93851ad9f6a458d[m
+Merge: c032f799 cc1596d8
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Mon Mar 21 21:26:15 2022 +0100
+
+    Unificacion develop y developAle en oficina
+
+[33mcommit c032f79941b093d3647a6393d3a8c295a61fa953[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Mon Mar 21 19:01:46 2022 +0100
+
+    Correccion de errores en paso 4,5 y 6 y al guardar datos finales
+
+[33mcommit cc1596d87fcaa57e46a55cce0d7218f3ed6914bd[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Mon Mar 21 10:18:50 2022 -0500
+
+    PDF Estadia
+
+[33mcommit d40c68a5346bcd5de638c45d5c4e835ddb399b66[m
+Merge: 48c4d2ff 054054cd
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Mon Mar 21 15:37:32 2022 +0100
+
+    Merge branch 'develop' of https://github.com/balejandra/INEAfinal into develop
+
+[33mcommit 054054cdcff265680a5de5661faed5db09131663[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Sun Mar 20 18:39:01 2022 -0400
+
+    Validaciones pendientes en solicitud de zarpes
+
+[33mcommit 563964a0f12abe15d573901dc998557dae0900ec[m
+Merge: f9401692 d0a207bc
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Thu Mar 17 12:06:02 2022 -0400
+
+    Merge branch 'developAle' of https://github.com/balejandra/INEAfinal into develop
+
+[33mcommit f9401692bab7679d2482123248a7704137f1d7ce[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Thu Mar 17 12:04:52 2022 -0400
+
+    Modificacion de pdf zarpes y listado de solicitudes para capitan
+
+[33mcommit d0a207bcb345ae8f1a55bf83d9bdf9e2ab56c9bc[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Thu Mar 17 10:55:09 2022 -0500
+
+    Estatus Estadia
+
+[33mcommit 8a34ef6951a236648a7ee0d0474b823f288944f2[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Wed Mar 16 21:51:01 2022 -0400
+
+    Actualizacion master y creacion de validaciones solicitadas,verificacion vencimiento de licencia y verificacion de que marino este asignado a un zarpe previo
+
+[33mcommit ad9f29982ece225d75911afc87da59fd16563b4b[m
+Merge: 9e475410 aad662be
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Wed Mar 16 19:04:04 2022 -0400
+
+    Merge branch 'developAle' of https://github.com/balejandra/INEAfinal
+
+[33mcommit 9e47541050d6e10cfb5c63fb6c0ae687089aa447[m
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Wed Mar 16 19:01:26 2022 -0400
+
+    Actualizacion master
+
+[33mcommit aad662bef5cafd98d38d5cfffee112a2955b0f98[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 16 17:42:25 2022 -0500
+
+    Cambio tabla status
+
+[33mcommit 427f3a0158d47cc50e24bca5fe1b7ae979227108[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 16 11:13:43 2022 -0500
+
+    PDF
+
+[33mcommit 2e90d3813c5018f5bdcc2f998d8fde03530543d7[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 16 11:11:04 2022 -0500
+
+    Eliminando archivos pdf
+
+[33mcommit c0ed2692a3ad8c5f75d097ac2a6113896afe2151[m
+Author: Brenni Barreiro <alejandra.barreiro@alter-info.com>
+Date:   Wed Mar 16 11:09:23 2022 -0500
+
+    Permiso Estadia 40%
+
+[33mcommit 4572c4b1dffd3e1007e32e36b316499a68798eff[m
+Merge: 0a63023f 669e89e1
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Tue Mar 15 15:24:05 2022 -0400
+
+    Merge branch 'develop' of https://github.com/balejandra/INEAfinal
+
+[33mcommit 0a63023f7544b28b2e2efb4d12aa25a11c0a03a0[m
+Merge: ae970f38 f2cfbe5c
+Author: Carlos Arocha <carlos.arocha@alter-info.com>
+Date:   Tue Mar 15 15:23:19 2022 -0400
+
+    fusion master y developAle
+
+[33mcommit ae970f384ef0af5f51b22f39228dc5

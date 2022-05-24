@@ -3,12 +3,18 @@
     Tabla de Mandos
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{!! route('tablaMandos.index') !!}">Tabla Mando</a>
-        </li>
-        <li class="breadcrumb-item active">Crear</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('tablaMandos.index') !!}">Tabla Mando</a>
+                </li>
+                <li class="breadcrumb-item active">Crear</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('coreui-templates::common.errors')
@@ -16,18 +22,24 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-plus-square-o fa-lg"></i>
+                            <i class="fas fa-table"></i>
                             <strong>Crear Tabla de Mando</strong>
                             <div class="card-header-actions">
-                                <a href="{{route('tablaMandos.index')}} " class="btn btn-primary btn-sm">Listado de Tabla de Mandos</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            {!! Form::open(['route' => 'tablaMandos.store']) !!}
 
+                            {!! Form::open(['route' => 'tablaMandos.store']) !!}
+                            <div class="row ">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8 border rounded p-3">
                             @include('zarpes.tabla_mando.fields')
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
 
                             {!! Form::close() !!}
+
                         </div>
                     </div>
                 </div>

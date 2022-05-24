@@ -17,7 +17,7 @@ class Menu_rolController extends AppBaseController
 {
     /** @var  Menu_rolRepository */
     private $menuRolRepository;
-
+    private $titulo="Menús";
     public function __construct(Menu_rolRepository $menuRolRepo)
     {
         $this->menuRolRepository = $menuRolRepo;
@@ -33,6 +33,7 @@ class Menu_rolController extends AppBaseController
     public function index(Request $request)
     {
 
+        
 
         $menuRols = DB::table('menus_roles')
             ->select('menus_roles.*','menus.name as name_menu', 'roles.name as name_role')
@@ -55,7 +56,7 @@ class Menu_rolController extends AppBaseController
         return view('publico.menus.tableroles')
         ->with('menuRols', $menuRols)
         ->with('rowspan', $datos)
-        ->with('count', $count);
+        ->with('count', $count)->with('titulo', $this->titulo);
 
     }
 

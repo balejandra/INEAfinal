@@ -51,6 +51,69 @@ class seederPermissions extends Seeder
             'editar-capitania',
             'consultar-capitania',
             'eliminar-capitania',
+
+            //Permisos para dependencias federales
+            'listar-dependencia',
+            'crear-dependencia',
+            'editar-dependencia',
+            'consultar-dependencia',
+            'eliminar-dependencia',
+
+            //Permisos para Equipos
+            'listar-equipo',
+            'crear-equipo',
+            'editar-equipo',
+            'consultar-equipo',
+            'eliminar-equipo',
+
+            //Permisos para Status
+            'listar-status',
+            'crear-status',
+            'editar-status',
+            'consultar-status',
+            'eliminar-status',
+
+            //Permisos para tabla de mandos
+            'listar-mando',
+            'crear-mando',
+            'editar-mando',
+            'consultar-mando',
+            'eliminar-mando',
+
+            //Permisos para permisos de zarpes
+            'consultar-zarpe',
+            'eliminar-zarpe',
+            'aprobar-zarpe',
+            'rechazar-zarpe',
+            'informar-arribo',
+            'informar-navegacion',
+            'anular-sar',
+            'anular-zarpeUsuario',
+            'listar-zarpes-todos', //admin
+            'listar-zarpes-generados',//usuariosweb
+            'listar-zarpes-capitania-origen',
+            'listar-zarpes-establecimiento-origen',//comodoros
+            'listar-zarpe-destino', //comodoro, capitan, comodoro_aprovador
+
+            //permisos para permisos de estadia
+            'crear-estadia',
+            'asignar-visita-estadia',
+            'visita-estadia-aprobada',
+            'recaudos-estadia',
+            'aprobar-estadia',
+            'rechazar-estadia',
+            'anular-estadia',
+            'listar-estadia-todos',
+            'listar-estadia-generados',
+            'listar-estadia-coordinador',
+            'listar-estadia-capitania-destino',
+            'renovar-estadia',
+
+              //permisos para usuarios de capitanias
+            'crear-usuarios-capitanias ',
+            'consultar-usuarios-capitanias',
+            'editar-usuarios-capitanias',
+            'eliminar-usuarios-capitanias',
         ];
 
         foreach ($permissions as $permission) {

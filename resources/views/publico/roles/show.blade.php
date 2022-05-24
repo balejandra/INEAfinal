@@ -3,12 +3,18 @@
     Roles
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-         <a href="{!! route('roles') !!}">Roles</a>
-      </li>
-      <li class="breadcrumb-item active1">Consulta</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('roles') !!}">Roles</a>
+                </li>
+                <li class="breadcrumb-item active1">Consulta</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
      <div class="container-fluid">
           <div class="animated fadeIn">
                 @include('coreui-templates::common.errors')
@@ -16,11 +22,11 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-plus-square-o fa-lg"></i>
-                                <strong>Consultar Rol - {{$role->name}}</strong>
+                                <i class="fa fa-id-badge fa-lg"></i>
+                                <strong>Consultar Rol</strong>
 
                                 <div class="card-header-actions">
-                                     <a href= "{{route('roles')}} " class="btn btn-primary btn-sm">Listado de roles</a>
+
                                   </div>
                             </div>
                             <div class="card-body">
@@ -49,7 +55,11 @@
                     </div>
 
 
-
+                    <div class="row mt-4">
+                        <div class="col-md-12 text-center">
+                        <a href="{{route('roles')}} " class="btn btn-primary btncancelarZarpes">Cancelar</a>
+                        </div>
+                    </div>
 
 
                 </div>

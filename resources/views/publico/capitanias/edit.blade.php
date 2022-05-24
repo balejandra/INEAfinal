@@ -3,12 +3,18 @@
     Capitanias
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="{!! route('capitanias.index') !!}">Capitania</a>
-          </li>
-          <li class="breadcrumb-item">Editar</li>
-        </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('capitanias.index') !!}">Capitanía</a>
+                </li>
+                <li class="breadcrumb-item">Editar</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
          <div class="animated fadeIn">
              @include('coreui-templates::common.errors')
@@ -16,18 +22,24 @@
                  <div class="col-lg-12">
                       <div class="card">
                           <div class="card-header">
-                              <i class="fa fa-edit fa-lg"></i>
-                              <strong>Editar Capitania {{$capitania->nombre}}</strong>
+                          <i class="fa fa-building"></i>
+                              <strong>Editar Capitanía</strong>
                               <div class="card-header-actions">
-                                  <a href= "{{route('capitanias.index')}} " class="btn btn-primary btn-sm">Listado de Capitanias</a>
                               </div>
                           </div>
                           <div class="card-body">
-                              {!! Form::model($capitania, ['route' => ['capitanias.update', $capitania->id], 'method' => 'patch']) !!}
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8 border rounded p-3">
 
-                              @include('publico.capitanias.fieldsedit')
+                                    {!! Form::model($capitania, ['route' => ['capitanias.update', $capitania->id], 'method' => 'patch']) !!}
 
-                              {!! Form::close() !!}
+                                    @include('publico.capitanias.fieldsedit')
+
+                                    {!! Form::close() !!}
+                                </div>
+                                <div class="col-md-2"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

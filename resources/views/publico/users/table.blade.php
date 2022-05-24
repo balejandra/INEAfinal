@@ -1,9 +1,14 @@
-<table class="table table-striped table-bordered" id="users-table" style="width:100%">
+<style>
+    table.dataTable {
+        margin: 0 auto;
+    }
+</style>
+<table class="table table-striped table-bordered table-grow" id="generic-table" style="width:90%">
     <thead>
         <th>Id</th>
         <th>Email</th>
         <th>Nombres</th>
-        <th>Iniciales</th>
+        <th width="15%">Tipo de Usuario</th>
         <th>Acciones</th>
     </thead>
     <tbody>
@@ -12,7 +17,7 @@
             <td>{{ $user->id }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->nombres }}</td>
-            <td>{{ $user->iniciales }}</td>
+            <td>{{ $user->tipo_usuario }}</td>
             <td>
                 @can('consultar-usuario')
                     <a class="btn btn-sm btn-success" href="  {{ route('users.show', [$user->id]) }}">
@@ -28,7 +33,7 @@
                     <div class='btn-group'>
                         {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
 
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el user $user->nombres ?')"]) !!}
+                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('¿Realmente desera eliminar el user $user->nombres ?')"]) !!}
 
                         {!! Form::close() !!}
                     </div>

@@ -1,25 +1,23 @@
 @component('mail::message')
 
-    Estimado {{$nombres_solic}} {{$apellidos_solic}}
-
-    Reciba un cordial saludo de INEA. Nos complace informarle que su solicitud de Zarpe ha sido {{$status}},
-    con el siguiente detalle:
-
+    {{$mensaje}}
 @component('mail::panel')
-    <h2>Nro de Solicitud: {{$solicitud}} </h2>
-    <br>
-    <h2>Buque Matricula Nro: {{$matricula}} </h2>
+    <h2>Nombre Embarcación: {{$nombre_buque}} </h2>
+    <h2>Buque Matrícula Nro: {{$matricula}} </h2>
+    @if ($idstatus==1)
+    <h2>Origen: {{$origen}} </h2>
+    <h2>Destino: {{$destino}} </h2>
+    @endif
     @if ($idstatus==2)
-        <br>
-        <h2>Motivo Rechazo: {{$motivo}} </h2>
+    <h2>Motivo Rechazo: {{$motivo}} </h2>
     @endif
 @endcomponent
-    Para más detalles ingrese a la página web:
+@component('mail::subcopy')
+    Instituto Nacional de Los Espacios Acuáticos - INEA. Síguenos en: <a href="http://twitter.com/#!/INEA200">http://twitter.com/#!/INEA200</a>
 
-@component('mail::button', ['url' => env('APP_URL')])
-        INEA
 @endcomponent
-
+@component('mail::footer')
     Sugerencia: Agregue {{$from}} a sus contactos de correo electrónico para así evitar recibir correo en spam.
     Gracias,
+@endcomponent
 @endcomponent

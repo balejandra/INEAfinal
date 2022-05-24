@@ -3,9 +3,15 @@
     Permisos
 @endsection
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Permisos</li>
-    </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">Permisos</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
             @include('flash::message')
@@ -24,22 +30,28 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i>
+                            <i class="fa fa-address-card"></i>
                             <strong>Permisos</strong>
                             @can('crear-permiso')
                             <div class="card-header-actions">
                                 <a class="btn btn-primary btn-sm" href="{{ route('permissions.create') }}">Nuevo</a>
+                                <a class="btn btn-warning btn-sm"  href="{{ route('permissionDelete.index') }}">Permisos Eliminados</a>
                             </div>
                             @endcan
                         </div>
+
                         <div class="card-body">
-                            <table class="table table-responsive-sm table-bordered table-striped" id="TablePermissions">
+                            <style>
+                                table.dataTable {
+                                    margin: 0 auto;
+                                }
+                            </style>
+                            <table class="table table-bordered table-striped table-grow" id="generic-table" style="width:50%;height:auto;">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Guard</th>
-                                    <th>Created_at</th>
+                                    <th width="10%">ID</th>
+                                    <th width="35%">Nombre</th>
+                                    <th width="30%">Creado</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
@@ -48,27 +60,28 @@
                                     <tr>
                                         <td> {{$permission->id}} </td>
                                         <td>{{$permission->name}} </td>
-                                        <td>{{$permission->guard_name}} </td>
                                         <td>{{$permission->created_at}} </td>
                                         <td>
-                                            {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete']) !!}
-                                            <div class='btn-group'>
-                                            <!-- <a href="{{ route('permissions.show', [$permission->id]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a> -->
-                                                @can('editar-permiso')
-                                                    <a href="{{ route('permissions.edit', [$permission->id]) }}"
-                                                       class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
-                                                @endcan
-                                                @can('eliminar-permiso')
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Realmente desera eliminar este permiso?')"]) !!}
+                                            @can('editar-menu')
+                                                <a class="btn btn-sm btn-info" href="{{ route('permissions.edit', [$permission->id]) }}">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            @endcan
+                                            @can('eliminar-menu')
+                                                <div class='btn-group'>
+                                                    {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete']) !!}
+
+                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar este permiso?')"]) !!}
+
                                                     {!! Form::close() !!}
-                                                @endcan
-                                            </div>
+                                                </div>
+                                            @endcan
 
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center"> No existen registros para mostrar</td>
+                                         No existen registros para mostrar
                                     </tr>
                                 @endforelse
                                 </tbody>

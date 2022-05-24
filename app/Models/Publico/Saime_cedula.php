@@ -10,7 +10,8 @@ class Saime_cedula extends Model
     use HasFactory;
 
     public $table = 'saime_cedula';
-
+    protected $connection = 'pgsql_public_schema';
+   // protected $connection = 'pgsql_public_prod_schema';
 
 
     public $fillable = [
@@ -33,13 +34,13 @@ class Saime_cedula extends Model
     protected $casts = [
         'id' => 'integer',
         "tipo_cedula",
-        "cedula",
+        "cedula"=>'string',
         "sigla1",
         "nombre1",
         "nombre2",
         "apellido1",
         "apellido2",
-        "fecha_nacimiento",
+        "fecha_nacimiento"=>'string',
         "sexo"
     ];
 
