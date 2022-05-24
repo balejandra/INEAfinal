@@ -234,6 +234,9 @@ div.container { max-width: 1200px }
 .toggle__input:checked ~ .toggle__label::after{
     background-color: var(--uiToggleColor);
 }
+.toggle__input:checked ~ .toggle__label{
+    color: white;
+}
 
 .toggle__text{
     margin-top: auto;

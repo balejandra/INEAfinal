@@ -1667,7 +1667,9 @@ function equipocheck(id,cantidad,otros){
             can1=document.getElementById("div_cant"+id);
             can1.style.display='block';
             document.getElementById(id+"cantidad").setAttribute("required",true);
-
+        if (id=1){
+            $(".CHALECOS").css('color', 'var(--cui-form-check-label-color, unset)');
+        }
         }
         if(otros!=='ninguno'){
             document.getElementById(id+"valores_otros").setAttribute("required",true);
@@ -2024,7 +2026,7 @@ $(document).ready(function() {
         var chalecos = $(".CHALECOS").is(":checked");
         if (!condiciones) {
             bootbox.alert({
-                message: "Debe Aceptar las Condiciones!",
+                message: "Debe Aceptar la Declaratoria!",
                 size: 'small',
                 centerVertical:true,
                 animate:true,
@@ -2037,6 +2039,7 @@ $(document).ready(function() {
                 centerVertical:true,
                 animate:true,
             });
+            $(".CHALECOS").css('color', 'red');
         }
     });
 });

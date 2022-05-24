@@ -65,8 +65,8 @@
                                                                 <div class="page__toggle">
                                                                     <label class="toggle">
                                                                         <input class="toggle__input" type="checkbox" id="option1" name="option1" required>
-                                                                        <span class="toggle__label">
-                                                                          <span class="toggle__text">DOY FE</span>
+                                                                        <span class="toggle__label" id="label">
+                                                                          <span class="toggle__text"  >DOY FE</span>
                                                                         </span>
                                                                     </label>
                                                                 </div>
@@ -99,9 +99,9 @@
                                                                        name="equipo[] " id='{{$equipo->id}}' value="{{$equipo->id}}"
                                                                        style="margin-left: auto;"
                                                                        onclick="equipocheck('{{$equipo->id}}','{{$equipo->cantidad}}','{{$equipo->otros}}')">
-                                                                <label class="form-check-label"
+                                                                <label class="form-check-label {{$equipo->equipo}}"
                                                                        for="flexSwitchCheckDefault"
-                                                                       style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
+                                                                       style="margin-inline-start: 30px;"> {{$equipo->equipo}} </label>
 
                                                                 <input type="text" class="form-control col-sm-7"
                                                                        id="{{$equipo->id}}selected"
