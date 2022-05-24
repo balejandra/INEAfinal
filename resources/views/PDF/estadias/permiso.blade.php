@@ -208,34 +208,24 @@
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
             Vista la solicitud correspondiente y previa consignación en este despacho de la documentación pertinente, el
             Capitán de Puerto de
-            <u>{{$estadia->capitania->nombre}}</u> concede autorización a la embarcación abajo identificadapara permanecer en
-            aguas venezolanas durante el lapso de dieciocho (18) meses. Finalizado
-            este lapso el buque deberá salir de aguas venezolanas durante cuarenta y cinco (45) días continuos antes de
-            poder ingresar nuevamente, so pena de
-            que el mismo sea sometido a la legislación en materia de contrabando, y por ende, ser puestoa la orden de la
-            Autoridad Aduanera a fin de que tome
-            las acciones legales que correspondan. Todo lo anterior de acuerdo a lo establecido en el Artículo 28 del
-            Reglamento de la Marina Deportiva Nacional
-            publicada en Decreto 1.748 de fecha 05 de Marzo de 1997, publicada en Gaceta Oficial N° 36.169 de fecha 19
-            de Marzo de 1997. Este permiso debe ser
-            mostrado a la Autoridad Acuática antes de zarpar. El Capitán del Buque, está en la obligación de comunicar
-            alCapitán de Puerto la falta de algún miembro
-            de la tripulación al momento de zarpe, sin perjuicio de notificarlo también a la demás autoridades a quienes
-            compete.
+            <u>{{$estadia->capitania->nombre}}</u> autoriza a la embarcación abajo identificada para permanecer en aguas venezolanas
+            durante el lapso de noventa (90) días, pudiendo solicitar prorroga por el mismo tiempo hasta alcanzar un (01) año de
+            permanencia continua en el país. Finalizado este lapso el buque deberá salir de aguas venezolanas durante cuarenta y cinco
+            (45) días continuos antes de poder ingresar nuevamente, so pena de que el mismo sea sometido a la legislación en materia de
+            Aduana en concordancia con el Permiso de Admisión Temporal emitido por la Autoridad Aduanera Nacional. Este permiso debe ser
+            mostrado a la Autoridad Acuática antes de zarpar. El Capitán del Buque, está en la obligación de comunicar al Capitán de
+            Puerto la falta de algún miembro de la tripulación al momento de zarpe, sin perjuicio de notificarlo también a las demás
+            autoridades a quienes compete.
             <br>
-            According to the corresponding request and previous fulfilment of the necessary documentation,
-            the <u>{{$estadia->capitania->nombre}}</u> Harbour Master admits the ship described
-            below to remain in Venezuelan waters of the lapse of eighteen (18) months. Once this lapse has expired, the
-            ship must leave Venezuelan waters for at least forty five
-            (45) days before entering again, under penalty of being submitted to Custom’s law regulations about
-            smuggling activities. All of the above is established
-            in the 28th article of the National Regulations for the Sports Marina issued on March 05, 1997 by 1748
-            Decree and published later on March 19, 1997 in
-            the Official Gazette N° 36169. This permission must be showed to the Aquqtic Authority prior to sailing out,
-            in order to obtain port clearance./The
-            Master of the Vessel, is obliged to inform the Harbour Master the lack of any crew member at the time of
-            Port Clearence, without prejudice to also
-            notify it to all Authorities to who it may concern.
+            <BR>
+            According to the corresponding request and previous consignment in this office the pertinent documentation, the
+            <u>{{$estadia->capitania->nombre}}</u> Harbour Master admits the ship described below to remain in Venezuelan waters of the
+            lapse of ninety (90) days, being able to request an extension for the same time until achieve one (01) year of continuous
+            permanence in the country. Once this lapse has expired, the ship must leave Venezuelan waters for at least forty-five (45)
+            continuous days before be able to enter again, under penalty of being submitted to Custom’s law regulations about smuggling
+            activities. This permission must be showed to the Aquatic Authority prior to sailing out, in order to obtain port clearance.
+            The Master of the Vessel, is obliged to inform the Harbour Master the lack of any crew member at the time of Port Clearance,
+            without prejudice to also notify it to all Authorities to who it may concern.
         <table>
             <thead>
             <tr>
@@ -260,7 +250,7 @@
                 <th>ESLORA <br>Lenght</th>
                 <th>POTENCIA KW <br>KW Power</th>
                 <th>CAPITÁN <br>Capitain</th>
-                <th>Pasaporte <br>Passport Nro</th>
+                <th>PASAPORTE <br>Passport Nro</th>
                 <th>NÚMERO DE TRIPULANTES <br>Number of Crew members</th>
                 <th>NÚMERO DE PASAJEROS <br>Number of Passengers</th>
             </tr>
