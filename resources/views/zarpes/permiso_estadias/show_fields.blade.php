@@ -1,4 +1,4 @@
-<strong>Detalle de Estadia</strong>
+<strong>Detalle de la Solicitud de Estadía</strong>
 
 <div class="container">
     <br>
@@ -12,7 +12,7 @@
                     {{ $permisoEstadia->nro_solicitud }}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Fecha de Solicitud
+                    Fecha de la Solicitud
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ date_format($permisoEstadia->created_at,'d-m-Y')}}
@@ -25,13 +25,13 @@
         <div class="col-sm-12">
             <div class="row border">
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Nombre Solicitante
+                    Nombre del Solicitante
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->user->nombres}} {{ $permisoEstadia->user->apellidos}}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Nombre Buque
+                    Nombre del Buque
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->nombre_buque }}
@@ -44,13 +44,13 @@
         <div class="col-sm-12">
             <div class="row border">
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Número Registro
+                    Número del Registro
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->nro_registro }}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Tipo Buque
+                    Tipo del Buque
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->tipo_buque }}
@@ -63,7 +63,7 @@
         <div class="col-sm-12">
             <div class="row border">
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Nacionalidad Buque
+                    Nacionalidad del Buque
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->nacionalidad_buque }}
@@ -82,7 +82,7 @@
         <div class="col-sm-12">
             <div class="row border">
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Nombres completos del Capitán
+                    Nombres Completos del Capitán
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->nombre_capitan }}
@@ -101,13 +101,13 @@
         <div class="col-sm-12">
             <div class="row border">
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Número Tripulantes
+                    Número de Tripulantes
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->cant_tripulantes }}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Número Pasajeros
+                    Número de Pasajeros
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->cant_pasajeros }}
@@ -145,7 +145,7 @@
                     {{ $permisoEstadia->potencia_kw }}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Actividades que realizará
+                    Actividades que Realizará
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->actividades }}
@@ -177,7 +177,7 @@
         <div class="col-sm-12">
             <div class="row border">
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Tiempo Estadía
+                    Tiempo de Estadía
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->tiempo_estadia }}

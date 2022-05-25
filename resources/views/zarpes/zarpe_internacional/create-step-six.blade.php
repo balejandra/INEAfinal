@@ -60,7 +60,7 @@
                                                 <div class="form-group">
                                                     <label for="numero_identificacion">Cédula / Pasaporte:</label>
                                                     <input type="text" class="form-control" id="numero_identificacion"
-                                                           placeholder="Cédula / Pasaporte" maxlength="10">
+                                                           placeholder="Cédula / Pasaporte" maxlength="15">
                                                 </div>
                                             </div>
 
@@ -309,7 +309,7 @@
                             <div class="input-group">
 
                                 <input type="text" class="form-control" id="numero_identificacionMenor"
-                                       placeholder="Cédula / Pasaporte" maxlength="10" onblur="blurSaime()">
+                                       placeholder="Cédula / Pasaporte" maxlength="15" onblur="blurSaime()">
                             </div>
                         </div>
 

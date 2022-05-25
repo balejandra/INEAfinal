@@ -266,7 +266,7 @@ function eliminarCargosMandos(id, idcoord){
         }
 
             if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="") {
-    console.log("EDAD", calcularEdad(fechanac));
+   // console.log("EDAD", calcularEdad(fechanac));
                 if(calcularEdad(fechanac)<18){
 
                     msj.innerHTML='<div class="alert alert-danger">Debe agregar un pasajero mayor de edad, por favor verifique.</div>' ;
@@ -835,16 +835,17 @@ $('#menor').click(function() {
 $( "#tipodoc" )
   .change(function () {
     var str = "";
-    str =$( "select option:selected" ).val();
-
+    str =$( "select option:selected" ).val(); 
+    $( "#numero_identificacion" ).val('');
     if(str=="P"){
       $('.DatosRestantes').attr('style', 'display:block');
+      $( "#numero_identificacion" ).attr('onKeyDown','');
     }else{
         let date = new Date();
         let fechamin="";
-
+        
         if((str=="V" || str=="NC") && $('#menor').prop('checked')){
-
+            $( "#numero_identificacion" ).attr('onKeyDown','return soloNumeros(event)');
             $('.DatosRestantes').attr('style', 'display:block');
             if( str=="NC"){
                 fechamin=date.getFullYear()-10;
@@ -862,7 +863,7 @@ $( "#tipodoc" )
         }else{
             $('.DatosRestantes').attr('style', 'display:none');
             $('#fecha_nacimiento').attr('min',"" );
-
+            $( "#numero_identificacion" ).attr('onKeyDown','return soloNumeros(event)');
             let date = new Date();
             let fechamax="";
             fechamax=date.getFullYear()-18;
@@ -1118,6 +1119,8 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
         document.getElementById("sexo").options.item(0).selected = 'selected';
         document.getElementById("nombres").value="";
         document.getElementById("apellidos").value="";
+        document.getElementById("pasaporte_mayor").value="";
+        
 
     }else{
         var msj= document.getElementById('msj');
@@ -1910,13 +1913,13 @@ $("#tipodocmenor").change(function(){
    }else{
     nrodoc.removeAttribute("readOnly");
     nrodoc.value='';
-
+    
 
 
         let fechamin="";
 
         if((str=="V")){
-
+            $( "#numero_identificacionMenor").attr('onKeyDown','return soloNumeros(event)');
             $('.FilePassport').attr('style', 'display:none');
 
                 fechamin=date.getFullYear()-18;
@@ -1926,6 +1929,7 @@ $("#tipodocmenor").change(function(){
         }else if(str=="P"){
             $('.FilePassport').attr('style', 'display:block');
             $('#fecha_nacimientoMenor').attr('min',"" );
+            $( "#numero_identificacionMenor").attr('onKeyDown','');
             fechamin=date.getFullYear()-18;
                 fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
                 fechamin+="-"+String(date.getDate()).padStart(2, '0');
