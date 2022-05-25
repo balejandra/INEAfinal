@@ -30,7 +30,7 @@
                               <div class="row">
                                   <div class="col-md-2"></div>
                                   <div class="col-md-8 border rounded p-3">
-                              @include('publico.capitania_users.fields')
+                              @include('publico.capitania_users.fieldsedit')
                                   </div>
                                   <div class="col-md-2"></div>
                               </div>

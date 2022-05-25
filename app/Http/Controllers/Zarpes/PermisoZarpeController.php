@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Models\Zarpes\CargoTablaMando;
 use App\Models\Zarpes\Equipo;
 use App\Models\Zarpes\EstablecimientoNautico;
-use App\Models\Zarpes\EstablecimientoNauticoUser;
 use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\Status;
 use App\Models\Zarpes\TablaMando;
@@ -65,11 +64,14 @@ class PermisoZarpeController extends Controller
                 ->with('permisoDestinoZarpes', $datazarpedestino)->with('titulo', $this->titulo);
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
-            $establecimiento = EstablecimientoNauticoUser::select('establecimiento_nautico_id')->where('user_id', $user)->get();
+            $establecimiento = CapitaniaUser::select('establecimiento_nautico_id')->where('user_id', $user)->where('establecimiento_nautico_id','<>',null)->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id','<>', 4)->get();
+            $datazarpedestino = PermisoZarpe::whereIn('establecimiento_nautico_destino_id', $establecimiento)->where('descripcion_navegacion_id','<>', 4)->get();
 
             return view('zarpes.permiso_zarpe.indexcomodoro')
-                ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
+                ->with('permisoOrigenZarpes', $datazarpeorigen)
+                ->with('permisoDestinoZarpes', $datazarpedestino)
+                ->with('titulo', $this->titulo);
         } else {
             return view('unauthorized');
         }
@@ -1315,7 +1317,7 @@ class PermisoZarpeController extends Controller
         $revisiones = ZarpeRevision::where('permiso_zarpe_id', $id)->get();
 
         $establecimiento = EstablecimientoNautico::select('capitania_id')->where('id', $permisoZarpe->establecimiento_nautico_id)->get();
-        $establecimiento_user = EstablecimientoNauticoUser::select('user_id')
+        $establecimiento_user = CapitaniaUser::select('user_id')
             ->where('establecimiento_nautico_id', $permisoZarpe->establecimiento_nautico_id)
             ->get();
         $establecimiento_destino = EstablecimientoNautico::find($permisoZarpe->establecimiento_nautico_destino_id);

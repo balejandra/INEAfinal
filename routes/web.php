@@ -39,7 +39,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('userDelete.index',[\App\Http\Controllers\Publico\UserController::class,'indexUserDeleted'])->name('userDelete.index');
     Route::get('userDeleted/{user}',[\App\Http\Controllers\Publico\UserController::class,'restoreUserDeleted'])->name('userDeleted.restore');
 
-    Route::get('EstablecimientoUser',[\App\Http\Controllers\Publico\UserController::class,'EstablecimientoUser'])->name('AsignarEstablecimiento');
+    Route::get('EstablecimientoUser',[\App\Http\Controllers\Publico\CapitaniaUserController::class,'EstablecimientoUser'])->name('AsignarEstablecimiento');
 
     Route::get('/permissions', [App\Http\Controllers\Publico\PermissionController::class, 'index'])->name('permissions')->middleware('auth');
     Route::get('/permissions/create', [App\Http\Controllers\Publico\PermissionController::class, 'create'])->name('permissions.create');

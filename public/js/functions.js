@@ -1792,7 +1792,7 @@ function getCapitania(){
     });
 }
 function requeridos() {
-    var roles = $(".roles").val();
+    var roles =  document.getElementById("cargo").value
     if ((roles==5) || (roles==6) ){
         $("#capitanias").prop('required', true);
         $("#establecimiento").prop('required', true);
@@ -1804,10 +1804,23 @@ function requeridos() {
         $("#establecimiento").prop('required', false);
     }
 }
+function cargoCapitaniaUser() {
+    var estado = document.getElementById("cargo").value
+    if ((estado==5) || (estado==6) ) {
+        pref = document.getElementById('divestablecimiento')
+        pref.style.display = 'block'
+    } else{
+            pref=document.getElementById('divestablecimiento')
+            pref.style.display='none';
+    }
+}
 function EstablecimientoUser(){
-    var estado = $(".roles").val();
+    var estado = document.getElementById("cargo").value
+    console.log(estado)
     if ((estado==5) || (estado==6) ){
-        var idCapitania = $("#capitanias").val();
+        pref=document.getElementById('divestablecimiento')
+        pref.style.display='block';
+        var idCapitania = $("#capitania_id").val();
 
         $.ajax({
             url: route('AsignarEstablecimiento'),
@@ -1819,7 +1832,7 @@ function EstablecimientoUser(){
                 respuesta = JSON.parse(response);
                 let establecimientos=respuesta[0];
                 let select=document.getElementById("establecimientos");
-                let options="<option value='0'>Puede asignar un Establecimiento...</option>";
+                let options="<option value=>Puede asignar un Establecimiento...</option>";
                 for (var i = 0; i < establecimientos.length; i++) {
                     options+="<option value='"+establecimientos[i].id+"'>"+establecimientos[i].nombre+"</option>"
                 }
@@ -1833,8 +1846,9 @@ function EstablecimientoUser(){
             });
     }else{
         let select=document.getElementById("establecimientos");
-        let options="<option value='0'>Puede asignar un Establecimiento...</option>";
+        let options="<option value=''>Puede asignar un Establecimiento...</option>";
         select.innerHTML=options;
+
 
     }
 

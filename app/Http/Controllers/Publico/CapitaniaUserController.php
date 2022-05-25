@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Publico;
 
-use App\Http\Requests\Publico\CreateCapitaniaUserRequest;
 use App\Http\Requests\Publico\UpdateCapitaniaUserRequest;
 use App\Models\Publico\Capitania;
 use App\Models\Publico\CapitaniaUser;
 use App\Models\User;
+use App\Models\Zarpes\EstablecimientoNautico;
 use App\Repositories\Publico\CapitaniaUserRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
 use Spatie\Permission\Models\Role;
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
 
 class CapitaniaUserController extends AppBaseController
 {
@@ -51,9 +49,11 @@ class CapitaniaUserController extends AppBaseController
         $user2=User::pluck('email','id');
         $capitanias=Capitania::pluck('nombre','id');
         $roles=Role::pluck('name','id');
+        $estable=EstablecimientoNautico::pluck('nombre','id');
         return view('publico.capitania_users.create')
             ->with('users',$user2)
             ->with('capitania',$capitanias)
+            ->with('establecimientos',$estable)
             ->with('roles',$roles);
     }
 
@@ -66,32 +66,53 @@ class CapitaniaUserController extends AppBaseController
      */
     public function store(Request$request)
     {
-        $validated = $request->validate([
-            'cargo' => 'required|string',
-            'user_id' => 'required|string',
-            'capitania_id'=>'required',
-        ],
 
-            [
-                'cargo.required' => 'El campo Cargo es obligatorio.',
-                'user_id.required' => 'El campo Email del Usuario es obligatorio.',
-                'capitania_id.required' => 'El campo Capitanía es obligatorio.',
+        if (($request->cargo==5)||($request->cargo==6)) {
+            $validated = $request->validate([
+                'cargo' => 'required|string',
+                'user_id' => 'required|string',
+                'capitania_id'=>'required',
+                'establecimiento_nautico_id'=>'required'
+            ],
 
-            ]);
+                [
+                    'cargo.required' => 'El campo Cargo es obligatorio.',
+                    'user_id.required' => 'El campo Email del Usuario es obligatorio.',
+                    'capitania_id.required' => 'El campo Capitanía es obligatorio.',
+                    'establecimiento_nautico_id.required'=>'El campo  Establecimiento Náutico Asignado es obligatorio.'
+
+                ]);
+        }else{
+            $validated = $request->validate([
+                'cargo' => 'required|string',
+                'user_id' => 'required|string',
+                'capitania_id'=>'required',
+            ],
+
+                [
+                    'cargo.required' => 'El campo Cargo es obligatorio.',
+                    'user_id.required' => 'El campo Email del Usuario es obligatorio.',
+                    'capitania_id.required' => 'El campo Capitanía es obligatorio.',
+
+                ]);
+
+        }
 
         $verification=CapitaniaUser::where('cargo',$request->cargo)->where('capitania_id',$request->capitania_id)->get();
         if (isset($verification[0])) {
             Flash::error('La Capitanía ya tiene asignado este Rol.');
             return redirect()->back();
         }else {
-            $input = $request->all();
 
-            $capitaniaUser = $this->capitaniaUserRepository->create($input);
+                $input = $request->all();
 
-            Flash::success('Usuario de Capitanía guardado satisfactoriamente.');
+                $capitaniaUser = $this->capitaniaUserRepository->create($input);
 
-            return redirect(route('capitaniaUsers.index'));
-        }
+                Flash::success('Usuario de Capitanía guardado satisfactoriamente.');
+
+                return redirect(route('capitaniaUsers.index'));
+            }
+
 
     }
 
@@ -128,6 +149,7 @@ class CapitaniaUserController extends AppBaseController
         $user2=User::pluck('email','id');
         $capitanias=Capitania::pluck('nombre','id');
         $roles=Role::pluck('name','id');
+        $establecimientos=EstablecimientoNautico::where('capitania_id',$capitaniaUser->capitania_id)->pluck('nombre','id');
 
         if (empty($capitaniaUser)) {
             Flash::error('Usuario de Capitanía no encontrado');
@@ -139,7 +161,8 @@ class CapitaniaUserController extends AppBaseController
             ->with('capitaniaUser', $capitaniaUser)
             ->with('users',$user2)
             ->with('capitania',$capitanias)
-            ->with('roles',$roles);
+            ->with('roles',$roles)
+            ->with('establecimientos',$establecimientos);
     }
 
     /**
@@ -212,5 +235,12 @@ class CapitaniaUserController extends AppBaseController
         Flash::success('Usuario de Capitanía eliminado satisfactoriamente.');
 
         return redirect(route('capitaniaUsers.index'));
+    }
+
+    public function EstablecimientoUser(Request $request){
+        $idcap= $_REQUEST['idcap'];
+        $EstNauticos = EstablecimientoNautico::where('capitania_id', $idcap)->get();
+        $resp=[$EstNauticos];
+        echo json_encode($resp);
     }
 }
