@@ -4,6 +4,7 @@ namespace App\Models\Publico;
 
 use App\Models\User;
 use App\Models\Publico\Capitania;
+use App\Models\Zarpes\EstablecimientoNautico;
 use App\Models\Zarpes\ZarpeRevision;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ use Spatie\Permission\Models\Role;
  * @property string $cargo
  * @property string $user_id
  * @property string $capitania_id
+ * @property string $establecimiento_nautico_id
  */
 class CapitaniaUser extends Model implements Auditable
 {
@@ -36,7 +38,8 @@ class CapitaniaUser extends Model implements Auditable
     public $fillable = [
         'cargo',
         'user_id',
-        'capitania_id'
+        'capitania_id',
+        'establecimiento_nautico_id'
     ];
 
     /**
@@ -48,7 +51,8 @@ class CapitaniaUser extends Model implements Auditable
         'id' => 'integer',
         'cargo' => 'string',
         'user_id' => 'string',
-        'capitania_id' => 'string'
+        'capitania_id' => 'string',
+        'establecimiento_nautico_id'=>'string'
     ];
 
     /**
@@ -74,6 +78,10 @@ class CapitaniaUser extends Model implements Auditable
     public function cargos(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Role::class,'cargo','id');
+    }
+    public function establecimientos()
+    {
+        return $this->belongsTo(EstablecimientoNautico::class,'establecimiento_nautico_id');
     }
 
     public function zarperevision(){

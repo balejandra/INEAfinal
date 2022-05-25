@@ -26,24 +26,6 @@
                             </div>
                         </div>
                         <div class="card-body" style="min-height: 350px;">
-                            <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pills-origen-tab" data-bs-toggle="pill"
-                                            data-bs-target="#origen" type="button" role="tab" aria-controls="origen"
-                                            aria-selected="true">Solicitudes de zarpe
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-destino-tab" data-bs-toggle="pill"
-                                            data-bs-target="#destino" type="button" role="tab" aria-controls="destino"
-                                            aria-selected="false">Información de arribos en su jurisdicción
-                                    </button>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="origen" role="tabpanel"
-                                     aria-labelledby="pills-origen-tab">
-
                                     <table class="table table-striped table-bordered display" style="width:100%">
                                         <thead>
                                         <tr>
@@ -147,68 +129,6 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-                                </div>
-
-                                <!--   ZARPES DESTINO    --->
-                                <div class="tab-pane fade" id="destino" role="tabpanel"
-                                     aria-labelledby="pills-destino-tab">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-bordered"
-                                               id="permisoZarpesdestino-table">
-                                            <thead>
-                                            <tr>
-                                                <th>Nro. Solicitud</th>
-                                                <th>Solicitante</th>
-                                                <th>Bandera</th>
-                                                <th>Matrícula</th>
-                                                <th>Tipo Navegación</th>
-                                                <th>Estatus</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($permisoDestinoZarpes as $permisoDestinoZarpe)
-                                                <tr>
-                                                    <td>{{ $permisoDestinoZarpe->nro_solicitud }}</td>
-                                                    <td>{{ $permisoDestinoZarpe->user->nombres }} {{ $permisoDestinoZarpe->user->apellidos }}</td>
-                                                    <td>{{ $permisoDestinoZarpe->bandera }}</td>
-                                                    <td>{{ $permisoDestinoZarpe->matricula }}</td>
-                                                    <td>{{ $permisoDestinoZarpe->tipo_zarpe->nombre }}</td>
-                                                    @if ($permisoDestinoZarpe->status->id==1)
-                                                        <td class="text-success">{{ $permisoDestinoZarpe->status->nombre}} </td>
-                                                    @elseif($permisoDestinoZarpe->status->id==2)
-                                                        <td class="text-danger">{{ $permisoDestinoZarpe->status->nombre}} </td>
-                                                    @elseif($permisoDestinoZarpe->status->id==3)
-                                                        <td class="text-warning">{{ $permisoDestinoZarpe->status->nombre}} </td>
-                                                    @elseif($permisoDestinoZarpe->status->id==4)
-                                                        <td class="text-muted">{{ $permisoDestinoZarpe->status->nombre}} </td>
-                                                    @else
-                                                        <td>{{ $permisoDestinoZarpe->status->nombre}} </td>
-                                                    @endif
-                                                    <td>
-                                                        @can('consultar-zarpe')
-                                                            <a class="btn btn-sm btn-primary"
-                                                               href=" {{route('zarpeInternacional.show',$permisoDestinoZarpe->id)}}">
-                                                                <i class="fa fa-search"></i>
-                                                            </a>
-                                                            @if (($permisoDestinoZarpe->status->id==1)||($permisoDestinoZarpe->status->id==4) ||($permisoDestinoZarpe->status->id==5))
-                                                                <a class="btn btn-sm btn-dark" href="{{route('zarpepdf',$permisoDestinoZarpe->id)}}"
-                                                                   target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="Descargar PDF">
-                                                                    <i class="fas fa-file-pdf"></i>
-                                                                </a>
-                                                            @endif
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
 
                         <!-- Modal Rechazar -->
                         <div class="modal fade" id="modal-rechazo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
