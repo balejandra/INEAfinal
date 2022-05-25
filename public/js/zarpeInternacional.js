@@ -668,6 +668,7 @@ function getMarinosZI(pass) {
                          pass1=respuesta[0];
                          console.log(pass1);
                          pass1=pass1[pass1.length-1];
+                         let ruta=tabla.getAttribute('data-rimg');  
                          $('#example2').DataTable({
                              responsive: true,
                              autoWidth: true,
@@ -697,7 +698,18 @@ function getMarinosZI(pass) {
                                  },
                                 
                                  {"data":'rango'},
-                                 {"data":'doc'},
+                                 
+                                 {
+                                    "data":"doc",
+                                        render: function ( data, type, row ) {
+                                            // esto es lo que se va a renderizar como html
+                                            let links=`<a href='${ruta+"/"+row.doc}' class='document-link' title='Pasaporte' target='_blank'> Pasaporte </a>`;
+                                            if(row.documento_acreditacion!=''){
+                                                links+=`<br><a href='${ruta+"/"+row.documento_acreditacion}' class='document-link' title='Documento de Acreditación' target='_blank'>Doc. de Acreditación</a>`;
+                                            }
+                                            return links; 
+                                        }
+                                    },
                                  
                                 {
                                 "data":"nro_doc",
@@ -720,6 +732,7 @@ function getMarinosZI(pass) {
                          document.getElementById('apellidos').value="";
                          document.getElementById('rango').value="";
                          document.getElementById('doc').value="";
+                         document.getElementById('documentoAcreditacion').value="";
                      }else{
                          if(funcion=="Capitán"){
                                         msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;

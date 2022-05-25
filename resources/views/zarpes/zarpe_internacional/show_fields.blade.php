@@ -166,6 +166,7 @@
         <th>Documentos</th>
         </thead>
         <tbody>
+            
         @foreach($tripulantes as $tripulante)
             <tr>
                 <td>{{$tripulante->funcion}} </td>
