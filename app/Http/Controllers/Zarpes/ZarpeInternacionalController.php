@@ -973,6 +973,7 @@ class ZarpeInternacionalController extends Controller
             $funcion=$_REQUEST['funcion'];
             $rango=$_REQUEST['rango'];
             $doc=$_REQUEST['doc'];
+            $docAcreditacion=$_REQUEST['docAcreditacion'];
 
                 $trip=[
                 "permiso_zarpe_id" => '',
@@ -983,6 +984,7 @@ class ZarpeInternacionalController extends Controller
                 "funcion" => $funcion,
                 "rango" =>$rango,
                 "doc" => $doc,
+                "documento_acreditacion" => $docAcreditacion,
 
                 ];
 

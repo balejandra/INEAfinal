@@ -720,6 +720,7 @@ function getMarinosZI(pass) {
                          document.getElementById('apellidos').value="";
                          document.getElementById('rango').value="";
                          document.getElementById('doc').value="";
+                         document.getElementById('documentoAcreditacion').value="";
                      }else{
                          if(funcion=="Capitán"){
                                         msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
