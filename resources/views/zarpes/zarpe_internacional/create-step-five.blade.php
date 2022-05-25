@@ -163,7 +163,7 @@
                                                     </tr>
                                                     </thead>
 
-                                                    <tbody id="marinosZI">
+                                                    <tbody id="marinosZI" data-rimg="{{asset('documentos/zarpeinternacional/')}}">
 
                                                     @if(isset($tripulantes))
 
@@ -194,13 +194,19 @@
                                                                     <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
                                                                     <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
                                                                     <td>{{$trip["rango"]}}</td>
-                                                                    <td>{{$trip["doc"]}}</td>
+                                                                    <td>  
+                                                                        <a class="document-link" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$trip['doc'])}}" target="_blank"> Pasaporte </a>
+
+                                                                        @if($trip["documento_acreditacion"]!="")
+                                                                            <br>                                                                           
+                                                                            <a class="document-link" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$trip['documento_acreditacion'])}}" target="_blank"> Doc. Acreditación. </a>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="#"
                                                                            onclick="openModalZI('{{$trip["nro_doc"]}}')">
                                                                             <i class="fa fa-trash"></i>
                                                                         </a>
-
 
                                                                     </td>
                                                                 </tr>
