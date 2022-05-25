@@ -71,7 +71,7 @@
                     {{ $permisoZarpe->tipo_zarpe->nombre }}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Descripcion de Navegación
+                    Descripción de Navegación
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{$descripcionNavegacion->descripcion}}

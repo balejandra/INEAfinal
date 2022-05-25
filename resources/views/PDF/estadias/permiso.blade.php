@@ -226,6 +226,44 @@
             activities. This permission must be showed to the Aquatic Authority prior to sailing out, in order to obtain port clearance.
             The Master of the Vessel, is obliged to inform the Harbour Master the lack of any crew member at the time of Port Clearance,
             without prejudice to also notify it to all Authorities to who it may concern.
+       <!-- <table>
+            <tr>
+                <th>NOMBRE DEL BUQUE <br>Vessel'sname</th>
+                <th>NÚMERO DE REGISTRO <br>Number of Register</th>
+                <th>TIPO DE BUQUE <br>Type of ship</th>
+                <th>NACIONALIDAD DEL BUQUE <br>Ship flag</th>
+                <th>PROPIETARIO <br>Ship Owner</th>
+            </tr>
+            <tr>
+                <td>{{$estadia->nombre_buque}}</td>
+                <td>{{$estadia->nro_registro}}</td>
+                <td>{{$estadia->tipo_buque}}</td>
+                <td>{{$estadia->nacionalidad_buque}}</td>
+                <td>{{$estadia->nombre_propietario}}</td>
+            </tr>
+            <tr>
+                <td colspan="3">NOMBRE DEL CAPITÁN / <br> Capitain's name: </td>
+                <td colspan="2">PASAPORTE / PASSPORT N° </td>
+            </tr>
+            <tr>
+                <td colspan="3">{{$estadia->nombre_capitan}}</td>
+                <td colspan="2">{{$estadia->pasaporte_capitan}}</td>
+            </tr>
+            <tr>
+                <td  align="center" coslpan="3">DIMENSIONES PRINCIPALES / General measures</td>
+                <td align="center" coslpan="2">ARQUEO / Tonnage</td>
+            </tr>
+
+            <tr>
+                <td>ESLORA <br>Lenght</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        </table>-->
+        
         <table>
             <thead>
             <tr>

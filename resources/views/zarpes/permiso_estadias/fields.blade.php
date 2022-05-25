@@ -57,7 +57,7 @@
 </div>
 
     <div class="form-group col-sm-2">
-        {!! Form::label('cant_pasajeros', 'Cantidad máxima  de personas a bordo:') !!}
+        {!! Form::label('cant_pasajeros', 'Cantidad Máxima  de Personas a Bordo:') !!}
         {!! Form::number('cant_pasajeros', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
     </div>
 
@@ -78,7 +78,7 @@
     </div>
 <!-- Actividades Field -->
 <div class="form-group col-sm-3">
-    {!! Form::label('actividades', 'Actividades que realizará:') !!}
+    {!! Form::label('actividades', 'Actividades que Realizará:') !!}
     <select name="actividades" id="actividades" class="form-control custom-select" placeholder='Seleccione' required>
         <option value="deportivo">Deportivo</option>
         <option value="recreativo">Recreativo</option>
@@ -115,19 +115,19 @@
 </div>
 
 <div class="form-group col-sm-4">
-    {!! Form::label('documento_1', 'Zarpe original de procedencia:') !!}
+    {!! Form::label('documento_1', 'Zarpe Original de Procedencia:') !!}
     <input type="file" class="form-control" name="zarpe_procedencia" id="zarpe_procedencia" accept="application/pdf, image/*" required>
 </div>
     <div class="form-group col-sm-4">
-        {!! Form::label('documento_1', 'Registro de la embarcación:') !!}
+        {!! Form::label('documento_1', 'Registro de la Embarcación:') !!}
         <input type="file" class="form-control" name="registro_embarcacion" id="registro_embarcacion" accept="application/pdf, image/*" required>
     </div>
     <div class="form-group col-sm-4">
-        {!! Form::label('documento_1', 'Despacho de aduana de procedencia:') !!}
+        {!! Form::label('documento_1', 'Despacho de Aduana de Procedencia:') !!}
         <input type="file" class="form-control" name="despacho_aduana_procedencia" id="despacho_aduana_procedencia" accept="application/pdf, image/*" required>
     </div>
     <div class="form-group col-sm-4">
-        {!! Form::label('documento_1', 'Pasaportes de los tripulantes:') !!}
+        {!! Form::label('documento_1', 'Pasaportes de los Tripulantes:') !!}
         <input type="file" class="form-control" name="pasaportes_tripulantes" id="pasaporte_tripulantes" accept="application/pdf, image/*" required>
     </div>
     <div class="form-group col-sm-4">

@@ -225,7 +225,7 @@ class PermisoEstadiaController extends AppBaseController
 
             $this->SendMail($estadia->id, 1);
             $this->SendMail($estadia->id, 0);
-            Flash::success('Solicitud de Permiso Estadía generado satisfactoriamente.');
+            Flash::success('Su Solicitud de Permiso de Estadía se ha generado satisfactoriamente.');
 
             return redirect(route('permisosestadia.index'));
         }

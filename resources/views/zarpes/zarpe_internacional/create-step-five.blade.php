@@ -85,7 +85,7 @@
                                             <div class="col-sm-3  px-1">
                                                 <div class="form-group">
                                                     <label for="title">Cédula/Pasaporte:</label>
-                                                    <input type="text" class="form-control" id="nrodoc" name="nrodoc" maxlength="10">
+                                                    <input type="text" class="form-control" id="nrodoc" name="nrodoc" maxlength="15">
                                                 </div>
                                             </div>
 
