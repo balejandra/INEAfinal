@@ -2,6 +2,7 @@
 
 namespace App\Models\Zarpes;
 
+use App\Models\Publico\CapitaniaUser;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  *
  * @property string $user_id
  * @property string $establecimiento_nautico_id
+ * @property string $capitania_user_id
  */
 class EstablecimientoNauticoUser extends Model implements Auditable
 {
@@ -56,7 +58,7 @@ class EstablecimientoNauticoUser extends Model implements Auditable
         'establecimiento_nautico_id' => 'required'
     ];
 
-    public function establecimiento_nautico()
+    public function establecimientos()
     {
         return $this->hasMany(EstablecimientoNautico::class);
     }
@@ -66,5 +68,9 @@ class EstablecimientoNauticoUser extends Model implements Auditable
     }
     public function zarperevision(){
         return $this->hasMany(ZarpeRevision::class);
+    }
+    public function establecimiento_user(){
+        return $this->belongsTo(CapitaniaUser::class,'capitania_user_id','id');
+
     }
 }

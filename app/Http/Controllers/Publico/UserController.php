@@ -250,13 +250,6 @@ class UserController extends Controller
             echo json_encode($data);
     }
 
-    public function EstablecimientoUser(Request $request){
-        $idcap= $_REQUEST['idcap'];
-        $EstNauticos = EstablecimientoNautico::where('capitania_id', $idcap)->get();
-        $resp=[$EstNauticos];
-        echo json_encode($resp);
-    }
-
 
     public function indexUserDeleted(){
         $users =User::onlyTrashed()->where('tipo_usuario','interno')->get();

@@ -2,7 +2,7 @@
 <div class="row">
 <div class="form-group col-sm-6">
     {!! Form::label('cargo', 'Cargo:') !!}
-    {!! Form::select('cargo',$roles, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un cargo']) !!}
+    {!! Form::select('cargo',$roles, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un cargo','onchange="cargoCapitaniaUser();"']) !!}
 </div>
 
 <!-- User Id Field -->
@@ -14,8 +14,13 @@
 <!-- Capitania Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('capitania_id', 'Capitanía:') !!}
-    {!! Form::select('capitania_id', $capitania, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione una capitania']) !!}
+    {!! Form::select('capitania_id', $capitania, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione una capitania','onclick="EstablecimientoUser();"']) !!}
 </div>
+
+    <div class="form-group col-sm-6" id="divestablecimiento" style="display: block">
+        {!! Form::label('establecimientos', 'Establecimiento Náutico Asignado:') !!}
+        {!! Form::select('establecimiento_nautico_id',[], null, ['id'=>'establecimientos','class' => ' form-control custom-select','placeholder' => 'Escoja una Capitanía para cargar los Establecimientos...']) !!}
+    </div>
 
 <!-- Submit Field -->
     <div class="row form-group  mt-4">
