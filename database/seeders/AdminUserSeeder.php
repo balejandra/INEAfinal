@@ -26,7 +26,7 @@ class AdminUserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('123456789'), // password
             'remember_token' => Str::random(10),
-            'tipo_usuario' => 'interno'
+            'tipo_usuario' => 'Usuario Interno'
 
         ]);
         $user->assignRole('Super Admin');

@@ -252,7 +252,7 @@ class UserController extends Controller
 
 
     public function indexUserDeleted(){
-        $users =User::onlyTrashed()->where('tipo_usuario','interno')->get();
+        $users =User::onlyTrashed()->where('tipo_usuario','Usuario Interno')->get();
         //dd($users);
 
         return view('publico.users.user_delete')

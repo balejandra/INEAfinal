@@ -65,4 +65,4 @@
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
     </div>
 </div>
-<input type="text" name="tipo_usuario" value="interno" hidden>
+<input type="text" name="tipo_usuario" value="Usuario Interno" hidden>
