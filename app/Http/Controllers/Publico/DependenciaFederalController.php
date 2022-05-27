@@ -7,14 +7,20 @@ use App\Models\Publico\DependenciaFederal;
 use Illuminate\Http\Request;
 use App\Models\Publico\Capitania;
 use App\Models\Publico\CoordenadasDependenciasFederales;
-
-
-
 use Flash;
 use Response;
 
 class DependenciaFederalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:listar-dependencia', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-dependencia', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-dependencia', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-dependencia', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-dependencia', ['only'=>['destroy'] ]);
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -96,8 +102,6 @@ class DependenciaFederalController extends Controller
             }
         }
 
-
-
         Flash::success('Dependencia Federal guardada satisfactoriamente.');
 
         return redirect(route('dependenciasfederales.index'));
@@ -106,7 +110,7 @@ class DependenciaFederalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  $idd
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -132,8 +136,6 @@ class DependenciaFederalController extends Controller
      */
     public function edit($id)
     {
-
-
         $dependenciaFederal = DependenciaFederal::find($id);
                 $capitania=Capitania::all();
                 $capitania=$capitania->pluck('nombre','id')->toArray();
@@ -148,9 +150,6 @@ class DependenciaFederalController extends Controller
         }else{
             $IDdependenciaFederal=$dependenciaFederal->capitania_id;
         }
-
-
-
        return view('publico.dependencias_federales.edit')->with('dependenciaFederal', $dependenciaFederal)->with('capitanias',  $capitania)->with('coordenadas',$coords)->with('IDdependenciaFederal', $IDdependenciaFederal);
     }
 

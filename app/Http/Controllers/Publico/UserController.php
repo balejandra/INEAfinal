@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Publico;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Publico\CreateUserRequest;
 use App\Http\Requests\Publico\UpdateUserRequest;
 use App\Models\Publico\CapitaniaUser;
 use App\Models\Publico\Menu_rol;
 use App\Models\Publico\Saime_cedula;
 use App\Models\User;
-use App\Models\Zarpes\EstablecimientoNautico;
 use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -26,8 +24,6 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepo)
     {
         $this->userRepository = $userRepo;
-
-
         $this->middleware('permission:listar-usuario', ['only'=>['index'] ]);
         $this->middleware('permission:crear-usuario', ['only'=>['create','store']]);
         $this->middleware('permission:editar-usuario', ['only'=>['edit','update']]);

@@ -10,6 +10,14 @@ use Response;
 
 class StatusController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:listar-status', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-status', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-status', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-status', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-status', ['only'=>['destroy'] ]);
+    }
     /**
      * Display a listing of the Status.
      *

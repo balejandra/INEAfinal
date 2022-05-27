@@ -22,6 +22,12 @@ class CapitaniaUserController extends AppBaseController
     public function __construct(CapitaniaUserRepository $capitaniaUserRepo)
     {
         $this->capitaniaUserRepository = $capitaniaUserRepo;
+        $this->middleware('permission:listar-usuarios-capitanias', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-usuarios-capitanias', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-usuarios-capitanias', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-usuarios-capitanias', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-usuarios-capitanias', ['only'=>['destroy'] ]);
+
     }
 
     /**

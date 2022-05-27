@@ -24,9 +24,11 @@
             <td>{{ date_format($auditable->created_at,'d-m-Y') }}</td>
             <td>
                 <div class='btn-group'>
-                    <a href="{{ route('auditables.show', [$auditable->id]) }}" class="btn btn-sm btn-success">
-                        <i class="fa fa-search"></i>
-                    </a>
+                    @can('consultar-auditoria')
+                        <a href="{{ route('auditables.show', [$auditable->id]) }}" class="btn btn-sm btn-success">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    @endcan
                 </div>
             </td>
         </tr>
