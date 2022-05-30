@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
+
     /**
      * The Artisan commands provided by your application.
      *
@@ -21,7 +22,12 @@ class Kernel extends ConsoleKernel
        VerificationZarpeVencido::class,
         VerificationZarpeRescate::class,
     ];
-
+    protected $routeMiddleware = [
+        // ...
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+    ];
     /**
      * Define the application's command schedule.
      *

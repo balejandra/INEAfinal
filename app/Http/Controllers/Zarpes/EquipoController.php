@@ -10,6 +10,15 @@ use Response;
 
 class EquipoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:listar-equipo', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-equipo', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-equipo', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-equipo', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-equipo', ['only'=>['destroy'] ]);
+    }
     /**
      * Display a listing of the Equipo.
      *

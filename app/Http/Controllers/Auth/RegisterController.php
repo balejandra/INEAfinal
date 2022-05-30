@@ -106,9 +106,9 @@ class RegisterController extends Controller
             'direccion' => $input['direccion'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'tipo_usuario' => 'Usuario web'
+            'tipo_usuario' => 'Usuario Web'
         ]);
-        $role = Role::where('name', 'Usuario web')->first();
+        $role = Role::where('id', 2)->first();
         $user->roles()->sync($role->id);
         event(new Registered($user));
         return $user;
@@ -127,9 +127,9 @@ class RegisterController extends Controller
                         'direccion' => $input['direccion'],
                         'email' => $input['email'],
                         'password' => Hash::make($input['password']),
-                        'tipo_usuario' => 'Usuario web'
+                        'tipo_usuario' => 'Usuario Web'
                     ]);
-                    $role = Role::where('name', 'Usuario web')->first();
+                    $role = Role::where('id', 2)->first();
                     $user->roles()->sync($role->id);
                     event(new Registered($user));
                     return $user;
@@ -142,7 +142,7 @@ class RegisterController extends Controller
                         'direccion' => $input['direccion'],
                         'email' => $input['email'],
                         'password' => Hash::make($input['password']),
-                        'tipo_usuario' => 'Usuario web'
+                        'tipo_usuario' => 'Usuario Web'
                     ]);
                     $role = Role::where('id', 8)->first();
                     $user->roles()->sync($role->id);

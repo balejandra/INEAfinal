@@ -15,13 +15,13 @@ class seederRoles extends Seeder
     {
         $roles=[
             'Super Admin',
-            'Usuario web',
+            'Usuario Web',
             'Admin',
             'Capitán',
-            'comodoro_aprobador',
+            'Comodoro_Aprobador',
             'Comodoro',
-            'Coordinador de operaciones',
-            'Agencia naviera'
+            'Coordinador de Operaciones',
+            'Agencia Naviera'
         ];
 
         foreach($roles as $role){

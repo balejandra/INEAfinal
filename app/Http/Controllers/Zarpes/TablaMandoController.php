@@ -19,6 +19,11 @@ class TablaMandoController extends Controller
     public function __construct(TablaMandoRepository $tablaMandoRepo)
     {
         $this->tablaMandoRepository = $tablaMandoRepo;
+        $this->middleware('permission:listar-mando', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-mando', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-mando', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-mando', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-mando', ['only'=>['destroy'] ]);
     }
 
     /**
@@ -184,7 +189,7 @@ class TablaMandoController extends Controller
 
             ]
         );
-        
+
         $tablaMando = $this->tablaMandoRepository->find($id);
 
         if (empty($tablaMando)) {

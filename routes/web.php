@@ -21,7 +21,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('error', function (){
-    return view('auth.error');
+    return view('errors.error_rol_inex');
 })->name('error');
 
 Route::get('consultasaime',[\App\Http\Controllers\Publico\UserController::class,'consulta'])->name('consultasaime');
