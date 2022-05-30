@@ -22,7 +22,7 @@
 
 <!-- Nacionalidad Buque Field -->
 <div class="form-group col-sm-3" >
-    {!! Form::label('paises', 'Nacionalidad Buque:') !!}
+    {!! Form::label('paises', 'Nacionalidad del Buque:') !!}
     <select id="nacionalidad_buque" name="nacionalidad_buque"
             class="form-control custom-select"  required>
         <option value="">Seleccione</option>
