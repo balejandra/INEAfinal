@@ -109,6 +109,10 @@ class PermisoEstadiaController extends AppBaseController
             'puerto_origen' => 'required|string|max:255',
             'capitania_id' =>'required|string|max:255',
             'tiempo_estadia' => 'required|string|max:255',
+            'manga' => 'required|string|max:255',
+            'puntal' => 'required|string|max:255',
+            'ultimo_puerto_zarpe' => 'required|string|max:255',
+            'establecimiento_nautico_id' => 'required|string|max:255',
             ],
             [
                 'nombre_buque.required'=>'El campo Nombre Buque es requerido',
@@ -134,6 +138,8 @@ class PermisoEstadiaController extends AppBaseController
                 'actividades.required'=>'El campo  Actividades que realizará es requerido',
                 'puerto_origen.required'=>'El campo Puerto de Origen / País es requerido',
                 'tiempo_estadia.required'=>'El campo Vigencia es requerido',
+                'ultimo_puerto_zarpe.required'=>'El campo Zarpe Último Puerto es requerido',
+                'establecimiento_nautico_id.required'=>'El campo Permanencia en la Marina es requerido',
 
 ]
             );
@@ -167,6 +173,10 @@ class PermisoEstadiaController extends AppBaseController
             $estadia->puerto_origen = $request->puerto_origen;
             $estadia->capitania_id = $request->capitania_id;
             $estadia->tiempo_estadia = $request->tiempo_estadia;
+            $estadia->manga = $request->manga;
+            $estadia->puntal = $request->puntal;
+            $estadia->ultimo_puerto_zarpe = $request->ultimo_puerto_zarpe;
+            $estadia->establecimiento_nautico_id = $request->establecimiento_nautico_id;
             $estadia->status_id = 3;
             $estadia->save();
 

@@ -24,6 +24,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $arqueo_bruto
  * @property string $eslora
  * @property string $potencia_kw
+ * @property string $manga
+ *  @property string $puntal
  * @property string $nombre_propietario
  * @property string $nombre_capitan
  * @property string $pasaporte_capitan
@@ -32,7 +34,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $actividades
  * @property string $puerto_origen
  * @property unsignedBigInteger $capitania_id
- * @property unsignedBigInteger $establecimiento_nautico_destino
+ * @property unsignedBigInteger $establecimiento_nautico_id
+ * @property string $ultimo_puerto_zarpe
  * @property string $tiempo_estadia
  * @property string $vigencia
  * @property date $vencimiento
@@ -62,6 +65,8 @@ class PermisoEstadia extends Model implements Auditable
         'nacionalidad_buque',
         'arqueo_bruto',
         'eslora',
+        'manga',
+        'puntal',
         'potencia_kw',
         'nombre_propietario',
         'nombre_capitan',
@@ -71,7 +76,8 @@ class PermisoEstadia extends Model implements Auditable
         'actividades',
         'puerto_origen',
         'capitania_id',
-        'establecimiento_nautico_destino',
+        'establecimiento_nautico_id',
+        'ultimo_puerto_zarpe',
         'tiempo_estadia',
         'vigencia',
         'vencimiento',
@@ -94,6 +100,8 @@ class PermisoEstadia extends Model implements Auditable
         'nacionalidad_buque' => 'string',
         'arqueo_bruto' => 'string',
         'eslora'=>'string',
+        'manga'=>'string',
+        'puntal'=>'string',
         'potencia_kw'=>'string',
         'nombre_propietario' => 'string',
         'nombre_capitan' => 'string',
@@ -102,7 +110,8 @@ class PermisoEstadia extends Model implements Auditable
         'cant_pasajeros' => 'integer',
         'actividades' => 'string',
         'puerto_origen' => 'string',
-        'establecimiento_nautico_destino' => 'integer',
+        'establecimiento_nautico_id' => 'integer',
+        'ultimo_puerto_zarpe'=>'string',
         'capitania_id' => 'integer',
         'tiempo_estadia' => 'string',
         'vigencia' => 'string',
@@ -132,6 +141,10 @@ class PermisoEstadia extends Model implements Auditable
         'puerto_origen' => 'required',
         'capitania_id' => 'required',
         'tiempo_estadia' => 'required',
+        'manga'=>'required',
+        'puntal'=>'required',
+        'establecimiento_nautico_id'=>'required',
+        'permanencia_marina'=>'required',
     ];
 
 
@@ -139,9 +152,9 @@ class PermisoEstadia extends Model implements Auditable
     {
         return $this->belongsTo(User::class);
     }
-    public function establecimiento_nautico()
+    public function establecimientos()
     {
-        return $this->belongsTo(EstablecimientoNautico::class,'establecimiento_nautico_destino','id');
+        return $this->belongsTo(EstablecimientoNautico::class,'establecimiento_nautico_id','id');
     }
     public function capitania():\Illuminate\Database\Eloquent\Relations\BelongsTo
     {

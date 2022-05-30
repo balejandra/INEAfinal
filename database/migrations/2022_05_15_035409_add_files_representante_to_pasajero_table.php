@@ -17,7 +17,7 @@ class AddFilesRepresentanteToPasajeroTable extends Migration
             $table->string('representante')->nullable();
             $table->string('partida_nacimiento')->nullable();
             $table->string('autorizacion')->nullable();
-             
+
         });
     }
 
@@ -28,8 +28,11 @@ class AddFilesRepresentanteToPasajeroTable extends Migration
      */
     public function down()
     {
-        Schema::table('pasajeros', function (Blueprint $table) {
-            //
+        Schema::connection('pgsql_zarpes_schema')->table('pasajeros', function (Blueprint $table) {
+            $table->dropColumn('representante');
+            $table->dropColumn('partida_nacimiento');
+            $table->dropColumn('autorizacion');
+
         });
     }
 }
