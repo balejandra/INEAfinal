@@ -15,7 +15,7 @@ class AddDocumentoAcreditacionToTripulanteInternacionals extends Migration
     {
         Schema::connection('pgsql_zarpes_schema')->table('tripulante_internacionals', function (Blueprint $table) {
             $table->string('documento_acreditacion')->nullable();
-            
+
         });
     }
 
@@ -27,7 +27,8 @@ class AddDocumentoAcreditacionToTripulanteInternacionals extends Migration
     public function down()
     {
         Schema::connection('pgsql_zarpes_schema')->table('tripulante_internacionals', function (Blueprint $table) {
-            //
+            $table->dropColumn('documento_acreditacion');
+
         });
     }
 }

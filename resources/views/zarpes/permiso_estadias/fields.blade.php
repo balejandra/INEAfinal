@@ -76,6 +76,14 @@
         {!! Form::label('potencia_kw', 'Potencia KW:') !!}
         {!! Form::text('potencia_kw', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
     </div>
+    <div class="form-group col-sm-2">
+        {!! Form::label('puntal', 'Puntal:') !!}
+        {!! Form::text('puntal', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
+    </div>
+    <div class="form-group col-sm-2">
+        {!! Form::label('manga', 'Manga:') !!}
+        {!! Form::text('manga', null, ['class' => 'form-control', 'required','onKeyDown'=>"return soloNumeros(event)"]) !!}
+    </div>
 <!-- Actividades Field -->
 <div class="form-group col-sm-3">
     {!! Form::label('actividades', 'Actividades que Realizará:') !!}
@@ -96,7 +104,7 @@
 <!-- Ultimo Puertovisitado Field -->
 <div class="form-group col-sm-3">
     {!! Form::label('capitania_id', 'Circunscripción Acuática de Arribo:') !!}
-    <select id="capitania_id" name="capitania_id"
+    <select id="capitania_id" name="capitania_id" onclick="EstablecimientoFindNautico();"
             class="form-control custom-select {{ $errors->has("capitania_id")?"is-invalid":"" }}"  required>
         <option value="">Seleccione</option>
         @foreach ($capitanias as $capitania)
@@ -107,8 +115,20 @@
     <span class="error invalid-feedback">{{ $message }}</span>
     @enderror
 </div>
+    <!-- Puerto Origen Field -->
+    <div class="form-group col-sm-3">
+        {!! Form::label('ultimo_puerto_zarpe', 'Zarpe Último Puerto:') !!}
+        {!! Form::text('ultimo_puerto_zarpe', null, ['class' => 'form-control'], 'required') !!}
+    </div>
 
-<!-- Tiempo Estadia Field -->
+    <!-- Puerto Origen Field -->
+    <div class="form-group col-sm-3">
+        {!! Form::label('permanencia_marina', 'Permanencia en la Marina:') !!}
+        {!! Form::select('establecimiento_nautico_id',[], null, ['id'=>'establecimientos','class' => ' form-control custom-select','placeholder' => 'Escoja una Capitanía para cargar los Establecimientos...']) !!}
+
+    </div>
+
+    <!-- Tiempo Estadia Field -->
 <div class="form-group col-sm-2">
     {!! Form::label('tiempo_estadia', 'Vigencia:') !!}
     <input type="text" name="tiempo_estadia" readonly value="90 días" id="tiempo_estadia" class="form-control">

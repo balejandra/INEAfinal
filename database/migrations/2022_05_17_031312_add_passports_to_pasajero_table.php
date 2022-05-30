@@ -16,7 +16,7 @@ class AddPassportsToPasajeroTable extends Migration
        Schema::connection('pgsql_zarpes_schema')->table('pasajeros', function (Blueprint $table) {
             $table->string('pasaporte_menor')->nullable();
             $table->string('pasaporte_mayor')->nullable();
-             
+
         });
     }
 
@@ -27,8 +27,10 @@ class AddPassportsToPasajeroTable extends Migration
      */
     public function down()
     {
-        Schema::table('pasajero', function (Blueprint $table) {
-            //
+        Schema::connection('pgsql_zarpes_schema')->table('pasajeros', function (Blueprint $table) {
+            $table->dropColumn('pasaporte_menor');
+            $table->dropColumn('pasaporte_mayor');
+
         });
     }
 }
