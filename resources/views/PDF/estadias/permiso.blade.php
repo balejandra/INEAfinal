@@ -289,15 +289,15 @@
                 <td colspan="2">{{$estadia->tiempo_estadia}}</td>
             </tr>
             <tr>
-                <td colspan="3">VÁLIDO DESDE / Valid since: {{date_format($estadia->updated_at,'Y-m-d')}}</td>
-                <td colspan="3">VÁLIDO HASTA / Valid until: {{date_format($estadia->vencimiento,'Y-m-d')}}</td>
+                <td colspan="3">VÁLIDO DESDE / Valid since: {{date_format($estadia->updated_at,'d-m-Y')}}</td>
+                <td colspan="3">VÁLIDO HASTA / Valid until: {{date_format($estadia->vencimiento,'d-m-Y')}}</td>
             </tr>
             </tbody>
         </table>
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">Lugar y fecha
-            <u> {{date_format($estadia->updated_at,'Y-m-d')}} </u><br>
-                PLACE AND DATE <u>  {{date_format($estadia->updated_at,'Y-m-d')}} </u>
+            <u> {{date_format($estadia->updated_at,'d-m-Y')}} </u><br>
+                PLACE AND DATE <u>  {{date_format($estadia->updated_at,'d-m-Y')}} </u>
         </p>
         <br>
         <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto<br>
