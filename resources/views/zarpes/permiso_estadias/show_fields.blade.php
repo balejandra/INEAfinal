@@ -53,7 +53,7 @@
                     Tipo del Buque
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->tipo_buque }}
+                    <span  style="text-transform: capitalize">{{ $permisoEstadia->tipo_buque }}</span>
                 </div>
             </div>
         </div>
@@ -165,7 +165,7 @@
                     Actividades que Realizará
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->actividades }}
+                    <span  style="text-transform: capitalize">{{ $permisoEstadia->actividades }}</span>
                 </div>
             </div>
         </div>

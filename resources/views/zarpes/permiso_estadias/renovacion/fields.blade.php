@@ -24,7 +24,7 @@
 
 <!-- Nacionalidad Buque Field -->
 <div class="form-group col-sm-2" >
-    {!! Form::label('tipo_buque', 'Nacionalidad Buque:') !!}
+    {!! Form::label('tipo_buque', 'Nacionalidad del Buque:') !!}
     <input type="text" name="nacionalidad_buque" value="{{$permiso->nacionalidad_buque}}" readonly class="form-control">
 </div>
 <!-- Propietario Field -->
