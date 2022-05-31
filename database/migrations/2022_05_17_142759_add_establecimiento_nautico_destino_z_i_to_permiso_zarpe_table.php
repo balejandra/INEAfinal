@@ -15,7 +15,7 @@ class AddEstablecimientoNauticoDestinoZIToPermisoZarpeTable extends Migration
     {
         Schema::connection('pgsql_zarpes_schema')->table('permiso_zarpes', function (Blueprint $table) {
             $table->string('establecimiento_nautico_destino_zi')->nullable();
-            
+
         });
     }
 
@@ -26,8 +26,9 @@ class AddEstablecimientoNauticoDestinoZIToPermisoZarpeTable extends Migration
      */
     public function down()
     {
-        Schema::table('permiso_zarpe', function (Blueprint $table) {
-            //
+        Schema::connection('pgsql_zarpes_schema')->table('permiso_zarpes', function (Blueprint $table) {
+            $table->dropColumn('establecimiento_nautico_destino_zi');
+
         });
     }
 }

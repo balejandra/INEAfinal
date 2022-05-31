@@ -15,7 +15,7 @@ class AddFuncionToTripulantesTable extends Migration
     {
         Schema::connection('pgsql_zarpes_schema')->table('tripulantes', function (Blueprint $table) {
             $table->string('funcion')->nullable();
-          
+
         });
     }
 
@@ -26,8 +26,9 @@ class AddFuncionToTripulantesTable extends Migration
      */
     public function down()
     {
-        Schema::table('tripulantes', function (Blueprint $table) {
-            //
+        Schema::connection('pgsql_zarpes_schema')->table('tripulantes', function (Blueprint $table) {
+            $table->dropColumn('funcion');
+
         });
     }
 }

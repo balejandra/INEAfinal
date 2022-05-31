@@ -53,7 +53,7 @@
                     Tipo del Buque
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->tipo_buque }}
+                    <span  style="text-transform: capitalize">{{ $permisoEstadia->tipo_buque }}</span>
                 </div>
             </div>
         </div>
@@ -134,7 +134,24 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row border">
+                <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
+                    Manga
+                </div>
+                <div class="col-md-3 col-sm-3 p-2">
+                    {{ $permisoEstadia->manga }}
+                </div>
+                <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
+                    Puntal
+                </div>
+                <div class="col-md-3 col-sm-3 p-2">
+                    {{ $permisoEstadia->puntal }}
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="row border">
@@ -148,7 +165,7 @@
                     Actividades que Realizará
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->actividades }}
+                    <span  style="text-transform: capitalize">{{ $permisoEstadia->actividades }}</span>
                 </div>
             </div>
         </div>
@@ -177,6 +194,25 @@
         <div class="col-sm-12">
             <div class="row border">
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
+                    Zarpe Último Puerto
+                </div>
+                <div class="col-md-3 col-sm-3 p-2">
+                    {{ $permisoEstadia->ultimo_puerto_zarpe }}
+                </div>
+                <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
+                    Permanencia en la Marina
+                </div>
+                <div class="col-md-3 col-sm-3 p-2">
+                    {{ $permisoEstadia->establecimientos->nombre }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row border">
+                <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
                     Tiempo de Estadía
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
@@ -186,7 +222,9 @@
                     Fecha de Vencimiento
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->vencimiento }}
+                    @if ($permisoEstadia->vencimiento)
+                        {{date_format($permisoEstadia->vencimiento,'d-m-Y')}}
+                    @endif
                 </div>
             </div>
         </div>
@@ -205,7 +243,25 @@
                     Estatus
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->status->nombre}}
+                @if ($permisoEstadia->status->id==1)
+                    <span class="text-success">{{ $permisoEstadia->status->nombre}} </span>
+                @elseif($permisoEstadia->status->id==2)
+                    <span class="text-danger">{{ $permisoEstadia->status->nombre}} </span>
+                @elseif($permisoEstadia->status->id==3)
+                    <span class="text-warning">{{ $permisoEstadia->status->nombre}} </span>
+                @elseif($permisoEstadia->status->id==6)
+                    <span style="color: #fd7e14">{{$permisoEstadia->status->nombre}}</span>
+                @elseif($permisoEstadia->status->id==9)
+                    <span class="text-warning bg-dark">{{$permisoEstadia->status->nombre}}</span>
+                @elseif($permisoEstadia->status->id==10)
+                    <span class="text-primary">{{ $permisoEstadia->status->nombre}} </span>
+                @elseif($permisoEstadia->status->id==11)
+                    <span style="color: #770bba">{{ $permisoEstadia->status->nombre}} </span>
+                @elseif($permisoEstadia->status->id==12)
+                    <span class="text-muted">{{ $permisoEstadia->status->nombre}} </span>
+                @else
+                    <span>{{ $permisoEstadia->status->nombre}} </span>
+                @endif
                 </div>
             </div>
         </div>

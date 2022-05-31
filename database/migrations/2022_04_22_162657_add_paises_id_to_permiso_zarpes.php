@@ -26,8 +26,8 @@ class AddPaisesIdToPermisoZarpes extends Migration
      */
     public function down()
     {
-        Schema::table('permiso_zarpes', function (Blueprint $table) {
-            //
+        Schema::connection('pgsql_zarpes_schema')->table('permiso_zarpes', function (Blueprint $table) {
+            $table->dropColumn('paises_id');
         });
     }
 }

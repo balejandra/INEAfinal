@@ -303,4 +303,10 @@ div.container { max-width: 1200px }
     color: #f0f0f0;
 }
 
-
+.title-estadia{
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}

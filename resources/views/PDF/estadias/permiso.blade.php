@@ -185,7 +185,7 @@
 
         <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate($QR)) !!} ">
     </div>
-    <div style="padding-top:50pt; padding-left:130pt;">
+    <div style="padding-top:20pt; padding-left:130pt;">
         <p class=" text-center mbr-text display-7">
             REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
             MINISTERIO DEL PODER POPULAR PARA EL TRANSPORTE<br>
@@ -202,7 +202,7 @@
 </header>
 
 <main>
-    <div style="clear:both; position:relative; padding-top: 180px;" class="content-paragraph">
+    <div style="clear:both; position:relative; padding-top: 120px;" class="content-paragraph">
 
         <h4 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5 content-paragraph">N° de Permiso: {{$estadia->nro_solicitud}}</h4>
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
@@ -226,44 +226,6 @@
             activities. This permission must be showed to the Aquatic Authority prior to sailing out, in order to obtain port clearance.
             The Master of the Vessel, is obliged to inform the Harbour Master the lack of any crew member at the time of Port Clearance,
             without prejudice to also notify it to all Authorities to who it may concern.
-       <!-- <table>
-            <tr>
-                <th>NOMBRE DEL BUQUE <br>Vessel'sname</th>
-                <th>NÚMERO DE REGISTRO <br>Number of Register</th>
-                <th>TIPO DE BUQUE <br>Type of ship</th>
-                <th>NACIONALIDAD DEL BUQUE <br>Ship flag</th>
-                <th>PROPIETARIO <br>Ship Owner</th>
-            </tr>
-            <tr>
-                <td>{{$estadia->nombre_buque}}</td>
-                <td>{{$estadia->nro_registro}}</td>
-                <td>{{$estadia->tipo_buque}}</td>
-                <td>{{$estadia->nacionalidad_buque}}</td>
-                <td>{{$estadia->nombre_propietario}}</td>
-            </tr>
-            <tr>
-                <td colspan="3">NOMBRE DEL CAPITÁN / <br> Capitain's name: </td>
-                <td colspan="2">PASAPORTE / PASSPORT N° </td>
-            </tr>
-            <tr>
-                <td colspan="3">{{$estadia->nombre_capitan}}</td>
-                <td colspan="2">{{$estadia->pasaporte_capitan}}</td>
-            </tr>
-            <tr>
-                <td  align="center" coslpan="3">DIMENSIONES PRINCIPALES / General measures</td>
-                <td align="center" coslpan="2">ARQUEO / Tonnage</td>
-            </tr>
-
-            <tr>
-                <td>ESLORA <br>Lenght</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-
-        </table>-->
-        
         <table>
             <thead>
             <tr>
@@ -272,54 +234,70 @@
                 <th>TIPO DE BUQUE <br>Type of ship</th>
                 <th>NACIONALIDAD DEL BUQUE <br>Ship flag</th>
                 <th>PROPIETARIO <br>Ship Owner</th>
-                <th>ARQUEO <br>Tonnage</th>
+                <th>NOMBRE DEL CAPITÁN <br>Captain's name</th>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td>{{$estadia->nombre_buque}}</td>
                 <td>{{$estadia->nro_registro}}</td>
-                <td>{{$estadia->tipo_buque}}</td>
+                <td style="text-transform: capitalize">{{$estadia->tipo_buque}}</td>
                 <td>{{$estadia->nacionalidad_buque}}</td>
                 <td>{{$estadia->nombre_propietario}}</td>
-                <td>{{$estadia->arqueo_bruto}}</td>
+                <td>{{$estadia->nombre_capitan}}</td>
             </tr>
             <tr>
-                <th>ESLORA <br>Lenght</th>
-                <th>POTENCIA KW <br>KW Power</th>
-                <th>CAPITÁN <br>Capitain</th>
                 <th>PASAPORTE <br>Passport Nro</th>
+                <th>ESLORA <br>Lenght (mts.)</th>
+                <th>MANGA <br>Breadth (mts.)</th>
+                <th>PUNTAL <br>Depth (mts.)</th>
+                <th>ARQUEO BRUTO <br>Gross Tonnage</th>
+                <th>POTENCIA MOTORES (KW) <br>Motor Power (kw)</th>
+            </tr>
+            <tr>
+                <td>{{$estadia->pasaporte_capitan}}</td>
+                <td>{{$estadia->eslora}}</td>
+                <td>{{$estadia->manga}}</td>
+                <td>{{$estadia->puntal}}</td>
+                <td>{{$estadia->arqueo_bruto}}</td>
+                <td>{{$estadia->potencia_kw}}</td>
+            </tr>
+            <tr>
+                <th>ACTIVIDADES A REALIZAR<br>Ship’s purpose</th>
                 <th>NÚMERO DE TRIPULANTES <br>Number of Crew members</th>
                 <th>NÚMERO DE PASAJEROS <br>Number of Passengers</th>
+                <th colspan="2">PROCEDENCIA <br>Port of origin</th>
+                <th>ZARPE ÚLTIMO PUERTO <br>Last port</th>
             </tr>
             <tr>
-                <td>{{$estadia->eslora}}</td>
-                <td>{{$estadia->potencia_kw}}</td>
-                <td>{{$estadia->nombre_capitan}}</td>
-                <td>{{$estadia->pasaporte_capitan}}</td>
+                <td style="text-transform: capitalize">{{$estadia->actividades}}</td>
                 <td>{{$estadia->cant_tripulantes}}</td>
                 <td>{{$estadia->cant_pasajeros}}</td>
-            </tr>
-            <tr>
-                <th>ACTIVIDADES A REALIZAR<br>Ship’spurpose</th>
-                <th colspan="2">PROCEDENCIA <br>Port of origin</th>
-                <th>DESTINO <br>Port of destination</th>
-                <th>TIEMPO DE ESTADÍA <br>Permanency</th>
-                <th>VÁLIDO HASTA <br>Valid until</th>
-            </tr>
-            <tr>
-                <td>{{$estadia->actividades}}</td>
                 <td colspan="2">{{$estadia->puerto_origen}}</td>
-                <td>{{$estadia->capitania->nombre}}</td>
-                <td>{{$estadia->tiempo_estadia}}</td>
-                <td>{{date_format($estadia->vencimiento,'Y-m-d')}}</td>
+                <td>{{$estadia->ultimo_puerto_zarpe}}</td>
+
+            </tr>
+            <tr>
+                <th colspan="2">DESTINO <br>Port of destination</th>
+                <th colspan="2">EN LA MARINA DE<br>Nautical Club</th>
+                <th colspan="2">TIEMPO DE ESTADÍA <br>Permanency</th>
+
+            </tr>
+            <tr>
+                <td colspan="2">{{$estadia->capitania->nombre}}</td>
+                <td colspan="2">{{$estadia->establecimientos->nombre}}</td>
+                <td colspan="2">{{$estadia->tiempo_estadia}}</td>
+            </tr>
+            <tr>
+                <td colspan="3">VÁLIDO DESDE / Valid since: {{date_format($estadia->updated_at,'d-m-Y')}}</td>
+                <td colspan="3">VÁLIDO HASTA / Valid until: {{date_format($estadia->vencimiento,'d-m-Y')}}</td>
             </tr>
             </tbody>
         </table>
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">Lugar y fecha
-            <u> {{$estadia->updated_at}} </u><br>
-                PLACE AND DATE <u> {{$estadia->updated_at}} </u>
+            <u> {{date_format($estadia->updated_at,'d-m-Y')}} </u><br>
+                PLACE AND DATE <u>  {{date_format($estadia->updated_at,'d-m-Y')}} </u>
         </p>
         <br>
         <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto<br>
