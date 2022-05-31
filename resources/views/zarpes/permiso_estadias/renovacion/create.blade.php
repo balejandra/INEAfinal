@@ -21,14 +21,15 @@
      <div class="container-fluid">
           <div class="animated fadeIn">
               @include('flash::message')
+              @include('coreui-templates::common.errors')
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <i class="fa fa-plus-square-o fa-lg"></i>
+                                <i class="fas fa-water"></i>
                                 <strong>Renovar Permiso de Estadía</strong>
                                 <div class="card-header-actions">
-                                    <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Listado</a>
+                                    <a href= "{{route('permisosestadia.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -39,6 +40,7 @@
 
                                 {!! Form::close() !!}
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>

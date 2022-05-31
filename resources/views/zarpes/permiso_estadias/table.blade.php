@@ -66,9 +66,8 @@
                         </a>
                     @endif
                 @endcan
-
                 @can('visita-estadia-aprobada')
-                    @if ($permisoEstadia->status_id===9)
+                    @if (($permisoEstadia->status_id===9)&& (date_format($permisoEstadia->visita->fecha_visita,'Y-m-d H:i:s')<=(date('Y-m-d H:i:s'))))
                         <a class="btn btn-sm btn-info confirmation"
                            data-route=" {{route('statusEstadia',[$permisoEstadia->id,10])}}" data-toggle="tooltip"
                            data-bs-placement="bottom" title="Aprobar Visita" data-action="APROBAR LA VISITA de">
