@@ -165,5 +165,10 @@ class PermisoEstadia extends Model implements Auditable
     {
         return $this->belongsTo(Status::class);
     }
+    public function visita()
+    {
+        return $this->hasOne(VisitaPermisoEstadia::class);
+    }
+
 
 }

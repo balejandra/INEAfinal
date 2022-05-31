@@ -81,6 +81,57 @@ class PermisoEstadiaRenovacionController extends AppBaseController
      */
     public function store($id, Request $request)
     {
+        $validated= $request->validate([
+            'nombre_buque' => 'required|string|max:255',
+            'nro_registro' => 'required|string|max:255',
+            'tipo_buque' => 'required|string|max:255',
+            'nacionalidad_buque' =>'required|string|max:255',
+            'nombre_propietario' => 'required|string|max:255',
+            'pasaporte_capitan' => 'required|string|max:255',
+            'nombre_capitan' => 'required|string|max:255',
+            'cant_tripulantes' => 'required|numeric|min:1|max:99999999',
+            'cant_pasajeros' =>'required|numeric|min:1|max:99999999',
+            'arqueo_bruto' => 'required|numeric|min:1|max:99999999',
+            'eslora' =>'required|numeric|min:1|max:99999999',
+            'potencia_kw' => 'required|numeric|min:1|max:99999999',
+            'actividades' => 'required|string|max:255',
+            'puerto_origen' => 'required|string|max:255',
+            'capitania_id' =>'required|string|max:255',
+            'tiempo_estadia' => 'required|string|max:255',
+            'manga' => 'required|string|max:255',
+            'puntal' => 'required|string|max:255',
+            'ultimo_puerto_zarpe' => 'required|string|max:255',
+            'establecimiento_nautico_id' => 'required|string|max:255',
+        ],
+            [
+                'nombre_buque.required'=>'El campo Nombre Buque es requerido',
+                'nro_registro.required'=>'El campo Numero Registro es requerido',
+                'tipo_buque.required'=>'El campo Numero Tipo Buque es requerido',
+                'nacionalidad_buque.required'=>'El campo Nacionalidad Buque es requerido',
+                'nombre_propietario.required'=>'El campo Nombre Propietario es requerido',
+                'pasaporte_capitan.required'=>'El campo Pasaporte Capitán es requerido',
+                'nombre_capitan.required'=>'El campo Nombre Capitán es requerido',
+                'capitania_id.required'=>'El campo Circunscripción Acuática es requerido',
+                'cant_tripulantes.min' => 'Cantidad Tripulantes no puede ser menor a :min caracteres.',
+                'cant_tripulantes.required' => 'El campo Cantidad Tripulantes es requerido.',
+                'cant_tripulantes.max' => 'Cantidad Tripulantes no puede ser mayor a :max caracteres.',
+                'arqueo_bruto.min' => 'Arqueo Bruto no puede ser menor a :min caracteres.',
+                'arqueo_bruto.required' => 'El campo Arqueo Bruto es requerido.',
+                'arqueo_bruto.max' => 'Arqueo Bruto  no puede ser mayor a :max caracteres.',
+                'cant_pasajeros.min' => 'Cantidad máxima de personas a bordo no puede ser menor a :min caracteres.',
+                'cant_pasajeros.required' => 'El campo Cantidad máxima de personas a bordo es requerido.',
+                'cant_pasajeros.max' => 'Cantidad máxima de personas a bordo no puede ser mayor a :max caracteres.',
+                'potencia_kw.min' => 'Potencia KW no puede ser menor a :min caracteres.',
+                'potencia_kw.required' => 'El campo Potencia KW es requerido.',
+                'potencia_kw.max' => 'Potencia KW no puede ser mayor a :max caracteres.',
+                'actividades.required'=>'El campo  Actividades que realizará es requerido',
+                'puerto_origen.required'=>'El campo Puerto de Origen / País es requerido',
+                'tiempo_estadia.required'=>'El campo Vigencia es requerido',
+                'ultimo_puerto_zarpe.required'=>'El campo Zarpe Último Puerto es requerido',
+                'establecimiento_nautico_id.required'=>'El campo Permanencia en la Marina es requerido',
+
+            ]
+        );
         $permiso=PermisoEstadia::find($id);
         $nro=substr($permiso->nro_solicitud,0,13);
         //dd($nro_solicitud);
@@ -119,6 +170,10 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         $estadia->puerto_origen = $request->puerto_origen;
         $estadia->capitania_id = $request->capitania_id;
         $estadia->tiempo_estadia = $request->tiempo_estadia;
+        $estadia->manga = $request->manga;
+        $estadia->puntal = $request->puntal;
+        $estadia->ultimo_puerto_zarpe = $request->ultimo_puerto_zarpe;
+        $estadia->establecimiento_nautico_id = $request->establecimiento_nautico_id;
         $estadia->status_id = 3;
         $estadia->save();
 

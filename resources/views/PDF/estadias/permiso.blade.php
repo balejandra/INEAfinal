@@ -296,8 +296,8 @@
         </table>
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">Lugar y fecha
-            <u> {{$estadia->updated_at}} </u><br>
-                PLACE AND DATE <u> {{$estadia->updated_at}} </u>
+            <u> {{date_format($estadia->updated_at,'Y-m-d')}} </u><br>
+                PLACE AND DATE <u>  {{date_format($estadia->updated_at,'Y-m-d')}} </u>
         </p>
         <br>
         <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto<br>

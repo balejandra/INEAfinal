@@ -32,7 +32,8 @@
                             {!! Form::model($permisoEstadia, ['route' => ['permisosestadia.update', $permisoEstadia->id], 'method' => 'patch','files' => true]) !!}
 
                             @include('zarpes.permiso_estadias.show_fields')
-                            <div class="row">
+                            <div class="row justify-content-center">
+                                <span class="title-estadia">Recaudos Faltantes</span>
                                 <div class="form-group col-sm-4">
                                     {!! Form::label('permiso_seniat', 'Permiso de Admisión Temporal emitida por el SENIAT:') !!}
                                     <input type="file" class="form-control" name="permiso_seniat"

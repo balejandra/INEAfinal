@@ -222,7 +222,9 @@
                     Fecha de Vencimiento
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->vencimiento }}
+                    @if ($permisoEstadia->vencimiento)
+                        {{date_format($permisoEstadia->vencimiento,'d-m-Y')}}
+                    @endif
                 </div>
             </div>
         </div>
