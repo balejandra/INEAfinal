@@ -83,7 +83,8 @@
                                         <input type="text"
                                                class="form-control {{ $errors->has("numero_identificacion")?"is-invalid":"" }}"
                                                name="numero_identificacion" value="{{ old('numero_identificacion') }}"
-                                               placeholder="Número de identificación" id="numero_identificacion" required>
+                                               placeholder="Número de identificación" id="numero_identificacion" required
+                                        onkeydown="return soloNumeros(event)">
                                         @error('numero_identificacion')
                                         <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -206,10 +207,10 @@
                                                placeholder={{ __('Confirm Password') }}>
                                     </div>
                                 </div>
-                                
+
                                 <!--////////// BOTON //////////////-->
                                 <button type="submit" class="btn btn-primary btn-block btn-flat" id="btonregister" disabled>{{ __('Register') }}</button>
-                              
+
                                 <a href="{{ url('/login') }}"
                                    class="text-center  mt-3">{{ __('I already have a membership')}}</a>
 

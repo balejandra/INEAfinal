@@ -17,6 +17,8 @@ function showContent() {
 
     pref=document.getElementById('pref_rif')
     pref.style.display='block';
+    document.getElementById("nombres").readOnly = false;
+    document.getElementById("nombres").value = '';
 }
 
 function showContentNatural() {
@@ -72,6 +74,10 @@ function changetipodocumento() {
             "                                               placeholder=\"fecha_nacimiento\" required>\n" +
             "                                    </div>"
         $('#btonregister').prop('disabled', false);
+        document.getElementById("apellidos").readOnly = false;
+        document.getElementById("nombres").readOnly = false;
+        document.getElementById("nombres").value = '';
+        document.getElementById("apellidos").value = '';
     } else if (sel=='Cedula'){
 
         $("#nacimiento").remove();
@@ -97,7 +103,7 @@ function changetipodocumento() {
         url: route('consultasaime'),
         data: {cedula: data1, fecha:data2 },
     })// This will be called on success
-        
+
         .done(function (response) {
           console.log(response,'bien');
           msj.innerHTML="";
@@ -133,9 +139,17 @@ function datosbasicos(response) {
         }
         nombrescompletos=(response[0].nombre1)+" "+(response[0].nombre2);
         $("#nombres").val(nombrescompletos);
+        document.getElementById("nombres").readOnly = true;
         apellidoscompletos= (response[0].apellido1)+" "+(response[0].apellido2);
         $("#apellidos").val(apellidoscompletos);
+        document.getElementById("apellidos").readOnly = true;
         $('#btonregister').prop('disabled', false);
     }
 
+}
+
+function soloNumeros(event){
+    if((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !==190  && event.keyCode !==110 && event.keyCode !==8 && event.keyCode !==9  ){
+        return false;
+    }
 }
