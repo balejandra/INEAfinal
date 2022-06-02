@@ -74,7 +74,8 @@ class UserController extends Controller
     {
         $validated= $request->validate([
             'nombres' => 'required|string|max:255',
-            'email' => 'required|string|email:rfc,dns|max:255|unique:users',
+           // 'email' => 'required|string|email:rfc,dns|max:255|unique:users',
+            'email' => 'required|string|max:255|unique:users',
             'password' => [
                 'required',
                 'max:50',
@@ -160,7 +161,8 @@ class UserController extends Controller
     {
         $validated= $request->validate([
             'nombres' => 'required|string|max:255',
-            'email' => 'required|string|email:rfc,dns|max:255',
+           // 'email' => 'required|string|email:rfc,dns|max:255',
+            'email' => 'required|string|max:255',
         ]);
 
 
@@ -170,7 +172,8 @@ class UserController extends Controller
         if ($request->password_change) {
             $validated= $request->validate([
                 'nombres' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
+               // 'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
+                'email' => ['required', 'string', 'max:255'],
                 'password' => [
                     'required',
                     'max:50',
