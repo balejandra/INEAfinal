@@ -28,8 +28,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-2"></div>
+                                <div class="row justify-content-center">
+
                                     <div class="col-md-8 border rounded p-3">
                                     {!! Form::open(['route' => 'capitanias.store']) !!}
 
@@ -37,7 +37,6 @@
 
                                         {!! Form::close() !!}
                                     </div>
-                                    <div class="col-md-2"></div>
                                 </div>
 
 

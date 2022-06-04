@@ -52,12 +52,12 @@ class CapitaniaUserController extends AppBaseController
      */
     public function create()
     {
-        $user2=User::pluck('email','id');
+       // $user2=User::pluck('email','id');
         $capitanias=Capitania::pluck('nombre','id');
         $roles=Role::pluck('name','id');
         $estable=EstablecimientoNautico::pluck('nombre','id');
         return view('publico.capitania_users.create')
-            ->with('users',$user2)
+           // ->with('users',$user2)
             ->with('capitania',$capitanias)
             ->with('establecimientos',$estable)
             ->with('roles',$roles);
@@ -103,12 +103,13 @@ class CapitaniaUserController extends AppBaseController
                 ]);
 
         }
-
-        $verification=CapitaniaUser::where('cargo',$request->cargo)->where('capitania_id',$request->capitania_id)->get();
-        if (isset($verification[0])) {
-            Flash::error('La Capitanía ya tiene asignado este Rol.');
-            return redirect()->back();
-        }else {
+        if (($request->cargo==5)||($request->cargo==6)) {
+            $verification=CapitaniaUser::where('cargo',$request->cargo)->where('capitania_id',$request->capitania_id)
+                ->where('establecimiento_nautico_id',$request->establecimiento_nautico_id)->get();
+            if (isset($verification[0])) {
+                Flash::error('El Establecimiento Náutico ya tiene asignado este Rol.');
+                return redirect()->back();
+            }else {
 
                 $input = $request->all();
 
@@ -118,6 +119,23 @@ class CapitaniaUserController extends AppBaseController
 
                 return redirect(route('capitaniaUsers.index'));
             }
+        }else{
+            $verification=CapitaniaUser::where('cargo',$request->cargo)->where('capitania_id',$request->capitania_id)->get();
+            if (isset($verification[0])) {
+                Flash::error('La Capitanía ya tiene asignado este Rol.');
+                return redirect()->back();
+            }else {
+
+                $input = $request->all();
+
+                $capitaniaUser = $this->capitaniaUserRepository->create($input);
+
+                Flash::success('Usuario de Capitanía guardado satisfactoriamente.');
+
+                return redirect(route('capitaniaUsers.index'));
+            }
+        }
+
 
 
     }
@@ -152,7 +170,6 @@ class CapitaniaUserController extends AppBaseController
     public function edit($id)
     {
         $capitaniaUser = $this->capitaniaUserRepository->find($id);
-        $user2=User::pluck('email','id');
         $capitanias=Capitania::pluck('nombre','id');
         $roles=Role::pluck('name','id');
         $establecimientos=EstablecimientoNautico::where('capitania_id',$capitaniaUser->capitania_id)->pluck('nombre','id');
@@ -165,7 +182,6 @@ class CapitaniaUserController extends AppBaseController
 
         return view('publico.capitania_users.edit')
             ->with('capitaniaUser', $capitaniaUser)
-            ->with('users',$user2)
             ->with('capitania',$capitanias)
             ->with('roles',$roles)
             ->with('establecimientos',$establecimientos);
@@ -193,28 +209,44 @@ class CapitaniaUserController extends AppBaseController
                 'capitania_id.required' => 'El campo Capitanía es obligatorio.',
 
             ]);
+        if (($request->cargo==5)||($request->cargo==6)) {
+            $verification=CapitaniaUser::where('cargo',$request->cargo)->where('capitania_id',$request->capitania_id)
+                ->where('establecimiento_nautico_id',$request->establecimiento_nautico_id)->get();
+            if (isset($verification[0])) {
+                Flash::error('El Establecimiento Náutico ya tiene asignado este Rol.');
+                return redirect()->back();
+            }else {
 
-        $verification=CapitaniaUser::where('cargo',$request->cargo)->where('capitania_id',$request->capitania_id)->get();
-        $ver=$verification->except([$id]);
-        if (isset($ver[0])) {
-            Flash::error('La Capitanía ya tiene asignado este Rol.');
-            return redirect()->back();
-        }else {
-            $capitaniaUser = $this->capitaniaUserRepository->find($id);
+                $input = $request->all();
 
-            if (empty($capitaniaUser)) {
-                Flash::error('Usuario de Capitanía no encontrado');
+                $capitaniaUser = $this->capitaniaUserRepository->create($input);
+
+                Flash::success('Usuario de Capitanía guardado satisfactoriamente.');
 
                 return redirect(route('capitaniaUsers.index'));
             }
+        }else {
+            $verification = CapitaniaUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
+            $ver = $verification->except([$id]);
+            if (isset($ver[0])) {
+                Flash::error('La Capitanía ya tiene asignado este Rol.');
+                return redirect()->back();
+            } else {
+                $capitaniaUser = $this->capitaniaUserRepository->find($id);
 
-            $capitaniaUser = $this->capitaniaUserRepository->update($request->all(), $id);
+                if (empty($capitaniaUser)) {
+                    Flash::error('Usuario de Capitanía no encontrado');
 
-            Flash::success('Usuario de Capitanía actualizado satisfactoriamente.');
+                    return redirect(route('capitaniaUsers.index'));
+                }
 
-            return redirect(route('capitaniaUsers.index'));
+                $capitaniaUser = $this->capitaniaUserRepository->update($request->all(), $id);
+
+                Flash::success('Usuario de Capitanía actualizado satisfactoriamente.');
+
+                return redirect(route('capitaniaUsers.index'));
+            }
         }
-
     }
 
     /**
@@ -249,4 +281,13 @@ class CapitaniaUserController extends AppBaseController
         $resp=[$EstNauticos];
         echo json_encode($resp);
     }
+
+    public function search(Request $request)
+    {
+      //  dd($request->search);
+        $user = User::where('email', 'LIKE', '%'.$request->search.'%')
+            ->where('tipo_usuario','Usuario Interno')->get();
+        return \response()->json($user);
+    }
 }
+
