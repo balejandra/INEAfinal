@@ -12,14 +12,15 @@
                 <span>
                     <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">
                 </span>
-
+                @include('flash::message')
+                @include('coreui-templates::common.errors')
                 <div id="errorRegister" data-asset="{{asset('images/')}}">
 
                 </div>
                 <div class="card mx-4">
                     <div class="card-body p-4">
 
-                        <form method="post" action="{{ url('/register') }}">
+                        <form method="post" action="{{ url('/register') }}" id="form_register">
                             @csrf
                             <h1>{{ __('Register') }}</h1>
                             <p class="text-muted">Crear tu cuenta</p>
@@ -77,6 +78,8 @@
                                                 <option value="J">J</option>
                                                 <option value="G">G</option>
                                                 <option value="V">V</option>
+                                                <option value="V">E</option>
+                                                <option value="V">P</option>
                                             </select>
                                         </div>
 

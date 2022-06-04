@@ -26,6 +26,8 @@ Route::get('error', function (){
 
 Route::get('consultasaime',[\App\Http\Controllers\Publico\UserController::class,'consulta'])->name('consultasaime');
 
+Route::get('verifiedRIF',[RegisterController::class,'ValidarRIF'])->name('verifiedRIF');
+
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verified');
 
 Route::middleware(['auth' , 'verified'])->group(function () {

@@ -7,6 +7,7 @@ use App\Models\Vageneral\AgenciaNavieraVigente;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
@@ -56,36 +57,116 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
-        return Validator::make($data, [
-            'nombres' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:users'],
-            'apellidos' => ['string', 'max:255'],
-            'tipo_identificacion' => ['required','string', 'max:20'],
-            'numero_identificacion' => ['required','string', 'max:20','unique:users'],
-            'fecha_nacimiento' => ['date', 'max:50'],
-            'telefono' => ['required', 'string', 'max:20'],
-            'direccion' => ['required', 'string', 'max:20'],
-            'password' => [
-                'required',
-                'max:50',
-                'confirmed',
-                Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->uncompromised(),
+        if ($data['tipo_persona']=="natural"){
+            return Validator::make($data, [
+                'nombres' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255','unique:users'],
+                'apellidos' => ['string', 'max:255'],
+                'tipo_identificacion' => ['required','string', 'max:20'],
+                'numero_identificacion' => ['required','string', 'max:20','unique:users'],
+                'fecha_nacimiento' => ['date', 'max:50'],
+                'telefono' => ['required', 'string', 'max:20'],
+                'direccion' => ['required', 'string', 'max:20'],
+                'password' => [
+                    'required',
+                    'max:50',
+                    'confirmed',
+                    Password::min(8)
+                        ->mixedCase()
+                        ->letters()
+                        ->numbers()
+                        ->uncompromised(),
+                ],
+                'tipo_usuario' => ['string', 'max:20'],
             ],
-            'tipo_usuario' => ['string', 'max:20'],
-        ],
-            [
-                'email.unique'=>'Email ya registrado',
-                'numero_identificacion.unique'=>'Numero de Identificacion ya registrado',
-                'password.'
-            ]);
+                [
+                    'email.unique'=>'Email ya registrado',
+                    'numero_identificacion.unique'=>'Numero de Identificacion ya registrado',
+                ]);
+         }else if($data['tipo_persona']=="juridica"){
+            return Validator::make($data, [
+                'numero_identificacion' => ['required','string','min:9', 'max:20','unique:users'],
+                'nombres' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255','unique:users'],
+                'tipo_identificacion' => ['required','string', 'max:20'],
+                'prefijo' => ['required','string', 'max:20'],
+                'telefono' => ['required', 'string', 'max:20'],
+                'direccion' => ['required', 'string', 'max:20'],
+                'password' => [
+                    'required',
+                    'max:50',
+                    'confirmed',
+                    Password::min(8)
+                        ->mixedCase()
+                        ->letters()
+                        ->numbers()
+                        ->uncompromised(),
+                ],
+                'tipo_usuario' => ['string', 'max:20'],
+            ],
+                [
+                    'email.unique'=>'Email ya registrado',
+                    'numero_identificacion.unique'=>'Numero de Identificacion ya registrado',
+                    'password.'
+                ]);
+        }
+
+
     }
 
 
+    public function ValidarRIF(Request $request) {
+        $rif=$_REQUEST['rif'];
+       // dd($rif);
+        $retorno = preg_match("/^([VEJPG]{1})([0-9]{9}$)/",$rif);
+
+            $digitos = str_split($rif);
+            $digitos[8] *= 2;
+            $digitos[7] *= 3;
+            $digitos[6] *= 4;
+            $digitos[5] *= 5;
+            $digitos[4] *= 6;
+            $digitos[3] *= 7;
+            $digitos[2] *= 2;
+            $digitos[1] *= 3;
+
+            // Determinar dígito especial según la inicial del RIF
+            // Regla introducida por el SENIAT
+            switch ($digitos[0]) {
+                case 'V':
+                    $digitoEspecial = 1;
+                    break;
+                case 'E':
+                    $digitoEspecial = 2;
+                    break;
+                case 'C':
+                case 'J':
+                    $digitoEspecial = 3;
+                    break;
+                case 'P':
+                    $digitoEspecial = 4;
+                    break;
+                case 'G':
+                    $digitoEspecial = 5;
+                    break;
+            }
+
+            $suma = (array_sum($digitos) - $digitos[9]) + ($digitoEspecial*4);
+            $residuo = $suma % 11;
+            $resta = 11 - $residuo;
+
+            $digitoVerificador = ($resta >= 10) ? 0 : $resta;
+
+            if ($digitoVerificador != $digitos[9]) {
+                $retorno=response()->json([
+                    'status'=>3,
+                    'msg' => $exception->getMessage(),
+                    'errors'=>[],
+                ], 200);
+            }
+
+        echo json_encode($retorno);
+    }
     /**
      * Create a new user instance after a valid registration.
      *
@@ -114,7 +195,6 @@ class RegisterController extends Controller
         return $user;
         }else if($input['tipo_persona']=="juridica"){
             $rif=$input['prefijo']."-".$input['numero_identificacion'];
-            //dd($rif);
             $naviera=AgenciaNavieraVigente::where('rifemp',$rif)->get()->last();
            // $naviera=AgenciaNavieraVigente::all();
            // dd($naviera);
