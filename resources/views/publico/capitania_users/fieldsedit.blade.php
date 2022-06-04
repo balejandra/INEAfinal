@@ -15,7 +15,7 @@
     </div>
     <div class="col-md-4 col-sm-12">
         {!! Form::label('nombres', 'Nombres y Apellidos:') !!}
-        <input type="text" id="nombres" value="{{$capitaniaUser->user->nombres}}" class="form-control" disabled>
+        <input type="text" id="nombres" value="{{$capitaniaUser->user->nombres}} {{$capitaniaUser->user->apellidos}}" class="form-control" disabled>
     </div>
 
     <!-- Capitania Id Field -->
