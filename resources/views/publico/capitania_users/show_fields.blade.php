@@ -18,7 +18,10 @@
             <td> {{ $capitaniaUser->establecimientos->nombre }}</td>
         </tr>
     @endif
-
+    <tr>
+        <th class="bg-light">Habilitado</th>
+        <td>@if($capitaniaUser->habilitado ==1 ) SI @else NO @endif</td>
+    </tr>
     <tr>
         <th class="bg-light">Creado</th>
         <td> {{ $capitaniaUser->created_at }}</td>

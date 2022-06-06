@@ -21,6 +21,7 @@ use Spatie\Permission\Models\Role;
  * @property string $user_id
  * @property string $capitania_id
  * @property string $establecimiento_nautico_id
+ * @property boolean $habilitado
  */
 class CapitaniaUser extends Model implements Auditable
 {
@@ -39,7 +40,8 @@ class CapitaniaUser extends Model implements Auditable
         'cargo',
         'user_id',
         'capitania_id',
-        'establecimiento_nautico_id'
+        'establecimiento_nautico_id',
+        'habilitado'
     ];
 
     /**
@@ -52,7 +54,8 @@ class CapitaniaUser extends Model implements Auditable
         'cargo' => 'string',
         'user_id' => 'string',
         'capitania_id' => 'string',
-        'establecimiento_nautico_id'=>'string'
+        'establecimiento_nautico_id'=>'string',
+        'habilitado'=>'boolean'
     ];
 
     /**
@@ -63,7 +66,8 @@ class CapitaniaUser extends Model implements Auditable
     public static $rules = [
         'cargo' => 'required',
         'user_id' => 'required',
-        'capitania_id' => 'required'
+        'capitania_id' => 'required',
+        'habilitado'=>'required'
     ];
 
     public function capitania():\Illuminate\Database\Eloquent\Relations\BelongsTo

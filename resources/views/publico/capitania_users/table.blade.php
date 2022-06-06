@@ -4,6 +4,7 @@
         <th>Cargo</th>
         <th>Usuario</th>
         <th>Capitanía</th>
+        <th>Habilitado</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -17,6 +18,11 @@
         @if (isset($capitaniaUser->establecimientos->nombre))<br>
            Establecimiento Náutico: {{ $capitaniaUser->establecimientos->nombre }}
             @endif</td>
+            @if ( $capitaniaUser->habilitado ==true)
+                <td>SI</td>
+            @else
+                <td>NO</td>
+            @endif
             <td>
                 @can('consultar-usuarios-capitanias')
                     <a class="btn btn-sm btn-success" href="  {{ route('capitaniaUsers.show', [$capitaniaUser->id]) }}">
