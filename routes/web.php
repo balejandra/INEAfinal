@@ -26,6 +26,8 @@ Route::get('error', function (){
 
 Route::get('consultasaime',[\App\Http\Controllers\Publico\UserController::class,'consulta'])->name('consultasaime');
 
+Route::get('verifiedRIF',[RegisterController::class,'ValidarRIF'])->name('verifiedRIF');
+
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth','verified');
 
 Route::middleware(['auth' , 'verified'])->group(function () {
@@ -66,6 +68,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
 
     Route::resource('capitaniaUsers', \App\Http\Controllers\Publico\CapitaniaUserController::class);
+    Route::get('/search', [\App\Http\Controllers\Publico\CapitaniaUserController::class,'search'])->name('capitaniauser.search');
+
 
     Route::resource('auditables', \App\Http\Controllers\Publico\AuditsController::class);
 

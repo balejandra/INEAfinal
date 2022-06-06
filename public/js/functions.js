@@ -835,7 +835,7 @@ $('#menor').click(function() {
 $( "#tipodoc" )
   .change(function () {
     var str = "";
-    str =$( "select option:selected" ).val(); 
+    str =$( "select option:selected" ).val();
     $( "#numero_identificacion" ).val('');
     if(str=="P"){
       $('.DatosRestantes').attr('style', 'display:block');
@@ -843,7 +843,7 @@ $( "#tipodoc" )
     }else{
         let date = new Date();
         let fechamin="";
-        
+
         if((str=="V" || str=="NC") && $('#menor').prop('checked')){
             $( "#numero_identificacion" ).attr('onKeyDown','return soloNumeros(event)');
             $('.DatosRestantes').attr('style', 'display:block');
@@ -1120,7 +1120,7 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
         document.getElementById("nombres").value="";
         document.getElementById("apellidos").value="";
         document.getElementById("pasaporte_mayor").value="";
-        
+
 
     }else{
         var msj= document.getElementById('msj');
@@ -1217,7 +1217,7 @@ function validacionMarino(){
                                     },
                                     "destroy": true,
                                     "createdRow": function( row, data, dataIndex ) {
-                                          
+
                                         $(row).attr('id','trip'+data.cedula );
                                     },
                                     "data": respuesta,
@@ -1233,8 +1233,8 @@ function validacionMarino(){
                                             "data":"cedula",
                                                 render: function ( data, type, row ) {
                                                     // esto es lo que se va a renderizar como html
-                                                     
-                                                    return `<a href='#' onclick=\"openModal('${row.cedula}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
+
+                                                    return `<a href='#' onclick=\"openModal('${row.cedula}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`;
                                                 }
                                         },
                                     ],
@@ -1669,8 +1669,6 @@ function compararFechas(){
 
 function equipocheck(id,cantidad,otros){
 
-   // let id=$(this).val();
-//alert(id)
     check = document.getElementById(id);
     if(check.checked){
         document.getElementById(id+"selected").value="true";
@@ -1678,7 +1676,7 @@ function equipocheck(id,cantidad,otros){
             can1=document.getElementById("div_cant"+id);
             can1.style.display='block';
             document.getElementById(id+"cantidad").setAttribute("required",true);
-        if (id=1){
+        if (id==1){
             $(".CHALECOS").css('color', 'var(--cui-form-check-label-color, unset)');
         }
         }
@@ -1927,7 +1925,7 @@ $("#tipodocmenor").change(function(){
    }else{
     nrodoc.removeAttribute("readOnly");
     nrodoc.value='';
-    
+
 
 
         let fechamin="";

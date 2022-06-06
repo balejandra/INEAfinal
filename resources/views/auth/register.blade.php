@@ -12,14 +12,15 @@
                 <span>
                     <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">
                 </span>
-
+                @include('flash::message')
+                @include('coreui-templates::common.errors')
                 <div id="errorRegister" data-asset="{{asset('images/')}}">
 
                 </div>
                 <div class="card mx-4">
                     <div class="card-body p-4">
 
-                        <form method="post" action="{{ url('/register') }}">
+                        <form method="post" action="{{ url('/register') }}" id="form_register">
                             @csrf
                             <h1>{{ __('Register') }}</h1>
                             <p class="text-muted">Crear tu cuenta</p>
@@ -77,13 +78,16 @@
                                                 <option value="J">J</option>
                                                 <option value="G">G</option>
                                                 <option value="V">V</option>
+                                                <option value="V">E</option>
+                                                <option value="V">P</option>
                                             </select>
                                         </div>
 
                                         <input type="text"
                                                class="form-control {{ $errors->has("numero_identificacion")?"is-invalid":"" }}"
                                                name="numero_identificacion" value="{{ old('numero_identificacion') }}"
-                                               placeholder="Número de identificación" id="numero_identificacion" required>
+                                               placeholder="Número de identificación" id="numero_identificacion" required
+                                        onkeydown="return soloNumeros(event)">
                                         @error('numero_identificacion')
                                         <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -206,10 +210,10 @@
                                                placeholder={{ __('Confirm Password') }}>
                                     </div>
                                 </div>
-                                
+
                                 <!--////////// BOTON //////////////-->
                                 <button type="submit" class="btn btn-primary btn-block btn-flat" id="btonregister" disabled>{{ __('Register') }}</button>
-                              
+
                                 <a href="{{ url('/login') }}"
                                    class="text-center  mt-3">{{ __('I already have a membership')}}</a>
 

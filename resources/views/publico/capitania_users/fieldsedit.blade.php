@@ -1,14 +1,21 @@
-<!-- Cargo Field -->
+@push('scripts')
+    <script src="{{asset('js/buscador.js')}}"></script>
+@endpush
 <div class="row">
-    <div class="form-group col-sm-6">
+    <div class="form-group col-md-4 col-sm-12">
         {!! Form::label('cargo', 'Cargo:') !!}
         {!! Form::select('cargo',$roles, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un cargo','onchange="cargoCapitaniaUser();"']) !!}
     </div>
 
     <!-- User Id Field -->
-    <div class="form-group col-sm-6">
-        {!! Form::label('user_id', 'Email del Usuario:') !!}
-        {!! Form::select('user_id',$users, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un usuario']) !!}
+    <div class="form-group col-md-4 col-sm-12">
+        {!! Form::label('email_user', 'Email del Usuario:') !!}
+        {!! Form::text('email_user', $capitaniaUser->user->email, ['id'=>'email_user','class' => 'form-control','placeholder' => 'Seleccione un usuario']) !!}
+        <input type="text" name="user_id" id="user_id" value="{{$capitaniaUser->user->id}}" hidden>
+    </div>
+    <div class="col-md-4 col-sm-12">
+        {!! Form::label('nombres', 'Nombres y Apellidos:') !!}
+        <input type="text" id="nombres" value="{{$capitaniaUser->user->nombres}} {{$capitaniaUser->user->apellidos}}" class="form-control" disabled>
     </div>
 
     <!-- Capitania Id Field -->

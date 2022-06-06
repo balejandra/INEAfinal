@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="{{asset('assets/custom.css')}}">
 
     <link rel="stylesheet" href="{{asset('assets/@coreui/@coreui.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/EasyAutocomplete-1.3.5/easy-autocomplete.css')}}">
+    <script src="{{asset('assets/jquery/jquery-3.6.0.min.js')}}"></script>
     @routes
-    @stack('scripts')
 </head>
 <body>
 <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
@@ -44,7 +45,6 @@
 </footer>
 </body>
 @stack('scripts')
-<script src="{{asset('assets/jquery/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/jquery/moment.min.js')}}"></script>
 <script src="{{asset('assets/bootstrap/js/dist/bootstrap-datetimepicker.min.js')}}"></script>
@@ -61,6 +61,7 @@
 <script src="{{asset('assets/vendors/simplebar/js/simplebar.min.js')}}"></script>
 <script src="{{asset('assets/@coreui/utils/js/coreui-utils.js')}}"></script>
 <script src="{{asset('assets/bootbox/bootbox.js')}}"></script>
+<script src="{{asset('assets/EasyAutocomplete-1.3.5/jquery.easy-autocomplete.js')}}"></script>
 
 
 </html>
