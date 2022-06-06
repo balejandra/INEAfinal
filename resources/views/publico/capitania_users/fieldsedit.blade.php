@@ -19,7 +19,7 @@
     </div>
 
     <!-- Capitania Id Field -->
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-4">
         {!! Form::label('capitania_id', 'Capitanía:') !!}
         {!! Form::select('capitania_id', $capitania, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione una capitania','onchange="EstablecimientoUser();"']) !!}
     </div>
@@ -32,6 +32,13 @@
                     {!! Form::select('establecimiento_nautico_id',$establecimientos, null, ['id'=>'establecimientos','class' => ' form-control custom-select','placeholder' => 'Esta...']) !!}
                 </div>
 
+        <div class="form-group mt-4 col-sm-2">
+            <label class="checkbox-inline">
+                {!! Form::hidden('habilitado', 0) !!}
+                {!! Form::checkbox('habilitado', '1') !!}
+            </label>
+            {!! Form::label('habilitado', 'Habilitado') !!}
+        </div>
                 <!-- Submit Field -->
                 <div class="row form-group  mt-4">
                     <div class="col text-center">

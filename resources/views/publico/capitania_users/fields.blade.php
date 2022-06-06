@@ -19,7 +19,7 @@
     <input type="text" id="nombres" class="form-control" disabled>
 </div>
 <!-- Capitania Id Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-4">
     {!! Form::label('capitania_id', 'Capitanía:') !!}
     {!! Form::select('capitania_id', $capitania, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione una capitania','onclick="EstablecimientoUser();"']) !!}
 </div>
@@ -28,7 +28,13 @@
         {!! Form::label('establecimientos', 'Establecimiento Náutico Asignado:') !!}
         {!! Form::select('establecimiento_nautico_id',[], null, ['id'=>'establecimientos','class' => ' form-control custom-select','placeholder' => 'Escoja una Capitanía para cargar los Establecimientos...']) !!}
     </div>
-
+    <div class="form-group mt-4 col-sm-2">
+        <label class="checkbox-inline">
+            {!! Form::hidden('habilitado', 0) !!}
+            {!! Form::checkbox('habilitado', '1',true) !!}
+        </label>
+        {!! Form::label('habilitado', 'Habilitado') !!}
+    </div>
 <!-- Submit Field -->
     <div class="row form-group  mt-4">
         <div class="col text-center">
