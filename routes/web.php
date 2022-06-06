@@ -73,6 +73,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('dependenciasfederales', \App\Http\Controllers\Publico\DependenciaFederalController::class);
 
+    Route::resource('establecimientosNauticos', \App\Http\Controllers\Publico\EstablecimientosNauticosController::class);
 });
 
 
