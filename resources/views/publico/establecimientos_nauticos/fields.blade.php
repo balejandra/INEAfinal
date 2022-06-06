@@ -11,10 +11,10 @@
         
         {!! Form::label('rif', 'RIF:') !!}
         <div class="col-sm-4  p-0">        
-            {!! Form::select('prefijo',['J'=>'J','G'=>'G','V'=>'V'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione']) !!}
+            {!! Form::select('prefijo',['V'=>'V','E'=>'E','C'=>'C','J'=>'J','G'=>'G','P'=>'P'], old('prefijo'), ['class' => 'form-control custom-select','placeholder' => 'Seleccione']) !!}
         </div>
         <div class="col-sm-8  p-0">
-        {!! Form::text('rif', null, ['class' => 'form-control ','maxlength'=>'12','onKeyDown'=>"return soloNumeros(event)"]) !!}
+        {!! Form::text('rif', old('rif'), ['class' => 'form-control ','maxlength'=>'12','onKeyDown'=>"return soloNumeros(event)"]) !!}
         </div>
         
         </div>
@@ -23,7 +23,7 @@
 
     <div class="form-group col-sm-4">
         {!! Form::label('capitania_id', 'Capitanía:') !!}
-        {!! Form::select('capitania_id',$capitanias, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione una capitanía']) !!}
+        {!! Form::select('capitania_id',$capitanias, old('capitania_id'), ['class' => 'form-control custom-select','placeholder' => 'Seleccione una capitanía']) !!}
     </div>
 </div>
 
