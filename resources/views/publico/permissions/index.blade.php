@@ -69,10 +69,10 @@
                                             @endcan
                                             @can('eliminar-menu')
                                                 <div class='btn-group'>
-                                                    {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete']) !!}
+                                                    {!! Form::open(['route' => ['permissions.destroy', $permission->id], 'method' => 'delete','class'=>'delete-form']) !!}
 
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar este permiso?')"]) !!}
-
+                                                    <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="el permiso {{$permission->name}}">
+                                                        <i class="fa fa-trash"></i></button>
                                                     {!! Form::close() !!}
                                                 </div>
                                             @endcan

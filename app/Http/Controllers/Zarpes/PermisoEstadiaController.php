@@ -47,21 +47,30 @@ class PermisoEstadiaController extends AppBaseController
             $permisoEstadias = $this->permisoEstadiaRepository->all();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
+
         } else if (auth()->user()->hasPermissionTo('listar-estadia-generados')) {
             $permisoEstadias = PermisoEstadia::where('user_id', $user)->get();
-
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
+
         } else if (auth()->user()->hasPermissionTo('listar-estadia-coordinador')) {
-            $coordinador = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $coordinador = CapitaniaUser::select('capitania_id')
+                ->where('user_id', $user)
+                ->where('habilitado',true)
+                ->get();
             $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $coordinador)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
+
         } else if (auth()->user()->hasPermissionTo('listar-estadia-capitania-destino')) {
-            $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $capitania = CapitaniaUser::select('capitania_id')
+                ->where('user_id', $user)
+                ->where('habilitado',true)
+                ->get();
             $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $capitania)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
+
         } else {
             return view('unauthorized');
         }

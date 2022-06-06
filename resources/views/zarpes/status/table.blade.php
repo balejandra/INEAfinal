@@ -27,10 +27,10 @@
                 @endcan
                 @can('eliminar-status')
                     <div class='btn-group'>
-                        {!! Form::open(['route' => ['status.destroy', $status->id], 'method' => 'delete']) !!}
+                        {!! Form::open(['route' => ['status.destroy', $status->id], 'method' => 'delete','class'=>'delete-form']) !!}
 
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el estatus $status->id ?')"]) !!}
-
+                        <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="el estatus {{$status->nombre}}">
+                            <i class="fa fa-trash"></i></button>
                         {!! Form::close() !!}
                     </div>
                 @endcan

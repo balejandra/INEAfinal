@@ -51,26 +51,32 @@ class ZarpeInternacionalController extends Controller
         if (auth()->user()->hasPermissionTo('listar-zarpes-todos')) {
             $data = PermisoZarpe::where('descripcion_navegacion_id', 4)->get();
             return view('zarpes.zarpe_internacional.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
+
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-generados')) {
             $user = auth()->id();
             $data = PermisoZarpe::where('user_id', $user)->where('descripcion_navegacion_id', 4)->get();
             return view('zarpes.zarpe_internacional.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
+
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
-            $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->where('habilitado',true)->get();
             $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id', $capitania)->where('descripcion_navegacion_id', 4)->get();
             $establecimiento = EstablecimientoNautico::select('id')->whereIn('capitania_id', $capitania)->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id', 4)->get();
             return view('zarpes.zarpe_internacional.indexcapitan')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)
                 ->with('permisoDestinoZarpes', $datazarpedestino)->with('titulo', $this->titulo);
+
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
-            $establecimiento = CapitaniaUser::select('establecimiento_nautico_id')->where('user_id', $user)->where('establecimiento_nautico_id','<>',null)->get();
+            $establecimiento = CapitaniaUser::select('establecimiento_nautico_id')->where('user_id', $user)
+                ->where('establecimiento_nautico_id','<>',null)
+                ->where('habilitado',true)
+                ->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id', 4)->get();
-
             return view('zarpes.zarpe_internacional.indexcomodoro')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
+
         } else {
             return view('unauthorized');
         }

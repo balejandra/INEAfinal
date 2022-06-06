@@ -1992,7 +1992,7 @@ $(document).ready(function() {
             var data = $(this).parent().find('.btn-primary').attr('data-action');
 
             bootbox.confirm({
-                title: "Confirmacion",
+                title: "Confirmación",
                 message: "Está seguro que desea "+data+ " esta solicitud?",
                 animate:true,
                 buttons: {
@@ -2014,6 +2014,37 @@ $(document).ready(function() {
 
 
         })
+
+    $('.delete-form').on('submit', function(e) {
+        e.preventDefault();
+
+        let form = e.target;
+        var data = $(this).parent().find('#eliminar').attr('data-mensaje');
+
+        bootbox.confirm({
+            title: "Confirmación",
+            message: "Está seguro que desea ELIMINAR "+data+"?",
+            animate:true,
+            buttons: {
+                confirm: {
+                    label: 'Si',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result1) {
+                if(result1) {
+                    form.submit();
+                }
+            },
+        });
+
+
+    })
+
     });
 
 $('.confirmation_other').on('click', function(event) {
@@ -2042,6 +2073,8 @@ $('.confirmation_other').on('click', function(event) {
             }
         }
     });
+
+
 })
 
 $(document).ready(function() {

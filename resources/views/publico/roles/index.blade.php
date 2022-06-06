@@ -54,7 +54,7 @@
                                 <th class="text-center" width="15%">Acciones</th>
                                 </thead>
                                 <tbody>
-                                @forelse($roles as $role)
+                                @foreach($roles as $role)
                                     <tr>
                                         <td> {{$role->id}} </td>
                                         <td>{{$role->name}} </td>
@@ -82,61 +82,16 @@
                                             @can('eliminar-rol')
 
                                                 <div class='btn-group'>
-                                                    {!! Form::open(['route' => ['roles.destroy', $role->id], 'method' => 'delete']) !!}
+                                                    {!! Form::open(['route' => ['roles.destroy', $role->id], 'method' => 'delete','class'=>'delete-form']) !!}
 
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el rol $role->name ?')"]) !!}
-
+                                                    <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="el rol {{$role->name}}">
+                                                        <i class="fa fa-trash"></i></button>
                                                     {!! Form::close() !!}
                                                 </div>
                                         @endcan
-
-                                        <!-- Modal -->
-                                            <div class="modal fade" id="deletemodal{{$role->id}}" tabindex="-1"
-                                                 role="dialog" aria-labelledby="exampleModalCenterTitle"
-                                                 aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar
-                                                                registro</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div id="bodymodal" class="modal-body">
-                                                            Realmente desea eliminar el rol <b>{{$role->name}}</b> y sus
-                                                            permisos asignados ?
-                                                            recuerde que esta acción es permanente y no se podrá
-                                                            deshacer.
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn  btn-sm btn-secondary"
-                                                                    data-dismiss="modal">Close
-                                                            </button>
-                                                            <form action="{{route('roles.destroy',$role->id)}}"
-                                                                  id="delete{{$role->id}}" method="post"
-                                                                  style="display:inline-block;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button class="btn btn-sm btn-danger" type="submit">
-                                                                    Eliminar
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                         </td>
                                     </tr>
-
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center"> No existen registros para mostrar</td>
-
-                                    </tr>
-                                @endforelse
+                                @endforeach
 
 
                                 </tbody>
