@@ -92,10 +92,10 @@ class EstablecimientosNauticosController extends Controller
         $input = [
             "nombre"=>$request->input('nombre'),
             "capitania_id"=>$request->input('capitania_id'),
-            "RIF"=>$request->input('prefijo')."-".$request->input('rif'),
+            "RIF"=>$request->input('prefijo').$request->input('rif'),
         ];
 
-        $rif=$request->input('prefijo')."-".$request->input('rif');
+        $rif=$request->input('prefijo').$request->input('rif');
 
         $existe = EstablecimientoNautico::select('*')->where('establecimiento_nauticos.RIF', '=', $rif)->get();
         
@@ -103,7 +103,7 @@ class EstablecimientosNauticosController extends Controller
             Flash::error('El RIF del establecimiento náutico ya existe, por favor verifique.');
             return redirect(route('establecimientosNauticos.create')) ->with('error','El RIF del establecimiento náutico ya existe, por favor verifique.');
         }else{
-            $rif=$request->input('prefijo').$request->input('rif');
+           
             if($this->ValidarRIF($rif)){
                 $estNautico=EstablecimientoNautico::create($input);
                 $estNautico->save();
@@ -152,10 +152,10 @@ class EstablecimientosNauticosController extends Controller
         $input = [
             "nombre"=>$request->input('nombre'),
             "capitania_id"=>$request->input('capitania_id'),
-            "RIF"=>$request->input('prefijo')."-".$request->input('rif'),
+            "RIF"=>$request->input('prefijo').$request->input('rif'),
         ];
 
-        $rif=$request->input('prefijo')."-".$request->input('rif');
+        $rif=$request->input('prefijo').$request->input('rif');
 
         $existe = EstablecimientoNautico::select('*')
         ->where('establecimiento_nauticos.RIF', '=', $rif)
@@ -166,7 +166,7 @@ class EstablecimientosNauticosController extends Controller
             Flash::error('El RIF del establecimiento náutico ya existe, por favor verifique.');
             return redirect(route('establecimientosNauticos.edit', [$id])) ->with('error','El RIF del establecimiento náutico ya existe, por favor verifique.');
         }else{
-            $rif=$request->input('prefijo').$request->input('rif');
+            
             if($this->ValidarRIF($rif)){
                 $estNautico=EstablecimientoNautico::find($id);
                 $estNautico->update($input);
