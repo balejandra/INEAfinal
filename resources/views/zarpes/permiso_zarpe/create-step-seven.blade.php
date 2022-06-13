@@ -31,7 +31,7 @@
 
                             @include('zarpes.permiso_zarpe.stepsIndicator')
 
-                            <form action="{{ route('permisoszarpes.store') }}" method="POST">
+                            <form action="{{ route('permisoszarpes.store') }}" method="POST" id="formsolicitud">
                                 @csrf
                                 <div class="card">
                                     <div class="card-body">
@@ -170,8 +170,7 @@
                                                 @endforeach
                                                 </tbody>
                                             </table>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="card-footer text-right">
@@ -181,9 +180,10 @@
                                                class="btn btn-primary pull-right">Anterior</a>
                                         </div>
                                         <div class="col text-right">
-                                            <button type="submit" id="solicitud" class="btn btn-primary">Generar solicitud</button>
+                                            <button type="submit" id="solicitud" class="btn btn-primary" >Generar solicitud</button>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </form>
                         </div>

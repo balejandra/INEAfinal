@@ -98,7 +98,7 @@
                                                                     <input class="form-check-input equipo {{$equipo->equipo}}" type="checkbox"
                                                                            name="equipo[] " id='{{$equipo->id}}' value="{{$equipo->id}}"
                                                                            style="margin-left: auto;"
-                                                                           onclick="equipocheck('{{$equipo->id}}','{{$equipo->cantidad}}','{{$equipo->otros}}')">
+                                                                           onclick="$permisoZarpe('{{$equipo->id}}','{{$equipo->cantidad}}','{{$equipo->otros}}')">
                                                                     <label class="form-check-label {{$equipo->equipo}}"
                                                                            for="flexSwitchCheckDefault"
                                                                            style="margin-inline-start: 30px;"> {{$equipo->equipo}}</label>
