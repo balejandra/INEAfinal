@@ -280,13 +280,15 @@
             <tr>
                 <th colspan="2">DESTINO <br>Port of destination</th>
                 <th colspan="2">EN LA MARINA DE<br>Nautical Club</th>
-                <th colspan="2">TIEMPO DE ESTADÍA <br>Permanency</th>
+                <th>FECHA DE ARRIBO <br>Arrival Date</th>
+                <th>TIEMPO DE ESTADÍA <br>Permanency</th>
 
             </tr>
             <tr>
                 <td colspan="2">{{$estadia->capitania->nombre}}</td>
                 <td colspan="2">{{$estadia->establecimientos->nombre}}</td>
-                <td colspan="2">{{$estadia->tiempo_estadia}}</td>
+                <td>{{date_format($estadia->fecha_arribo,'d-m-Y')}}</td>
+                <td>{{$estadia->tiempo_estadia}}</td>
             </tr>
             <tr>
                 <td colspan="3">VÁLIDO DESDE / Valid since: {{date_format($estadia->updated_at,'d-m-Y')}}</td>
@@ -301,11 +303,8 @@
         </p>
         <br>
         <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto<br>
-
-                HARBOUR MASTER
-
+                HARBOUR MASTE
         </p>
-
     </div>
 </main>
 </body>
