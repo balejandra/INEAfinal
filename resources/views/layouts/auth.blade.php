@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="{{asset('assets/bootstrap/dist/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('assets/@coreui/@coreui.css')}}">
     @routes
-    @stack('scripts')
 </head>
 <body>
 <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
@@ -36,5 +35,6 @@
 <script src="{{asset('assets/@coreui/coreui/js/coreui.bundle.min.js')}}"></script>
 <script src="{{asset('assets/vendors/simplebar/js/simplebar.min.js')}}"></script>
 <script src="{{asset('assets/@coreui/utils/js/coreui-utils.js')}}"></script>
+@stack('scripts')
 </body>
 </html>

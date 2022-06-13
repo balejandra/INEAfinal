@@ -2133,7 +2133,7 @@ function validarExtension(idInput, divMsj) {
     var acept=".jpg,.png,.pdf";
     if(acept.split(',').indexOf(extension) < 0) {
     //  alert('Archivo inválido. No se permite la extensión ' + extension);
-      
+
       msjMarinoInt.innerHTML='<div class="alert alert-danger">Archivo inválido. No se permite la extensión '+extension+'. Sólo son permitidas .pdf, .jpg, .png</div>' ;
 
       document.getElementById(idInput).value="";

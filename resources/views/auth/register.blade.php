@@ -3,9 +3,6 @@
     Registro
 @endsection
 @section('content')
-    @push('scripts')
-        <script src="{{asset('js/register.js')}}"></script>
-    @endpush
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -224,4 +221,7 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script src="{{asset('js/register.js')}}"></script>
+    @endpush
 @endsection

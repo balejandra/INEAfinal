@@ -1,4 +1,6 @@
-
+$(document).ready(function() {
+    document.getElementById('numero_identificacion').maxLength = 8;
+});
 
 function showContent() {
     apellidos = document.getElementById("apellidosdiv");
@@ -24,6 +26,7 @@ function showContent() {
     var btn = document.getElementById("btonregister");
     btn.addEventListener("click", myclikfunction);
     $('#btonregister').prop('type', 'button');
+    document.getElementById('numero_identificacion').maxLength = 10;
 
 }
 
@@ -101,7 +104,7 @@ function changetipodocumento() {
     //var sel = document.getElementById('tipo_identificacion');
     sel=$("#tipo_identificacion option:selected").text();
     if (sel=='Pasaporte'){
-
+        document.getElementById('numero_identificacion').maxLength = 15;
         $("#nacimiento").remove();
         const birthday = document.querySelector("#fechanacimiento");
         birthday.innerHTML=" <div class=\"input-group mb-3\" id=\"nacimiento\">\n" +
@@ -119,7 +122,7 @@ function changetipodocumento() {
         document.getElementById("nombres").value = '';
         document.getElementById("apellidos").value = '';
     } else if (sel=='Cedula'){
-
+        document.getElementById('numero_identificacion').maxLength = 8;
         $("#nacimiento").remove();
         const birthday = document.querySelector("#fechanacimiento");
         birthday.innerHTML=" <div class=\"input-group mb-3\" id=\"nacimiento\">\n" +
@@ -132,6 +135,9 @@ function changetipodocumento() {
             "                                               placeholder=\"fecha_nacimiento\" required onblur=\"getEmployees($('#numero_identificacion').val(),$('#fecha_nacimiento').val())\" >\n" +
             "                                    </div>"
         $('#btonregister').prop('disabled', true);
+    } else if (sel=='Rif'){
+        console.log('RIF')
+        document.getElementById('numero_identificacion').maxLength = 10;
     }
 
 }

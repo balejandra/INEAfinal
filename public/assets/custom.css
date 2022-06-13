@@ -116,12 +116,19 @@ img.nav-avatar {
     display: none;
 }
 
-@media screen and (max-width: 800px) {
-    .equipostab {
-       display: block;
+.div-equip{
+    max-width: 60%;
+}
+@media only screen and (max-width: 700px) {
+    .div-equip {
+        max-width: 100% !important; /* The width is 100%, when the viewport is 800px or smaller */
     }
 }
-
+@media only screen and (max-width: 1000px) {
+    .div-equip {
+        max-width: 90% !important; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+}
 
 .blog_post {
     position: relative;
