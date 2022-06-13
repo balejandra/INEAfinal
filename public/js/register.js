@@ -158,7 +158,8 @@ function changetipodocumento() {
         })
 
         // This will be called on error
-        .fail(function (response) { console.log(response,'error');
+        .fail(function (response) {
+            console.log(response,'error');
             datosbasicos(JSON.parse(0));
             let error=document.getElementById('errorRegister');
             error.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias en el SAIME con los datos suministrados</div>';

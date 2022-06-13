@@ -119,6 +119,13 @@ class seederPermissions extends Seeder
             //permisos para Auditoria
             'listar-auditoria',
             'consultar-auditoria',
+
+            //permisos para Establecimientos
+            'consultar-estableimientoNautico',
+            'editar-estableimientoNautico',
+            'eliminar-estableimientoNautico',
+            'listar-estableimientoNautico',
+            'crear-establecimientoNautico'
         ];
 
         foreach ($permissions as $permission) {

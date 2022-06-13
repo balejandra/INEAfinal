@@ -98,6 +98,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             'puerto_origen' => 'required|string|max:255',
             'capitania_id' =>'required|string|max:255',
             'tiempo_estadia' => 'required|string|max:255',
+            'fecha_arribo' => 'required|date',
             'manga' => 'required|string|max:255',
             'puntal' => 'required|string|max:255',
             'ultimo_puerto_zarpe' => 'required|string|max:255',
@@ -127,6 +128,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
                 'actividades.required'=>'El campo  Actividades que realizará es requerido',
                 'puerto_origen.required'=>'El campo Puerto de Origen / País es requerido',
                 'tiempo_estadia.required'=>'El campo Vigencia es requerido',
+                'fecha_arribo.required'=>'El campo de Fecha de Arribo es requerido',
                 'ultimo_puerto_zarpe.required'=>'El campo Zarpe Último Puerto es requerido',
                 'establecimiento_nautico_id.required'=>'El campo Permanencia en la Marina es requerido',
 
@@ -170,6 +172,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         $estadia->puerto_origen = $request->puerto_origen;
         $estadia->capitania_id = $request->capitania_id;
         $estadia->tiempo_estadia = $request->tiempo_estadia;
+        $estadia->fecha_arribo = $request->fecha_arribo;
         $estadia->manga = $request->manga;
         $estadia->puntal = $request->puntal;
         $estadia->ultimo_puerto_zarpe = $request->ultimo_puerto_zarpe;

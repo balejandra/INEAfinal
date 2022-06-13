@@ -35,11 +35,11 @@
                     </a>
                 @endcan
                 @can('eliminar-usuarios-capitanias')
+
                     <div class='btn-group'>
-                        {!! Form::open(['route' => ['capitaniaUsers.destroy', $capitaniaUser->id], 'method' => 'delete']) !!}
-
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desea eliminar el usuario ".$capitaniaUser->user->email." de la Capitanía ".$capitaniaUser->capitania->nombre." ?')"]) !!}
-
+                        {!! Form::open(['route' => ['capitaniaUsers.destroy', $capitaniaUser->id], 'method' => 'delete','class'=>'delete-form']) !!}
+                        <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="el Usuario {{$capitaniaUser->user->email}}">
+                            <i class="fa fa-trash"></i></button>
                         {!! Form::close() !!}
                     </div>
                 @endcan

@@ -47,21 +47,30 @@ class PermisoEstadiaController extends AppBaseController
             $permisoEstadias = $this->permisoEstadiaRepository->all();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
+
         } else if (auth()->user()->hasPermissionTo('listar-estadia-generados')) {
             $permisoEstadias = PermisoEstadia::where('user_id', $user)->get();
-
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
+
         } else if (auth()->user()->hasPermissionTo('listar-estadia-coordinador')) {
-            $coordinador = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $coordinador = CapitaniaUser::select('capitania_id')
+                ->where('user_id', $user)
+                ->where('habilitado',true)
+                ->get();
             $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $coordinador)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
+
         } else if (auth()->user()->hasPermissionTo('listar-estadia-capitania-destino')) {
-            $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $capitania = CapitaniaUser::select('capitania_id')
+                ->where('user_id', $user)
+                ->where('habilitado',true)
+                ->get();
             $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $capitania)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
+
         } else {
             return view('unauthorized');
         }
@@ -109,6 +118,7 @@ class PermisoEstadiaController extends AppBaseController
             'puerto_origen' => 'required|string|max:255',
             'capitania_id' =>'required|string|max:255',
             'tiempo_estadia' => 'required|string|max:255',
+            'fecha_arribo' => 'required|date',
             'manga' => 'required|string|max:255',
             'puntal' => 'required|string|max:255',
             'ultimo_puerto_zarpe' => 'required|string|max:255',
@@ -138,6 +148,7 @@ class PermisoEstadiaController extends AppBaseController
                 'actividades.required'=>'El campo  Actividades que realizará es requerido',
                 'puerto_origen.required'=>'El campo Puerto de Origen / País es requerido',
                 'tiempo_estadia.required'=>'El campo Vigencia es requerido',
+                'fecha_arribo.required'=>'El campo de Fecha de Arribo es requerido',
                 'ultimo_puerto_zarpe.required'=>'El campo Zarpe Último Puerto es requerido',
                 'establecimiento_nautico_id.required'=>'El campo Permanencia en la Marina es requerido',
 
@@ -173,6 +184,7 @@ class PermisoEstadiaController extends AppBaseController
             $estadia->puerto_origen = $request->puerto_origen;
             $estadia->capitania_id = $request->capitania_id;
             $estadia->tiempo_estadia = $request->tiempo_estadia;
+            $estadia->fecha_arribo = $request->fecha_arribo;
             $estadia->manga = $request->manga;
             $estadia->puntal = $request->puntal;
             $estadia->ultimo_puerto_zarpe = $request->ultimo_puerto_zarpe;

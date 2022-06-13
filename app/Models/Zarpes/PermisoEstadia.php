@@ -36,6 +36,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property unsignedBigInteger $capitania_id
  * @property unsignedBigInteger $establecimiento_nautico_id
  * @property string $ultimo_puerto_zarpe
+ * @property date $fecha_arribo
  * @property string $tiempo_estadia
  * @property string $vigencia
  * @property date $vencimiento
@@ -78,6 +79,7 @@ class PermisoEstadia extends Model implements Auditable
         'capitania_id',
         'establecimiento_nautico_id',
         'ultimo_puerto_zarpe',
+        'fecha_arribo',
         'tiempo_estadia',
         'vigencia',
         'vencimiento',
@@ -114,6 +116,7 @@ class PermisoEstadia extends Model implements Auditable
         'ultimo_puerto_zarpe'=>'string',
         'capitania_id' => 'integer',
         'tiempo_estadia' => 'string',
+        'fecha_arribo'=>'date',
         'vigencia' => 'string',
         'vencimiento'=>'date',
         'status_id' => 'integer'
@@ -141,6 +144,7 @@ class PermisoEstadia extends Model implements Auditable
         'puerto_origen' => 'required',
         'capitania_id' => 'required',
         'tiempo_estadia' => 'required',
+        'fecha_arribo'=>'required',
         'manga'=>'required',
         'puntal'=>'required',
         'establecimiento_nautico_id'=>'required',
