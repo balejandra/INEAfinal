@@ -1710,7 +1710,10 @@ function compararFechasEscala(){
     var escala =document.getElementById('llegada_escala');
 
     escala.setAttribute("min",salida);
-    escala.setAttribute("max",regreso);
+    //alert(regreso.value);
+    if(regreso.value!=""){
+        escala.setAttribute("max",regreso.value);
+    }
 
     var date1 = new Date(salida);
     var date2 = new Date(escala.value);

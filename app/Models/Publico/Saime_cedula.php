@@ -10,8 +10,8 @@ class Saime_cedula extends Model
     use HasFactory;
 
     public $table = 'saime_cedula';
-  //protected $connection = 'pgsql_public_schema';
-  protected $connection = 'pgsql_public_prod_schema';
+  protected $connection = 'pgsql_public_schema';
+  //protected $connection = 'pgsql_public_prod_schema';
 
 
     public $fillable = [

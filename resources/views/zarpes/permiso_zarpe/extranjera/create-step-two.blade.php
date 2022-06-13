@@ -47,15 +47,20 @@
 				                                </div>
 				                            @endif
 
-                                           <div class="row gy-2 gx-3 justify-content-center">
+                                           <div class="row gy-2 gx-3 justify-content-center mt-3">
+											<div class="col-auto">
+											<label for="title">Ingrese el número de Permiso de
+estadía del buque:</label>
+											</div>
                                             <div class="col-auto">
+											
                                                 <div class="form-group">
-                                                    <label for="title">Permiso de estadía:</label>
-                                                    <input type="text" class="form-control" name="permiso" id="permiso">
+                                                    
+                                                    <input type="text" class="form-control col-sm-6" name="permiso" id="permiso">
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <br>
+                                                 
                                                 <button type="button" class="btn btn-primary" onclick="getPermisoEstadia($('#permiso').val())">Verificar</button>
                                             </div>
                                         </div>

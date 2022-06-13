@@ -631,7 +631,7 @@ class ZarpeInternacionalController extends Controller
             $pasajeros = $request->session()->get('pasajeros');
            // print_r($pasajeros);
 
-            if ($pasajeros[0] != 0) {
+            if (is_array($pasajeros) && count($pasajeros)>0) {
                 for ($i = 0; $i < count($pasajeros); $i++) {
                     $pasajeros[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
                     $pass = Pasajero::create($pasajeros[$i]);
