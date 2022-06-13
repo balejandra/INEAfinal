@@ -104,7 +104,7 @@
                                                 <label for="documento">Pasaporte:</label>
                                                 <div class="input-group">
                                                     <input type="file" class="form-control" name="pasaporte_mayor"
-                                                           id="pasaporte_mayor" accept="application/pdf, image/*">
+                                                           id="pasaporte_mayor" accept="application/pdf, image/*"  onchange="validarExtension('pasaporte_mayor','msj')">
                                                 </div>
                                             </div>
                                             <div class="col-sm-1 text-center my-1">
@@ -359,19 +359,19 @@
                         <div class="form-group col-sm-6">
                             {!! Form::label('documento_1', 'Partida de Nacimiento (Obligatorio):') !!}
                             <input type="file" class="form-control" name="partida_nacimiento" id="partida_nacimiento"
-                                   accept="application/pdf, image/*" required>
+                                   accept="application/pdf, image/*" required  onchange="validarExtension('partida_nacimiento','errorModalPass')">
                         </div>
                         <div class="form-group col-sm-6">
                             {!! Form::label('documento_1', 'Autorización (Si amerita):') !!}
                             <input type="file" class="form-control" name="autorizacion" id="autorizacion"
-                                   accept="application/pdf, image/*">
+                                   accept="application/pdf, image/*"  onchange="validarExtension('autorizacion','errorModalPass')">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-6">
                          {!! Form::label('documento_1', 'Pasaporte (Obligatorio):') !!}
                             <input type="file" class="form-control" name="pasaporte_menor" id="pasaporte_menor"
-                                   accept="application/pdf, image/*" required>
+                                   accept="application/pdf, image/*" required  onchange="validarExtension('pasaporte_menor','errorModalPass')">
                         </div>
                     </div>
 

@@ -115,13 +115,13 @@
                                             <div class="col-sm-4 DatosRestantes">
                                                 <div class="form-group">
                                                     <label for="title">Documento de Acreditación:</label>
-                                                    <input type="file" class="form-control" id="documentoAcreditacion" name="documentoAcreditacion"  >
+                                                    <input type="file" class="form-control" id="documentoAcreditacion" name="documentoAcreditacion"  accept=".pdf, .jpg, .png" onchange="validarExtension('documentoAcreditacion','msjMarinoInt')" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label for="title">Pasaporte:</label>
-                                                    <input type="file" class="form-control" id="doc" name="doc"  >
+                                                    <input type="file" class="form-control" id="doc" name="doc" accept=".pdf, .jpg, .png" onchange="validarExtension('doc', 'msjMarinoInt')">
                                                 </div>
                                             </div>
 
