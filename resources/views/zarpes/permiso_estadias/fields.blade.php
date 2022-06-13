@@ -117,9 +117,18 @@
 </div>
     <!-- Puerto Origen Field -->
     <div class="form-group col-sm-3">
-        {!! Form::label('permanencia_marina', 'Permanencia en la Marina:') !!}
+        {!! Form::label('permanencia_marina', 'Establecimiento Náutico de Arribo:') !!}
         {!! Form::select('establecimiento_nautico_id',[], null, ['id'=>'establecimientos','class' => ' form-control custom-select','placeholder' => 'Escoja una Circunscripción para cargar los Establecimientos...']) !!}
 
+    </div>
+    <div class="form-group col-sm-2">
+        @php
+            $fechaActual=new DateTime();
+            $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
+            $fechaActual=$fechaActual->format('Y-m-d');
+        @endphp
+        {!! Form::label('fecha_arribo', 'Fecha de Arribo:') !!}
+        <input type="date" name="fecha_arribo" class="form-control" min="{{$fechaActual}}" max="9999-12-31" required >
     </div>
 
     <div class="form-group col-sm-3">

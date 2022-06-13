@@ -645,6 +645,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'App\\Http\\Controllers\\Publico\\CapitaniaUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Publico/CapitaniaUserController.php',
         'App\\Http\\Controllers\\Publico\\CoordenadasCapitaniaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Publico/CoordenadasCapitaniaController.php',
         'App\\Http\\Controllers\\Publico\\DependenciaFederalController' => __DIR__ . '/../..' . '/app/Http/Controllers/Publico/DependenciaFederalController.php',
+        'App\\Http\\Controllers\\Publico\\EstablecimientosNauticosController' => __DIR__ . '/../..' . '/app/Http/Controllers/Publico/EstablecimientosNauticosController.php',
         'App\\Http\\Controllers\\Publico\\MenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/Publico/MenuController.php',
         'App\\Http\\Controllers\\Publico\\Menu_rolController' => __DIR__ . '/../..' . '/app/Http/Controllers/Publico/Menu_rolController.php',
         'App\\Http\\Controllers\\Publico\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Publico/PermissionController.php',

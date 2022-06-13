@@ -200,7 +200,7 @@
                     {{ $permisoEstadia->ultimo_puerto_zarpe }}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Permanencia en la Marina
+                    Establecimiento Náutico de Arribo
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->establecimientos->nombre }}
@@ -208,16 +208,27 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-sm-12">
             <div class="row border">
+                <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
+                    Fecha de Arribo
+                </div>
+                <div class="col-md-3 col-sm-3 p-2">
+                        {{date_format($permisoEstadia->fecha_arribo,'d-m-Y')}}
+                </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
                     Tiempo de Estadía
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
                     {{ $permisoEstadia->tiempo_estadia }}
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row border">
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
                     Fecha de Vencimiento
                 </div>
@@ -226,6 +237,12 @@
                         {{date_format($permisoEstadia->vencimiento,'d-m-Y')}}
                     @endif
                 </div>
+                <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
+                    Cantidad de Solicitudes
+                </div>
+                <div class="col-md-3 col-sm-3 p-2">
+                    {{ $permisoEstadia->cantidad_solicitud }} vez
+                </div>
             </div>
         </div>
     </div>
@@ -233,12 +250,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="row border">
-                <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
-                    Cantidad de Solicitudes
-                </div>
-                <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoEstadia->cantidad_solicitud }} vez
-                </div>
+
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
                     Estatus
                 </div>
