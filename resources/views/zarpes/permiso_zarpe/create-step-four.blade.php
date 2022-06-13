@@ -129,7 +129,7 @@
                                                     {!! Form::label('llegada_escala', 'Fecha/hora llegada a punto de escala:') !!}
                                                     <input type="datetime-local" id="llegada_escala"
                                                            name="fecha_llegada_escala"
-                                                           min="{{$fechaActual}}" class="form-control formatoFecha"
+                                                           min="{{$fechaActual}}" class="form-control "
                                                            onblur="compararFechasEscala()" max="9999-12-31T23:59" value="{{$fechaesc}}" >
                                                 </div>
 

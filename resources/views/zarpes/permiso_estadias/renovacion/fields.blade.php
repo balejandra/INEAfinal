@@ -139,26 +139,29 @@
 </div>
 
     <hr class="dropdown-divider">
+
+    <div class='mx-4 my-2' id="msjEstadia2"></div>
+
     <span class="title-estadia">Recaudos</span>
 <div class="form-group col-sm-4">
     {!! Form::label('documento_1', 'Zarpe original de procedencia:') !!}
-    <input type="file" class="form-control" name="zarpe_procedencia" id="zarpe_procedencia" accept="application/pdf" required>
+    <input type="file" class="form-control" name="zarpe_procedencia" id="zarpe_procedencia" accept="application/pdf" required onchange="validarExtension('zarpe_procedencia','msjEstadia2')">
 </div>
     <div class="form-group col-sm-4">
         {!! Form::label('documento_1', 'Registro de la embarcación:') !!}
-        <input type="file" class="form-control" name="registro_embarcacion" id="registro_embarcacion" accept="application/pdf" required>
+        <input type="file" class="form-control" name="registro_embarcacion" id="registro_embarcacion" accept="application/pdf" required  onchange="validarExtension('registro_embarcacion','msjEstadia2')">
     </div>
     <div class="form-group col-sm-4">
         {!! Form::label('documento_1', 'Despacho de aduana de procedencia:') !!}
-        <input type="file" class="form-control" name="despacho_aduana_procedencia" id="despacho_aduana_procedencia" accept="application/pdf" required>
+        <input type="file" class="form-control" name="despacho_aduana_procedencia" id="despacho_aduana_procedencia" accept="application/pdf" required onchange="validarExtension('despacho_aduana_procedencia','msjEstadia2')">
     </div>
     <div class="form-group col-sm-4">
         {!! Form::label('documento_1', 'Pasaportes de los tripulantes:') !!}
-        <input type="file" class="form-control" name="pasaportes_tripulantes" id="pasaporte_tripulantes" accept="application/pdf" required>
+        <input type="file" class="form-control" name="pasaportes_tripulantes" id="pasaporte_tripulantes" accept="application/pdf" required onchange="validarExtension('pasaporte_tripulantes','msjEstadia2')">
     </div>
     <div class="form-group col-sm-4">
         {!! Form::label('documento_1', 'Nominación Agencia Naviera:') !!}
-        <input type="file" class="form-control" name="nominacion_agencia" id="nominacion_agencia" accept="application/pdf, image/*" required>
+        <input type="file" class="form-control" name="nominacion_agencia" id="nominacion_agencia" accept="application/pdf, image/*" required onchange="validarExtension('nominacion_agencia','msjEstadia2')">
     </div>
 </div>
 <!-- Submit Field -->

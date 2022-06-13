@@ -2128,12 +2128,16 @@ function validarExtension(idInput, divMsj) {
         extension = archivo.substring(archivo.lastIndexOf('.'),archivo.length);
     // Si la extensión obtenida no está incluida en la lista de valores
     // del atributo "accept", mostrar un error.
+    console.log(divMsj);
+    var msjMarinoInt=document.getElementById(divMsj);
+    msjMarinoInt.innerHTML="";
     var acept=".jpg,.png,.pdf";
     if(acept.split(',').indexOf(extension) < 0) {
     //  alert('Archivo inválido. No se permite la extensión ' + extension);
-      var msjMarinoInt=document.getElementById(divMsj);
+      
       msjMarinoInt.innerHTML='<div class="alert alert-danger">Archivo inválido. No se permite la extensión '+extension+'. Sólo son permitidas .pdf, .jpg, .png</div>' ;
 
       document.getElementById(idInput).value="";
     }
   }
+
