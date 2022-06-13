@@ -2091,8 +2091,7 @@ $(document).ready(function() {
                 centerVertical:true,
                 animate:true,
             });
-        }
-        if (!chalecos) {
+        }else if (!chalecos) {
             bootbox.alert({
                 message: "Marque la casilla, Para generar la solicitud es obligatorio incluir la cantidad de salvavidas que tiene en la embarcación!",
                 size: 'small',
