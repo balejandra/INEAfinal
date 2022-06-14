@@ -20,17 +20,17 @@
                 <td>{{ $estNaut->RIF }}</td>
                 <td>{{ $estNaut->capitania }}</td>
                 <td>
-                    @can('consultar-estableimientoNautico')
+                    @can('consultar-establecimientoNautico')
                         <a class="btn btn-sm btn-success" href="  {{ route('establecimientosNauticos.show', [$estNaut->id]) }}">
                             <i class="fa fa-search"></i>
                         </a>
                     @endcan
-                    @can('editar-estableimientoNautico')
+                    @can('editar-establecimientoNautico')
                         <a class="btn btn-sm btn-info" href=" {{ route('establecimientosNauticos.edit', [$estNaut->id]) }}">
                             <i class="fa fa-edit"></i>
                         </a>
                     @endcan
-                    @can('eliminar-estableimientoNautico')
+                    @can('eliminar-establecimientoNautico')
                         <div class='btn-group'>
                             {!! Form::open(['route' => ['establecimientosNauticos.destroy', $estNaut->id], 'method' => 'delete','class'=>'delete-form']) !!}
 

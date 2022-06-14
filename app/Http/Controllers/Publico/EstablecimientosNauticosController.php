@@ -19,16 +19,16 @@ class EstablecimientosNauticosController extends Controller
     public function __construct()
     {
 
-        $this->middleware('permission:listar-estableimientoNautico', ['only'=>['index'] ]);
+        $this->middleware('permission:listar-establecimientoNautico', ['only'=>['index'] ]);
         $this->middleware('permission:crear-establecimientoNautico', ['only'=>['create','store']]);
-        $this->middleware('permission:editar-estableimientoNautico', ['only'=>['edit','update']]);
-        $this->middleware('permission:consultar-estableimientoNautico', ['only'=>['show'] ]);
-        $this->middleware('permission:eliminar-estableimientoNautico', ['only'=>['destroy'] ]);
+        $this->middleware('permission:editar-establecimientoNautico', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-establecimientoNautico', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-establecimientoNautico', ['only'=>['destroy'] ]);
     }
 
     public function index(Request $request)
     {
-        
+
         $estNautico = EstablecimientoNautico::select('establecimiento_nauticos.*', 'capitanias.nombre as capitania')
         ->Join('public.capitanias', 'capitanias.id', '=', 'capitania_id')->get();
 
@@ -38,12 +38,12 @@ class EstablecimientosNauticosController extends Controller
     }
 
 
-    
+
     public function show($id)
     {
         $estNautico = EstablecimientoNautico::select('establecimiento_nauticos.*', 'capitanias.nombre as capitania')
         ->Join('public.capitanias', 'capitanias.id', '=', 'capitania_id')->where('establecimiento_nauticos.id', '=', $id)->get();
-        
+
         $user=CapitaniaUser::select('users.nombres', 'users.apellidos', 'users.email')->Join('public.users', 'users.id', '=', 'user_id')->where('capitania_user.establecimiento_nautico_id', '=', $id)->get();
 
         if (empty($estNautico)) {
@@ -68,7 +68,7 @@ class EstablecimientosNauticosController extends Controller
     public function create()
     {
         $capitanias=Capitania::pluck('nombre','id');
-        
+
         return view('publico.establecimientos_nauticos.create')->with('capitanias',$capitanias)->with('titulo', $this->titulo);
     }
 
@@ -98,17 +98,17 @@ class EstablecimientosNauticosController extends Controller
         $rif=$request->input('prefijo').$request->input('rif');
 
         $existe = EstablecimientoNautico::select('*')->where('establecimiento_nauticos.RIF', '=', $rif)->get();
-        
+
         if(count($existe)>0){
             Flash::error('El RIF del establecimiento náutico ya existe, por favor verifique.');
             return redirect(route('establecimientosNauticos.create')) ->with('error','El RIF del establecimiento náutico ya existe, por favor verifique.');
         }else{
-           
+
             if($this->ValidarRIF($rif)){
                 $estNautico=EstablecimientoNautico::create($input);
                 $estNautico->save();
                 Flash::success('Establecimiento náutico guardado con éxito.');
-                return redirect(route('establecimientosNauticos.index'))->with('success','El Establecimiento náutico se ha guardado con éxito.');    
+                return redirect(route('establecimientosNauticos.index'))->with('success','El Establecimiento náutico se ha guardado con éxito.');
             }else{
                 Flash::error('El RIF del establecimiento náutico no es válido, por favor verifique.');
                 return redirect(route('establecimientosNauticos.create'))->with('error','El RIF del establecimiento náutico no es válido, por favor verifique.');
@@ -121,7 +121,7 @@ class EstablecimientosNauticosController extends Controller
     {
         $estNautico =  EstablecimientoNautico::where('id', $id)->first();
         $capitanias=Capitania::pluck('nombre','id');
-       
+
         if (empty($estNautico)) {
             Flash::error('Establecimiento Náutico no encontrado');
             return redirect(route('establecimientosNauticos.index'));
@@ -161,18 +161,18 @@ class EstablecimientosNauticosController extends Controller
         ->where('establecimiento_nauticos.RIF', '=', $rif)
         ->where('establecimiento_nauticos.id', '!=', $id)
         ->get();
-        
+
         if(count($existe)>0){
             Flash::error('El RIF del establecimiento náutico ya existe, por favor verifique.');
             return redirect(route('establecimientosNauticos.edit', [$id])) ->with('error','El RIF del establecimiento náutico ya existe, por favor verifique.');
         }else{
-            
+
             if($this->ValidarRIF($rif)){
                 $estNautico=EstablecimientoNautico::find($id);
                 $estNautico->update($input);
-                 
+
                 Flash::success('Establecimiento náutico modificado con éxito.');
-                return redirect(route('establecimientosNauticos.index'))->with('success','El Establecimiento náutico se ha guardado con éxito.');    
+                return redirect(route('establecimientosNauticos.index'))->with('success','El Establecimiento náutico se ha guardado con éxito.');
             }else{
                 Flash::error('El RIF del establecimiento náutico no es válido, por favor verifique.');
                 return redirect(route('establecimientosNauticos.edit', [$id]))->with('error','El RIF del establecimiento náutico no es válido, por favor verifique.');
