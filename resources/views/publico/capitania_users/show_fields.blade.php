@@ -24,7 +24,7 @@
     </tr>
     <tr>
         <th class="bg-light">Creado</th>
-        <td> {{ $capitaniaUser->created_at }}</td>
+        <td> {{ date_format($capitaniaUser->created_at,'d-m-Y') }}</td>
     </tr>
 
     </tbody>
