@@ -60,7 +60,10 @@
                                     <tr>
                                         <td> {{$permission->id}} </td>
                                         <td>{{$permission->name}} </td>
-                                        <td>{{$permission->created_at}} </td>
+                                        <td>@if ($permission->created_at)
+                                                {{date_format($permission->created_at,'d-m-Y')}}
+                                            @endif
+                                            </td>
                                         <td>
                                             @can('editar-menu')
                                                 <a class="btn btn-sm btn-info" href="{{ route('permissions.edit', [$permission->id]) }}">
