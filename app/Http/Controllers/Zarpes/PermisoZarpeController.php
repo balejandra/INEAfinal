@@ -776,11 +776,11 @@ class PermisoZarpeController extends Controller
                 //Tripulantes
                 $tripulantes = $request->session()->get('tripulantes');
                 for ($i = 0; $i < count($tripulantes); $i++) {
-                  /*  if($tripulantes[$i]["capitan"]=='SI'){
+                   if($tripulantes[$i]["capitan"]=='SI'){
                         $tripulantes[$i]["capitan"]=true;
                     }else{
                         $tripulantes[$i]["capitan"]=false;
-                    }*/
+                    }
                     $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
                     $trip = Tripulante::create($tripulantes[$i]);
                   //  print_r($trip); echo "Tripulantes<br>";
@@ -1157,6 +1157,7 @@ class PermisoZarpeController extends Controller
 
                 $trip=[
                 "permiso_zarpe_id" => '',
+                "ctrl_documento_id" =>0,
                 "nombres" =>$nombres,
                 "apellidos" =>$apellidos,
                 "tipo_doc" => 'P',
@@ -1166,7 +1167,7 @@ class PermisoZarpeController extends Controller
                 "fecha_nacimiento" =>$fecha_nacimiento,
                 "doc" => $doc,
                 "documento_acreditacion" => $docAcreditacion,
-
+                "capitan"=>$cap
                 ];
 
             $tripExiste=false;

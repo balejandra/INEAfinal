@@ -196,11 +196,13 @@
                 <td>{{$tripulante->sexo}} </td>
                 <td>
                     @if($tripulante->doc!="")
-                    {{$tripulante->doc}} 
+                    <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->doc)}}" target="_blank"> Pasaporte </a>
+                     
                     @endif
                     @if($tripulante->documento_acreditacion!="")
-
-                    {{$tripulante->documento_acreditacion}} 
+                    <br>
+                    <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->documento_acreditacion)}}" target="_blank"> Documento de acreditación </a>
+ 
                     @endif
                 </td>
                 
