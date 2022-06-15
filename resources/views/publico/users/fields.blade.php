@@ -34,7 +34,10 @@
     <div class="row">
     <div class="form-group col-sm-6"  >
         {!! Form::label('password', 'Contraseña:') !!}
-        <input type="password" class="form-control" id="password" name="password">
+        <input type="password" class="form-control {{ $errors->has('password')?'is-invalid':''}}" id="password" name="password">
+        @error('password')
+        <span class="error invalid-feedback">{{ $message }}</span>
+        @enderror
     </div>
     <div class="form-group col-sm-6"  >
         {!! Form::label('password', 'Confirmar Contraseña:') !!}
