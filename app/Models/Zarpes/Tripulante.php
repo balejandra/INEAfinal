@@ -35,7 +35,16 @@ class Tripulante extends Model implements Auditable
         'permiso_zarpe_id',
         'ctrl_documento_id',
         'capitan',
-        'funcion'
+        'funcion',
+        'nombres',
+        'apellidos',
+        'tipo_doc',
+        'nro_doc',
+        'doc',
+        'rango',
+        'fecha_nacimiento',
+        'sexo',
+        'documento_acreditacion',
     ];
 
     /**
@@ -48,7 +57,17 @@ class Tripulante extends Model implements Auditable
         'permiso_zarpe_id'=>'integer',
         'ctrl_documento_id' => 'string',
         'capitan' => 'boolean',
-        'funcion' => 'string'
+        'funcion' => 'string',
+        'nombres' => 'string',
+        'apellidos' => 'string',
+        'tipo_doc' => 'string',
+        'nro_doc' => 'string',
+        'doc' => 'string',
+        'rango' => 'string',
+        'fecha_nacimiento'=> 'string',
+        'sexo'=> 'string',
+        'documento_acreditacion'=> 'string',
+
     ];
 
     /**
@@ -60,7 +79,16 @@ class Tripulante extends Model implements Auditable
         'permiso_zarpe_id' => 'required',
         'ctrl_documento_id' => 'required',
         'capitan' => 'required',
-        'funcion' => 'required'
+        'funcion' => 'required',
+        'nombres' => 'required',
+        'apellidos' => 'required',
+        'tipo_doc' => 'required',
+        'nro_doc' => 'required',
+        'doc' => 'required',
+        'rango' => 'required',
+        'fecha_nacimiento'=> 'required',
+        'sexo'=> 'required',
+        'documento_acreditacion'=> 'required',
 
     ];
 

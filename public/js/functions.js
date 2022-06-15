@@ -1266,7 +1266,7 @@ function validacionMarino(){
     }
 }
 
-
+/*
 function getMarinos() {
     let cedula= document.getElementById('cedula').value;
    // let fechanac= document.getElementById('fecha_nacimiento').value;
@@ -1404,9 +1404,306 @@ function getMarinos() {
 
 }
 
+}*/
+
+
+function AddPasportsMarinosZN(){
+    let doc=document.getElementById('doc').files[0];
+    let docAcreditacion=document.getElementById('documentoAcreditacion').files[0];
+    console.log('documentoAcreditacion',documentoAcreditacion);
+    let tipodoc=document.getElementById('tipodoc').value;
+    console.log("tipoDOC", tipodoc);
+    console.log("doc", doc);
+    if(tipodoc==""){
+        let msj=document.getElementById('msjMarino');
+                msj.innerHTML="";
+                msj.innerHTML="<div class='alert alert-danger'>Se requiere que seleccione el tipo de documento</div>";
+                return false;
+    }
+     switch(tipodoc){
+        case 'P':
+
+            if (!doc){
+                let msj=document.getElementById('msjMarino');
+                msj.innerHTML="";
+                msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el pasaporte.</div>";
+                return false;
+            }
+            if (!docAcreditacion){
+                let msj=document.getElementById('msjMarino');
+                msj.innerHTML="";
+                msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el documento de acreditación.</div>";
+                return false;
+            }
+
+        break;
+        case 'V':
+           /** if (!doc){
+                let msj=document.getElementById('msjMarino');
+                msj.innerHTML="";
+                msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el pasaporte.</div>";
+                return false;
+            }*/
+            
+        break;
+
+
+     }
+
+    var formData = new FormData();
+    formData.append('doc', doc);
+    formData.append('documentoAcreditacion', docAcreditacion);
+
+
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: route('AddDocumentosMarinosZN'),
+        type: "POST",
+        dataType: "html",
+        data:formData,
+        cache: false,
+        contentType: false,
+        processData: false
+    }).done(function (response){
+        var resps=JSON.parse(response);
+        console.log('RESPDOCS',resps);
+        var documentos;
+        if(tipodoc=='P'){
+            if(resps[0][0] =='OK' || resps[1][0] =='OK'){
+
+                pasaporteName=resps;
+                documentos=[resps[0][1],resps[1][1]];
+                getMarinos(documentos);
+            }else{
+                let msj=document.getElementById('msjMarino');
+                msj.innerHTML="";
+                msj.innerHTML="<div class='alert alert-danger'>HA ocurrido un error al adjuntar los documentos, actualice el navegador e intente nuevamente. Asegúrese de que las extenciones de archivo sean .jpg, .png o .pdf.</div>";
+                
+            }
+        }else{
+            //if(resps[0][0] =='OK'){
+
+                pasaporteName=resps;
+                documentos=["",""];
+                getMarinos(documentos);
+            //}
+        }
 
 
 
+    });
+
+
+}
+
+
+function getMarinos(pass) {
+    let funcion= document.getElementById('funcion').value;
+    let tipodoc= document.getElementById('tipodoc').value;
+    let nrodoc= document.getElementById('nrodoc').value;
+    let nombres= document.getElementById('nombres').value;
+    let apellidos= document.getElementById('apellidos').value;
+    //let rango= document.getElementById('rango').value;
+    let sexo= document.getElementById('sexo').value;
+    let fechanac= document.getElementById('fecha_nacimiento').value;
+    let doc=pass[0];
+    let docAcreditacion=pass[1];
+    let ruta='';
+    let tabla=document.getElementById('marinos');
+    let msj=document.getElementById('msjMarino');
+    msj.innerHTML="";
+    let flashMsj=document.getElementById('flashMsj');
+    if(flashMsj != null){
+        flashMsj.setAttribute('class','');
+        flashMsj.innerHTML="";
+    }
+
+    let ErrorsFlash=document.getElementById('ErrorsFlash');
+    if(ErrorsFlash != null){
+        ErrorsFlash.setAttribute('class','');
+        ErrorsFlash.innerHTML="";
+    }
+
+    if(funcion=='' || tipodoc =='' || nrodoc =='' || sexo=='' || fechanac==""){
+        msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
+    }else if(tipodoc=='P' && (nombres == '' || apellidos == '')){
+
+        msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
+
+    }else{
+         msj.innerHTML='';
+        if(tipodoc=='V'){
+            ruta=route('validacionMarino');
+        }else{
+            ruta=route('marinoExtranjero');
+        }
+
+        $.ajax({
+        url: ruta,
+        data: {
+            funcion:funcion,
+            tipodoc:tipodoc,
+            nrodoc:nrodoc,
+            nombres:nombres,
+            apellidos:apellidos,
+            sexo:sexo,
+            fecha_nacimiento:fechanac,
+            doc:doc,
+            docAcreditacion:docAcreditacion
+        }
+
+        })// This will be called on success
+        .done(function (response) {
+          //  alert(response);
+            respuesta = JSON.parse(response);
+                console.log(respuesta);
+
+            var validacion=respuesta[1];
+            switch(respuesta[3]){
+                case 'TripulanteExiste':
+                    msj.innerHTML="<div class='alert alert-danger'>El tripulante que intenta agregar ya se encuentra en el listado, por favor verifique.</div>";
+
+                break;
+                case 'capitanExiste':
+                    msj.innerHTML="<div class='alert alert-danger'>Sólo puede haber un capitán asignado a la embarcación, por favor verifique.</div>";
+
+                break;
+                case 'FoundButMaxTripulationLimit':
+                    msj.innerHTML="<div class='alert alert-danger'>Ha alcanzado el máximo de tripulantes disponibles para la embarcación.</div>";
+
+                break;
+                case 'TripulanteNoAutorizado':
+                        if(funcion=="Capitán"){
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+nrodoc+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                            }else{
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+nrodoc+' no esta permisado para tripular esta embarcación.</div>' ;
+
+                        }
+                break;
+                case 'gmarNotFound':
+                    msj.innerHTML="<div class='alert alert-danger'>La cédula suministrada no pertenecea a un marino venezolano.</div>";
+
+                break;
+                case 'FoundButAssigned':
+                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. '+nrodoc+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
+                break;
+                case 'FoundInList':
+                    msj.innerHTML='<div class="alert alert-danger">El tripulante con el número de documento '+nrodoc+' ya se encuentra en el listado, por favor verifique.</div>' ;
+                break;
+                case 'OK':
+
+                  //  let cantidad=respuesta1.length;
+
+
+                     if(validacion[0] ==true){
+
+
+                        var nodataTrip = !!document.getElementById("nodataTrip");
+
+                        if(nodataTrip==true){
+                            tabla.innerHTML='';
+                        }
+                        //let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a></td></tr>";
+                       // tabla.innerHTML+=html;
+                         pass1=respuesta[0];
+                         console.log(pass1);
+                         pass1=pass1[pass1.length-1];
+                         let ruta=tabla.getAttribute('data-rimg');  
+                         $('#example2').DataTable({
+                             responsive: true,
+                             autoWidth: true,
+                             language: {
+                                 "url": "../assets/DataTables/es_es.json"
+                             },
+                             "destroy": true,
+                             "createdRow": function( row, data, dataIndex ) {
+                                 $(row).attr('id',data.nro_doc );
+                             },
+                             "data": respuesta[0],
+                             "columns":[
+                                 {"data":'funcion'},
+                                 {
+                                    "data":"tipo_doc",
+                                    render: function ( data, type, row ) {
+                                        // esto es lo que se va a renderizar como html
+                                        return `${row.tipo_doc} ${row.nro_doc}`; 
+                                    }
+                                 },
+                                  {
+                                    "data":"nombres",
+                                    render: function ( data, type, row ) {
+                                        // esto es lo que se va a renderizar como html
+                                        return `${row.nombres}  ${row.apellidos}`; 
+                                    }
+                                 },
+                                 {"data":'fecha_nacimiento'},
+                                
+                                 {"data":'sexo'},
+                                 
+                                 {
+                                    "data":"doc",
+                                        render: function ( data, type, row ) {
+                                            // esto es lo que se va a renderizar como html
+                                            let links='';
+                                            if(row.doc!=""){
+                                             links=`<a href='${ruta+"/"+row.doc}' class='document-link' title='Pasaporte' target='_blank'> Pasaporte </a>`;
+
+                                            }
+                                            
+                                            if(row.documento_acreditacion!=''){
+                                                links+=`<br><a href='${ruta+"/"+row.documento_acreditacion}' class='document-link' title='Documento de Acreditación' target='_blank'>Doc. de Acreditación</a>`;
+                                            }
+                                            return links; 
+                                        }
+                                    },
+                                 
+                                {
+                                "data":"nro_doc",
+                                    render: function ( data, type, row ) {
+                                        // esto es lo que se va a renderizar como html
+                                        return `<a href='#' onclick=\"openModalZN('${row.nro_doc}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
+                                    }
+                                }
+                                 
+                             ],
+
+                         });
+                         msj.innerHTML="<div class='alert alert-success'>El tripulante se ha agregado de manera exitosa</div>";
+
+
+                        document.getElementById('funcion').value="";
+                        document.getElementById('tipodoc').value="";
+                        document.getElementById('nrodoc').value="";
+                         document.getElementById('nombres').value="";
+                         document.getElementById('apellidos').value="";
+                         document.getElementById('sexo').value="";
+                         document.getElementById('fecha_nacimiento').value="";
+                         document.getElementById('doc').value="";
+                         document.getElementById('documentoAcreditacion').value="";
+                     }else{
+                         if(funcion=="Capitán"){
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                            }else{
+                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para tripular esta embarcación.</div>' ;
+
+                        }
+                     }
+
+                break;
+                default:
+
+                break;
+            }
+
+        })
+
+        // This will be called on error
+        .fail(function (response) {
+            console.log(response);
+            console.log('falló validación de Jerarquización ZI');
+        });
+
+    }
 }
 
 function eliminarTrip(){
@@ -1434,7 +1731,7 @@ function eliminarTrip(){
             let respuesta=JSON.parse(response);
             console.log('EliminarTrip',respuesta);
             if(respuesta[0]==true){
-                let tr=document.getElementById('trip'+cedula);
+                let tr=document.getElementById(cedula);
                 tr.remove();
 
                 msj.innerHTML='<div class="alert alert-success">Tripulante eliminado con éxito.</div>' ;
@@ -1442,7 +1739,7 @@ function eliminarTrip(){
             }else{
                 msj.innerHTML='<div class="alert alert-danger">No se ha podido eliminar el elemento del listado, actualice el navegador e intente nuevamente.</div>' ;
             }
-            closeModal();
+            closeModalZN();
         })
         // This will be called on error
         .fail(function (response) {
@@ -1464,6 +1761,22 @@ function closeModal() {
     document.getElementById("backdrop").style.display = "none";
     document.getElementById("exampleModal").style.display = "none";
     document.getElementById("exampleModal").classList.remove("show");
+}
+
+function openModalZN(cedula) {
+    let btn=document.getElementById('btnDelete');
+    console.log('modalcedula', cedula);
+    btn.setAttribute('data-ced', cedula);
+    let ci=document.getElementById('ci');
+        ci.innerHTML=cedula;
+    document.getElementById("backdrop").style.display = "block";
+    document.getElementById("modalDeleteTrip").style.display = "block";
+    document.getElementById("modalDeleteTrip").classList.add("show");
+}
+function closeModalZN() {
+    document.getElementById("backdrop").style.display = "none";
+    document.getElementById("modalDeleteTrip").style.display = "none";
+    document.getElementById("modalDeleteTrip").classList.remove("show");
 }
 
 function openModalPassengers(tipodoc,cedula, modal){
@@ -2147,3 +2460,23 @@ function validarExtension(idInput, divMsj) {
         return false;
     }
 }
+
+
+
+
+$( "#tipodoc" ).change(function () {
+    var str = "";
+    str =$( "#tipodoc" ).val();
+    $( "#nrodoc").val('');
+    
+    if(str=="P"){
+      $('.DatosRestantes').attr('style', 'display:block');
+      $( "#nrodoc").attr('onKeyDown','');
+    }else{
+      $('.DatosRestantes').attr('style', 'display:none');
+      $( "#nrodoc").attr('onKeyDown','return soloNumeros(event)');
+
+    }
+
+  })
+  .change();

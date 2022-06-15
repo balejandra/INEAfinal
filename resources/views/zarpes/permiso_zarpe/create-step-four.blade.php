@@ -105,7 +105,7 @@
                                                     {!! Form::label('salida', 'Fecha/hora salida:') !!}
                                                     <input type="datetime-local" id="salida" name="salida"
                                                            min="{{$fechaActual}}" class="form-control formatoFecha"
-                                                           onblur="compararFechas()" max="2100-12-31T23:59"  value="{{ $fechasal }}"  onKeyDown="return noTeclas(event)">
+                                                           onblur="compararFechas()" max="2100-12-31T23:59"  value="{{ $fechasal }}"  onKeyDown="return noTeclas(event)" title="Haga click sobre el calendario para seleccionar la fecha">
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
@@ -130,7 +130,7 @@
                                                     <input type="datetime-local" id="llegada_escala"
                                                            name="fecha_llegada_escala"
                                                            min="{{$fechaActual}}" class="form-control "
-                                                           onblur="compararFechasEscala()" max="2100-12-31T23:59" value="{{$fechaesc}}" onKeyDown="return noTeclas(event)">
+                                                           onblur="compararFechasEscala()" max="2100-12-31T23:59" value="{{$fechaesc}}" onKeyDown="return noTeclas(event)" title="Haga click sobre el calendario para seleccionar la fecha">
                                                 </div>
 
                                                 <div class="col-md-12 py-2">
@@ -148,7 +148,7 @@
                                                     @endif
 
                                                     <input type="datetime-local" id="regreso" name="regreso"
-                                                           class="form-control" max="2100-12-31T23:59" onblur="compararFechas()" value="{{$fechareg}}" onKeyDown="return noTeclas(event)">
+                                                           class="form-control" max="2100-12-31T23:59" onblur="compararFechas()" value="{{$fechareg}}" onKeyDown="return noTeclas(event)" title="Haga click sobre el calendario para seleccionar la fecha">
                                                 </div>
                                                  
                                                 <div class="col-md-12 px-0" id="SelectCapitaniaDestinoDiv" style='{{$showSelect}}' >

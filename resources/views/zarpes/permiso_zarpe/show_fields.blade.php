@@ -178,22 +178,34 @@
 
     <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
-        <th>Nombres y Apellidos</th>
-        <th>Cédula</th>
-        <th>Documento</th>
-        <th>Posición</th>
-        <th>Fecha Vencimiento</th>
         <th>Cargo que Desempeña</th>
+        <th>Nombres y Apellidos</th>
+        <th>Cédula/Pasaporte</th>
+        <th>Fecha de nacimiento</th>
+        <th>Sexo</th>
+        <th>Documentos</th>
+        
         </thead>
         <tbody>
         @foreach($tripulantes as $tripulante)
             <tr>
-                <td>{{$tripulante->nombre}} {{$tripulante->apellido}} </td>
-                <td>{{$tripulante->ci}}</td>
-                <td>{{$tripulante->solicitud}}</td>
-                <td>{{$tripulante->documento}} </td>
-                <td>{{$tripulante->fecha_vencimiento}} </td>
                 <td>{{$tripulante->funcion}} </td>
+                <td>{{$tripulante->nombres}} {{$tripulante->apellidos}} </td>
+                <td>{{$tripulante->tipo_doc}} {{$tripulante->nro_doc}}</td>
+                <td>{{$tripulante->fecha_nacimiento}}</td>
+                <td>{{$tripulante->sexo}} </td>
+                <td>
+                    @if($tripulante->doc!="")
+                    {{$tripulante->doc}} 
+                    @endif
+                    @if($tripulante->documento_acreditacion!="")
+
+                    {{$tripulante->documento_acreditacion}} 
+                    @endif
+                </td>
+                
+
+            </tr>
         @endforeach
         </tbody>
     </table>
