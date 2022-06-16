@@ -121,10 +121,10 @@ class seederPermissions extends Seeder
             'consultar-auditoria',
 
             //permisos para Establecimientos
-            'consultar-estableimientoNautico',
-            'editar-estableimientoNautico',
-            'eliminar-estableimientoNautico',
-            'listar-estableimientoNautico',
+            'consultar-establecimientoNautico',
+            'editar-establecimientoNautico',
+            'eliminar-establecimientoNautico',
+            'listar-establecimientoNautico',
             'crear-establecimientoNautico'
         ];
 
