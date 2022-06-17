@@ -1023,7 +1023,8 @@ class PermisoZarpeController extends Controller
             $validation = json_decode($request->session()->get('validacion'), true);
         $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
          $InfoMarino = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
-
+         $infoSaime = Saime_cedula::where('cedula', $cedula)
+         ->get();
        //  $request->session()->put('tripulantes', '');
         if (is_null($InfoMarino->first())) {
             $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
@@ -1031,6 +1032,14 @@ class PermisoZarpeController extends Controller
             $emision=explode(' ',$InfoMarino[0]->fecha_emision);
             list($ano, $mes, $dia) = explode("-", $emision[0]);
             $emision[0]=$dia.'-'.$mes.'-'.$ano;
+            if(count($infoSaime)>0){
+                $fehcaNacV=$infoSaime[0]->fecha_nacimiento;
+                $sexoV=$infoSaime[0]->sexo;
+            }else{
+                $fehcaNacV='';
+                $sexoV="";
+            }
+
             $trip = [
             "permiso_zarpe_id" => '',
             "ctrl_documento_id" => $InfoMarino[0]->id,
@@ -1041,8 +1050,8 @@ class PermisoZarpeController extends Controller
             "tipo_doc" => 'V',
             "rango" => $InfoMarino[0]->documento,
             "funcion"  => $funcion,
-            "sexo"  => $_REQUEST['sexo'],
-            "fecha_nacimiento"  => $_REQUEST['fecha_nacimiento'],
+            "sexo"  => $sexoV,
+            "fecha_nacimiento"  => $fehcaNacV,
             "doc"  => $_REQUEST['doc'],
             "documento_acreditacion"  => $_REQUEST['docAcreditacion'],
 
@@ -1101,7 +1110,7 @@ class PermisoZarpeController extends Controller
                     }
                 }
         }
-        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['pasajerosRestantes'],$validation['cant_pasajeros'],$validation['cantPassAbordo']];
+        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['pasajerosRestantes'],$validation['cant_pasajeros'],$validation['cantPassAbordo'],$infoSaime];
         echo json_encode($return);
         }
 
@@ -1153,7 +1162,8 @@ class PermisoZarpeController extends Controller
             $funcion=$_REQUEST['funcion'];
             $sexo=$_REQUEST['sexo'];
             $fecha_nacimiento=$_REQUEST['fecha_nacimiento'];
-            
+            $f=explode('-',$fecha_nacimiento);
+            $fecha_nacimiento=$f[2].'/'.$f[1].'/'.$f[0];
             $doc=$_REQUEST['doc'];
             $docAcreditacion=$_REQUEST['docAcreditacion'];
 
