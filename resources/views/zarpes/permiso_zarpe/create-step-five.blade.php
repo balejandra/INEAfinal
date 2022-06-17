@@ -105,14 +105,14 @@
                                             </div>
 
 
-                                            <div class="col-sm-2  px-1  ">
+                                            <div class="col-sm-2  px-1 DatosRestantes ">
                                                 <div class="form-group">
                                                     <label for="title">Fecha de Nacimiento:</label>
                                                     <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" >
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-2  px-1  ">
+                                            <div class="col-sm-2  px-1 DatosRestantes ">
                                                 <div class="form-group">
                                                     <label for="title">Sexo:</label>
                                                     <select name="sexo" id="sexo" class="form-control custom-select">

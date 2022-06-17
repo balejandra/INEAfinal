@@ -1524,9 +1524,9 @@ function getMarinos(pass) {
         ErrorsFlash.innerHTML="";
     }
 
-    if(funcion=='' || tipodoc =='' || nrodoc =='' || sexo=='' || fechanac==""){
+    if(funcion=='' || tipodoc =='' || nrodoc =='' ){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
-    }else if(tipodoc=='P' && (nombres == '' || apellidos == '')){
+    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || sexo=='' || fechanac=="")){
 
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
 
@@ -1554,9 +1554,9 @@ function getMarinos(pass) {
 
         })// This will be called on success
         .done(function (response) {
-          //  alert(response);
+            
             respuesta = JSON.parse(response);
-                console.log(respuesta);
+                console.log("RESPUESTA::",respuesta);
 
             var validacion=respuesta[1];
             switch(respuesta[3]){
@@ -1590,11 +1590,19 @@ function getMarinos(pass) {
                 case 'FoundInList':
                     msj.innerHTML='<div class="alert alert-danger">El tripulante con el número de documento '+nrodoc+' ya se encuentra en el listado, por favor verifique.</div>' ;
                 break;
+                case 'FoundButNotPerrmision':
+                    if(funcion=="Capitán"){
+                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                    }else{
+                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para tripular esta embarcación.</div>' ;
+                    }
+                    
+                break;
                 case 'OK':
 
                   //  let cantidad=respuesta1.length;
 
-
+console.log('validacion[0]',validacion[0]);
                      if(validacion[0] ==true){
 
 
@@ -1606,7 +1614,7 @@ function getMarinos(pass) {
                         //let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a></td></tr>";
                        // tabla.innerHTML+=html;
                          pass1=respuesta[0];
-                         console.log(pass1);
+                         console.log("PASS1",pass1);
                          pass1=pass1[pass1.length-1];
                          let ruta=tabla.getAttribute('data-rimg');  
                          $('#example2').DataTable({
@@ -1681,6 +1689,7 @@ function getMarinos(pass) {
                          document.getElementById('doc').value="";
                          document.getElementById('documentoAcreditacion').value="";
                      }else{
+                       
                          if(funcion=="Capitán"){
                                         msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
                             }else{

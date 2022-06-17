@@ -1094,6 +1094,8 @@ class PermisoZarpeController extends Controller
 
                         }else if($indice==true){
                             $InfoMarino = "FoundInList"; 
+                        }else{
+                            $InfoMarino="FoundButNotPerrmision";
                         }
 
                     }
