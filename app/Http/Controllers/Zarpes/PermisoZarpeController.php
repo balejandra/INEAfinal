@@ -1182,47 +1182,61 @@ class PermisoZarpeController extends Controller
                 "capitan"=>$cap
                 ];
 
-            $tripExiste=false;
-            $vj=[false];
-            if(is_array($tripulantes)){
-                foreach ($tripulantes as $value) {
+                $marinoAsignado = PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id')
+                ->Join('tripulantes', 'permiso_zarpes.id', '=', 'tripulantes.permiso_zarpe_id')
+                ->where('tripulantes.nro_doc', '=', $nrodoc)
+                ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
+                ->get();
 
-                    if($value['nro_doc']==$nrodoc){
-                       $tripExiste=true;
-                    }
-                }
-                if ($tripExiste) {
-                    $InfoMarino = "FoundInList";
-                }else{
+            if (count($marinoAsignado) > 0) {
+                $InfoMarino = "FoundButAssigned"; //encontrado pero asignado a otro barco
+            } else {
 
-                        if($validation['pasajerosRestantes']>0){
-                            array_push($tripulantes, $trip);
-                            $request->session()->put('tripulantes', $tripulantes);
-                            $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                            $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
-                            $request->session()->put('validacion', json_encode($validation));
-
-                            $InfoMarino = "OK";
-                             $vj=[true];
-                        }else{
-                            $InfoMarino = "FoundButMaxTripulationLimit";
+                $tripExiste=false;
+                $vj=[false];
+                if(is_array($tripulantes)){
+                    foreach ($tripulantes as $value) {
+    
+                        if($value['nro_doc']==$nrodoc){
+                           $tripExiste=true;
                         }
-
+                    }
+                    if ($tripExiste) {
+                        $InfoMarino = "FoundInList";
+                    }else{
+    
+                            if($validation['pasajerosRestantes']>0){
+                                array_push($tripulantes, $trip);
+                                $request->session()->put('tripulantes', $tripulantes);
+                                $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
+                                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+                                $request->session()->put('validacion', json_encode($validation));
+    
+                                $InfoMarino = "OK";
+                                 $vj=[true];
+                            }else{
+                                $InfoMarino = "FoundButMaxTripulationLimit";
+                            }
+    
+                    }
+    
+                }else{
+                    $tripulantes=[];
+                    array_push($tripulantes, $trip);
+                    $request->session()->put('tripulantes', $tripulantes);
+                    $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
+                    $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+                    $request->session()->put('validacion', json_encode($validation));
+    
+                    $InfoMarino = "OK";
+                     $vj=[true];
                 }
+    
+    
 
-            }else{
-                $tripulantes=[];
-                array_push($tripulantes, $trip);
-                $request->session()->put('tripulantes', $tripulantes);
-                $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
-                $request->session()->put('validacion', json_encode($validation));
-
-                $InfoMarino = "OK";
-                 $vj=[true];
             }
 
-
+            
              $return = [$tripulantes, $vj, '',$InfoMarino, $validation['cant_pasajeros'], count($tripulantes),$validation['pasajerosRestantes'],$validation['cantPassAbordo']];
             echo json_encode($return);
 

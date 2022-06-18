@@ -48,14 +48,18 @@
 				                            @endif
 
                                            <div class="row gy-2 gx-3 justify-content-center">
+										   <div class="col-auto">
+											<label for="title">Ingrese el número de permiso de
+estadía del buque:</label>
+											</div>
                                             <div class="col-auto">
                                                 <div class="form-group">
-                                                    <label for="title">Permiso de estadía:</label>
+                                                    
                                                     <input type="text" class="form-control" name="permiso" id="permiso">
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <br>
+                                                
                                                 <button type="button" class="btn btn-primary" onclick="getPermisoEstadiaZI($('#permiso').val())">Verificar</button>
                                             </div>
                                         </div>
