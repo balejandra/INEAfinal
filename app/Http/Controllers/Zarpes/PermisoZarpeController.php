@@ -642,7 +642,7 @@ class PermisoZarpeController extends Controller
         if ((isset($solicitud['bandera'])) || ((isset($solicitud['fecha_hora_salida']))) )  {
         $validation = json_decode($request->session()->get('validacion'), true);
         $tripulantes = $request->session()->get('tripulantes');
-
+ 
         $this->step = 5;
         return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('titulo', $this->titulo);
         }else{
@@ -1023,8 +1023,7 @@ class PermisoZarpeController extends Controller
             $validation = json_decode($request->session()->get('validacion'), true);
         $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
          $InfoMarino = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
-         $infoSaime = Saime_cedula::where('cedula', $cedula)
-         ->get();
+         $infoSaime = Saime_cedula::where('cedula', $cedula)->get();
        //  $request->session()->put('tripulantes', '');
         if (is_null($InfoMarino->first())) {
             $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
@@ -1032,9 +1031,9 @@ class PermisoZarpeController extends Controller
             $emision=explode(' ',$InfoMarino[0]->fecha_emision);
             list($ano, $mes, $dia) = explode("-", $emision[0]);
             $emision[0]=$dia.'-'.$mes.'-'.$ano;
-            if(count($infoSaime)>0){
+            if(!is_null($infoSaime->first())){
                 $fehcaNacV=$infoSaime[0]->fecha_nacimiento;
-                $sexoV=$infoSaime[0]->sexo;
+                $sexoV=$infoSaime[0]->sexo ;
             }else{
                 $fehcaNacV='';
                 $sexoV="";

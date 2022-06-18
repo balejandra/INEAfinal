@@ -32,7 +32,12 @@
                     Fecha de Solicitud
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoZarpe->created_at}}
+                    @php 
+                        $fecha=explode(' ',$permisoZarpe->created_at);
+                        $f=explode('-',$fecha[0]);
+                        $createdAt=$f[2].'/'.$f[1].'/'.$f[0]." ".$fecha[1];
+                    @endphp
+                    {{  $createdAt}}
                 </div>
             </div>
         </div>
@@ -128,7 +133,12 @@
                     Fecha y Hora Salida
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{$permisoZarpe->fecha_hora_salida }}
+                @php 
+                        $fechaS=explode(' ',$permisoZarpe->fecha_hora_salida);
+                        $fS=explode('-',$fechaS[0]);
+                        $fecha_hora_salida=$fS[2].'/'.$fS[1].'/'.$fS[0]." ".$fechaS[1];
+                    @endphp
+                    {{$fecha_hora_salida}}
                 </div>
             </div>
         </div>
@@ -140,7 +150,12 @@
                     Fecha y Hora Regreso
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{$permisoZarpe->fecha_hora_regreso }}
+                    @php 
+                        $fechaR=explode(' ',$permisoZarpe->fecha_hora_regreso);
+                        $fR=explode('-',$fechaR[0]);
+                        $fecha_hora_regreso=$fR[2].'/'.$fR[1].'/'.$fR[0]." ".$fechaR[1];
+                    @endphp
+                    {{$fecha_hora_regreso }}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
                     Estatus
