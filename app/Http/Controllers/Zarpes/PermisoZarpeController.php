@@ -661,9 +661,8 @@ class PermisoZarpeController extends Controller
         if (is_array($tripulantes) && (count($tripulantes) >= $validation['cant_tripulantes'] && count($tripulantes) <= $validation['cant_pasajeros'])) {
              $capitan=0;
             for ($i=0; $i < count($tripulantes); $i++) {
-                $indice=array_search("Capitán",$tripulantes[$i],false);
-
-                if($indice!=false){
+               // $indice=array_search("Capitán",$tripulantes[$i],false);
+                if($tripulantes[$i]['funcion']=="Capitán"){
                     $capitan++;
                 }
             }
