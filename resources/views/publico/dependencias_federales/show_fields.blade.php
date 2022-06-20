@@ -13,6 +13,7 @@
              <td class="bg-light">Capitanía</td>
              <td>{{ $capitania }}</td>
          </tr>
+         @if(is_object($coordenadas))
          <tr>
              <td class="bg-light">Latitud</td>
              <td>{{$coordenadas[0]->latitud}}</td>
@@ -21,6 +22,8 @@
              <td class="bg-light">Longitud</td>
              <td>{{$coordenadas[0]->longitud}}</td>
          </tr>
+         
+         @endif
      </table>
  
 

@@ -37,10 +37,10 @@
                 @endcan
                 @can('eliminar-equipo')
                     <div class='btn-group'>
-                        {!! Form::open(['route' => ['equipos.destroy', $equipo->id], 'method' => 'delete']) !!}
+                        {!! Form::open(['route' => ['equipos.destroy', $equipo->id], 'method' => 'delete','class'=>'delete-form']) !!}
 
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el equipo $equipo->id ?')"]) !!}
-
+                        <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="el equipo {{$equipo->equipo}}">
+                            <i class="fa fa-trash"></i></button>
                         {!! Form::close() !!}
                     </div>
                 @endcan

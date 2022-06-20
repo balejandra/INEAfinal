@@ -85,6 +85,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('validarMarino',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validarMarino'])->name('validarMarino');
 
     Route::get('validacionMarino',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validacionMarino'])->name('validacionMarino');
+    
+    Route::get('marinoExtranjero',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'marinoExtranjero'])->name('marinoExtranjero');
 
     Route::get('validacionJerarquizacion',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validacionJerarquizacion'])->name('validacionJerarquizacion');
 
@@ -103,6 +105,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('AddPassenger',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'AddPassenger'])->name('AddPassenger');
 
     Route::post('AddDocumentos',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'AddDocumentos'])->name('AddDocumentos');
+   
+    Route::post('AddDocumentosMarinosZN',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'AddDocumentosMarinosZN'])->name('AddDocumentosMarinosZN');
 
     /*Inicio de Rutas de zarpe Internacional*/
 

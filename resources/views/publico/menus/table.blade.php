@@ -39,10 +39,10 @@
                 @endcan
                  @can('eliminar-menu')
                 <div class='btn-group'>
-                    {!! Form::open(['route' => ['menus.destroy', $menu->id], 'method' => 'delete']) !!}
+                    {!! Form::open(['route' => ['menus.destroy', $menu->id], 'method' => 'delete','class'=>'delete-form']) !!}
 
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el menú $menu->name ?')"]) !!}
-
+                    <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="el menú {{$menu->name}}">
+                        <i class="fa fa-trash"></i></button>
                     {!! Form::close() !!}
                 </div>
                 @endcan
@@ -77,10 +77,10 @@
                 @endcan
                 @can('eliminar-menu')
                     <div class='btn-group'>
-                        {!! Form::open(['route' => ['menus.destroy', $menuh->id], 'method' => 'delete']) !!}
+                        {!! Form::open(['route' => ['menus.destroy', $menuh->id], 'method' => 'delete','class'=>'delete-form']) !!}
 
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desera eliminar el menú $menu->name ?')"]) !!}
-
+                        <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="el menú {{$menuh->name}}">
+                            <i class="fa fa-trash"></i></button>
                         {!! Form::close() !!}
                     </div>
                 @endcan

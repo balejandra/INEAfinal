@@ -110,10 +110,22 @@ class seederPermissions extends Seeder
             'renovar-estadia',
 
               //permisos para usuarios de capitanias
-            'crear-usuarios-capitanias ',
+            'listar-usuarios-capitanias',
+            'crear-usuarios-capitanias',
             'consultar-usuarios-capitanias',
             'editar-usuarios-capitanias',
             'eliminar-usuarios-capitanias',
+
+            //permisos para Auditoria
+            'listar-auditoria',
+            'consultar-auditoria',
+
+            //permisos para Establecimientos
+            'consultar-establecimientoNautico',
+            'editar-establecimientoNautico',
+            'eliminar-establecimientoNautico',
+            'listar-establecimientoNautico',
+            'crear-establecimientoNautico'
         ];
 
         foreach ($permissions as $permission) {

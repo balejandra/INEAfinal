@@ -6,7 +6,7 @@
 <table class="table table-striped table-bordered table-grow" id="generic-table" style="width:60%">
     <thead>
     <tr>
-        <th>Nomb re</th>
+        <th>Nombre</th>
         <th>Capitanías</th>
         <th>Acciones</th>
     </tr>
@@ -17,7 +17,6 @@
             <td>{{ $dependenciaFederal->nombre }}</td>
             <td>{{ $dependenciaFederal->capitania}}   </td>
             <td width="20%" class="text-center">
-                {!! Form::open(['route' => ['dependenciasfederales.destroy', $dependenciaFederal->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     @can('consultar-dependencia')
                         <a href="{{ route('dependenciasfederales.show', [$dependenciaFederal->id]) }}"
@@ -34,10 +33,14 @@
                         &nbsp;&nbsp;&nbsp;
                     @endcan
                     @can('eliminar-dependencia')
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('¿Está seguto?')"]) !!}
+                        {!! Form::open(['route' => ['dependenciasfederales.destroy', $dependenciaFederal->id], 'method' => 'delete','class'=>'delete-form']) !!}
+
+                            <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="la dependencia {{$dependenciaFederal->nombre}}">
+                                <i class="fa fa-trash"></i></button>
+                        {!! Form::close() !!}
                     @endcan
                 </div>
-                {!! Form::close() !!}
+
             </td>
         </tr>
     @endforeach

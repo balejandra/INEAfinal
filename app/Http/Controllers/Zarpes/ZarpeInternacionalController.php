@@ -51,26 +51,32 @@ class ZarpeInternacionalController extends Controller
         if (auth()->user()->hasPermissionTo('listar-zarpes-todos')) {
             $data = PermisoZarpe::where('descripcion_navegacion_id', 4)->get();
             return view('zarpes.zarpe_internacional.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
+
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-generados')) {
             $user = auth()->id();
             $data = PermisoZarpe::where('user_id', $user)->where('descripcion_navegacion_id', 4)->get();
             return view('zarpes.zarpe_internacional.index')->with('permisoZarpes', $data)->with('titulo', $this->titulo);
+
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
-            $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->get();
+            $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->where('habilitado',true)->get();
             $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id', $capitania)->where('descripcion_navegacion_id', 4)->get();
             $establecimiento = EstablecimientoNautico::select('id')->whereIn('capitania_id', $capitania)->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id', 4)->get();
             return view('zarpes.zarpe_internacional.indexcapitan')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)
                 ->with('permisoDestinoZarpes', $datazarpedestino)->with('titulo', $this->titulo);
+
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
-            $establecimiento = CapitaniaUser::select('establecimiento_nautico_id')->where('user_id', $user)->where('establecimiento_nautico_id','<>',null)->get();
+            $establecimiento = CapitaniaUser::select('establecimiento_nautico_id')->where('user_id', $user)
+                ->where('establecimiento_nautico_id','<>',null)
+                ->where('habilitado',true)
+                ->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id', 4)->get();
-
             return view('zarpes.zarpe_internacional.indexcomodoro')
                 ->with('permisoOrigenZarpes', $datazarpeorigen)->with('titulo', $this->titulo);
+
         } else {
             return view('unauthorized');
         }
@@ -612,75 +618,102 @@ class ZarpeInternacionalController extends Controller
             Flash::error('Debe indicar los equipos que posee a bordo, por favor verifique.');
             return redirect()->route('permisoszarpes.createStepSeven');
         } else {
-            $solicitud = json_decode($request->session()->get('solicitud'), true);
 
+            $bandera=true;
 
-            $codigo = $this->codigo($solicitud);
+            try {
+                DB::beginTransaction();
+                //SOlicitud de zarpe
+                $solicitud = json_decode($request->session()->get('solicitud'), true);
+                $codigo = $this->codigo($solicitud);
+                $solicitud['nro_solicitud'] = $codigo;
+                $saveSolicitud = PermisoZarpe::create($solicitud);
 
-            $solicitud['nro_solicitud'] = $codigo;
-
-            $saveSolicitud = PermisoZarpe::create($solicitud);
-
-            $tripulantes = $request->session()->get('tripulantes');
-            for ($i = 0; $i < count($tripulantes); $i++) {
-                $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
-                $trip = TripulanteInternacional::create($tripulantes[$i]);
-
-            }
-
-            $pasajeros = $request->session()->get('pasajeros');
-           // print_r($pasajeros);
-
-            if ($pasajeros[0] != 0) {
-                for ($i = 0; $i < count($pasajeros); $i++) {
-                    $pasajeros[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
-                    $pass = Pasajero::create($pasajeros[$i]);
-                    // print_r($pasajeros[$i]); echo "<br>";
+                if($saveSolicitud==""){
+                    $bandera=false;
                 }
-            }
 
-            $listadoEquipos = ["permiso_zarpe_id" => '', "equipo_id" => '', "cantidad" => '', "otros" => '', "valores_otros" => ''];
 
-            $otros = [];
-            $valoresOtros = [];
+                //Tripulantes
+                $tripulantes = $request->session()->get('tripulantes');
+                for ($i = 0; $i < count($tripulantes); $i++) {
+                    $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
+                    $trip = TripulanteInternacional::create($tripulantes[$i]);
 
-            $listEq = [];
-            $i = 0;
-            $j = 0;
+                }
 
-            foreach ($equipos as $equipoX) {
-                foreach ($equipo as $equip) {
-                    if ($equipoX->id == $equip) {
+                //Pasajeros
+                $pasajeros = $request->session()->get('pasajeros');
 
-                        if ($request->input($equip . 'selected') == true) {
-                            $listadoEquipos["permiso_zarpe_id"] = $saveSolicitud->id;
-                            $listadoEquipos["equipo_id"] = $equip;
-                            if ($equipoX->cantidad == true) {
-                                $listadoEquipos["cantidad"] = $request->input($equip . 'cantidad');
-
-                            } else {
-                                $listadoEquipos["cantidad"] = '';
-                            }
-
-                            if ($equipoX->otros != 'ninguno') {
-                                $listadoEquipos["otros"] = $request->input($equip . 'otros');
-                                $listadoEquipos["valores_otros"] = $request->input($equip . 'valores_otros');
-                            } else {
-                                $listadoEquipos["otros"] = "";
-                                $listadoEquipos["valores_otros"] = "";
-
-                            }
-
-                            $listEq[$i] = $listadoEquipos;
-                            $i++;
-                            EquipoPermisoZarpe::create($listadoEquipos);
-
-                            $listadoEquipos = ["permiso_zarpe_id" => '', "equipo_id" => '', "cantidad" => '', "otros" => '', "valores_otros" => ''];
+                    if (is_array($pasajeros) && count($pasajeros)>0) {
+                        for ($i = 0; $i < count($pasajeros); $i++) {
+                            $pasajeros[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
+                            $pass = Pasajero::create($pasajeros[$i]);
+                            // print_r($pasajeros[$i]); echo "<br>";
                         }
+                    }
 
+
+                //Equipos
+                    
+                $listadoEquipos = ["permiso_zarpe_id" => '', "equipo_id" => '', "cantidad" => '', "otros" => '', "valores_otros" => ''];
+
+                $otros = [];
+                $valoresOtros = [];
+
+                $listEq = [];
+                $i = 0;
+                $j = 0;
+
+                foreach ($equipos as $equipoX) {
+                    foreach ($equipo as $equip) {
+                        if ($equipoX->id == $equip) {
+
+                            if ($request->input($equip . 'selected') == true) {
+                                $listadoEquipos["permiso_zarpe_id"] = $saveSolicitud->id;
+                                $listadoEquipos["equipo_id"] = $equip;
+                                if ($equipoX->cantidad == true) {
+                                    $listadoEquipos["cantidad"] = $request->input($equip . 'cantidad');
+
+                                } else {
+                                    $listadoEquipos["cantidad"] = '';
+                                }
+
+                                if ($equipoX->otros != 'ninguno') {
+                                    $listadoEquipos["otros"] = $request->input($equip . 'otros');
+                                    $listadoEquipos["valores_otros"] = $request->input($equip . 'valores_otros');
+                                } else {
+                                    $listadoEquipos["otros"] = "";
+                                    $listadoEquipos["valores_otros"] = "";
+
+                                }
+
+                                $listEq[$i] = $listadoEquipos;
+                                $i++;
+                                EquipoPermisoZarpe::create($listadoEquipos);
+
+                                $listadoEquipos = ["permiso_zarpe_id" => '', "equipo_id" => '', "cantidad" => '', "otros" => '', "valores_otros" => ''];
+                            }
+
+                        }
                     }
                 }
-            }
+
+                 // printf('Bandera::'.$bandera);
+                if($bandera==true){
+                    DB::commit();
+                }else{
+                    DB::rollback();
+                    Flash::error('Ha ocurrido un error al guardar la solicitud, algunos datos no se guardaron.');
+                }
+                
+
+            } catch (\Exception $e) {
+                DB::rollback();
+                throw $e;
+                Flash::error('Ha ocurrido un error al guardar la solicitud, los datos no se guardaron.');
+
+            }    
 
 
             $capOrigin = $this->SendMail($saveSolicitud->id, 1);

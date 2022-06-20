@@ -15,7 +15,7 @@ class VerificationRole extends Middleware
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        if (is_null(\Spatie\Permission\Models\Role::where('name','Usuario web')->first())) {
+        if (is_null(\Spatie\Permission\Models\Role::where('id',2)->first())) {
             return redirect('error');
         }
         return $next($request);

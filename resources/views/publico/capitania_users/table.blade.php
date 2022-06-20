@@ -4,6 +4,7 @@
         <th>Cargo</th>
         <th>Usuario</th>
         <th>Capitanía</th>
+        <th>Habilitado</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -17,6 +18,11 @@
         @if (isset($capitaniaUser->establecimientos->nombre))<br>
            Establecimiento Náutico: {{ $capitaniaUser->establecimientos->nombre }}
             @endif</td>
+            @if ( $capitaniaUser->habilitado ==true)
+                <td>SI</td>
+            @else
+                <td>NO</td>
+            @endif
             <td>
                 @can('consultar-usuarios-capitanias')
                     <a class="btn btn-sm btn-success" href="  {{ route('capitaniaUsers.show', [$capitaniaUser->id]) }}">
@@ -29,11 +35,11 @@
                     </a>
                 @endcan
                 @can('eliminar-usuarios-capitanias')
+
                     <div class='btn-group'>
-                        {!! Form::open(['route' => ['capitaniaUsers.destroy', $capitaniaUser->id], 'method' => 'delete']) !!}
-
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Realmente desea eliminar el usuario ".$capitaniaUser->user->email." de la Capitanía ".$capitaniaUser->capitania->nombre." ?')"]) !!}
-
+                        {!! Form::open(['route' => ['capitaniaUsers.destroy', $capitaniaUser->id], 'method' => 'delete','class'=>'delete-form']) !!}
+                        <button type="submit" class="btn btn-sm btn-danger" id="eliminar" data-mensaje="el Usuario {{$capitaniaUser->user->email}}">
+                            <i class="fa fa-trash"></i></button>
                         {!! Form::close() !!}
                     </div>
                 @endcan

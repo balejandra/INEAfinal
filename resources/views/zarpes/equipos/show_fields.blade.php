@@ -17,7 +17,7 @@
         @endif
     </tr>
     <tr>
-        <th class="bg-light">Nombre</th>
+        <th class="bg-light">Otros</th>
         <td>{{ $equipo->otros }}</td>
     </tr>
 

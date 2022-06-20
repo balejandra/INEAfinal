@@ -7,14 +7,17 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">{{$titulo}}</li>
+                <li class="breadcrumb-item">Permisos de {{$titulo}}</li>
             </ol>
         </nav>
     </div>
     </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
+            <div >
             @include('flash::message')
+
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -23,15 +26,15 @@
                             <strong>Solicitud de Permisos de {{$titulo}} | Paso {{$paso}}</strong>
 
                             <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm" href="{{route('permisoszarpes.index')}}">Cancelar</a>
+                                <a class="btn btn-primary btn-sm"
+                                   href="{{route('permisoszarpes.index')}}">Cancelar</a>
 
                             </div>
 
                         </div>
-
                         <div class="card-body" style="min-height: 350px;">
 
-                            @include('zarpes.permiso_zarpe.stepsIndicator')
+                            @include('zarpes.zarpe_internacional.stepsIndicator')
 
 
                             <form action="#" method="POST">
@@ -40,7 +43,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         @if ($errors->any())
-                                            <div id="ErrorsFlash" class="alert alert-danger">
+                                            <div  id="ErrorsFlash" class="alert alert-danger">
                                                 <ul>
                                                     @foreach ($errors->all() as $error)
                                                         <li>{{ $error }}</li>
@@ -50,19 +53,18 @@
                                         @endif
 
                                         @if (isset($msj))
-                                            <div  id="flashMsj" class="alert alert-danger">
+                                            <div id="flashMsj" class="alert alert-danger">
                                                 {{$msj}}
                                             </div>
                                         @endif
+                                        <div class="row px-5" id="msjMarino" data-asset="{{asset('images')}}">
 
-                                        <div class="row">
-                                            <div class="row px-5" id="msjMarino"  data-asset="{{asset('images')}}">
+                                        </div>
+                                        <div class="row margin">
 
-                                            </div>
-                                            <div class="col-md-3">
-
-                                                <div class="form-group form-check form-switch ">
-                                                     <label>Función del tripulante:</label>
+                                            <div class="col-sm-2 px-1">
+                                                <div class="form-group">
+                                                    <label>Función:</label>
                                                     <select id="funcion" name="funcion" class="form-control custom-select">
                                                         <option value="">Seleccione</option>
                                                         <option value="Capitán">Capitán</option>
@@ -72,45 +74,107 @@
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-3">
+
+                                            <div class="col-sm-2 px-1">
                                                 <div class="form-group">
-                                                    <label for="title">Cédula:</label>
-                                                    <input type="text" class="form-control" id="cedula" name="cedula"
-                                                           maxlength="10" onKeyDown="return soloNumeros(event)">
+                                                    <label for="title">Tipo Documento:</label>
+                                                    {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2  px-1">
+                                                <div class="form-group">
+                                                    <label for="title">Cédula/Pasaporte:</label>
+                                                    <input type="text" class="form-control" id="nrodoc" name="nrodoc" maxlength="15">
                                                 </div>
                                             </div>
 
 
+                                            <div class="col-sm-2  px-1 DatosRestantes">
+                                                <div class="form-group" >
+                                                    <label for="title">Nombres:</label>
+                                                    <input type="text" class="form-control" id="nombres" name="nombres"  onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2  px-1 DatosRestantes">
+                                                <div class="form-group">
+                                                    <label for="title">Apellidos:</label>
+                                                    <input type="text" class="form-control" id="apellidos" name="apellidos" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
+                                                </div>
+                                            </div>
 
 
-                                            <div class="col-md-3 mt-4">
-                                                <button type="button" class="btn btn-primary" onclick="validacionMarino()">
+                                            <div class="col-sm-2  px-1 DatosRestantes ">
+                                                <div class="form-group">
+                                                    <label for="title">Fecha de Nacimiento:</label>
+                                                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2  px-1 DatosRestantes ">
+                                                <div class="form-group">
+                                                    <label for="title">Sexo:</label>
+                                                    <select name="sexo" id="sexo" class="form-control custom-select">
+                                                        <option value="M">M</option>
+                                                        <option value="F">F</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4 DatosRestantes">
+                                                <div class="form-group">
+                                                    <label for="title">Documento de Acreditación:</label>
+                                                    <input type="file" class="form-control" id="documentoAcreditacion" name="documentoAcreditacion"  accept=".pdf, .jpg, .png" onchange="validarExtension('documentoAcreditacion','msjMarino')" >
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 DatosRestantes">
+                                                <div class="form-group">
+                                                    <label for="title">Pasaporte:</label>
+                                                    <input type="file" class="form-control" id="doc" name="doc" accept=".pdf, .jpg, .png" onchange="validarExtension('doc', 'msjMarino')">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-1 my-2 text-center">
+                                                <br>
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="AddPasportsMarinosZN()">
                                                     Agregar
                                                 </button>
                                             </div>
+                                        </div>
+
+
+                                        <div class="row text-center ">
 
                                         </div>
 
-                                        <div class="col-md-12 my-2">
-                                            <b>
-                                            Cantidad mínima de tripulantes: <span id="cantTripulantes">{{$validacion['cant_tripulantes']}}</span>
-                                            </b>
-                                        </div>
-                                        <div class="row px-3">
-                                                <table class="table table-bordered example1" id="example1" style="width:100%">
+                                        <div class="row mt-3 px-3">
+                                            <div id="cantTripulantes">
+                                                @php
+                                                    $validacion= json_decode(session('validacion'));
+                                                     $cantTrip=$validacion->cant_tripulantes;
+
+                                                @endphp
+
+                                                Cantidad mínima de tripulantes abordo: {{$cantTrip}}
+                                            </div>
+
+                                                <table class="table table-bordered example1" id="example2" style="width:100%">
                                                     <thead>
                                                     <tr>
                                                         <th>Función</th>
-                                                        <th>Cédula</th>
+                                                        <th>Cédula / Pasaporte</th>
                                                         <th>Nombres y Apellidos</th>
-                                                        <th>Fecha Emisión</th>
-                                                        <th>Tipo Documento</th>
-                                                        <th>Documento</th>
-                                                        <th  class="text-center">Eliminar</th>
+                                                        <th>Fecha de nacimiento</th>
+                                                        <th>Sexo</th>
+                                                        <th>Documentos</th>
+                                                        <th>Acciones</th>
+
                                                     </tr>
                                                     </thead>
 
-                                                    <tbody id="marinos">
+                                                    <tbody id="marinos" data-rimg="{{asset('documentos/permisozarpe/')}}">
 
                                                     @if(isset($tripulantes))
 
@@ -121,26 +185,43 @@
                                                                 $cant=0;
 
                                                             @endphp
+                                                            <tr id="nodataTrip">
+                                                                <td colspan="7" class="text-center" id="nodata">Sin
+                                                                    registros para mostrar
+                                                                </td>
+                                                            </tr>
                                                         @else
 
                                                             @php
                                                                 $cant=count($tripulantes);
                                                             @endphp
 
-                                                            @foreach($tripulantes as $key => $trip)
+                                                            @foreach($tripulantes as $trip)
 
-                                                                <tr id="trip{{$trip['cedula']}}">
-                                                                    <td>{{$trip["funcion"]}}</td>
-                                                                    <td>{{$trip["cedula"]}}</td>
-                                                                    <td>{{$trip["nombre"]}}</td>
-                                                                    @php
-                                                                        list($ano, $mes, $dia)=explode('-', $trip["fecha_emision"]);
-                                                                        $emision=$dia."-".$mes."-".$ano;
-                                                                    @endphp
-                                                                    <td>{{$emision}}</td>
-                                                                    <td>{{$trip["solicitud"]}}</td>
-                                                                    <td>{{$trip["documento"]}}</td>
-                                                                    <td class="text-center"><a href="#" onclick="openModal({{$trip['cedula']}})"><i class="fa fa-trash" title="Eliminar"></i></td>
+                                                                <tr id='{{$trip["nro_doc"]}}'>
+
+                                                                    <td> {{$trip["funcion"]}} </td>
+
+                                                                    <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
+                                                                    <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
+                                                                    <td>{{$trip["fecha_nacimiento"]}}</td>
+                                                                    <td>{{$trip["sexo"]}}</td>
+                                                                    <td>  
+                                                                        @if($trip["doc"]!="")
+                                                                        <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$trip['doc'])}}" target="_blank"> Pasaporte </a>
+                                                                        @endif
+                                                                        @if($trip["documento_acreditacion"]!="")
+                                                                            <br>                                                                           
+                                                                            <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$trip['documento_acreditacion'])}}" target="_blank"> Doc. Acreditación. </a>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#"
+                                                                           onclick="openModalZN('{{$trip["nro_doc"]}}')">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
+
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -150,35 +231,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}" method="POST">
+                                    <form action="{{ route('permisoszarpes.permissionCreateStepFive') }}"
+                                          method="POST">
                                         @csrf
 
-                                        <div id="dataMarinos" data-cantMar="{{$cant ?? 0}}"
-                                             data-cantMaxima="{{$validacion['cant_pasajeros']}}" data-cantMinima="$validacion['cant_tripulantes']}}">
-                                            @if(isset($cant) && $cant!=0)
-                                                @php  $count=0; @endphp
-                                                @foreach($tripulantes as $trip)
-                                                    @php $count++; $id="contentMar".$count; @endphp
-                                                    <div id="{{$id}}">
-                                                        <input type="hidden" name="ids[]"
-                                                               value="{{$trip['ctrl_documento_id']}}"><input
-                                                            type="hidden" name="capitan[]" value="SI">
-                                                        <input type="hidden" name="cedula[]"
-                                                               value="{{$trip['cedula']}}">
-                                                        <input type="hidden" name="nombre[]"
-                                                               value="{{$trip['nombre']}}">
-                                                        <input type="hidden" name="fechaVence[]"
-                                                               value="{{$trip['fecha_vencimiento']}}">
-                                                        <input type="hidden" name="fechaEmision[]"
-                                                               value="{{$trip['fecha_emision']}}">
 
-                                                        <input type="hidden" name="documento[]"
-                                                               value="{{$trip['documento']}}">
-                                                    </div>
-
-                                                @endforeach
-                                            @endif
-                                        </div>
                                         <div class="card-footer text-right">
                                             <div class="row">
                                                 <div class="col text-left">
@@ -200,27 +257,29 @@
         </div>
     </div>
 
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
-    role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-                <button type="button" class="close" aria-label="Close" onclick="closeModal()">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ¿Realmente desea eliminar al tripulante (<span id='ci'></span>) seleccionado?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cerrar</button>
-                <button type="button" id="btnDelete" class="btn btn-primary" data-ced='' onclick="eliminarTrip()">Eliminar</button>
+    <div class="modal fade" id="modalDeleteTrip" tabindex="-1" aria-labelledby="modalDeleteTripLabel" aria-modal="true"
+         role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteTripLabel">Confirmar</h5>
+                    <button type="button" class="close" aria-label="Close" onclick="closeModalZN()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Realmente desea eliminar al tripulante (<span id='ci'></span>) seleccionado?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModalZN()">Cerrar</button>
+                    <button type="button" id="btnDelete" class="btn btn-primary" data-ced=''
+                            onclick="eliminarTrip()">Eliminar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+    <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+
 
 @endsection

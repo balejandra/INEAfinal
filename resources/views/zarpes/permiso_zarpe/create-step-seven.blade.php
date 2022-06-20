@@ -31,7 +31,7 @@
 
                             @include('zarpes.permiso_zarpe.stepsIndicator')
 
-                            <form action="{{ route('permisoszarpes.store') }}" method="POST">
+                            <form action="{{ route('permisoszarpes.store') }}" method="POST" id="formsolicitud">
                                 @csrf
                                 <div class="card">
                                     <div class="card-body">
@@ -76,24 +76,23 @@
                                                 </div>
                                             </div>
                                             <br>
-                                            <style>
-                                                table.dataTable {
-                                                    margin: 0 auto;
-                                                }
-                                            </style>
+                                            <div class="row justify-content-center">
+                                            <div class="col div-equip">
+                                            <div class="row border bg-light text-th ">
+                                                <div class="col-md-6 col-sm-6 p-2 border-end text-center">
+                                                 Equipo
+                                                </div>
+                                                <div class="col-md-3 col-sm-3 p-2 border-end text-center">
+                                                    Cantidad
+                                                </div>
+                                                <div class="col-md-3 col-sm-3 p-2 text-center">
+                                                    Otros
+                                                </div>
+                                            </div>
 
-                                            <table class="table table-striped table-bordered table-grow" id="table-nooptions" style="width: 60%">
-                                                <thead>
-                                                <tr>
-                                                    <th>Equipo</th>
-                                                    <th style="width: 20%">Cantidad</th>
-                                                    <th style="width: 30%">Otros</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
                                                 @foreach($equipos as $equipo)
-                                                    <tr>
-                                                        <td>
+                                                    <div class="row border">
+                                                        <div class=" col-md-6 col-sm-6 p-2 border-end">
                                                             <div class="form-check form-switch col-12">
                                                                 <input class="form-check-input equipo {{$equipo->equipo}}" type="checkbox"
                                                                        name="equipo[] " id='{{$equipo->id}}' value="{{$equipo->id}}"
@@ -109,69 +108,60 @@
                                                                        hidden>
 
                                                             </div>
-                                                        </td>
+                                                        </div>
 
-                                                        <td>
+                                                        <div class="col-md-3 col-sm-3 p-2 border-end">
                                                             <div id="div_cant{{$equipo->id}}" class="equipostab">
-                                                            @if ($equipo->cantidad==true)
-                                                                <div class=" col-12 ">
-                                                                    <input type="number" class="form-control"
-                                                                           id="{{$equipo->id}}cantidad"
-                                                                           name="{{$equipo->id}}cantidad">
-                                                                </div>
-                                                            @else
-                                                                <div class=" col-12 ">
-                                                                    NO APLICA
-                                                                </div>
-                                                            @endif
+                                                                @if ($equipo->cantidad==true)
+                                                                    <div class=" col-12 ">
+                                                                        <input type="number" class="form-control" id="{{$equipo->id}}cantidad"
+                                                                               name="{{$equipo->id}}cantidad" placeholder="Cantidad" >
+                                                                    </div>
+                                                                @else
+                                                                    <div class=" col-12 ">
+                                                                        NO APLICA
+                                                                    </div>
+                                                                @endif
                                                             </div>
-                                                        </td>
-
-                                                        <td>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-3 p-2">
                                                             <div id="valores_otros{{$equipo->id}}" class="equipostab">
-                                                            @if($equipo->otros!='ninguno')
+                                                                @if($equipo->otros!='ninguno')
 
 
-                                                                <div class=" form-inline">
-                                                                    <label for="inputEmail4" class="col-sm-12"
-                                                                           style="text-transform: uppercase;">
-                                                                        @if($equipo->otros=="fecha_ultima_inspeccion")
-                                                                            Fecha de última inspección
+                                                                    <div class=" form-inline">
+                                                                        <label for="inputEmail4" class="col-sm-12"
+                                                                               style="text-transform: uppercase;">
+                                                                            @if($equipo->otros=="fecha_ultima_inspeccion")
+                                                                                Fecha de última inspección:
 
-                                                                            @php
-                                                                                $type="date";
-                                                                                $max="max=".date('Y-m-d').""
-                                                                            @endphp
+                                                                                @php
+                                                                                    $type="date";
+                                                                                    $max="max=".date('Y-m-d').""
+                                                                                @endphp
 
-                                                                        @else
-                                                                            {{$equipo->otros}}
-                                                                            @php
-                                                                                $type="text";
-                                                                                $max="";
-                                                                            @endphp
-
-                                                                        @endif
-
-
-                                                                    </label>
-                                                                    <input type="{{$type}}"
-                                                                           class="form-control col-sm-7"
-                                                                           id="{{$equipo->id}}valores_otros"
-                                                                           name="{{$equipo->id}}valores_otros" {{$max}} >
-                                                                    <input type="text" class="form-control col-sm-7"
-                                                                           id="otros" name="{{$equipo->id}}otros"
-                                                                           value="{{$equipo->otros}}" hidden>
-                                                                </div>
-
-                                                            @endif
+                                                                            @else
+                                                                                {{$equipo->otros}}:
+                                                                                @php
+                                                                                    $type="text";
+                                                                                    $max="";
+                                                                                @endphp
+                                                                            @endif
+                                                                        </label>
+                                                                        <input type="{{$type}}"
+                                                                               class="form-control col-sm-7" id="{{$equipo->id}}valores_otros"
+                                                                               name="{{$equipo->id}}valores_otros" {{$max}}>
+                                                                        <input type="text" class="form-control col-sm-7"
+                                                                               id="otros" name="{{$equipo->id}}otros"
+                                                                               value="{{$equipo->otros}}" hidden>
+                                                                    </div>
+                                                                @endif
                                                             </div>
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                    </div>
                                                 @endforeach
-                                                </tbody>
-                                            </table>
                                             </div>
-                                        </div>
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="card-footer text-right">
@@ -181,9 +171,10 @@
                                                class="btn btn-primary pull-right">Anterior</a>
                                         </div>
                                         <div class="col text-right">
-                                            <button type="submit" id="solicitud" class="btn btn-primary">Generar solicitud</button>
+                                            <button type="submit" id="solicitud" class="btn btn-primary" >Generar solicitud</button>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </form>
                         </div>

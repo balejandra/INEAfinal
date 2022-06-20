@@ -32,7 +32,12 @@
                     Fecha de Solicitud
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{ $permisoZarpe->created_at}}
+                    @php 
+                        $fecha=explode(' ',$permisoZarpe->created_at);
+                        $f=explode('-',$fecha[0]);
+                        $createdAt=$f[2].'/'.$f[1].'/'.$f[0]." ".$fecha[1];
+                    @endphp
+                    {{  $createdAt}}
                 </div>
             </div>
         </div>
@@ -128,7 +133,12 @@
                     Fecha y Hora Salida
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{$permisoZarpe->fecha_hora_salida }}
+                @php 
+                        $fechaS=explode(' ',$permisoZarpe->fecha_hora_salida);
+                        $fS=explode('-',$fechaS[0]);
+                        $fecha_hora_salida=$fS[2].'/'.$fS[1].'/'.$fS[0]." ".$fechaS[1];
+                    @endphp
+                    {{$fecha_hora_salida}}
                 </div>
             </div>
         </div>
@@ -140,7 +150,12 @@
                     Fecha y Hora Regreso
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    {{$permisoZarpe->fecha_hora_regreso }}
+                    @php 
+                        $fechaR=explode(' ',$permisoZarpe->fecha_hora_regreso);
+                        $fR=explode('-',$fechaR[0]);
+                        $fecha_hora_regreso=$fR[2].'/'.$fR[1].'/'.$fR[0]." ".$fechaR[1];
+                    @endphp
+                    {{$fecha_hora_regreso }}
                 </div>
                 <div class="col-md-3 col-sm-3 bg-light p-2 text-th">
                     Estatus
@@ -178,22 +193,36 @@
 
     <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
-        <th>Nombres y Apellidos</th>
-        <th>Cédula</th>
-        <th>Documento</th>
-        <th>Posición</th>
-        <th>Fecha Vencimiento</th>
         <th>Cargo que Desempeña</th>
+        <th>Nombres y Apellidos</th>
+        <th>Cédula/Pasaporte</th>
+        <th>Fecha de nacimiento</th>
+        <th>Sexo</th>
+        <th>Documentos</th>
+        
         </thead>
         <tbody>
         @foreach($tripulantes as $tripulante)
             <tr>
-                <td>{{$tripulante->nombre}} {{$tripulante->apellido}} </td>
-                <td>{{$tripulante->ci}}</td>
-                <td>{{$tripulante->solicitud}}</td>
-                <td>{{$tripulante->documento}} </td>
-                <td>{{$tripulante->fecha_vencimiento}} </td>
                 <td>{{$tripulante->funcion}} </td>
+                <td>{{$tripulante->nombres}} {{$tripulante->apellidos}} </td>
+                <td>{{$tripulante->tipo_doc}} {{$tripulante->nro_doc}}</td>
+                <td>{{$tripulante->fecha_nacimiento}}</td>
+                <td>{{$tripulante->sexo}} </td>
+                <td>
+                    @if($tripulante->doc!="")
+                    <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->doc)}}" target="_blank"> Pasaporte </a>
+                     
+                    @endif
+                    @if($tripulante->documento_acreditacion!="")
+                    <br>
+                    <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->documento_acreditacion)}}" target="_blank"> Documento de acreditación </a>
+ 
+                    @endif
+                </td>
+                
+
+            </tr>
         @endforeach
         </tbody>
     </table>

@@ -8,6 +8,12 @@ use OwenIt\Auditing\Models\Audit;
 
 class AuditsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:listar-auditoria', ['only'=>['index'] ]);
+        $this->middleware('permission:consultar-auditoria', ['only'=>['show'] ]);
+    }
+
     /**
      * Display a listing of the Auditable.
      *
@@ -17,10 +23,15 @@ class AuditsController extends Controller
      */
     public function index(Request $request)
     {
-        $auditables =Audit::all();
-//dd($auditables);
-        return view('publico.audits.index')
-            ->with('auditables', $auditables);
+        if (auth()->user()->hasPermissionTo('listar-auditoria')) {
+            $auditables =Audit::all();
+
+            return view('publico.audits.index')
+                ->with('auditables', $auditables);
+        }else{
+            return view('unauthorized');
+        }
+
     }
 
     /**

@@ -10,12 +10,16 @@
     </tr>
     <tr>
         <th class="bg-light">Creado</th>
-        <td>{{ $status->created_at }}</td>
+        <td>
+        @if ($status->created_at)
+           {{date_format( $status->created_at,'d-m-Y') }}
+        @endif
+        </td>
     </tr>
-    
+
     </tbody>
 </table>
 <div class="form-group col-sm-12 text-center">
-        
+
         <a href="{{ route('status.index') }}" class="btn  btncancelarZarpes">Cancelar</a>
     </div>

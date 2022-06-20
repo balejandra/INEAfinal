@@ -28,7 +28,7 @@ class AddEstablecimientoNauticoIdToCapitaniaUserTable extends Migration
     public function down()
     {
         Schema::table('capitania_user', function (Blueprint $table) {
-            //
+            $table->dropColumn('establecimiento_nautico_id');
         });
     }
 }

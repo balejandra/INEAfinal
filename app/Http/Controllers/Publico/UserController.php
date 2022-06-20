@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Publico;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Publico\CreateUserRequest;
 use App\Http\Requests\Publico\UpdateUserRequest;
 use App\Models\Publico\CapitaniaUser;
 use App\Models\Publico\Menu_rol;
 use App\Models\Publico\Saime_cedula;
 use App\Models\User;
-use App\Models\Zarpes\EstablecimientoNautico;
 use App\Repositories\Publico\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -26,8 +24,6 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepo)
     {
         $this->userRepository = $userRepo;
-
-
         $this->middleware('permission:listar-usuario', ['only'=>['index'] ]);
         $this->middleware('permission:crear-usuario', ['only'=>['create','store']]);
         $this->middleware('permission:editar-usuario', ['only'=>['edit','update']]);
@@ -78,7 +74,8 @@ class UserController extends Controller
     {
         $validated= $request->validate([
             'nombres' => 'required|string|max:255',
-            'email' => 'required|string|email:rfc,dns|max:255|unique:users',
+           // 'email' => 'required|string|email:rfc,dns|max:255|unique:users',
+            'email' => 'required|string|max:255|unique:users',
             'password' => [
                 'required',
                 'max:50',
@@ -164,7 +161,8 @@ class UserController extends Controller
     {
         $validated= $request->validate([
             'nombres' => 'required|string|max:255',
-            'email' => 'required|string|email:rfc,dns|max:255',
+           // 'email' => 'required|string|email:rfc,dns|max:255',
+            'email' => 'required|string|max:255',
         ]);
 
 
@@ -174,7 +172,8 @@ class UserController extends Controller
         if ($request->password_change) {
             $validated= $request->validate([
                 'nombres' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
+               // 'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
+                'email' => ['required', 'string', 'max:255'],
                 'password' => [
                     'required',
                     'max:50',
@@ -252,7 +251,7 @@ class UserController extends Controller
 
 
     public function indexUserDeleted(){
-        $users =User::onlyTrashed()->where('tipo_usuario','interno')->get();
+        $users =User::onlyTrashed()->where('tipo_usuario','Usuario Interno')->get();
         //dd($users);
 
         return view('publico.users.user_delete')

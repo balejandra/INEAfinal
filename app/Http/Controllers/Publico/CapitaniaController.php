@@ -6,14 +6,12 @@ namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Publico\CreateCapitaniaRequest;
 use App\Http\Requests\Publico\UpdateCapitaniaRequest;
-//use App\Models\Publico\Coordenas_capitania;
 use App\Models\Publico\Capitania;
 use App\Models\Publico\CapitaniaUser;
 use App\Models\User;
 use App\Repositories\Publico\CapitaniaRepository;
 use Illuminate\Http\Request;
 use App\Models\Publico\CoordenadasCapitania;
-use DateTime;
 use Flash;
 use Response;
 use Spatie\Permission\Models\Role;
@@ -134,7 +132,7 @@ class CapitaniaController extends AppBaseController
 
         $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
 
-        $capitan=CapitaniaUser::where('capitania_id', $id)->join('users',  'users.id', '=','capitania_user.user_id',)->get();
+        $capitan=CapitaniaUser::where('capitania_id', $id)->join('users',  'users.id', '=','capitania_user.user_id')->get();
         if (empty($capitania)) {
             //Flash::error('Capitania no encontrada');
 
@@ -292,17 +290,14 @@ class CapitaniaController extends AppBaseController
         $capitania = $this->capitaniaRepository->find($id);
 
         if (empty($capitania)) {
-        //    Flash::error('Capitania no encontrada');
+           Flash::error('Capitania no encontrada');
 
-            return redirect(route('capitanias.index'))->with('danger','Capitania no encontrada'); ;
+            return redirect(route('capitanias.index'));
         }
 
         $this->capitaniaRepository->delete($id);
+        Flash::success('Capitania eliminada con éxito.');
 
-
-
-        //Flash::success('Capitania eliminada con éxito.');
-
-        return redirect(route('capitanias.index'))->with('success','Capitanía eliminada con éxito.'); ;
+        return redirect(route('capitanias.index'));
     }
 }

@@ -15,7 +15,7 @@
 
     <tr>
         <th class="bg-light">Creado</th>
-        <td>{{ $tablaMando->created_at }}</td>
+        <td>{{ date_format($tablaMando->created_at,'d-m-Y') }}</td>
     </tr>
     </tbody>
 </table>
