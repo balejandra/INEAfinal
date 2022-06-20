@@ -660,10 +660,11 @@ class PermisoZarpeController extends Controller
        $request->session()->put('validacion', json_encode($validation));
         if (is_array($tripulantes) && (count($tripulantes) >= $validation['cant_tripulantes'] && count($tripulantes) <= $validation['cant_pasajeros'])) {
              $capitan=0;
+              
             for ($i=0; $i < count($tripulantes); $i++) {
-                $indice=array_search("Capitán",$tripulantes[$i],false);
-
-                if($indice!=false){
+               // $indice=array_search("Capitán",$tripulantes[$i],false);
+               // print_r($tripulantes[$i]['funcion'] );
+                if($tripulantes[$i]['funcion'] =="Capitán"){
                     $capitan++;
                 }
             }
@@ -676,6 +677,7 @@ class PermisoZarpeController extends Controller
                 $mensj ="Debe asignar un capitán para esta embarcación, por favor verifique";
                 return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj)->with('titulo', $this->titulo);
             }else{
+                print_r($capitan);
                 $mensj ="No puede asignar más de un capitán para la embarcación";
                 return view('zarpes.permiso_zarpe.create-step-five')->with('paso', $this->step)->with('tripulantes', $tripulantes)->with('validacion', $validation)->with('msj', $mensj)->with('titulo', $this->titulo);
             }
