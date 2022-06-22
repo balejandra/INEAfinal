@@ -198,6 +198,7 @@
         <th>Cédula/Pasaporte</th>
         <th>Fecha de nacimiento</th>
         <th>Sexo</th>
+        <th>Fecha de Emisión</th>
         <th>Documentos</th>
         
         </thead>
@@ -209,7 +210,12 @@
                 <td>{{$tripulante->tipo_doc}} {{$tripulante->nro_doc}}</td>
                 <td>{{$tripulante->fecha_nacimiento}}</td>
                 <td>{{$tripulante->sexo}} </td>
+                <td>{{$tripulante->fecha_emision}}</td>
+
                 <td>
+                @if ($tripulante->tipo_doc=='V')
+                    {{$tripulante->rango}}
+                @else
                     @if($tripulante->doc!="")
                     <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->doc)}}" target="_blank"> Pasaporte </a>
                      
@@ -219,6 +225,8 @@
                     <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->documento_acreditacion)}}" target="_blank"> Documento de acreditación </a>
  
                     @endif
+                @endif
+                   
                 </td>
                 
 

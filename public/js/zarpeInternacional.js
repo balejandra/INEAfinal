@@ -489,9 +489,9 @@ function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
 function AddPasportsMarinos(){
     let doc=document.getElementById('doc').files[0];
     let docAcreditacion=document.getElementById('documentoAcreditacion').files[0];
-console.log('documentoAcreditacion',documentoAcreditacion);
+ 
     let tipodoc=document.getElementById('tipodocZI').value;
-    console.log("tipoDOC", tipodoc);
+   
      switch(tipodoc){
         case 'P':
 
@@ -620,6 +620,7 @@ function getMarinosZI(pass) {
           //  alert(response);
             respuesta = JSON.parse(response);
 
+            console.log("RESPUESTAINT::",respuesta);
 
             var validacion=respuesta[1];
             switch(respuesta[3]){
@@ -648,7 +649,7 @@ function getMarinosZI(pass) {
 
                 break;
                 case 'FoundButAssigned':
-                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. '+nrodoc+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
+                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. / Pasaporte '+nrodoc+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
                 break;
                 case 'OK':
 

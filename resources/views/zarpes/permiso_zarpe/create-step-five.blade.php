@@ -168,6 +168,7 @@
                                                         <th>Nombres y Apellidos</th>
                                                         <th>Fecha de nacimiento</th>
                                                         <th>Sexo</th>
+                                                        <th>Fecha de emision</th>
                                                         <th>Documentos</th>
                                                         <th>Acciones</th>
 
@@ -206,14 +207,24 @@
                                                                     <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
                                                                     <td>{{$trip["fecha_nacimiento"]}}</td>
                                                                     <td>{{$trip["sexo"]}}</td>
-                                                                    <td>  
-                                                                        @if($trip["doc"]!="")
-                                                                        <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$trip['doc'])}}" target="_blank"> Pasaporte </a>
+                                                                    <td>{{$trip["fecha_emision"]}}</td>
+
+                                                                    <td> 
+                                                                       
+                                                                        @if($trip["tipo_doc"]=='V')
+                                                                            
+                                                                            {{$trip['documento_acreditacion']}}
+                                                                        @else
+                                                                            @if($trip["doc"]!="")
+                                                                            <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$trip['doc'])}}" target="_blank"> Pasaporte </a>
+                                                                            @endif
+                                                                            @if($trip["documento_acreditacion"]!="")
+                                                                                <br>                                                                           
+                                                                                <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$trip['documento_acreditacion'])}}" target="_blank"> Doc. Acreditación. </a>
+                                                                            @endif
+
                                                                         @endif
-                                                                        @if($trip["documento_acreditacion"]!="")
-                                                                            <br>                                                                           
-                                                                            <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$trip['documento_acreditacion'])}}" target="_blank"> Doc. Acreditación. </a>
-                                                                        @endif
+
                                                                     </td>
                                                                     <td>
                                                                         <a href="#"

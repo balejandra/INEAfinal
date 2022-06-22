@@ -1181,7 +1181,7 @@ function validacionMarino(){
                             msj.innerHTML='<div class="alert alert-danger">La vigencia de la licencia del tripulante C.I. '+cedula+' se encuentra vencida, por este motivo no puede tripular ninguna embarcación por el momento.</div>' ;
                         break;
                         case 'FoundButAssigned':
-                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. '+cedula+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
+                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I./Pasaporte '+cedula+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
                         break;
                         case 'FoundButMaxTripulationLimit':
                             msj.innerHTML='<div class="alert alert-danger">Ha alcanzado el máximo de personas abordo para la embarcación, no es posible agregar mas tripulantes o pasajeros.</div>' ;
@@ -1585,7 +1585,7 @@ function getMarinos(pass) {
 
                 break;
                 case 'FoundButAssigned':
-                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. '+nrodoc+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
+                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. / Pasaporte '+nrodoc+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
                 break;
                 case 'FoundInList':
                     msj.innerHTML='<div class="alert alert-danger">El tripulante con el número de documento '+nrodoc+' ya se encuentra en el listado, por favor verifique.</div>' ;
@@ -1614,7 +1614,7 @@ function getMarinos(pass) {
                         //let html="<tr id='"+pass['nro_doc']+"'><td> "+pass['funcion']+"</td><td>"+pass['tipo_doc']+"-"+pass['nro_doc']+"</td> <td>"+pass['nombres']+" "+pass['apellidos']+"</td> <td>"+pass['rango']+"</td> <td>"+pass['doc']+"</td><td>  <a href='#' onclick=\"openModalZI('"+pass['nro_doc']+"')\"><i class='fa fa-trash'></i></a></td></tr>";
                        // tabla.innerHTML+=html;
                          pass1=respuesta[0];
-                        // console.log("PASS1",pass1);
+                         console.log("PASS1",pass1);
                          pass1=pass1[pass1.length-1];
                          let ruta=tabla.getAttribute('data-rimg');  
                          $('#example2').DataTable({
@@ -1647,20 +1647,29 @@ function getMarinos(pass) {
                                  {"data":'fecha_nacimiento'},
                                 
                                  {"data":'sexo'},
+                                 {"data":'fecha_emision'},
                                  
                                  {
                                     "data":"doc",
                                         render: function ( data, type, row ) {
                                             // esto es lo que se va a renderizar como html
                                             let links='';
-                                            if(row.doc!=""){
-                                             links=`<a href='${ruta+"/"+row.doc}' class='document-link' title='Pasaporte' target='_blank'> Pasaporte </a>`;
+                                            if(row.tipo_doc=='V'){
+                                                links+=row.documento_acreditacion;
+                                            }else{
+                                                
+                                                if(row.doc!=""){
+                                                    links=`<a href='${ruta+"/"+row.doc}' class='document-link' title='Pasaporte' target='_blank'> Pasaporte </a>`;
+
+                                                }
+                                                   
+                                               if(row.documento_acreditacion!=''){
+                                                    links+=`<br><a href='${ruta+"/"+row.documento_acreditacion}' class='document-link' title='Documento de Acreditación' target='_blank'>Doc. de Acreditación</a>`;
+                                                }
 
                                             }
-                                            
-                                            if(row.documento_acreditacion!=''){
-                                                links+=`<br><a href='${ruta+"/"+row.documento_acreditacion}' class='document-link' title='Documento de Acreditación' target='_blank'>Doc. de Acreditación</a>`;
-                                            }
+
+                                           
                                             return links; 
                                         }
                                     },
