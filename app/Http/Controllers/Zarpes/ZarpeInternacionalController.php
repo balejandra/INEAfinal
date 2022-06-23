@@ -865,6 +865,8 @@ class ZarpeInternacionalController extends Controller
             $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
         } else {
             $emision=explode(' ',$InfoMarino[0]->fecha_emision);
+            list($ano, $mes, $dia) = explode("-", $emision[0]);
+            $emision[0]=$dia.'/'.$mes.'/'.$ano;
             /*$trip = [
             "permiso_zarpe_id" => '',
             "ctrl_documento_id" => $InfoMarino[0]->id,
@@ -887,8 +889,9 @@ class ZarpeInternacionalController extends Controller
                 "funcion" => $funcion,
                 "rango" =>$InfoMarino[0]->documento,
                 "doc" => $doc,
-                "documento_acreditacion"=>$docAcreditacion
-
+                "documento_acreditacion"=>$docAcreditacion,
+                "fecha_emision" =>$emision[0],
+                "solicitud"=>$InfoMarino[0]->solicitud,
             ];
 
             if(is_array($tripulantes)){
@@ -1024,7 +1027,8 @@ class ZarpeInternacionalController extends Controller
                 "rango" =>$rango,
                 "doc" => $doc,
                 "documento_acreditacion" => $docAcreditacion,
-
+                "fecha_emision" => "",
+                "solicitud"=> "",
                 ];
 
 

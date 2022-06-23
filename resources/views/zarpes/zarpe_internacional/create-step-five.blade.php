@@ -157,6 +157,7 @@
                                                         <th>Cédula / Pasaporte</th>
                                                         <th>Nombres y Apellidos</th>
                                                         <th>Rango</th>
+                                                        <th>Fecha de Emisión</th>
                                                         <th>Documentos</th>
                                                         <th>Acciones</th>
 
@@ -194,6 +195,13 @@
                                                                     <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
                                                                     <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
                                                                     <td>{{$trip["rango"]}}</td>
+                                                                    <td>
+                                                                        @if($trip["fecha_emision"]=="")
+                                                                            N/A
+                                                                        @else
+                                                                            {{$trip["fecha_emision"]}}
+                                                                        @endif
+                                                                    </td>
                                                                     <td>  
                                                                         <a class="document-link" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$trip['doc'])}}" target="_blank"> Pasaporte </a>
 
@@ -202,6 +210,7 @@
                                                                             <a class="document-link" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$trip['documento_acreditacion'])}}" target="_blank"> Doc. Acreditación. </a>
                                                                         @endif
                                                                     </td>
+                                                                    
                                                                     <td>
                                                                         <a href="#"
                                                                            onclick="openModalZI('{{$trip["nro_doc"]}}')">
