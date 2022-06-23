@@ -207,7 +207,13 @@
                                                                     <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
                                                                     <td>{{$trip["fecha_nacimiento"]}}</td>
                                                                     <td>{{$trip["sexo"]}}</td>
-                                                                    <td>{{$trip["fecha_emision"]}}</td>
+                                                                    <td>
+                                                                        @if($trip["fecha_emision"]=="")
+                                                                            N/A
+                                                                        @else
+                                                                            {{$trip["fecha_emision"]}}
+                                                                        @endif
+                                                                    </td>
 
                                                                     <td> 
                                                                        

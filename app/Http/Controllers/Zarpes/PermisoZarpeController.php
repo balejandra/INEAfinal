@@ -2046,58 +2046,72 @@ public function AddDocumentos(Request $request){
                 $pasajeros=[];
             }
 
+            $PasajeroAsignado = PermisoZarpe::select('permiso_zarpes.status_id')
+            ->Join('pasajeros', 'permiso_zarpes.id', '=', 'pasajeros.permiso_zarpe_id')
+            ->where('pasajeros.nro_doc', $_REQUEST['nrodoc'])
+            ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
+            ->get();
 
-            if($_REQUEST['representante']==''){
-                $respresentante="N/A";
+            if(count($PasajeroAsignado)>0){
+                $info="PassengerAsigned";
+                $pass=[];
             }else{
-                $respresentante=$_REQUEST['representante'];
+
+                        if($_REQUEST['representante']==''){
+                            $respresentante="N/A";
+                        }else{
+                            $respresentante=$_REQUEST['representante'];
+                        }
+            
+                        if($_REQUEST['tipodoc']=="NC"){
+                            $nrodoc=$_REQUEST['nrodoc']."-".$HijoNumero;
+                        }else{
+                            $nrodoc=$_REQUEST['nrodoc'];
+                        }
+            
+            
+                        $fechaNac=explode('-',$_REQUEST['fechanac']);
+                        $fechaNac2=$fechaNac[2].'-'.$fechaNac[1].'-'.$fechaNac[0];
+            
+                    $pass = [
+                        "nombres" => $_REQUEST['nombres'],
+                        "apellidos" => $_REQUEST['apellidos'],
+                        "tipo_doc" => $_REQUEST['tipodoc'],
+                        "nro_doc" => $nrodoc,
+                        "sexo" =>$_REQUEST['sexo'],
+                        "fecha_nacimiento" =>$fechaNac2,
+                        "menor_edad" =>$menor,
+                        "representante" =>$respresentante,
+                        "permiso_zarpe_id" => '',
+                        "partida_nacimiento"=> $_REQUEST['partida_nacimiento'],
+                        "autorizacion"=> $_REQUEST['autorizacion'],
+                        "pasaporte_menor"=> $_REQUEST['pasaporte_menor'],
+                        "pasaporte_mayor"=> $_REQUEST['pasaporte_mayor']
+                    ];
+            
+            
+            
+                    if($indice==false ){
+                        if($validation['pasajerosRestantes']>0){
+                            array_push($pasajeros, $pass);
+                            $request->session()->put('pasajeros', $pasajeros);
+                            $info="OK";
+                        // $cantPasajeros=$cantPasajeros-count($pasajeros);
+                        // $validation['cantPassAbordo']=count($pasajeros);
+                            $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+                            $request->session()->put('validacion', json_encode($validation));
+                        }else{
+                            $info = "MaxPassengerLimit";
+                        }
+            
+                    }else{
+                        $info="ExistInPassengerList";
+            
+                    }
+                
             }
 
-            if($_REQUEST['tipodoc']=="NC"){
-                $nrodoc=$_REQUEST['nrodoc']."-".$HijoNumero;
-            }else{
-                $nrodoc=$_REQUEST['nrodoc'];
-            }
 
-
-            $fechaNac=explode('-',$_REQUEST['fechanac']);
-            $fechaNac2=$fechaNac[2].'-'.$fechaNac[1].'-'.$fechaNac[0];
-
-        $pass = [
-            "nombres" => $_REQUEST['nombres'],
-            "apellidos" => $_REQUEST['apellidos'],
-            "tipo_doc" => $_REQUEST['tipodoc'],
-            "nro_doc" => $nrodoc,
-            "sexo" =>$_REQUEST['sexo'],
-            "fecha_nacimiento" =>$fechaNac2,
-            "menor_edad" =>$menor,
-            "representante" =>$respresentante,
-            "permiso_zarpe_id" => '',
-            "partida_nacimiento"=> $_REQUEST['partida_nacimiento'],
-            "autorizacion"=> $_REQUEST['autorizacion'],
-            "pasaporte_menor"=> $_REQUEST['pasaporte_menor'],
-            "pasaporte_mayor"=> $_REQUEST['pasaporte_mayor']
-        ];
-
-
-
-        if($indice==false ){
-            if($validation['pasajerosRestantes']>0){
-                array_push($pasajeros, $pass);
-                $request->session()->put('pasajeros', $pasajeros);
-                $info="OK";
-               // $cantPasajeros=$cantPasajeros-count($pasajeros);
-               // $validation['cantPassAbordo']=count($pasajeros);
-                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
-                $request->session()->put('validacion', json_encode($validation));
-            }else{
-                $info = "MaxPassengerLimit";
-            }
-
-        }else{
-            $info="ExistInPassengerList";
-
-        }
 
         $resp=[$info,$pass,count($pasajeros), $validation['pasajerosRestantes'],$validation['pasajerosRestantes'] ];
         echo json_encode($resp);

@@ -174,7 +174,13 @@
                 <td>{{$tripulante->nombres}} {{$tripulante->apellidos}} </td>
                 <td>{{$tripulante->tipo_doc}}-{{$tripulante->nro_doc}}</td>
                  
-                <td>{{$tripulante->fecha_emision}}</td>
+                <td> 
+                    @if($tripulante->fecha_emision=="")
+                        N/A
+                    @else
+                        {{$tripulante->fecha_emision}}
+                    @endif
+                </td>
                 <td>{{$tripulante->solicitud}}</td>
 
                 <td>

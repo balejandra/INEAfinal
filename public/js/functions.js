@@ -976,7 +976,7 @@ console.log("Documentos::",documentos);
     })// This will be called on success
         .done(function (response) {
              var resp=JSON.parse(response);
-             console.log(resp);
+             console.log('RESPUESTAPAss',resp);
 
              switch(resp[0]){
                 case 'ExistInPassengerList':
@@ -984,6 +984,9 @@ console.log("Documentos::",documentos);
                 break;
                 case 'MaxPassengerLimit':
                     msj.innerHTML='<div class="alert alert-danger">Ha alcanzado el máximo de pasageros disponibles para esta embarcación</div>' ;
+                break;
+                case 'PassengerAsigned': 
+                    msj.innerHTML='<div class="alert alert-danger">El pasajero con C.I. / Pasaporte '+nrodoc+' se encuentra asignado a una embarcación con un permiso de zarpe pendiente o en curso actualmente</div>' ;
                 break;
                 case 'OK':
                     if(representante==''){
