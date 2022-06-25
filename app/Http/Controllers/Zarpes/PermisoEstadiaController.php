@@ -605,7 +605,7 @@ class PermisoEstadiaController extends AppBaseController
               $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
     de Estadia en su jurisdicción que espera por su asignación de visita.";
               $mailTo = $coordinador[0]->email;
-              $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+              $subject = 'Nueva solicitud de permiso de Estadía ' . $solicitud->nro_solicitud;
           }else{
           }
 
