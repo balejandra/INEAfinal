@@ -1229,7 +1229,16 @@ function validacionMarino(){
                                         {"data":'funcion', 'title': 'Función'},
                                         {"data":'cedula'},
                                         {"data":'nombre'},
-                                        {"data":'fecha_emision'},
+                                        {"data":'fecha_emision',
+                                            render: function ( data, type, row ) {
+                                           // esto es lo que se va a renderizar como html
+                                                let fm="N/A";
+                                                if(row.fecha_emision!=''){
+                                                    fm=row.fecha_emision;
+                                                }
+                                                return `${fm}`; 
+                                            }
+                                        },
                                         {"data":'solicitud'},
                                         {"data":'documento'},
                                         {

@@ -1233,7 +1233,7 @@ class PermisoZarpeController extends Controller
                 "doc" => $doc,
                 "documento_acreditacion" => $docAcreditacion,
                 "capitan"=>$cap,
-                "fecha_emision"=>'',
+                "fecha_emision"=>'N/A',
                 "solicitud"=>'',
                 ];
 
