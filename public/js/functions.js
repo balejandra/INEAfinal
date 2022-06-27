@@ -1022,13 +1022,16 @@ function deletePassenger(){
     })// This will be called on success
         .done(function (response) {
 
-
-            if(response==true){
-                let tr=document.getElementById(cedula);
-                tr.remove();
-                var cantPass= document.getElementById("cantPasajeros");
-                let cant=parseInt(cantPass.getAttribute("data-cantPass"));
-                cantPass.innerHTML=cant+1;
+            console.log("DeletePass:",response);
+            if(response[0]==true){
+                response[1].forEach(element => {
+                    let tr=document.getElementById(element);
+                    tr.remove();
+                    var cantPass= document.getElementById("cantPasajeros");
+                    let cant=parseInt(cantPass.getAttribute("data-cantPass"));
+                    cantPass.innerHTML=cant+1;
+                });
+                
 
                 msj.innerHTML='<div class="alert alert-success">Pasajero eliminado con éxito.</div>' ;
 

@@ -1002,23 +1002,31 @@ class PermisoZarpeController extends Controller
                 $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                 $request->session()->put('validacion', json_encode($validation));
                 $borrado =true;
+                $elim=[$cedula];
             }else{
+                $pass=[];
+                $elim=[];
                 for ($i=0; $i < count($pasajeros); $i++) {
-                    $indice=array_search($cedula,$pasajeros[$i],false);
-                    if($indice!=false){
-                        array_splice($pasajeros, $i, 1);
-                        $request->session()->put('pasajeros', $pasajeros);
-                        $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                        $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+                    
+                    if($cedula!=$pasajeros[$i]['nro_doc'] && $cedula!=$pasajeros[$i]['representante'] ){
+                        array_push($pass, $pasajeros[$i]);
+                    }else{
+                        $borrado=true;
+                        array_push($elim, $pasajeros[$i]['nro_doc']);
 
-                        $request->session()->put('validacion', json_encode($validation));
-                        $borrado =true;
                     }
+                   
                 }
+                $pasajeros=$pass;
+                $request->session()->put('pasajeros', $pasajeros);
+                $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
+                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+                $request->session()->put('validacion', json_encode($validation));
+
             }
 
         }
-        echo $borrado;
+        return [$borrado, $elim] ;
     }
 
     public function validacionMarino(Request $request){
