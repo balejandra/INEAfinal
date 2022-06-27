@@ -1029,7 +1029,7 @@ function deletePassenger(){
                     tr.remove();
                     var cantPass= document.getElementById("cantPasajeros");
                     let cant=parseInt(cantPass.getAttribute("data-cantPass"));
-                    cantPass.innerHTML=cant+1;
+                    cantPass.innerHTML=response[2];
                 });
                 
 

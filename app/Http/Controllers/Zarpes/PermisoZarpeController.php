@@ -1026,7 +1026,7 @@ class PermisoZarpeController extends Controller
             }
 
         }
-        return [$borrado, $elim] ;
+        return [$borrado, $elim, $validation['pasajerosRestantes']] ;
     }
 
     public function validacionMarino(Request $request){
