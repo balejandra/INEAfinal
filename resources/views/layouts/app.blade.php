@@ -2,6 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <title>@yield('titulo' )| {{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
