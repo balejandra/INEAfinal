@@ -653,6 +653,7 @@ class ComposerStaticInitd491db5c41c4ee8d0e2fc6441a24fe00
         'App\\Http\\Controllers\\Publico\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Publico/UserController.php',
         'App\\Http\\Controllers\\Zarpes\\EquipoController' => __DIR__ . '/../..' . '/app/Http/Controllers/Zarpes/EquipoController.php',
         'App\\Http\\Controllers\\Zarpes\\MailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Zarpes/MailController.php',
+        'App\\Http\\Controllers\\Zarpes\\NotificacioneController' => __DIR__ . '/../..' . '/app/Http/Controllers/Zarpes/NotificacioneController.php',
         'App\\Http\\Controllers\\Zarpes\\PdfGeneratorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Zarpes/PdfGeneratorController.php',
         'App\\Http\\Controllers\\Zarpes\\PermisoEstadiaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Zarpes/PermisoEstadiaController.php',
         'App\\Http\\Controllers\\Zarpes\\PermisoEstadiaRenovacionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Zarpes/PermisoEstadiaRenovacionController.php',

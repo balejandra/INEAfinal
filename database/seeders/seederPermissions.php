@@ -125,7 +125,14 @@ class seederPermissions extends Seeder
             'editar-establecimientoNautico',
             'eliminar-establecimientoNautico',
             'listar-establecimientoNautico',
-            'crear-establecimientoNautico'
+            'crear-establecimientoNautico',
+
+            
+            //permisos para Notificaciones
+            'consultar-notificaciones',
+            'listar-notificaciones',
+
+
         ];
 
         foreach ($permissions as $permission) {

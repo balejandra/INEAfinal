@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
+use App\Http\Controllers\Zarpes\NotificacionesController;
+
 
 class PermisoEstadiaController extends AppBaseController
 {
@@ -433,6 +435,7 @@ class PermisoEstadiaController extends AppBaseController
     {
 
         $email = new MailController();
+        $notificacion = new NotificacioneController();
            if ($status=== "9") {
                $visitador = $_GET['visitador'];
                $fecha_visita = $_GET['fecha_visita'];
@@ -467,7 +470,9 @@ class PermisoEstadiaController extends AppBaseController
                $view = 'emails.estadias.visita';
                $subject = 'Solicitud de Permiso de Estadía ' . $estadia->nro_solicitud;
                $email->mailZarpe($solicitante->email, $subject, $data, $view);
-
+               $mensaje="Saludos, a su Solicitud de Permiso de Estadía N° ".$estadia->nro_solicitud." se le ha asignado un visitador, con el siguiente detalle:";
+               $mensaje.=" <br>Buque Registro Nro.: ".$estadia->nro_registro." <br> Solicitante: ".$solicitante->nombres." ".$solicitante->apellidos." <br> Visitador: ".$visitador." <br> Fecha de la visita: ".$fecha_visita;
+               
                Flash::success('Visitador asignado y notificación enviada al solicitante.');
                return redirect(route('permisosestadia.index'));
            } if ($status==='10') {
@@ -537,6 +542,7 @@ class PermisoEstadiaController extends AppBaseController
 
         $this->SendMailAprobacion($estadia->id, $mensaje,$subject);
 
+        $notificacion->storeNotificaciones($estadia->user_id, $subject,  $mensaje, "Permiso de Estadía");
 
                 Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
                 return redirect(route('permisosestadia.index'));
@@ -572,7 +578,8 @@ class PermisoEstadiaController extends AppBaseController
                 $view = 'emails.estadias.revision';
                 $subject = 'Solicitud de Estadía ' . $estadia->nro_solicitud;
                 $email->mailZarpe($solicitante->email, $subject, $data, $view);
-
+                $notificacion->storeNotificaciones($estadia->user_id, $subject,  $mensaje.' motivado a '.$motivo, "Permiso de Estadía");
+                 
                 Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
                 return redirect(route('permisosestadia.index'));
            }
@@ -584,27 +591,31 @@ class PermisoEstadiaController extends AppBaseController
         $solicitante = User::find($solicitud->user_id);
         $rolecapitan=Role::find(4);
         $rolecoordinador=Role::find(7);
-        $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
+        $capitanDestino = CapitaniaUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
             ->where('cargo', $rolecapitan->id)
             ->get();
         //dd($capitanDestino);-
 
-        $coordinador = CapitaniaUser::select('capitania_id', 'email')
+        $coordinador = CapitaniaUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
             ->where('cargo', $rolecoordinador->id)
             ->get();
         //dd($coordinador);
+        $notificacion = new NotificacioneController();
+
         $mensaje = "";
         $mailTo="";
+        $idTo="";
         $subject="";
         if ($tipo == 1) {
           if ( isset($coordinador[0]->email)) {
               $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
     de Estadia en su jurisdicción que espera por su asignación de visita.";
               $mailTo = $coordinador[0]->email;
+              $idTo=$coordinador[0]->user_id;
               $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
           }else{
           }
@@ -614,6 +625,8 @@ class PermisoEstadiaController extends AppBaseController
                 $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que
     la siguiente embarcación Internacional tiene una solicitud para arribar a su jurisdicción.";
                 $mailTo = $capitanDestino[0]->email;
+                $idTo=$capitanDestino[0]->user_id;
+
                 $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;
             }else {
 
@@ -633,6 +646,8 @@ class PermisoEstadiaController extends AppBaseController
         $view = 'emails.estadias.solicitud';
 
         $email->mailZarpe($mailTo, $subject, $data, $view);
+        $notificacion->storeNotificaciones($idTo, $subject,  $mensaje, "Permiso de Estadía");
+
     }
 
     public function SendMailAprobacion($idsolicitud, $mensaje,$subject)
@@ -640,6 +655,8 @@ class PermisoEstadiaController extends AppBaseController
         $solicitud = PermisoEstadia::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
         $idstatus = Status::find(1);
+        $notificacion = new NotificacioneController();
+
         $data = [
             'solicitud' => $solicitud->nro_solicitud,
             'id'=>$idsolicitud,
@@ -654,6 +671,8 @@ class PermisoEstadiaController extends AppBaseController
         $view = 'emails.estadias.revision';
 
         $email->mailEstadiaPDF($solicitante->email, $subject, $data, $view);
+        $notificacion->storeNotificaciones($solicitud->user_id, $subject,  $mensaje, "Permiso de Estadía");
+
     }
 
     /**
