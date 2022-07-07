@@ -21,10 +21,15 @@ class NotificacioneController extends Controller
     public function index()
     {
         $userid = auth()->id();
-        $notificaciones = Notificacione::where('user_id', $userid)->get();
+        $notificacionesNacional = Notificacione::where('user_id', $userid)->where('tipo', 'Zarpe Nacional')->get();
+        $notificacionesInternacional = Notificacione::where('user_id', $userid)->where('tipo', 'Zarpe Internacional')->get();
+        $notificacionesEstadia = Notificacione::where('user_id', $userid)->where('tipo', 'Permiso de Estadía')->get();
+
         $this->statusNotificaciones();
         return view('zarpes/notificaciones/index')
-        ->with('notificaciones', $notificaciones);
+        ->with('notificacionesNacional', $notificacionesNacional)
+        ->with('notificacionesInternacional', $notificacionesInternacional)
+        ->with('notificacionesEstadia', $notificacionesEstadia);
     }
 
      

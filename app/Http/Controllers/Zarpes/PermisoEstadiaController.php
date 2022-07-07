@@ -165,6 +165,7 @@ class PermisoEstadiaController extends AppBaseController
 
             return redirect()->back();
         }else {
+            $notificacion = new NotificacioneController();
 
             $estadia = new PermisoEstadia();
             $estadia->nro_solicitud = $this->codigo($request->capitania_id);
@@ -616,7 +617,7 @@ class PermisoEstadiaController extends AppBaseController
     de Estadia en su jurisdicción que espera por su asignación de visita.";
               $mailTo = $coordinador[0]->email;
               $idTo=$coordinador[0]->user_id;
-              $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+              $subject = 'Nueva solicitud de permiso de Estadía ' . $solicitud->nro_solicitud;
           }else{
           }
 
