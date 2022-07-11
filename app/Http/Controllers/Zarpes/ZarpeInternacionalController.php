@@ -717,8 +717,8 @@ class ZarpeInternacionalController extends Controller
             }    
 
 
-            $capOrigin = $this->SendMail($saveSolicitud->id, 1);
-            $caopDestino = $this->SendMail($saveSolicitud->id, 0);
+            $capOrigin = $this->SendMail($saveSolicitud->id, 1, true);
+            $caopDestino = $this->SendMail($saveSolicitud->id, 0, false);
 
             if ($capOrigin == true || $caopDestino == true) {
                 Flash::success('Se ha generado la solicitud <b>
@@ -1396,7 +1396,7 @@ class ZarpeInternacionalController extends Controller
             ->with('pais',$paises)->with('titulo', $this->titulo);
     }
 
-    public function SendMail($idsolicitud, $tipo)
+    public function SendMail($idsolicitud, $tipo, $mailUser)
     {
         $solicitud = PermisoZarpe::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
@@ -1476,6 +1476,7 @@ class ZarpeInternacionalController extends Controller
 
         }
 
+        if( $mailUser==true){
         $emailUser = new MailController();
         $mensajeUser = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha generado una
         nueva solicitud de permiso de zarpe Internacional con su usuario y se encuentra en espera de aprobación.";
@@ -1492,7 +1493,7 @@ class ZarpeInternacionalController extends Controller
         $subject = 'Nueva solicitud de permiso de Zarpe Internacional ' . $solicitud->nro_solicitud;
         $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
         $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Internacional");
-        
+        }
         return $return;
     }
 

@@ -906,8 +906,8 @@ class PermisoZarpeController extends Controller
 
             }
  
-            $capOrigin = $this->SendMail($saveSolicitud->id, 1);
-            $caopDestino = $this->SendMail($saveSolicitud->id, 0);
+            $capOrigin = $this->SendMail($saveSolicitud->id, 1, true);
+            $caopDestino = $this->SendMail($saveSolicitud->id, 0, false);
             if ($capOrigin == true || $caopDestino == true) {
                 Flash::success('Se ha generado la solocitud <b>
             ' . $codigo . '</b> exitosamente y se han enviado los correos de notificación correspondientes');
@@ -1635,7 +1635,7 @@ class PermisoZarpeController extends Controller
             ->with('capitaniaOrigen', $capitaniaOrigen[0])->with('titulo', $this->titulo);
     }
 
-    public function SendMail($idsolicitud, $tipo)
+    public function SendMail($idsolicitud, $tipo, $mailUser)
     {
         $solicitud = PermisoZarpe::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
@@ -1715,23 +1715,26 @@ class PermisoZarpeController extends Controller
 
         }
 
-        $emailUser = new MailController();
-        $mensajeUser = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha generado una
-        nueva solicitud de permiso de zarpe con su usuario y se encuentra en espera de aprobación.";
-        $dataUser = [
-                'solicitud' => $solicitud->nro_solicitud,
-                'matricula' => $solicitud->matricula,
-                'nombres_solic' => $solicitante->nombres,
-                'apellidos_solic' => $solicitante->apellidos,
-                'fecha_salida' => $solicitud->fecha_hora_salida,
-                'fecha_regreso' => $solicitud->fecha_hora_regreso,
-                'mensaje' => $mensajeUser,
-        ];
-        $view = 'emails.zarpes.solicitudPermisoZarpe';
-        $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
-        $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
-        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Nacional");
-        
+        if( $mailUser==true){
+            $emailUser = new MailController();
+            $mensajeUser = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha generado una
+            nueva solicitud de permiso de zarpe con su usuario y se encuentra en espera de aprobación.";
+            $dataUser = [
+                    'solicitud' => $solicitud->nro_solicitud,
+                    'matricula' => $solicitud->matricula,
+                    'nombres_solic' => $solicitante->nombres,
+                    'apellidos_solic' => $solicitante->apellidos,
+                    'fecha_salida' => $solicitud->fecha_hora_salida,
+                    'fecha_regreso' => $solicitud->fecha_hora_regreso,
+                    'mensaje' => $mensajeUser,
+            ];
+            $view = 'emails.zarpes.solicitudPermisoZarpe';
+            $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+            $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
+            $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Nacional");
+            
+        }
+
         return $return;
     }
 
