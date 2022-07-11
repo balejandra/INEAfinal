@@ -11,11 +11,7 @@
     <th>Acciones</th>
     </thead>
     <tbody>
-<<<<<<< HEAD
-    @foreach($notificacionesNacionales as $notificacion)
-=======
     @foreach($notificacionesNacional as $notificacion)
->>>>>>> 39147d39ee4de5d45dea19c5df350c6aede8741b
         @if($notificacion->visto==false)
         <tr style="background-color:#FCF4D4;">
         @else
