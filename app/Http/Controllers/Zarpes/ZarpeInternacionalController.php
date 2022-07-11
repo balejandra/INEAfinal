@@ -1491,7 +1491,7 @@ class ZarpeInternacionalController extends Controller
         $view = 'emails.zarpes.solicitudPermisoZarpe';
         $subject = 'Nueva solicitud de permiso de Zarpe Internacional ' . $solicitud->nro_solicitud;
         $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
-        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Nacional");
+        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Internacional");
         
         return $return;
     }
