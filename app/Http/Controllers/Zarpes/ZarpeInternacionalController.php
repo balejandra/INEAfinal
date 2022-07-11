@@ -1475,6 +1475,12 @@ class ZarpeInternacionalController extends Controller
             $return = false;
 
         }
+
+        $subject = 'Nueva solicitud de permiso de Zarpe Internacional ' . $solicitud->nro_solicitud;
+        $mensajeUser = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha generado una
+    nueva solicitud de permiso de zarpe internacional con su usuario y se encuentra en espera de aprobación.";
+        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Nacional");
+        
         return $return;
     }
 

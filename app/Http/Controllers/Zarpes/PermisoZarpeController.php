@@ -1645,7 +1645,6 @@ class PermisoZarpeController extends Controller
             ->where('capitania_id', '=', $solicitud->destino_capitania_id)
             ->where('cargo', '=', 4)
             ->where('habilitado', '=', true)
-
             ->get();
 
         $estNautico = EstablecimientoNautico::find($solicitud->establecimiento_nautico_id);
@@ -1664,6 +1663,7 @@ class PermisoZarpeController extends Controller
             //mensaje para caitania origen
             $mensaje = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha recibido una
     nueva solicitud de permiso de zarpe en su jurisdicción que espera por su aprobación.";
+    
             $mailTo = $capitanOrigen[0]->email;
             $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
 
@@ -1689,6 +1689,7 @@ class PermisoZarpeController extends Controller
             //mensaje para capitania destino
             $mensaje = "El Sistema de Control y Gestión de Zarpes del INEA le notifica que
     la siguiente embarcación está próxima a arribar a su jurisdicción.";
+    
             $mailTo = $capitanDestino[0]->email;
             $subject = 'Notificación de arribo de embarcación ' . $solicitud->matricula;
 
@@ -1701,7 +1702,6 @@ class PermisoZarpeController extends Controller
                 'fecha_salida' => $solicitud->fecha_hora_salida,
                 'fecha_regreso' => $solicitud->fecha_hora_regreso,
                 'mensaje' => $mensaje,
-
             ];
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
@@ -1714,6 +1714,24 @@ class PermisoZarpeController extends Controller
             $return = false;
 
         }
+
+        $emailUser = new MailController();
+        $mensajeUser = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha generado una
+        nueva solicitud de permiso de zarpe con su usuario y se encuentra en espera de aprobación.";
+        $dataUser = [
+                'solicitud' => $solicitud->nro_solicitud,
+                'matricula' => $solicitud->matricula,
+                'nombres_solic' => $solicitante->nombres,
+                'apellidos_solic' => $solicitante->apellidos,
+                'fecha_salida' => $solicitud->fecha_hora_salida,
+                'fecha_regreso' => $solicitud->fecha_hora_regreso,
+                'mensaje' => $mensajeUser,
+        ];
+        $view = 'emails.zarpes.solicitudPermisoZarpe';
+        $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+        $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
+        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Nacional");
+        
         return $return;
     }
 

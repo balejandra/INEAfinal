@@ -611,7 +611,7 @@ class PermisoEstadiaController extends AppBaseController
         $mailTo="";
         $idTo="";
         $subject="";
-        print_r($coordinador);
+         
         if ($tipo == 1) {
           if ( isset($coordinador[0]->email)) {
               $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
