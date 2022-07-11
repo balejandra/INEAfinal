@@ -1404,6 +1404,8 @@ class ZarpeInternacionalController extends Controller
         $capitanDestino = CapitaniaUser::select('capitania_id', 'email', 'user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->destino_capitania_id)
+            ->where('cargo', '=', 4)
+            ->where('habilitado', '=', true)
             ->get();
 
         $estNautico = EstablecimientoNautico::find($solicitud->establecimiento_nautico_id);
@@ -1412,6 +1414,8 @@ class ZarpeInternacionalController extends Controller
         $capitanOrigen = CapitaniaUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $estNautico->capitania_id)
+            ->where('cargo', '=', 4)
+            ->where('habilitado', '=', true)
             ->get();
         
             $notificacion = new NotificacioneController();
