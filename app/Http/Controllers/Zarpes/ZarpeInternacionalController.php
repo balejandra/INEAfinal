@@ -35,6 +35,7 @@ use App\Models\Publico\Paise;
 use Flash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Zarpes\NotificacionesController;
 
 
 class ZarpeInternacionalController extends Controller
@@ -865,6 +866,8 @@ class ZarpeInternacionalController extends Controller
             $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
         } else {
             $emision=explode(' ',$InfoMarino[0]->fecha_emision);
+            list($ano, $mes, $dia) = explode("-", $emision[0]);
+            $emision[0]=$dia.'/'.$mes.'/'.$ano;
             /*$trip = [
             "permiso_zarpe_id" => '',
             "ctrl_documento_id" => $InfoMarino[0]->id,
@@ -887,8 +890,9 @@ class ZarpeInternacionalController extends Controller
                 "funcion" => $funcion,
                 "rango" =>$InfoMarino[0]->documento,
                 "doc" => $doc,
-                "documento_acreditacion"=>$docAcreditacion
-
+                "documento_acreditacion"=>$docAcreditacion,
+                "fecha_emision" =>$emision[0],
+                "solicitud"=>$InfoMarino[0]->solicitud,
             ];
 
             if(is_array($tripulantes)){
@@ -916,11 +920,17 @@ class ZarpeInternacionalController extends Controller
 
                     $marinoAsignado = PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id')
                         ->Join('tripulantes', 'permiso_zarpes.id', '=', 'tripulantes.permiso_zarpe_id')
-                        ->where('tripulantes.ctrl_documento_id', '=', $InfoMarino[0]->id)
+                        ->where('tripulantes.nro_doc', $cedula)
+                        ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
+                        ->get();
+                    
+                    $marinoAsignado2 = PermisoZarpe::select('permiso_zarpes.status_id')
+                        ->Join('tripulante_internacionals', 'permiso_zarpes.id', '=','tripulante_internacionals.permiso_zarpe_id')
+                        ->where('tripulante_internacionals.nro_doc', $cedula)
                         ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
                         ->get();
 
-                    if (count($marinoAsignado) > 0) {
+                    if (count($marinoAsignado) > 0 || count($marinoAsignado2)>0 ) {
                         $InfoMarino = "FoundButAssigned"; //encontrado pero asignado a otro barco
                     } else {
                         $vj = $this->validacionJerarquizacion($InfoMarino[0]->documento, $cap);
@@ -952,7 +962,8 @@ class ZarpeInternacionalController extends Controller
                     }
                 }
         }
-        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros'],$validation['pasajerosRestantes'],$validation['cantPassAbordo']];
+                    
+        $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros'],$validation['pasajerosRestantes'],$validation['cantPassAbordo'],$marinoAsignado2,$marinoAsignado];
         echo json_encode($return);
         }
 
@@ -1017,9 +1028,28 @@ class ZarpeInternacionalController extends Controller
                 "rango" =>$rango,
                 "doc" => $doc,
                 "documento_acreditacion" => $docAcreditacion,
-
+                "fecha_emision" => "",
+                "solicitud"=> "",
                 ];
 
+
+                $marinoAsignado = PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id')
+                ->Join('tripulantes', 'permiso_zarpes.id', '=', 'tripulantes.permiso_zarpe_id')
+                ->where('tripulantes.nro_doc', $cedula)
+                ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
+                ->get();
+            
+            $marinoAsignado2 = PermisoZarpe::select('permiso_zarpes.status_id')
+                ->Join('tripulante_internacionals', 'permiso_zarpes.id', '=','tripulante_internacionals.permiso_zarpe_id')
+                ->where('tripulante_internacionals.nro_doc', $cedula)
+                ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
+                ->get();
+
+            if (count($marinoAsignado) > 0 || count($marinoAsignado2)>0 ) {
+                $InfoMarino="FoundButAssigned";
+            }else{ 
+                
+                
             $tripExiste=false;
             $vj=[false];
             if(is_array($tripulantes)){
@@ -1061,7 +1091,12 @@ class ZarpeInternacionalController extends Controller
             }
 
 
-             $return = [$tripulantes, $vj, '',$InfoMarino, $validation['cant_pasajeros'], count($tripulantes),$validation['pasajerosRestantes'],$validation['cantPassAbordo']];
+
+            }
+
+
+
+             $return = [$tripulantes, $vj, '',$InfoMarino, $validation['cant_pasajeros'], count($tripulantes),$validation['pasajerosRestantes'],$validation['cantPassAbordo'],$marinoAsignado,$marinoAsignado2];
             echo json_encode($return);
 
         }
@@ -1142,6 +1177,8 @@ class ZarpeInternacionalController extends Controller
         $capitania= Capitania::where('id',$transaccion->establecimiento_nautico->capitania_id)->first();
         //$estnauticoDestino=EstablecimientoNautico::find($transaccion->establecimiento_nautico_destino_id);
         $pais=Paise::find($transaccion->paises_id);
+        $notificacion = new NotificacioneController();
+
         if ($status === 'aprobado') {
             if ($transaccion->bandera=='extranjera') {
                 $buqueconsex=PermisoEstadia::where('id',$transaccion->permiso_estadia_id)->first();
@@ -1181,6 +1218,7 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de permiso de Zarpe ' . $transaccion->nro_solicitud;
             $email->mailZarpePDFZI($solicitante->email, $subject, $data, $view);
+            $notificacion->storeNotificaciones($transaccion->user_id, $subject,  $mensaje, "Zarpe Internacional");
 
             Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
@@ -1221,6 +1259,7 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de Zarpe Internacional ' . $transaccion->nro_solicitud;
             $email->mailZarpe($solicitante->email, $subject, $data, $view);
+            $notificacion->storeNotificaciones($transaccion->user_id, $subject,  $mensaje, "Zarpe Internacional");
 
             Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
@@ -1296,7 +1335,31 @@ class ZarpeInternacionalController extends Controller
         }else {
             $buque=Renave_data::where('matricula_actual',$permisoZarpe->matricula)->first();
         }
-        $tripulantes = TripulanteInternacional::select('*')->where('permiso_zarpe_id', $id)->get();
+        $tripulantes2 = TripulanteInternacional::select('*')->where('permiso_zarpe_id', $id)->get();
+        foreach ($tripulantes2 as $value) {
+                
+            if($value->tipo_doc=='V'){
+                $tripV=Saime_cedula::select('saime_cedula.fecha_nacimiento','saime_cedula.sexo','licencias_titulos_gmar.nombre','licencias_titulos_gmar.apellido','licencias_titulos_gmar.solicitud','licencias_titulos_gmar.documento','licencias_titulos_gmar.fecha_emision')
+                ->rightJoin('gmar.licencias_titulos_gmar','saime_cedula.cedula','=','licencias_titulos_gmar.ci')
+                ->where('licencias_titulos_gmar.ci',$value->nro_doc)
+               ->get();
+            
+               $value->nombres=$tripV[0]->nombre;
+               $value->apellidos=$tripV[0]->apellido;
+               $value->sexo=$tripV[0]->sexo;
+               $value->fecha_nacimiento=$tripV[0]->fecha_nacimiento;
+               $value->rango=$tripV[0]->documento;
+               $emision=explode(' ',$tripV[0]->fecha_emision);
+                list($ano, $mes, $dia) = explode("-", $emision[0]);
+                $emision[0]=$dia.'/'.$mes.'/'.$ano;
+               $value->fecha_emision=$emision[0];
+               $value->solicitud=$tripV[0]->solicitud;
+
+            }else{
+                $value->fecha_emision='';
+                $value->solicitud='';
+            }
+        }
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
         //$tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
         $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
@@ -1321,7 +1384,7 @@ class ZarpeInternacionalController extends Controller
             ->with('permisoZarpe', $permisoZarpe)
             ->with('buque',$buque)
             ->with('certificados', $validacionSgm)
-            ->with('tripulantes', $tripulantes)
+            ->with('tripulantes', $tripulantes2)
             ->with('pasajeros', $pasajeros)
             ->with('equipos', $equipos)
             ->with('revisiones', $revisiones)
@@ -1338,7 +1401,7 @@ class ZarpeInternacionalController extends Controller
         $solicitud = PermisoZarpe::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
 
-        $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
+        $capitanDestino = CapitaniaUser::select('capitania_id', 'email', 'user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->destino_capitania_id)
             ->get();
@@ -1346,10 +1409,13 @@ class ZarpeInternacionalController extends Controller
         $estNautico = EstablecimientoNautico::find($solicitud->establecimiento_nautico_id);
 
 
-        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email')
+        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $estNautico->capitania_id)
             ->get();
+        
+            $notificacion = new NotificacioneController();
+
 
         if ($tipo == 1 && count($capitanOrigen) > 0) {
             //mensaje para caitania origen
@@ -1372,6 +1438,9 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo, $subject, $data, $view);
+
+            $notificacion->storeNotificaciones($capitanOrigen[0]->user_id, $subject,  $mensaje, "Zarpe Internacional");
+
             $return = true;
 
         } else if (count($capitanDestino) > 0) {
@@ -1395,6 +1464,8 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo, $subject, $data, $view);
+            $notificacion->storeNotificaciones($capitanDestino[0]->user_id, $subject,  $mensaje, "Zarpe Internacional");
+
             $return = true;
         } else {
             $return = false;

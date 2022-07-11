@@ -13,12 +13,12 @@
 
     <div class="form-group col-sm-4">
         {!! Form::label('capitanes', 'Capitán:') !!}
-        {!! Form::select('user',$user, null, ['class' => 'form-control custom-select']) !!}
+        {!! Form::select('user',$user, null, ['class' => 'form-control custom-select', 'disabled'=>'true']) !!}
     </div>
 </div>
 
 
-{!! Form::label('coordenadas', 'Coordenas:') !!}
+{!! Form::label('coordenadas', 'Coordenadas:') !!}
 @php($var=0)
 <div>
 @forelse($coordenadas as $key =>$coord)

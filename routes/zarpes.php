@@ -164,5 +164,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     
     /*Fin de Rutas de zarpe Internacional*/
 
+    Route::get('notificaciones/index',[\App\Http\Controllers\Zarpes\NotificacioneController::class,'index'])->name('notificaciones.index');
+
+    Route::get('notificaciones/show/{notificacion}',[\App\Http\Controllers\Zarpes\NotificacioneController::class,'show'])->name('notificaciones.show');
+
 
 });

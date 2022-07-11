@@ -161,8 +161,9 @@
         <thead>
         <th>Función</th>
         <th>Nombres y Apellidos</th>
-        <th>Cédula</th>
-        <th>Rango</th>
+        <th>C.I. / Pasaporte</th>
+        <th>Fecha de Emisión</th>
+        <th>Tipo Doc.</th>
         <th>Documentos</th>
         </thead>
         <tbody>
@@ -172,8 +173,20 @@
                 <td>{{$tripulante->funcion}} </td>
                 <td>{{$tripulante->nombres}} {{$tripulante->apellidos}} </td>
                 <td>{{$tripulante->tipo_doc}}-{{$tripulante->nro_doc}}</td>
-                <td>{{$tripulante->rango}} </td>
+                 
+                <td> 
+                    @if($tripulante->fecha_emision=="")
+                        N/A
+                    @else
+                        {{$tripulante->fecha_emision}}
+                    @endif
+                </td>
+                <td>{{$tripulante->solicitud}}</td>
+
                 <td>
+                @if ($tripulante->tipo_doc=='V')
+                    {{$tripulante->rango}}
+                @else
                     @if ($tripulante->doc)
                         <a class="document-link" title="Pasaporte"
                            href="{{asset('documentos/zarpeinternacional/'.$tripulante->doc)}}" target="_blank">
@@ -184,7 +197,9 @@
                             <a class="document-link" title="Documento Acreditación"
                                href="{{asset('documentos/zarpeinternacional/'.$tripulante->documento_acreditacion)}}" target="_blank">
                                 Documento de Acreditación</a>
-                        @endif
+                    @endif
+                @endif
+                   
                 </td>
         @endforeach
         </tbody>

@@ -17,7 +17,7 @@
     </div>
 </div>
 
-{!! Form::label('coordenadas', 'Coordenas:') !!}
+{!! Form::label('coordenadas', 'Coordenadas:') !!}
 
 <div class="row">
     <!-- latitud Field -->
