@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Zarpes\NotificacioneController;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $notificacion = new NotificacioneController();
+        $notificacion->statusNotificaciones();
+        
         return view('home');
     }
 }

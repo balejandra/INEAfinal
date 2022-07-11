@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
-use App\Http\Controllers\Zarpes\NotificacionesController;
+use App\Http\Controllers\Zarpes\NotificacioneController;
 
 
 class PermisoEstadiaController extends AppBaseController
