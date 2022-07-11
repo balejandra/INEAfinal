@@ -23,11 +23,11 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-clipboard-check fa-lg"></i>
+                            <i class="fa fa-bell fa-lg"></i>
                             <strong>Notificaciones</strong>
                             <div class="card-header-actions">
                                  <a class="btn btn-primary btn-sm"  href="{{ route('notificaciones.index') }}">Cancelar</a>
-                             </div>
+                            </div>
                         </div>
                         <div class="card-body ">
                           

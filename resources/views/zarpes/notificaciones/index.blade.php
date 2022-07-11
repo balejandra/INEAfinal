@@ -19,12 +19,38 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-clipboard-check fa-lg"></i>
+                            <i class="fa fa-bell fa-lg"></i>
                             <strong>Notificaciones</strong>
                             
                         </div>
                         <div class="card-body">
-                            @include('zarpes.notificaciones.table')
+                            <div class="text-center">
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Zarpe Nacional</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Zarpe Internacional</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Permisos de Estadía</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        
+                            <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">@include('zarpes.notificaciones.table')</div>
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">@include('zarpes.notificaciones.table2')</div>
+                            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">@include('zarpes.notificaciones.table3')</div>
+                        </div>
+
+
+
+
+                         
+
+
+                            
                             <div class="pull-right mr-3">
 
                             </div>

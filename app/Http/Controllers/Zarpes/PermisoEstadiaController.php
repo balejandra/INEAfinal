@@ -610,12 +610,13 @@ class PermisoEstadiaController extends AppBaseController
         $mailTo="";
         $idTo="";
         $subject="";
+        print_r($coordinador);
         if ($tipo == 1) {
           if ( isset($coordinador[0]->email)) {
               $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
     de Estadia en su jurisdicción que espera por su asignación de visita.";
               $mailTo = $coordinador[0]->email;
-              $idTo=$coordinador[0]->user_id;
+            echo  $idTo=$coordinador[0]->user_id;
               $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
           }else{
           }
