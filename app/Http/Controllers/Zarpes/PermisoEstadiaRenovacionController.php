@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Zarpes\NotificacioneController;
 
 class PermisoEstadiaRenovacionController extends AppBaseController
 {
@@ -232,8 +233,8 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $documento5->save();
         }
 
-        $this->SendMail($estadia->id, 1);
-        $this->SendMail($estadia->id, 0);
+        $this->SendMail($estadia->id, 1, true);
+        $this->SendMail($estadia->id, 0, false);
         Flash::success('Solicitud de Permiso Estadía guardada satisfactoriamente.');
 
         return redirect(route('permisosestadia.index'));
@@ -278,7 +279,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
     }
 
 
-    public function SendMail($idsolicitud, $tipo)
+    public function SendMail($idsolicitud, $tipo, $mailUser)
     {
         $solicitud = PermisoEstadia::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
@@ -297,6 +298,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             ->where('cargo', $rolecoordinador->id)
             ->get();
         //  dd($coordinador);
+        $notificacion = new NotificacioneController();
 
         if ($tipo == 1) {
             if ( isset($coordinador[0]->email)) {
@@ -304,7 +306,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
                 $mensaje = "El sistema de control y gestión de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
     de Estadía en su jurisdicción que espera por su asignación de visita.";
                 $mailTo = $coordinador[0]->email;
-                $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+                $subject = 'Nueva solicitud de renovación de permiso de estadía ' . $solicitud->nro_solicitud;
             }else {
 
             }
@@ -320,6 +322,26 @@ class PermisoEstadiaRenovacionController extends AppBaseController
 
             }
         }
+
+        if( $mailUser==true){
+            $emailUser = new MailController();
+            $mensajeUser = "El sistema de control y gestion de zarpes del INEA le notifica que ha generado una nueva solicitud de renovación 
+            de permiso de Estadía con su usuario y se espera de asignación de visita.";
+            $dataUser = [
+                'solicitud' => $solicitud->nro_solicitud,
+                'matricula' => $solicitud->nro_registro,
+                'nombre_buque' => $solicitud->nombre_buque,
+                'nombres_solic' => $solicitante->nombres,
+                'apellidos_solic' => $solicitante->apellidos,
+                'mensaje' => $mensaje,
+            ];
+            $view = 'emails.estadias.solicitud';
+            $subject = 'Nueva solicitud de renovación de permiso de Estadía ' . $solicitud->nro_solicitud;
+            $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
+            $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Permiso de Estadía");
+            
+        }
+
 
         $data = [
             'solicitud' => $solicitud->nro_solicitud,
