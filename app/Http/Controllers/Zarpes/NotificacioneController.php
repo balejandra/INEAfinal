@@ -20,7 +20,7 @@ class NotificacioneController extends Controller
      */
     public function index()
     {
-        $userid = auth()->id();
+       echo  $userid = auth()->id();
         $notificacionesNacional = Notificacione::where('user_id', $userid)->where('tipo', 'Zarpe Nacional')->get();
         $notificacionesInternacional = Notificacione::where('user_id', $userid)->where('tipo', 'Zarpe Internacional')->get();
         $notificacionesEstadia = Notificacione::where('user_id', $userid)->where('tipo', 'Permiso de Estadía')->get();
