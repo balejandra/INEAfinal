@@ -47,8 +47,10 @@ class NotificacioneController extends Controller
         $notificacion->texto=$texto;
         $notificacion->tipo=$tipo;
         $notificacion->visto=false;
-        return $notificacion->save();
-
+        $resp=$notificacion->save();
+        $this->statusNotificaciones();
+        return $resp;
+        
     }
 
     /**
