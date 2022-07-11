@@ -470,9 +470,11 @@ class PermisoEstadiaController extends AppBaseController
                ];
                $view = 'emails.estadias.visita';
                $subject = 'Solicitud de Permiso de Estadía ' . $estadia->nro_solicitud;
-               $email->mailZarpe($solicitante->email, $subject, $data, $view);
                $mensaje="Saludos, a su Solicitud de Permiso de Estadía N° ".$estadia->nro_solicitud." se le ha asignado un visitador, con el siguiente detalle:";
-               $mensaje.=" <br>Buque Registro Nro.: ".$estadia->nro_registro." <br> Solicitante: ".$solicitante->nombres." ".$solicitante->apellidos." <br> Visitador: ".$visitador." <br> Fecha de la visita: ".$fecha_visita;
+               $mensaje.=" <br><b>Buque Registro Nro.:</b> ".$estadia->nro_registro." <br> <b>Solicitante:</b> ".$solicitante->nombres." ".$solicitante->apellidos." <br> <b>Visitador:</b> ".$visitador." <br> <b>Fecha de la visita:</b> ".$fecha_visita;
+               
+               $notificacion->storeNotificaciones($estadia->user_id, $subject,  $mensaje, "Permiso de Estadía");
+               $email->mailZarpe($solicitante->email, $subject, $data, $view);
                
                Flash::success('Visitador asignado y notificación enviada al solicitante.');
                return redirect(route('permisosestadia.index'));

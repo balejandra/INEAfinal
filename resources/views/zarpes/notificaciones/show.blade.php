@@ -49,7 +49,7 @@
                            <div class="row mx-3 mt-0 ">
                                 <div class="col-md-12 text-center border  p-2"><b>Mensaje</b> </div>
                                 <div class="col-md-12 border p-2">
-                                    {{$notificacion->texto}}
+                                {!!$notificacion->texto!!}
                                 </div>
                            </div>
                         </div>
