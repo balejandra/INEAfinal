@@ -32,6 +32,7 @@ return array(
     'App\\Http\\Controllers\\Publico\\UserController' => $baseDir . '/app/Http/Controllers/Publico/UserController.php',
     'App\\Http\\Controllers\\Zarpes\\EquipoController' => $baseDir . '/app/Http/Controllers/Zarpes/EquipoController.php',
     'App\\Http\\Controllers\\Zarpes\\MailController' => $baseDir . '/app/Http/Controllers/Zarpes/MailController.php',
+    'App\\Http\\Controllers\\Zarpes\\NotificacioneController' => $baseDir . '/app/Http/Controllers/Zarpes/NotificacioneController.php',
     'App\\Http\\Controllers\\Zarpes\\PdfGeneratorController' => $baseDir . '/app/Http/Controllers/Zarpes/PdfGeneratorController.php',
     'App\\Http\\Controllers\\Zarpes\\PermisoEstadiaController' => $baseDir . '/app/Http/Controllers/Zarpes/PermisoEstadiaController.php',
     'App\\Http\\Controllers\\Zarpes\\PermisoEstadiaRenovacionController' => $baseDir . '/app/Http/Controllers/Zarpes/PermisoEstadiaRenovacionController.php',

@@ -18,7 +18,7 @@
 </div>
 
 
-{!! Form::label('coordenadas', 'Coordenas:') !!}
+{!! Form::label('coordenadas', 'Coordenadas:') !!}
 @php($var=0)
 <div>
 @forelse($coordenadas as $key =>$coord)

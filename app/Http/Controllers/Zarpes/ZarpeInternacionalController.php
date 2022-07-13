@@ -35,6 +35,7 @@ use App\Models\Publico\Paise;
 use Flash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Zarpes\NotificacionesController;
 
 
 class ZarpeInternacionalController extends Controller
@@ -716,8 +717,8 @@ class ZarpeInternacionalController extends Controller
             }    
 
 
-            $capOrigin = $this->SendMail($saveSolicitud->id, 1);
-            $caopDestino = $this->SendMail($saveSolicitud->id, 0);
+            $capOrigin = $this->SendMail($saveSolicitud->id, 1, true);
+            $caopDestino = $this->SendMail($saveSolicitud->id, 0, false);
 
             if ($capOrigin == true || $caopDestino == true) {
                 Flash::success('Se ha generado la solicitud <b>
@@ -1176,6 +1177,8 @@ class ZarpeInternacionalController extends Controller
         $capitania= Capitania::where('id',$transaccion->establecimiento_nautico->capitania_id)->first();
         //$estnauticoDestino=EstablecimientoNautico::find($transaccion->establecimiento_nautico_destino_id);
         $pais=Paise::find($transaccion->paises_id);
+        $notificacion = new NotificacioneController();
+
         if ($status === 'aprobado') {
             if ($transaccion->bandera=='extranjera') {
                 $buqueconsex=PermisoEstadia::where('id',$transaccion->permiso_estadia_id)->first();
@@ -1215,6 +1218,7 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de permiso de Zarpe ' . $transaccion->nro_solicitud;
             $email->mailZarpePDFZI($solicitante->email, $subject, $data, $view);
+            $notificacion->storeNotificaciones($transaccion->user_id, $subject,  $mensaje, "Zarpe Internacional");
 
             Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
@@ -1255,6 +1259,7 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de Zarpe Internacional ' . $transaccion->nro_solicitud;
             $email->mailZarpe($solicitante->email, $subject, $data, $view);
+            $notificacion->storeNotificaciones($transaccion->user_id, $subject,  $mensaje, "Zarpe Internacional");
 
             Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
@@ -1391,23 +1396,30 @@ class ZarpeInternacionalController extends Controller
             ->with('pais',$paises)->with('titulo', $this->titulo);
     }
 
-    public function SendMail($idsolicitud, $tipo)
+    public function SendMail($idsolicitud, $tipo, $mailUser)
     {
         $solicitud = PermisoZarpe::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
 
-        $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
+        $capitanDestino = CapitaniaUser::select('capitania_id', 'email', 'user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->destino_capitania_id)
+            ->where('cargo', '=', 4)
+            ->where('habilitado', '=', true)
             ->get();
 
         $estNautico = EstablecimientoNautico::find($solicitud->establecimiento_nautico_id);
 
 
-        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email')
+        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $estNautico->capitania_id)
+            ->where('cargo', '=', 4)
+            ->where('habilitado', '=', true)
             ->get();
+        
+            $notificacion = new NotificacioneController();
+
 
         if ($tipo == 1 && count($capitanOrigen) > 0) {
             //mensaje para caitania origen
@@ -1430,6 +1442,9 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo, $subject, $data, $view);
+
+            $notificacion->storeNotificaciones($capitanOrigen[0]->user_id, $subject,  $mensaje, "Zarpe Internacional");
+
             $return = true;
 
         } else if (count($capitanDestino) > 0) {
@@ -1453,10 +1468,31 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo, $subject, $data, $view);
+            $notificacion->storeNotificaciones($capitanDestino[0]->user_id, $subject,  $mensaje, "Zarpe Internacional");
+
             $return = true;
         } else {
             $return = false;
 
+        }
+
+        if( $mailUser==true){
+        $emailUser = new MailController();
+        $mensajeUser = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha generado una
+        nueva solicitud de permiso de zarpe Internacional con su usuario y se encuentra en espera de aprobación.";
+        $dataUser = [
+                'solicitud' => $solicitud->nro_solicitud,
+                'matricula' => $solicitud->matricula,
+                'nombres_solic' => $solicitante->nombres,
+                'apellidos_solic' => $solicitante->apellidos,
+                'fecha_salida' => $solicitud->fecha_hora_salida,
+                'fecha_regreso' => $solicitud->fecha_hora_regreso,
+                'mensaje' => $mensajeUser,
+        ];
+        $view = 'emails.zarpes.solicitudPermisoZarpe';
+        $subject = 'Nueva solicitud de permiso de Zarpe Internacional ' . $solicitud->nro_solicitud;
+        $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
+        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Internacional");
         }
         return $return;
     }

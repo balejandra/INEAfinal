@@ -1022,13 +1022,16 @@ function deletePassenger(){
     })// This will be called on success
         .done(function (response) {
 
-
-            if(response==true){
-                let tr=document.getElementById(cedula);
-                tr.remove();
-                var cantPass= document.getElementById("cantPasajeros");
-                let cant=parseInt(cantPass.getAttribute("data-cantPass"));
-                cantPass.innerHTML=cant+1;
+            console.log("DeletePass:",response);
+            if(response[0]==true){
+                response[1].forEach(element => {
+                    let tr=document.getElementById(element);
+                    tr.remove();
+                    var cantPass= document.getElementById("cantPasajeros");
+                    let cant=parseInt(cantPass.getAttribute("data-cantPass"));
+                    cantPass.innerHTML=response[2];
+                });
+                
 
                 msj.innerHTML='<div class="alert alert-success">Pasajero eliminado con éxito.</div>' ;
 
@@ -1229,7 +1232,16 @@ function validacionMarino(){
                                         {"data":'funcion', 'title': 'Función'},
                                         {"data":'cedula'},
                                         {"data":'nombre'},
-                                        {"data":'fecha_emision'},
+                                        {"data":'fecha_emision',
+                                            render: function ( data, type, row ) {
+                                           // esto es lo que se va a renderizar como html
+                                                let fm="N/A";
+                                                if(row.fecha_emision!=''){
+                                                    fm=row.fecha_emision;
+                                                }
+                                                return `${fm}`; 
+                                            }
+                                        },
                                         {"data":'solicitud'},
                                         {"data":'documento'},
                                         {
