@@ -121,7 +121,7 @@ $(document).ready(function() {
         responsive: true,
         autoWidth: true,
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
@@ -133,7 +133,7 @@ $(document).ready(function() {
         responsive: true,
         autoWidth: true,
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
@@ -141,6 +141,29 @@ $(document).ready(function() {
         ]
     });
 
+    $('#generic-table4').DataTable({
+        responsive: true,
+        autoWidth: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+
+    $('#generic-table5').DataTable({
+        responsive: true,
+        autoWidth: true,
+        language: {
+            "url": "../assets/DataTables/es_es.json"
+        },
+        dom: 'Blfrtp',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
 
 } );
 

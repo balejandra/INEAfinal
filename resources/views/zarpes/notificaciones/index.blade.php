@@ -35,6 +35,9 @@
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Permisos de Estadía</button>
                                     </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-general" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">General</button>
+                                    </li>
                                 </ul>
                              
                             
@@ -46,7 +49,10 @@
                                   @include('zarpes.notificaciones.table2')
                               </div>
                               <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                                  @include('zarpes.notificaciones.table3')
+                               ccc   @include('zarpes.notificaciones.table3')
+                              </div>
+                              <div class="tab-pane fade" id="pills-general" role="tabpanel" aria-labelledby="pills-contact-tab">
+                                  @include('zarpes.notificaciones.table4')
                               </div>
                             </div>
 

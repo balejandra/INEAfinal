@@ -3,9 +3,11 @@
 namespace App\Models;
 
 
+use App\Http\Controllers\Zarpes\NotificacioneController;
 use App\Models\Publico\Capitania;
 use App\Models\Zarpes\EstablecimientoNautico;
 use App\Models\Zarpes\PermisoZarpe;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -82,5 +84,16 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public function permisozarpes()
     {
         return $this->hasMany(PermisoZarpe::class);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+        $user = $this['id'];
+        $n = new NotificacioneController();
+        $subject="Recuperación de contraseña";
+        $mensaje="Saludos, se ha realizado una nueva solicitud de contraseña con su usuario, debe revisar su correo electrónico
+        y seguir las indicaciones para realizar el restablecimiento de su contraseña.";
+        $n->storeNotificaciones($user,$subject,  $mensaje, "General");
     }
 }
