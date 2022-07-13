@@ -579,7 +579,7 @@ class PermisoEstadiaController extends AppBaseController
                     'mensaje' =>$mensaje,
                 ];
                 $view = 'emails.estadias.revision';
-                $subject = 'Solicitud de Estadía ' . $estadia->nro_solicitud;
+                $subject = 'Solicitud de Permiso de Estadía ' . $estadia->nro_solicitud;
                 $email->mailZarpe($solicitante->email, $subject, $data, $view);
                 $notificacion->storeNotificaciones($estadia->user_id, $subject,  $mensaje.' motivado a '.$motivo, "Permiso de Estadía");
                  
