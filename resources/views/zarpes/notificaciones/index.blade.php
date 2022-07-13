@@ -49,7 +49,7 @@
                                   @include('zarpes.notificaciones.table2')
                               </div>
                               <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                               ccc   @include('zarpes.notificaciones.table3')
+                                  @include('zarpes.notificaciones.table3')
                               </div>
                               <div class="tab-pane fade" id="pills-general" role="tabpanel" aria-labelledby="pills-contact-tab">
                                   @include('zarpes.notificaciones.table4')
