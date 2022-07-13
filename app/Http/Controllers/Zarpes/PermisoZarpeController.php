@@ -33,7 +33,7 @@ use App\Models\Zarpes\DescripcionNavegacion;
 use Flash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Zarpes\NotificacionesController;
+use App\Http\Controllers\Zarpes\NotificacioneController;
 
 class PermisoZarpeController extends Controller
 {
