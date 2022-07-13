@@ -3,7 +3,7 @@
         margin: 0 auto;
     }
 </style>
-<table class="table table-striped table-bordered table-grow" id="generic-table4" style="width:90%">
+<table class="table table-striped table-bordered table-grow" id="generic-table3" style="width:90%">
     <thead>
     <th>Título</th>
     <th>Tipo</th>
@@ -11,7 +11,7 @@
     <th>Acciones</th>
     </thead>
     <tbody>
-    @foreach($notificacionesNacional as $notificacion)
+    @foreach($notificacionGeneral as $notificacion)
         @if($notificacion->visto==false)
         <tr style="background-color:#FCF4D4;">
         @else
