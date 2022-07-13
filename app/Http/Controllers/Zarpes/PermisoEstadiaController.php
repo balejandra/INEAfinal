@@ -472,10 +472,10 @@ class PermisoEstadiaController extends AppBaseController
                $subject = 'Solicitud de Permiso de Estadía ' . $estadia->nro_solicitud;
                $mensaje="Saludos, a su Solicitud de Permiso de Estadía N° ".$estadia->nro_solicitud." se le ha asignado un visitador, con el siguiente detalle:";
                $mensaje.=" <br><b>Buque Registro Nro.:</b> ".$estadia->nro_registro." <br> <b>Solicitante:</b> ".$solicitante->nombres." ".$solicitante->apellidos." <br> <b>Visitador:</b> ".$visitador." <br> <b>Fecha de la visita:</b> ".$fecha_visita;
-               
+
                $notificacion->storeNotificaciones($estadia->user_id, $subject,  $mensaje, "Permiso de Estadía");
                $email->mailZarpe($solicitante->email, $subject, $data, $view);
-               
+
                Flash::success('Visitador asignado y notificación enviada al solicitante.');
                return redirect(route('permisosestadia.index'));
            } if ($status==='10') {
@@ -582,7 +582,7 @@ class PermisoEstadiaController extends AppBaseController
                 $subject = 'Solicitud de Estadía ' . $estadia->nro_solicitud;
                 $email->mailZarpe($solicitante->email, $subject, $data, $view);
                 $notificacion->storeNotificaciones($estadia->user_id, $subject,  $mensaje.' motivado a '.$motivo, "Permiso de Estadía");
-                 
+
                 Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
                 return redirect(route('permisosestadia.index'));
            }
@@ -613,7 +613,7 @@ class PermisoEstadiaController extends AppBaseController
         $mailTo="";
         $idTo="";
         $subject="";
-         
+
         if ($tipo == 1) {
           if ( isset($coordinador[0]->email)) {
               $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
@@ -653,7 +653,7 @@ class PermisoEstadiaController extends AppBaseController
             $subject = 'Nueva solicitud de permiso de Estadía ' . $solicitud->nro_solicitud;
             $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
             $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Permiso de Estadía");
-            
+
         }
 
 
