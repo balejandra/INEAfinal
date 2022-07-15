@@ -443,6 +443,7 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#pasaporte_menor').val("");
                                 $('#pasaporte_mayor').val("");
                         closeModalPassengers(2);
+                     
                 }else{
                         msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
                     }
@@ -472,6 +473,9 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#autorizacion').val("");
                                 $('#pasaporte_menor').val("");
                                 $('#pasaporte_mayor').val("");
+                                $("#sexoMenor > option[value='']").removeAttr("selected");
+                                $("#sexoMenor > option[value='F']").removeAttr("selected");
+                                $("#sexoMenor > option[value='M']").removeAttr("selected");
                                  closeModalPassengers(2);
 
                          }
@@ -493,14 +497,15 @@ function eliminarCargosMandos(id, idcoord){
                             let sex='';
                             respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
                            let  pasajeroExiste=document.getElementById(respuesta.cedula);
-
+console.log(respuesta);
                             if(pasajeroExiste==null){
                                 let nombres, apellidos;
                                 if (respuesta.nombre2==null) {nombres=respuesta.nombre1; }else{ nombres=respuesta.nombre1+" "+respuesta.nombre2;}
                                 if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
                                 $('#nombresMenor').val(nombres);
                                 $('#apellidosMenor').val(apellidos);
-
+                               // $('#sexoMenor').val(apellidos);
+                                
 
                                 subirDocumentos("SI", tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(),'',representante);
                                 msj.innerHTML="";
@@ -512,6 +517,12 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#nombresMenor').val("");
                                 $('#apellidosMenor').val("");
                                 $('#representanteMenor').val("");
+                                $('#autorizacion').val("");
+                                $('#pasaporte_menor').val("");
+                                $('#partida_nacimiento').val("");
+                                $("#sexoMenor > option[value='']").removeAttr("selected");
+                                $("#sexoMenor > option[value='F']").removeAttr("selected");
+                                $("#sexoMenor > option[value='M']").removeAttr("selected");
                                  closeModalPassengers(2);
 
                             }else{
@@ -569,6 +580,10 @@ function blurSaime(){
                     if (respuesta[0].apellido2==null){apellidos=respuesta[0].apellido1; }else {apellidos=respuesta[0].apellido1+" "+respuesta[0].apellido2;}
                     $('#nombresMenor').val(nombres);
                     $('#apellidosMenor').val(apellidos);
+                    $("#sexoMenor > option[value='']").removeAttr("selected");
+                    $("#sexoMenor > option[value='F']").removeAttr("selected");
+                    $("#sexoMenor > option[value='M']").removeAttr("selected");
+                    
                     $("#sexoMenor > option[value="+respuesta[0].sexo+"]").attr("selected",true);
 
                     msj.innerHTML="";
@@ -679,7 +694,9 @@ function blurSaime(){
                                     if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
                                     $('#nombres').val(nombres);
                                     $('#apellidos').val(apellidos);
-
+                                     
+                                    $('#sexoMenor').val(respuesta.sexo);
+                                    
                         //            var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
 
                                     addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
@@ -1126,7 +1143,10 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
         document.getElementById("nombres").value="";
         document.getElementById("apellidos").value="";
         document.getElementById("pasaporte_mayor").value="";
+        if(menor=='SI'){
+            location.reload(true);
 
+        }
 
     }else{
         var msj= document.getElementById('msj');
@@ -1821,6 +1841,9 @@ function openModalPassengers(tipodoc,cedula, modal){
     $('#nombresMenor').val("");
     $('#apellidosMenor').val("");
     $('#representanteMenor').val("");
+   
+    document.getElementById('errorModalPass').innerHTML="";
+
     if(modal==1){
          let btn=document.getElementById('btnDelete');
          let ci=document.getElementById('ci');
