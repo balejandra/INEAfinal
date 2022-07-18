@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3  my-1 DatosRestantes">
+                                            <div class="col-md-2  my-1 DatosRestantes">
                                                 <label for="nombres">Nombres:</label>
                                                 <div class="input-group">
 
@@ -91,7 +91,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3  my-1 DatosRestantes">
+                                            <div class="col-md-2  my-1 DatosRestantes">
                                                 <label for="nombres">Apellidos:</label>
                                                 <div class="input-group">
 
@@ -100,14 +100,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-3  my-1 ">
+                                            <div class="col-sm-4  my-1 ">
                                                 <label for="documento">Pasaporte:</label>
                                                 <div class="input-group">
                                                     <input type="file" class="form-control" name="pasaporte_mayor"
                                                            id="pasaporte_mayor" accept="application/pdf, image/*"  onchange="validarExtension('pasaporte_mayor','msj')">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-1 text-center my-1">
+                                            <div class="col-sm-12 text-center my-1">
                                                 <br>
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="getDataPassengers('ZI')">
