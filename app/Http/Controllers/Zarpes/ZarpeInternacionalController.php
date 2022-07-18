@@ -860,14 +860,23 @@ class ZarpeInternacionalController extends Controller
             $validation = json_decode($request->session()->get('validacion'), true);
         $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
          $InfoMarino = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
-
+         $infoSaime = Saime_cedula::where('cedula', $cedula)->get();
        //  $request->session()->put('tripulantes', '');
         if (is_null($InfoMarino->first())) {
             $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
+            $marinoAsignado2="";
+            $marinoAsignado="";
         } else {
             $emision=explode(' ',$InfoMarino[0]->fecha_emision);
             list($ano, $mes, $dia) = explode("-", $emision[0]);
             $emision[0]=$dia.'/'.$mes.'/'.$ano;
+            if(!is_null($infoSaime->first())){
+                $fechaNacV=$infoSaime[0]->fecha_nacimiento;
+                $sexoV=$infoSaime[0]->sexo ;
+            }else{
+                $fechaNacV='';
+                $sexoV="";
+            }
             /*$trip = [
             "permiso_zarpe_id" => '',
             "ctrl_documento_id" => $InfoMarino[0]->id,
@@ -893,6 +902,8 @@ class ZarpeInternacionalController extends Controller
                 "documento_acreditacion"=>$docAcreditacion,
                 "fecha_emision" =>$emision[0],
                 "solicitud"=>$InfoMarino[0]->solicitud,
+                "fecha_nacimiento"=> $fechaNacV,
+                "sexo"=> $sexoV,
             ];
 
             if(is_array($tripulantes)){
@@ -1017,6 +1028,9 @@ class ZarpeInternacionalController extends Controller
             $rango=$_REQUEST['rango'];
             $doc=$_REQUEST['doc'];
             $docAcreditacion=$_REQUEST['docAcreditacion'];
+            $sexo=$_REQUEST['sexo'];
+            $fecha_nacimiento=$_REQUEST['fecha_nacimiento'];
+
 
                 $trip=[
                 "permiso_zarpe_id" => '',
@@ -1030,6 +1044,8 @@ class ZarpeInternacionalController extends Controller
                 "documento_acreditacion" => $docAcreditacion,
                 "fecha_emision" => "",
                 "solicitud"=> "",
+                "fecha_nacimiento"=> $fecha_nacimiento,
+                "sexo"=> $sexo,
                 ];
 
 
@@ -1336,7 +1352,8 @@ class ZarpeInternacionalController extends Controller
             $buque=Renave_data::where('matricula_actual',$permisoZarpe->matricula)->first();
         }
         $tripulantes2 = TripulanteInternacional::select('*')->where('permiso_zarpe_id', $id)->get();
-        foreach ($tripulantes2 as $value) {
+        $trp=$tripulantes2;
+        foreach ($trp as $value) {
                 
             if($value->tipo_doc=='V'){
                 $tripV=Saime_cedula::select('saime_cedula.fecha_nacimiento','saime_cedula.sexo','licencias_titulos_gmar.nombre','licencias_titulos_gmar.apellido','licencias_titulos_gmar.solicitud','licencias_titulos_gmar.documento','licencias_titulos_gmar.fecha_emision')
@@ -1355,11 +1372,16 @@ class ZarpeInternacionalController extends Controller
                $value->fecha_emision=$emision[0];
                $value->solicitud=$tripV[0]->solicitud;
 
+               
+
             }else{
                 $value->fecha_emision='';
                 $value->solicitud='';
+               
             }
         }
+       
+         
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
         //$tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
         $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();

@@ -810,7 +810,7 @@ class PermisoZarpeController extends Controller
                             "apellidos" =>$tripulantes[$i]["apellidos"],
                             "nro_doc" => $tripulantes[$i]["nro_doc"],
                             "tipo_doc" => $tripulantes[$i]["tipo_doc"],
-                            
+                            "rango"  => $tripulantes[$i]["rango"],
                             "funcion"  => $tripulantes[$i]["funcion"],
                             "sexo"  => $tripulantes[$i]["sexo"],
                             "fecha_nacimiento"  => $tripulantes[$i]["fecha_nacimiento"],
@@ -1226,6 +1226,7 @@ class PermisoZarpeController extends Controller
             $fecha_nacimiento=$f[2].'/'.$f[1].'/'.$f[0];
             $doc=$_REQUEST['doc'];
             $docAcreditacion=$_REQUEST['docAcreditacion'];
+            $rango=$_REQUEST['rango'];
 
                 $trip=[
                 "permiso_zarpe_id" => '',
@@ -1242,6 +1243,7 @@ class PermisoZarpeController extends Controller
                 "capitan"=>$cap,
                 "fecha_emision"=>'N/A',
                 "solicitud"=>'',
+                "rango"=>$rango,
                 ];
 
                 $marinoAsignado = PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id')

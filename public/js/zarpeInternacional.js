@@ -570,6 +570,9 @@ function getMarinosZI(pass) {
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
     let rango= document.getElementById('rango').value;
+    let sexo= document.getElementById('sexo').value;
+    let fechanac= document.getElementById('fecha_nacimiento').value;
+
     let doc=pass[0];
     let docAcreditacion=pass[1];
     let ruta='';
@@ -590,7 +593,7 @@ function getMarinosZI(pass) {
 
     if(funcion=='' || tipodoc =='' || nrodoc ==''){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
-    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || rango=='')){
+    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || rango=='' || sexo=='' || fechanac=='')){
 
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
 
@@ -612,7 +615,10 @@ function getMarinosZI(pass) {
             apellidos:apellidos,
             rango:rango,
             doc:doc,
-            docAcreditacion:docAcreditacion
+            docAcreditacion:docAcreditacion,
+            sexo:sexo,
+            fecha_nacimiento:fechanac,
+
         }
 
         })// This will be called on success

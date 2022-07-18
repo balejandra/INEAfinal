@@ -157,23 +157,40 @@
 
     <br>
     <strong>Tripulantes</strong>
+     
     <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
         <th>Función</th>
         <th>Nombres y Apellidos</th>
         <th>C.I. / Pasaporte</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Sexo</th>
+        <th>Rango</th>
         <th>Fecha de Emisión</th>
         <th>Tipo Doc.</th>
         <th>Documentos</th>
         </thead>
         <tbody>
-            
-        @foreach($tripulantes as $tripulante)
+            @foreach($tripulantes as $tripulante)
             <tr>
-                <td>{{$tripulante->funcion}} </td>
-                <td>{{$tripulante->nombres}} {{$tripulante->apellidos}} </td>
+                <td>{{$tripulante->funcion}}</td>
+                <td>{{$tripulante->nombres}} {{$tripulante->apellidos}}</td>
                 <td>{{$tripulante->tipo_doc}}-{{$tripulante->nro_doc}}</td>
-                 
+                <td>
+                    @if($tripulante->tipo_doc=='V')
+                        {{ $tripulante->fecha_nacimiento}}
+                    @else
+                        @php
+                            $fechaNac= explode(' ',$tripulante->fecha_nacimiento);
+                            list($ano, $mes, $dia) = explode("-", $fechaNac[0]);
+                            $fechaNac[0]=$dia.'/'.$mes.'/'.$ano;
+                            echo $fechaNac[0];
+                        @endphp
+                    
+                    @endif
+                </td>
+                <td>{{$tripulante->sexo}}</td>
+                <td>{{$tripulante->rango}}</td>
                 <td> 
                     @if($tripulante->fecha_emision=="")
                         N/A
@@ -181,12 +198,15 @@
                         {{$tripulante->fecha_emision}}
                     @endif
                 </td>
-                <td>{{$tripulante->solicitud}}</td>
-
                 <td>
-                @if ($tripulante->tipo_doc=='V')
-                    {{$tripulante->rango}}
-                @else
+                    @if($tripulante->tipo_doc=='V')
+                        {{$tripulante->solicitud}}
+                    @else
+                        N/A
+                    @endif
+                </td>
+                <td>
+                 
                     @if ($tripulante->doc)
                         <a class="document-link" title="Pasaporte"
                            href="{{asset('documentos/zarpeinternacional/'.$tripulante->doc)}}" target="_blank">
@@ -198,10 +218,11 @@
                                href="{{asset('documentos/zarpeinternacional/'.$tripulante->documento_acreditacion)}}" target="_blank">
                                 Documento de Acreditación</a>
                     @endif
-                @endif
+                
                    
                 </td>
-        @endforeach
+            </tr>
+            @endforeach
         </tbody>
     </table>
     <br>
@@ -212,6 +233,7 @@
         <th table-sm>Documentación</th>
         <th table-sm>Sexo</th>
         <th table-sm>Menor</th>
+        <th table-sm>Representante</th>
         <th table-sm>Documentos</th>
         </thead>
         <tbody>
@@ -222,6 +244,7 @@
                 <td>{{$pasajero->sexo}} </td>
                 @if($pasajero->menor_edad==true)
                     <td>SI</td>
+                    <td>{{$pasajero->representante}} </td>
                     <td>
                         @if ($pasajero->pasaporte_menor)
                             <a class="link-info"
@@ -244,6 +267,7 @@
                     </td>
                 @else
                     <td>NO</td>
+                    <td>{{$pasajero->representante}} </td>
                     <td> @if ($pasajero->pasaporte_mayor)
                             <a class="link-info"
                                href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_mayor)}}"
