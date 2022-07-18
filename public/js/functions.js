@@ -1145,7 +1145,6 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
         document.getElementById("pasaporte_mayor").value="";
         if(menor=='SI'){
             location.reload(true);
-
         }
 
     }else{
@@ -1512,7 +1511,7 @@ function AddPasportsMarinosZN(){
             }else{
                 let msj=document.getElementById('msjMarino');
                 msj.innerHTML="";
-                msj.innerHTML="<div class='alert alert-danger'>HA ocurrido un error al adjuntar los documentos, actualice el navegador e intente nuevamente. Asegúrese de que las extenciones de archivo sean .jpg, .png o .pdf.</div>";
+                msj.innerHTML="<div class='alert alert-danger'>Ha ocurrido un error al adjuntar los documentos, actualice el navegador e intente nuevamente. Asegúrese de que las extenciones de archivo sean .jpg, .png o .pdf.</div>";
                 
             }
         }else{
@@ -1538,7 +1537,7 @@ function getMarinos(pass) {
     let nrodoc= document.getElementById('nrodoc').value;
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
-    //let rango= document.getElementById('rango').value;
+    let rango= document.getElementById('rango').value;
     let sexo= document.getElementById('sexo').value;
     let fechanac= document.getElementById('fecha_nacimiento').value;
     let doc=pass[0];
@@ -1561,7 +1560,7 @@ function getMarinos(pass) {
 
     if(funcion=='' || tipodoc =='' || nrodoc =='' ){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
-    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || sexo=='' || fechanac=="")){
+    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || sexo=='' || fechanac=="" || rango=="")){
 
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
 
@@ -1584,7 +1583,9 @@ function getMarinos(pass) {
             sexo:sexo,
             fecha_nacimiento:fechanac,
             doc:doc,
-            docAcreditacion:docAcreditacion
+            docAcreditacion:docAcreditacion,
+            rango:rango,
+
         }
 
         })// This will be called on success
@@ -1732,6 +1733,7 @@ function getMarinos(pass) {
                          document.getElementById('fecha_nacimiento').value="";
                          document.getElementById('doc').value="";
                          document.getElementById('documentoAcreditacion').value="";
+                         document.getElementById('rango').value="";
                      }else{
                        
                          if(funcion=="Capitán"){
