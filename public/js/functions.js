@@ -2526,10 +2526,14 @@ $( "#tipodoc" ).change(function () {
     var str = "";
     str =$( "#tipodoc" ).val();
     $( "#nrodoc").val('');
-    
+    let date = new Date();
+    fechamin=date.getFullYear()-18;
+    fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+    fechamin+="-"+String(date.getDate()).padStart(2, '0');
     if(str=="P"){
       $('.DatosRestantes').attr('style', 'display:block');
       $( "#nrodoc").attr('onKeyDown','');
+      $('#fecha_nacimiento').attr('max',fechamin );
     }else{
       $('.DatosRestantes').attr('style', 'display:none');
       $( "#nrodoc").attr('onKeyDown','return soloNumeros(event)');

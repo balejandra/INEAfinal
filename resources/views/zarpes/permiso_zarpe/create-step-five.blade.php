@@ -116,6 +116,7 @@
                                                 <div class="form-group">
                                                     <label for="title">Sexo:</label>
                                                     <select name="sexo" id="sexo" class="form-control custom-select">
+                                                        <option value="">Selecione</option>
                                                         <option value="M">M</option>
                                                         <option value="F">F</option>
                                                     </select>
