@@ -150,11 +150,7 @@
                                                         @php
                                                             $cant=0;
                                                         @endphp
-                                                        <tr>
-                                                            <td colspan="8" class="text-center">
-                                                                Sin registros para mostrar
-                                                            </td>
-                                                        </tr>
+                                                        
                                                     @else
                                                         @php
                                                             $cant=count($passengers);
