@@ -53,7 +53,7 @@ class tripulanteInternacional extends Model implements Auditable
         'permiso_zarpe_id' => 'integer',
         'documento_acreditacion'=> 'string',
         'sexo'=> 'string',
-        'fecha_nacimiento'=> 'date'
+        'fecha_nacimiento'=> 'string'
 
         
     ];
