@@ -628,7 +628,7 @@ class ZarpeInternacionalController extends Controller
                 $solicitud = json_decode($request->session()->get('solicitud'), true);
                 $codigo = $this->codigo($solicitud);
                 $solicitud['nro_solicitud'] = $codigo;
-                $saveSolicitud = PermisoZarpe::create($solicitud);
+                 $saveSolicitud = PermisoZarpe::create($solicitud);
 
                 if($saveSolicitud==""){
                     $bandera=false;
@@ -637,12 +637,18 @@ class ZarpeInternacionalController extends Controller
 
                 //Tripulantes
                 $tripulantes = $request->session()->get('tripulantes');
+                
                 for ($i = 0; $i < count($tripulantes); $i++) {
                     $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
+                    
+                    if (strpos($tripulantes[$i]["fecha_nacimiento"], "/") !== false) {
+                        list($dia, $mes, $ano) = explode("/", $tripulantes[$i]["fecha_nacimiento"]);
+                        $tripulantes[$i]["fecha_nacimiento"]=$ano.'-'.$mes.'-'.$dia;
+                    }
                     $trip = TripulanteInternacional::create($tripulantes[$i]);
 
                 }
-
+                
                 //Pasajeros
                 $pasajeros = $request->session()->get('pasajeros');
 
