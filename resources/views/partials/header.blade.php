@@ -15,7 +15,7 @@
                 <li class="nav-item dropdown" title="Notificaciones">
                     <a href="{{ route('notificaciones.index') }}" class="btn btn-sm btn-outline-secondary">
                         <i class="fa fa-bell title-inea" ></i>
-                        @if(session('notificaciones')>0 &&  session('notificaciones') <=3 )
+                        @if(session('notificaciones')>0 &&  session('notificaciones') <=99 )
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                             {{session('notificaciones')}}
                                 <span class="visually-hidden">Nueva Notificación</span>

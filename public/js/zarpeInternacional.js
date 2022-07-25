@@ -570,6 +570,9 @@ function getMarinosZI(pass) {
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
     let rango= document.getElementById('rango').value;
+    let sexo= document.getElementById('sexo').value;
+    let fechanac= document.getElementById('fecha_nacimiento').value;
+
     let doc=pass[0];
     let docAcreditacion=pass[1];
     let ruta='';
@@ -590,7 +593,7 @@ function getMarinosZI(pass) {
 
     if(funcion=='' || tipodoc =='' || nrodoc ==''){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
-    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || rango=='')){
+    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || rango=='' || sexo=='' || fechanac=='')){
 
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
 
@@ -612,7 +615,10 @@ function getMarinosZI(pass) {
             apellidos:apellidos,
             rango:rango,
             doc:doc,
-            docAcreditacion:docAcreditacion
+            docAcreditacion:docAcreditacion,
+            sexo:sexo,
+            fecha_nacimiento:fechanac,
+
         }
 
         })// This will be called on success
@@ -744,11 +750,14 @@ function getMarinosZI(pass) {
                          document.getElementById('rango').value="";
                          document.getElementById('doc').value="";
                          document.getElementById('documentoAcreditacion').value="";
+                         document.getElementById('sexo').value="";
+                         document.getElementById('fecha_nacimiento').value="";
+
                      }else{
                          if(funcion=="Capitán"){
-                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                                msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
                             }else{
-                                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para tripular esta embarcación.</div>' ;
+                                msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para tripular esta embarcación.</div>' ;
 
                         }
                      }
@@ -836,13 +845,18 @@ function closeModalZI() {
 
 
 $( "#tipodocZI" ).change(function () {
-    var str = "";
+    var str = ""; 
     str =$( "#tipodocZI" ).val();
     $( "#nrodoc").val('');
+    let date = new Date();
+    fechamax=date.getFullYear()-18;
+    fechamax+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+    fechamax+="-"+String(date.getDate()).padStart(2, '0');
     
     if(str=="P"){
       $('.DatosRestantes').attr('style', 'display:block');
       $( "#nrodoc").attr('onKeyDown','');
+      $('#fecha_nacimiento').attr('max',fechamax );
     }else{
       $('.DatosRestantes').attr('style', 'display:none');
       $( "#nrodoc").attr('onKeyDown','return soloNumeros(event)');

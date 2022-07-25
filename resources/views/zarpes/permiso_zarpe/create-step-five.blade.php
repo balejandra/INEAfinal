@@ -90,14 +90,14 @@
                                             </div>
 
 
-                                            <div class="col-sm-2  px-1 DatosRestantes">
+                                            <div class="col-sm-2 px-1 DatosRestantes">
                                                 <div class="form-group" >
                                                     <label for="title">Nombres:</label>
                                                     <input type="text" class="form-control" id="nombres" name="nombres"  onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-2  px-1 DatosRestantes">
+                                            <div class="col-sm-2 px-1 DatosRestantes">
                                                 <div class="form-group">
                                                     <label for="title">Apellidos:</label>
                                                     <input type="text" class="form-control" id="apellidos" name="apellidos" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
@@ -116,9 +116,17 @@
                                                 <div class="form-group">
                                                     <label for="title">Sexo:</label>
                                                     <select name="sexo" id="sexo" class="form-control custom-select">
+                                                        <option value="">Selecione</option>
                                                         <option value="M">M</option>
                                                         <option value="F">F</option>
                                                     </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2  px-1 DatosRestantes">
+                                                <div class="form-group">
+                                                    <label for="title">Rango:</label>
+                                                    <input type="text" class="form-control" id="rango" name="rango" maxlength="35">
                                                 </div>
                                             </div>
 
@@ -135,7 +143,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-1 my-2 text-center">
+                                            <div class="col-sm-12 my-2 text-center">
                                                 <br>
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="AddPasportsMarinosZN()">

@@ -443,6 +443,7 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#pasaporte_menor').val("");
                                 $('#pasaporte_mayor').val("");
                         closeModalPassengers(2);
+                     
                 }else{
                         msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
                     }
@@ -472,6 +473,9 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#autorizacion').val("");
                                 $('#pasaporte_menor').val("");
                                 $('#pasaporte_mayor').val("");
+                                $("#sexoMenor > option[value='']").removeAttr("selected");
+                                $("#sexoMenor > option[value='F']").removeAttr("selected");
+                                $("#sexoMenor > option[value='M']").removeAttr("selected");
                                  closeModalPassengers(2);
 
                          }
@@ -493,14 +497,15 @@ function eliminarCargosMandos(id, idcoord){
                             let sex='';
                             respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
                            let  pasajeroExiste=document.getElementById(respuesta.cedula);
-
+console.log(respuesta);
                             if(pasajeroExiste==null){
                                 let nombres, apellidos;
                                 if (respuesta.nombre2==null) {nombres=respuesta.nombre1; }else{ nombres=respuesta.nombre1+" "+respuesta.nombre2;}
                                 if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
                                 $('#nombresMenor').val(nombres);
                                 $('#apellidosMenor').val(apellidos);
-
+                               // $('#sexoMenor').val(apellidos);
+                                
 
                                 subirDocumentos("SI", tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(),'',representante);
                                 msj.innerHTML="";
@@ -512,6 +517,12 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#nombresMenor').val("");
                                 $('#apellidosMenor').val("");
                                 $('#representanteMenor').val("");
+                                $('#autorizacion').val("");
+                                $('#pasaporte_menor').val("");
+                                $('#partida_nacimiento').val("");
+                                $("#sexoMenor > option[value='']").removeAttr("selected");
+                                $("#sexoMenor > option[value='F']").removeAttr("selected");
+                                $("#sexoMenor > option[value='M']").removeAttr("selected");
                                  closeModalPassengers(2);
 
                             }else{
@@ -569,6 +580,10 @@ function blurSaime(){
                     if (respuesta[0].apellido2==null){apellidos=respuesta[0].apellido1; }else {apellidos=respuesta[0].apellido1+" "+respuesta[0].apellido2;}
                     $('#nombresMenor').val(nombres);
                     $('#apellidosMenor').val(apellidos);
+                    $("#sexoMenor > option[value='']").removeAttr("selected");
+                    $("#sexoMenor > option[value='F']").removeAttr("selected");
+                    $("#sexoMenor > option[value='M']").removeAttr("selected");
+                    
                     $("#sexoMenor > option[value="+respuesta[0].sexo+"]").attr("selected",true);
 
                     msj.innerHTML="";
@@ -679,7 +694,9 @@ function blurSaime(){
                                     if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
                                     $('#nombres').val(nombres);
                                     $('#apellidos').val(apellidos);
-
+                                     
+                                    $('#sexoMenor').val(respuesta.sexo);
+                                    
                         //            var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
 
                                     addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
@@ -1126,7 +1143,9 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
         document.getElementById("nombres").value="";
         document.getElementById("apellidos").value="";
         document.getElementById("pasaporte_mayor").value="";
-
+        if(menor=='SI'){
+            location.reload(true);
+        }
 
     }else{
         var msj= document.getElementById('msj');
@@ -1492,7 +1511,7 @@ function AddPasportsMarinosZN(){
             }else{
                 let msj=document.getElementById('msjMarino');
                 msj.innerHTML="";
-                msj.innerHTML="<div class='alert alert-danger'>HA ocurrido un error al adjuntar los documentos, actualice el navegador e intente nuevamente. Asegúrese de que las extenciones de archivo sean .jpg, .png o .pdf.</div>";
+                msj.innerHTML="<div class='alert alert-danger'>Ha ocurrido un error al adjuntar los documentos, actualice el navegador e intente nuevamente. Asegúrese de que las extenciones de archivo sean .jpg, .png o .pdf.</div>";
                 
             }
         }else{
@@ -1518,7 +1537,7 @@ function getMarinos(pass) {
     let nrodoc= document.getElementById('nrodoc').value;
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
-    //let rango= document.getElementById('rango').value;
+    let rango= document.getElementById('rango').value;
     let sexo= document.getElementById('sexo').value;
     let fechanac= document.getElementById('fecha_nacimiento').value;
     let doc=pass[0];
@@ -1541,7 +1560,7 @@ function getMarinos(pass) {
 
     if(funcion=='' || tipodoc =='' || nrodoc =='' ){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
-    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || sexo=='' || fechanac=="")){
+    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || sexo=='' || fechanac=="" || rango=="")){
 
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
 
@@ -1564,7 +1583,9 @@ function getMarinos(pass) {
             sexo:sexo,
             fecha_nacimiento:fechanac,
             doc:doc,
-            docAcreditacion:docAcreditacion
+            docAcreditacion:docAcreditacion,
+            rango:rango,
+
         }
 
         })// This will be called on success
@@ -1712,6 +1733,7 @@ function getMarinos(pass) {
                          document.getElementById('fecha_nacimiento').value="";
                          document.getElementById('doc').value="";
                          document.getElementById('documentoAcreditacion').value="";
+                         document.getElementById('rango').value="";
                      }else{
                        
                          if(funcion=="Capitán"){
@@ -1821,6 +1843,9 @@ function openModalPassengers(tipodoc,cedula, modal){
     $('#nombresMenor').val("");
     $('#apellidosMenor').val("");
     $('#representanteMenor').val("");
+   
+    document.getElementById('errorModalPass').innerHTML="";
+
     if(modal==1){
          let btn=document.getElementById('btnDelete');
          let ci=document.getElementById('ci');
@@ -2501,10 +2526,14 @@ $( "#tipodoc" ).change(function () {
     var str = "";
     str =$( "#tipodoc" ).val();
     $( "#nrodoc").val('');
-    
+    let date = new Date();
+    fechamin=date.getFullYear()-18;
+    fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+    fechamin+="-"+String(date.getDate()).padStart(2, '0');
     if(str=="P"){
       $('.DatosRestantes').attr('style', 'display:block');
       $( "#nrodoc").attr('onKeyDown','');
+      $('#fecha_nacimiento').attr('max',fechamin );
     }else{
       $('.DatosRestantes').attr('style', 'display:none');
       $( "#nrodoc").attr('onKeyDown','return soloNumeros(event)');

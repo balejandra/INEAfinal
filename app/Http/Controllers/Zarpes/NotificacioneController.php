@@ -20,16 +20,19 @@ class NotificacioneController extends Controller
      */
     public function index()
     {
-       echo  $userid = auth()->id();
+         $userid = auth()->id();
         $notificacionesNacional = Notificacione::where('user_id', $userid)->where('tipo', 'Zarpe Nacional')->get();
         $notificacionesInternacional = Notificacione::where('user_id', $userid)->where('tipo', 'Zarpe Internacional')->get();
         $notificacionesEstadia = Notificacione::where('user_id', $userid)->where('tipo', 'Permiso de Estadía')->get();
-
+        $notificacionGeneral = Notificacione::where('user_id', $userid)->where('tipo', 'General')->get();
+       
+        
         $this->statusNotificaciones();
         return view('zarpes/notificaciones/index')
         ->with('notificacionesNacional', $notificacionesNacional)
         ->with('notificacionesInternacional', $notificacionesInternacional)
-        ->with('notificacionesEstadia', $notificacionesEstadia);
+        ->with('notificacionesEstadia', $notificacionesEstadia)
+        ->with('ng', $notificacionGeneral);
     }
 
      
@@ -47,8 +50,10 @@ class NotificacioneController extends Controller
         $notificacion->texto=$texto;
         $notificacion->tipo=$tipo;
         $notificacion->visto=false;
-        return $notificacion->save();
-
+        $resp=$notificacion->save();
+        $this->statusNotificaciones();
+        return $resp;
+        
     }
 
     /**
