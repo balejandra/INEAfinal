@@ -19,7 +19,7 @@ class CreateNotificacionesTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('titulo');
-            $table->string('texto');
+            $table->string('texto',2000);
             $table->string('tipo');
             $table->boolean('visto');
             $table->timestamps();

@@ -316,6 +316,7 @@ function eliminarCargosMandos(id, idcoord){
                                     respuesta=respuesta[0];
                                     let sex='';
                                     respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
+                                    sexo=respuesta.sexo;
                                 let  pasajeroExiste=document.getElementById('pass'+respuesta.cedula);
 
                                     if(pasajeroExiste==null){
