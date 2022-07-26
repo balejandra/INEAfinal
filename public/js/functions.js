@@ -239,7 +239,7 @@ function eliminarCargosMandos(id, idcoord){
         var pass=document.getElementById('pasajeros');
         const asset=msj.getAttribute('data-asset');
 
-         msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con resgitros existentes en SAIME, por favor espere...</div>";
+         msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con registros existentes en SAIME, por favor espere...</div>";
 
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));

@@ -36,7 +36,7 @@ use Flash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Zarpes\NotificacionesController;
-
+use Carbon\Carbon;
 
 class ZarpeInternacionalController extends Controller
 {
@@ -641,10 +641,10 @@ class ZarpeInternacionalController extends Controller
                 for ($i = 0; $i < count($tripulantes); $i++) {
                     $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
                     
-                    if (strpos($tripulantes[$i]["fecha_nacimiento"], "/") !== false) {
+                    /*if (strpos($tripulantes[$i]["fecha_nacimiento"], "/") !== false) {
                         list($dia, $mes, $ano) = explode("/", $tripulantes[$i]["fecha_nacimiento"]);
                         $tripulantes[$i]["fecha_nacimiento"]=$ano.'-'.$mes.'-'.$dia;
-                    }
+                    }*/
                     $trip = TripulanteInternacional::create($tripulantes[$i]);
 
                 }
@@ -1359,6 +1359,7 @@ class ZarpeInternacionalController extends Controller
         }
         $tripulantes2 = TripulanteInternacional::select('*')->where('permiso_zarpe_id', $id)->get();
         $trp=$tripulantes2;
+        
         foreach ($trp as $value) {
                 
             if($value->tipo_doc=='V'){
@@ -1370,7 +1371,9 @@ class ZarpeInternacionalController extends Controller
                $value->nombres=$tripV[0]->nombre;
                $value->apellidos=$tripV[0]->apellido;
                $value->sexo=$tripV[0]->sexo;
-               $value->fecha_nacimiento=$tripV[0]->fecha_nacimiento;
+               
+                   
+                $value->fecha_nacimiento=  $tripV[0]->fecha_nacimiento;
                $value->rango=$tripV[0]->documento;
                $emision=explode(' ',$tripV[0]->fecha_emision);
                 list($ano, $mes, $dia) = explode("-", $emision[0]);
@@ -1386,6 +1389,7 @@ class ZarpeInternacionalController extends Controller
                
             }
         }
+        
        
          
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
@@ -1412,7 +1416,7 @@ class ZarpeInternacionalController extends Controller
             ->with('permisoZarpe', $permisoZarpe)
             ->with('buque',$buque)
             ->with('certificados', $validacionSgm)
-            ->with('tripulantes', $tripulantes2)
+            ->with('tripulantes', $trp)
             ->with('pasajeros', $pasajeros)
             ->with('equipos', $equipos)
             ->with('revisiones', $revisiones)
