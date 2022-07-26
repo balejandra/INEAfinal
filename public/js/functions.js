@@ -1572,7 +1572,8 @@ function getMarinos(pass) {
         }else{
             ruta=route('marinoExtranjero');
         }
-
+        const asset=msj.getAttribute('data-asset');
+        msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con registros existentes, por favor espere...</div>";
         $.ajax({
         url: ruta,
         data: {
