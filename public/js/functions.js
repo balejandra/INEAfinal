@@ -444,7 +444,7 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#pasaporte_menor').val("");
                                 $('#pasaporte_mayor').val("");
                         closeModalPassengers(2);
-                     
+
                 }else{
                         msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
                     }
@@ -506,7 +506,7 @@ console.log(respuesta);
                                 $('#nombresMenor').val(nombres);
                                 $('#apellidosMenor').val(apellidos);
                                // $('#sexoMenor').val(apellidos);
-                                
+
 
                                 subirDocumentos("SI", tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(),'',representante);
                                 msj.innerHTML="";
@@ -584,7 +584,7 @@ function blurSaime(){
                     $("#sexoMenor > option[value='']").removeAttr("selected");
                     $("#sexoMenor > option[value='F']").removeAttr("selected");
                     $("#sexoMenor > option[value='M']").removeAttr("selected");
-                    
+
                     $("#sexoMenor > option[value="+respuesta[0].sexo+"]").attr("selected",true);
 
                     msj.innerHTML="";
@@ -695,9 +695,9 @@ function blurSaime(){
                                     if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
                                     $('#nombres').val(nombres);
                                     $('#apellidos').val(apellidos);
-                                     
+
                                     $('#sexoMenor').val(respuesta.sexo);
-                                    
+
                         //            var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
 
                                     addPassengers(men, tipodoc, cedula, fechanac, sexo, $('#nombres').val(), $('#apellidos').val(),html);
@@ -1003,7 +1003,7 @@ console.log("Documentos::",documentos);
                 case 'MaxPassengerLimit':
                     msj.innerHTML='<div class="alert alert-danger">Ha alcanzado el máximo de pasageros disponibles para esta embarcación</div>' ;
                 break;
-                case 'PassengerAsigned': 
+                case 'PassengerAsigned':
                     msj.innerHTML='<div class="alert alert-danger">El pasajero con C.I. / Pasaporte '+nrodoc+' se encuentra asignado a una embarcación con un permiso de zarpe pendiente o en curso actualmente</div>' ;
                 break;
                 case 'OK':
@@ -1049,7 +1049,7 @@ function deletePassenger(){
                     let cant=parseInt(cantPass.getAttribute("data-cantPass"));
                     cantPass.innerHTML=response[2];
                 });
-                
+
 
                 msj.innerHTML='<div class="alert alert-success">Pasajero eliminado con éxito.</div>' ;
 
@@ -1259,7 +1259,7 @@ function validacionMarino(){
                                                 if(row.fecha_emision!=''){
                                                     fm=row.fecha_emision;
                                                 }
-                                                return `${fm}`; 
+                                                return `${fm}`;
                                             }
                                         },
                                         {"data":'solicitud'},
@@ -1479,7 +1479,7 @@ function AddPasportsMarinosZN(){
                 msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el pasaporte.</div>";
                 return false;
             }*/
-            
+
         break;
 
 
@@ -1513,7 +1513,7 @@ function AddPasportsMarinosZN(){
                 let msj=document.getElementById('msjMarino');
                 msj.innerHTML="";
                 msj.innerHTML="<div class='alert alert-danger'>Ha ocurrido un error al adjuntar los documentos, actualice el navegador e intente nuevamente. Asegúrese de que las extenciones de archivo sean .jpg, .png o .pdf.</div>";
-                
+
             }
         }else{
             //if(resps[0][0] =='OK'){
@@ -1591,7 +1591,7 @@ function getMarinos(pass) {
 
         })// This will be called on success
         .done(function (response) {
-            
+
             respuesta = JSON.parse(response);
                 console.log("RESPUESTA::",respuesta);
 
@@ -1633,7 +1633,7 @@ function getMarinos(pass) {
                     }else{
                         msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para tripular esta embarcación.</div>' ;
                     }
-                    
+
                 break;
                 case 'OK':
 
@@ -1653,7 +1653,7 @@ function getMarinos(pass) {
                          pass1=respuesta[0];
                          console.log("PASS1",pass1);
                          pass1=pass1[pass1.length-1];
-                         let ruta=tabla.getAttribute('data-rimg');  
+                         let ruta=tabla.getAttribute('data-rimg');
                          $('#example2').DataTable({
                              responsive: true,
                              autoWidth: true,
@@ -1671,21 +1671,21 @@ function getMarinos(pass) {
                                     "data":"tipo_doc",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `${row.tipo_doc} ${row.nro_doc}`; 
+                                        return `${row.tipo_doc} ${row.nro_doc}`;
                                     }
                                  },
                                   {
                                     "data":"nombres",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `${row.nombres}  ${row.apellidos}`; 
+                                        return `${row.nombres}  ${row.apellidos}`;
                                     }
                                  },
                                  {"data":'fecha_nacimiento'},
-                                
+
                                  {"data":'sexo'},
                                  {"data":'fecha_emision'},
-                                 
+
                                  {
                                     "data":"doc",
                                         render: function ( data, type, row ) {
@@ -1694,31 +1694,31 @@ function getMarinos(pass) {
                                             if(row.tipo_doc=='V'){
                                                 links+=row.documento_acreditacion;
                                             }else{
-                                                
+
                                                 if(row.doc!=""){
                                                     links=`<a href='${ruta+"/"+row.doc}' class='document-link' title='Pasaporte' target='_blank'> Pasaporte </a>`;
 
                                                 }
-                                                   
+
                                                if(row.documento_acreditacion!=''){
                                                     links+=`<br><a href='${ruta+"/"+row.documento_acreditacion}' class='document-link' title='Documento de Acreditación' target='_blank'>Doc. de Acreditación</a>`;
                                                 }
 
                                             }
 
-                                           
-                                            return links; 
+
+                                            return links;
                                         }
                                     },
-                                 
+
                                 {
                                 "data":"nro_doc",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `<a href='#' onclick=\"openModalZN('${row.nro_doc}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
+                                        return `<a href='#' onclick=\"openModalZN('${row.nro_doc}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`;
                                     }
                                 }
-                                 
+
                              ],
 
                          });
@@ -1736,7 +1736,7 @@ function getMarinos(pass) {
                          document.getElementById('documentoAcreditacion').value="";
                          document.getElementById('rango').value="";
                      }else{
-                       
+
                          if(funcion=="Capitán"){
                                         msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
                             }else{
@@ -1844,7 +1844,7 @@ function openModalPassengers(tipodoc,cedula, modal){
     $('#nombresMenor').val("");
     $('#apellidosMenor').val("");
     $('#representanteMenor').val("");
-   
+
     document.getElementById('errorModalPass').innerHTML="";
 
     if(modal==1){
