@@ -49,14 +49,14 @@
                                         </div>
 
                                         <div class="row px-0 mx-0">
-                                            <div class="col-md-3 my-1">
+                                            <div class="col-md-2 my-1">
                                                 <div class="form-group">
                                                     <label for="title">Tipo doc.:</label>
                                                     {!! Form::select('tipodoc', ['V'=>'Cédula', 'P'=>'Pasaporte'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodoc']) !!}
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3 my-1">
+                                            <div class="col-md-2 my-1">
                                                 <div class="form-group">
                                                     <label for="numero_identificacion">Cédula / Pasaporte</label>
                                                     <input type="text" class="form-control" id="numero_identificacion"
@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3  my-1 DatosRestantes">
+                                            <div class="col-md-2  my-1 DatosRestantes">
                                                 <label for="nombres">Nombres</label>
                                                 <div class="input-group">
 
@@ -91,7 +91,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3  my-1 DatosRestantes">
+                                            <div class="col-md-2  my-1 DatosRestantes">
                                                 <label for="nombres">Apellidos</label>
                                                 <div class="input-group">
 
@@ -107,7 +107,7 @@
                                                            id="pasaporte_mayor" accept="application/pdf, image/*"  onchange="validarExtension('pasaporte_mayor','msj')">
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 my-1">
+                                            <div class="col-md-12 my-1 text-center">
                                                 <br>
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="getDataPassengers()">

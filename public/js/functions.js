@@ -239,7 +239,7 @@ function eliminarCargosMandos(id, idcoord){
         var pass=document.getElementById('pasajeros');
         const asset=msj.getAttribute('data-asset');
 
-         msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con resgitros existentes en SAIME, por favor espere...</div>";
+         msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con registros existentes en SAIME, por favor espere...</div>";
 
         var div=document.getElementById("dataPassengers");
         cantAct=parseInt(div.getAttribute("data-cant"));
@@ -316,6 +316,7 @@ function eliminarCargosMandos(id, idcoord){
                                     respuesta=respuesta[0];
                                     let sex='';
                                     respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
+                                    sexo=respuesta.sexo;
                                 let  pasajeroExiste=document.getElementById('pass'+respuesta.cedula);
 
                                     if(pasajeroExiste==null){
@@ -443,6 +444,7 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#pasaporte_menor').val("");
                                 $('#pasaporte_mayor').val("");
                         closeModalPassengers(2);
+
                 }else{
                         msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
                     }
@@ -472,6 +474,9 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#autorizacion').val("");
                                 $('#pasaporte_menor').val("");
                                 $('#pasaporte_mayor').val("");
+                                $("#sexoMenor > option[value='']").removeAttr("selected");
+                                $("#sexoMenor > option[value='F']").removeAttr("selected");
+                                $("#sexoMenor > option[value='M']").removeAttr("selected");
                                  closeModalPassengers(2);
 
                          }
@@ -493,13 +498,14 @@ function eliminarCargosMandos(id, idcoord){
                             let sex='';
                             respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
                            let  pasajeroExiste=document.getElementById(respuesta.cedula);
-
+console.log(respuesta);
                             if(pasajeroExiste==null){
                                 let nombres, apellidos;
                                 if (respuesta.nombre2==null) {nombres=respuesta.nombre1; }else{ nombres=respuesta.nombre1+" "+respuesta.nombre2;}
                                 if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
                                 $('#nombresMenor').val(nombres);
                                 $('#apellidosMenor').val(apellidos);
+                               // $('#sexoMenor').val(apellidos);
 
 
                                 subirDocumentos("SI", tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenor').val(), $('#apellidosMenor').val(),'',representante);
@@ -512,6 +518,12 @@ function eliminarCargosMandos(id, idcoord){
                                 $('#nombresMenor').val("");
                                 $('#apellidosMenor').val("");
                                 $('#representanteMenor').val("");
+                                $('#autorizacion').val("");
+                                $('#pasaporte_menor').val("");
+                                $('#partida_nacimiento').val("");
+                                $("#sexoMenor > option[value='']").removeAttr("selected");
+                                $("#sexoMenor > option[value='F']").removeAttr("selected");
+                                $("#sexoMenor > option[value='M']").removeAttr("selected");
                                  closeModalPassengers(2);
 
                             }else{
@@ -569,6 +581,10 @@ function blurSaime(){
                     if (respuesta[0].apellido2==null){apellidos=respuesta[0].apellido1; }else {apellidos=respuesta[0].apellido1+" "+respuesta[0].apellido2;}
                     $('#nombresMenor').val(nombres);
                     $('#apellidosMenor').val(apellidos);
+                    $("#sexoMenor > option[value='']").removeAttr("selected");
+                    $("#sexoMenor > option[value='F']").removeAttr("selected");
+                    $("#sexoMenor > option[value='M']").removeAttr("selected");
+
                     $("#sexoMenor > option[value="+respuesta[0].sexo+"]").attr("selected",true);
 
                     msj.innerHTML="";
@@ -679,6 +695,8 @@ function blurSaime(){
                                     if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
                                     $('#nombres').val(nombres);
                                     $('#apellidos').val(apellidos);
+
+                                    $('#sexoMenor').val(respuesta.sexo);
 
                         //            var html="<tr id='pass"+cedula+"' data-menor='"+men+"'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombres').val()+"</td> <td>"+$('#apellidos').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>"+men+"</td> </tr>";
 
@@ -976,7 +994,7 @@ console.log("Documentos::",documentos);
     })// This will be called on success
         .done(function (response) {
              var resp=JSON.parse(response);
-             console.log(resp);
+             console.log('RESPUESTAPAss',resp);
 
              switch(resp[0]){
                 case 'ExistInPassengerList':
@@ -984,6 +1002,9 @@ console.log("Documentos::",documentos);
                 break;
                 case 'MaxPassengerLimit':
                     msj.innerHTML='<div class="alert alert-danger">Ha alcanzado el máximo de pasageros disponibles para esta embarcación</div>' ;
+                break;
+                case 'PassengerAsigned':
+                    msj.innerHTML='<div class="alert alert-danger">El pasajero con C.I. / Pasaporte '+nrodoc+' se encuentra asignado a una embarcación con un permiso de zarpe pendiente o en curso actualmente</div>' ;
                 break;
                 case 'OK':
                     if(representante==''){
@@ -1019,13 +1040,16 @@ function deletePassenger(){
     })// This will be called on success
         .done(function (response) {
 
+            console.log("DeletePass:",response);
+            if(response[0]==true){
+                response[1].forEach(element => {
+                    let tr=document.getElementById(element);
+                    tr.remove();
+                    var cantPass= document.getElementById("cantPasajeros");
+                    let cant=parseInt(cantPass.getAttribute("data-cantPass"));
+                    cantPass.innerHTML=response[2];
+                });
 
-            if(response==true){
-                let tr=document.getElementById(cedula);
-                tr.remove();
-                var cantPass= document.getElementById("cantPasajeros");
-                let cant=parseInt(cantPass.getAttribute("data-cantPass"));
-                cantPass.innerHTML=cant+1;
 
                 msj.innerHTML='<div class="alert alert-success">Pasajero eliminado con éxito.</div>' ;
 
@@ -1120,7 +1144,9 @@ function addPassengers(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellido
         document.getElementById("nombres").value="";
         document.getElementById("apellidos").value="";
         document.getElementById("pasaporte_mayor").value="";
-
+        if(menor=='SI'){
+            location.reload(true);
+        }
 
     }else{
         var msj= document.getElementById('msj');
@@ -1226,7 +1252,16 @@ function validacionMarino(){
                                         {"data":'funcion', 'title': 'Función'},
                                         {"data":'cedula'},
                                         {"data":'nombre'},
-                                        {"data":'fecha_emision'},
+                                        {"data":'fecha_emision',
+                                            render: function ( data, type, row ) {
+                                           // esto es lo que se va a renderizar como html
+                                                let fm="N/A";
+                                                if(row.fecha_emision!=''){
+                                                    fm=row.fecha_emision;
+                                                }
+                                                return `${fm}`;
+                                            }
+                                        },
                                         {"data":'solicitud'},
                                         {"data":'documento'},
                                         {
@@ -1444,7 +1479,7 @@ function AddPasportsMarinosZN(){
                 msj.innerHTML="<div class='alert alert-danger'>Se requiere que adjunte el pasaporte.</div>";
                 return false;
             }*/
-            
+
         break;
 
 
@@ -1477,8 +1512,8 @@ function AddPasportsMarinosZN(){
             }else{
                 let msj=document.getElementById('msjMarino');
                 msj.innerHTML="";
-                msj.innerHTML="<div class='alert alert-danger'>HA ocurrido un error al adjuntar los documentos, actualice el navegador e intente nuevamente. Asegúrese de que las extenciones de archivo sean .jpg, .png o .pdf.</div>";
-                
+                msj.innerHTML="<div class='alert alert-danger'>Ha ocurrido un error al adjuntar los documentos, actualice el navegador e intente nuevamente. Asegúrese de que las extenciones de archivo sean .jpg, .png o .pdf.</div>";
+
             }
         }else{
             //if(resps[0][0] =='OK'){
@@ -1503,7 +1538,7 @@ function getMarinos(pass) {
     let nrodoc= document.getElementById('nrodoc').value;
     let nombres= document.getElementById('nombres').value;
     let apellidos= document.getElementById('apellidos').value;
-    //let rango= document.getElementById('rango').value;
+    let rango= document.getElementById('rango').value;
     let sexo= document.getElementById('sexo').value;
     let fechanac= document.getElementById('fecha_nacimiento').value;
     let doc=pass[0];
@@ -1526,7 +1561,7 @@ function getMarinos(pass) {
 
     if(funcion=='' || tipodoc =='' || nrodoc =='' ){
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
-    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || sexo=='' || fechanac=="")){
+    }else if(tipodoc=='P' && (nombres == '' || apellidos == '' || sexo=='' || fechanac=="" || rango=="")){
 
         msj.innerHTML="<div class='alert alert-danger'>Existen campos vacios en el formulario, por favor verifique.</div>";
 
@@ -1537,7 +1572,8 @@ function getMarinos(pass) {
         }else{
             ruta=route('marinoExtranjero');
         }
-
+        const asset=msj.getAttribute('data-asset');
+        msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con registros existentes, por favor espere...</div>";
         $.ajax({
         url: ruta,
         data: {
@@ -1549,12 +1585,14 @@ function getMarinos(pass) {
             sexo:sexo,
             fecha_nacimiento:fechanac,
             doc:doc,
-            docAcreditacion:docAcreditacion
+            docAcreditacion:docAcreditacion,
+            rango:rango,
+
         }
 
         })// This will be called on success
         .done(function (response) {
-            
+
             respuesta = JSON.parse(response);
                 console.log("RESPUESTA::",respuesta);
 
@@ -1596,7 +1634,7 @@ function getMarinos(pass) {
                     }else{
                         msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para tripular esta embarcación.</div>' ;
                     }
-                    
+
                 break;
                 case 'OK':
 
@@ -1616,7 +1654,7 @@ function getMarinos(pass) {
                          pass1=respuesta[0];
                          console.log("PASS1",pass1);
                          pass1=pass1[pass1.length-1];
-                         let ruta=tabla.getAttribute('data-rimg');  
+                         let ruta=tabla.getAttribute('data-rimg');
                          $('#example2').DataTable({
                              responsive: true,
                              autoWidth: true,
@@ -1634,21 +1672,21 @@ function getMarinos(pass) {
                                     "data":"tipo_doc",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `${row.tipo_doc} ${row.nro_doc}`; 
+                                        return `${row.tipo_doc} ${row.nro_doc}`;
                                     }
                                  },
                                   {
                                     "data":"nombres",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `${row.nombres}  ${row.apellidos}`; 
+                                        return `${row.nombres}  ${row.apellidos}`;
                                     }
                                  },
                                  {"data":'fecha_nacimiento'},
-                                
+
                                  {"data":'sexo'},
                                  {"data":'fecha_emision'},
-                                 
+
                                  {
                                     "data":"doc",
                                         render: function ( data, type, row ) {
@@ -1657,31 +1695,31 @@ function getMarinos(pass) {
                                             if(row.tipo_doc=='V'){
                                                 links+=row.documento_acreditacion;
                                             }else{
-                                                
+
                                                 if(row.doc!=""){
                                                     links=`<a href='${ruta+"/"+row.doc}' class='document-link' title='Pasaporte' target='_blank'> Pasaporte </a>`;
 
                                                 }
-                                                   
+
                                                if(row.documento_acreditacion!=''){
                                                     links+=`<br><a href='${ruta+"/"+row.documento_acreditacion}' class='document-link' title='Documento de Acreditación' target='_blank'>Doc. de Acreditación</a>`;
                                                 }
 
                                             }
 
-                                           
-                                            return links; 
+
+                                            return links;
                                         }
                                     },
-                                 
+
                                 {
                                 "data":"nro_doc",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `<a href='#' onclick=\"openModalZN('${row.nro_doc}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
+                                        return `<a href='#' onclick=\"openModalZN('${row.nro_doc}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`;
                                     }
                                 }
-                                 
+
                              ],
 
                          });
@@ -1697,8 +1735,9 @@ function getMarinos(pass) {
                          document.getElementById('fecha_nacimiento').value="";
                          document.getElementById('doc').value="";
                          document.getElementById('documentoAcreditacion').value="";
+                         document.getElementById('rango').value="";
                      }else{
-                       
+
                          if(funcion=="Capitán"){
                                         msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
                             }else{
@@ -1806,6 +1845,9 @@ function openModalPassengers(tipodoc,cedula, modal){
     $('#nombresMenor').val("");
     $('#apellidosMenor').val("");
     $('#representanteMenor').val("");
+
+    document.getElementById('errorModalPass').innerHTML="";
+
     if(modal==1){
          let btn=document.getElementById('btnDelete');
          let ci=document.getElementById('ci');
@@ -2486,10 +2528,14 @@ $( "#tipodoc" ).change(function () {
     var str = "";
     str =$( "#tipodoc" ).val();
     $( "#nrodoc").val('');
-    
+    let date = new Date();
+    fechamin=date.getFullYear()-18;
+    fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+    fechamin+="-"+String(date.getDate()).padStart(2, '0');
     if(str=="P"){
       $('.DatosRestantes').attr('style', 'display:block');
       $( "#nrodoc").attr('onKeyDown','');
+      $('#fecha_nacimiento').attr('max',fechamin );
     }else{
       $('.DatosRestantes').attr('style', 'display:none');
       $( "#nrodoc").attr('onKeyDown','return soloNumeros(event)');

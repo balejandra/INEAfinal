@@ -30,7 +30,9 @@ class tripulanteInternacional extends Model implements Auditable
         'rango',
         'doc',
         'permiso_zarpe_id',
-        'documento_acreditacion'
+        'documento_acreditacion',
+        'sexo',
+        'fecha_nacimiento'
     ];
 
     /**
@@ -50,6 +52,8 @@ class tripulanteInternacional extends Model implements Auditable
         'doc'=> 'string',
         'permiso_zarpe_id' => 'integer',
         'documento_acreditacion'=> 'string',
+        'sexo'=> 'string',
+        'fecha_nacimiento'=> 'string'
 
         
     ];
@@ -69,7 +73,8 @@ class tripulanteInternacional extends Model implements Auditable
         'doc'=> 'required',
         'permiso_zarpe_id' => 'required',
         'documento_acreditacion'=> 'required',
-
+        'sexo'=> 'required',
+        'fecha_nacimiento'=> 'required'
 
     ];
 

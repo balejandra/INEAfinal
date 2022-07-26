@@ -33,7 +33,7 @@ use App\Models\Zarpes\DescripcionNavegacion;
 use Flash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\Zarpes\NotificacioneController;
 
 class PermisoZarpeController extends Controller
 {
@@ -810,7 +810,7 @@ class PermisoZarpeController extends Controller
                             "apellidos" =>$tripulantes[$i]["apellidos"],
                             "nro_doc" => $tripulantes[$i]["nro_doc"],
                             "tipo_doc" => $tripulantes[$i]["tipo_doc"],
-
+                            "rango"  => $tripulantes[$i]["rango"],
                             "funcion"  => $tripulantes[$i]["funcion"],
                             "sexo"  => $tripulantes[$i]["sexo"],
                             "fecha_nacimiento"  => $tripulantes[$i]["fecha_nacimiento"],
@@ -905,10 +905,9 @@ class PermisoZarpeController extends Controller
                 Flash::error('Ha ocurrido un error al guardar la solicitud, los datos no se guardaron.');
 
             }
-
-            $capOrigin = $this->SendMail($saveSolicitud->id, 1);
-            $caopDestino = $this->SendMail($saveSolicitud->id, 0);
-
+ 
+            $capOrigin = $this->SendMail($saveSolicitud->id, 1, true);
+            $caopDestino = $this->SendMail($saveSolicitud->id, 0, false);
             if ($capOrigin == true || $caopDestino == true) {
                 Flash::success('Se ha generado la solocitud <b>
             ' . $codigo . '</b> exitosamente y se han enviado los correos de notificación correspondientes');
@@ -1002,23 +1001,31 @@ class PermisoZarpeController extends Controller
                 $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
                 $request->session()->put('validacion', json_encode($validation));
                 $borrado =true;
+                $elim=[$cedula];
             }else{
+                $pass=[];
+                $elim=[];
                 for ($i=0; $i < count($pasajeros); $i++) {
-                    $indice=array_search($cedula,$pasajeros[$i],false);
-                    if($indice!=false){
-                        array_splice($pasajeros, $i, 1);
-                        $request->session()->put('pasajeros', $pasajeros);
-                        $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
-                        $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+                    
+                    if($cedula!=$pasajeros[$i]['nro_doc'] && $cedula!=$pasajeros[$i]['representante'] ){
+                        array_push($pass, $pasajeros[$i]);
+                    }else{
+                        $borrado=true;
+                        array_push($elim, $pasajeros[$i]['nro_doc']);
 
-                        $request->session()->put('validacion', json_encode($validation));
-                        $borrado =true;
                     }
+                   
                 }
+                $pasajeros=$pass;
+                $request->session()->put('pasajeros', $pasajeros);
+                $validation['cantPassAbordo']=abs(count($tripulantes)+count($pasajeros));
+                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+                $request->session()->put('validacion', json_encode($validation));
+
             }
 
         }
-        echo $borrado;
+        return [$borrado, $elim, $validation['pasajerosRestantes']] ;
     }
 
     public function validacionMarino(Request $request){
@@ -1219,6 +1226,7 @@ class PermisoZarpeController extends Controller
             $fecha_nacimiento=$f[2].'/'.$f[1].'/'.$f[0];
             $doc=$_REQUEST['doc'];
             $docAcreditacion=$_REQUEST['docAcreditacion'];
+            $rango=$_REQUEST['rango'];
 
                 $trip=[
                 "permiso_zarpe_id" => '',
@@ -1233,8 +1241,9 @@ class PermisoZarpeController extends Controller
                 "doc" => $doc,
                 "documento_acreditacion" => $docAcreditacion,
                 "capitan"=>$cap,
-                "fecha_emision"=>'',
+                "fecha_emision"=>'N/A',
                 "solicitud"=>'',
+                "rango"=>$rango,
                 ];
 
                 $marinoAsignado = PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id')
@@ -1393,6 +1402,7 @@ class PermisoZarpeController extends Controller
         $transaccion = PermisoZarpe::find($id);
         $capitania= Capitania::where('id',$transaccion->establecimiento_nautico->capitania_id)->first();
         $estnauticoDestino=EstablecimientoNautico::find($transaccion->establecimiento_nautico_destino_id);
+        $notificacion = new NotificacioneController();
         if ($status === 'aprobado') {
             if ($transaccion->bandera=='extranjera') {
                 $buqueconsex=PermisoEstadia::where('id',$transaccion->permiso_estadia_id)->first();
@@ -1432,6 +1442,7 @@ class PermisoZarpeController extends Controller
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de permiso de Zarpe ' . $transaccion->nro_solicitud;
             $email->mailZarpePDF($solicitante->email, $subject, $data, $view);
+            $notificacion->storeNotificaciones($transaccion->user_id, $subject,  $mensaje, "Zarpe Nacional");
 
             Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
             return redirect(route('permisoszarpes.index'));
@@ -1472,6 +1483,7 @@ class PermisoZarpeController extends Controller
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de Zarpe ' . $transaccion->nro_solicitud;
             $email->mailZarpe($solicitante->email, $subject, $data, $view);
+            $notificacion->storeNotificaciones($transaccion->user_id, $subject,  $mensaje, "Zarpe Nacional");
 
             Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
             return redirect(route('permisoszarpes.index'));
@@ -1625,28 +1637,35 @@ class PermisoZarpeController extends Controller
             ->with('capitaniaOrigen', $capitaniaOrigen[0])->with('titulo', $this->titulo);
     }
 
-    public function SendMail($idsolicitud, $tipo)
+    public function SendMail($idsolicitud, $tipo, $mailUser)
     {
         $solicitud = PermisoZarpe::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
 
-        $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
+        $capitanDestino = CapitaniaUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->destino_capitania_id)
+            ->where('cargo', '=', 4)
+            ->where('habilitado', '=', true)
             ->get();
 
         $estNautico = EstablecimientoNautico::find($solicitud->establecimiento_nautico_id);
 
 
-        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email')
+        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $estNautico->capitania_id)
+            ->where('cargo', '=', 4)
+            ->where('habilitado', '=', true)
             ->get();
+
+            $notificacion = new NotificacioneController();
 
         if ($tipo == 1 && count($capitanOrigen) > 0) {
             //mensaje para caitania origen
             $mensaje = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha recibido una
     nueva solicitud de permiso de zarpe en su jurisdicción que espera por su aprobación.";
+    
             $mailTo = $capitanOrigen[0]->email;
             $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
 
@@ -1664,12 +1683,15 @@ class PermisoZarpeController extends Controller
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo, $subject, $data, $view);
+            $notificacion->storeNotificaciones($capitanOrigen[0]->user_id, $subject,  $mensaje, "Zarpe Nacional");
+
             $return = true;
 
         } else if (count($capitanDestino) > 0) {
             //mensaje para capitania destino
             $mensaje = "El Sistema de Control y Gestión de Zarpes del INEA le notifica que
     la siguiente embarcación está próxima a arribar a su jurisdicción.";
+    
             $mailTo = $capitanDestino[0]->email;
             $subject = 'Notificación de arribo de embarcación ' . $solicitud->matricula;
 
@@ -1682,16 +1704,39 @@ class PermisoZarpeController extends Controller
                 'fecha_salida' => $solicitud->fecha_hora_salida,
                 'fecha_regreso' => $solicitud->fecha_hora_regreso,
                 'mensaje' => $mensaje,
-
             ];
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo, $subject, $data, $view);
+            $notificacion->storeNotificaciones($capitanDestino[0]->user_id, $subject,  $mensaje, "Zarpe Nacional");
+
+
             $return = true;
         } else {
             $return = false;
 
         }
+
+        if( $mailUser==true){
+            $emailUser = new MailController();
+            $mensajeUser = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha generado una
+            nueva solicitud de permiso de zarpe con su usuario y se encuentra en espera de aprobación.";
+            $dataUser = [
+                    'solicitud' => $solicitud->nro_solicitud,
+                    'matricula' => $solicitud->matricula,
+                    'nombres_solic' => $solicitante->nombres,
+                    'apellidos_solic' => $solicitante->apellidos,
+                    'fecha_salida' => $solicitud->fecha_hora_salida,
+                    'fecha_regreso' => $solicitud->fecha_hora_regreso,
+                    'mensaje' => $mensajeUser,
+            ];
+            $view = 'emails.zarpes.solicitudPermisoZarpe';
+            $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
+            $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
+            $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Nacional");
+            
+        }
+
         return $return;
     }
 
@@ -2046,58 +2091,72 @@ public function AddDocumentos(Request $request){
                 $pasajeros=[];
             }
 
+            $PasajeroAsignado = PermisoZarpe::select('permiso_zarpes.status_id')
+            ->Join('pasajeros', 'permiso_zarpes.id', '=', 'pasajeros.permiso_zarpe_id')
+            ->where('pasajeros.nro_doc', $_REQUEST['nrodoc'])
+            ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
+            ->get();
 
-            if($_REQUEST['representante']==''){
-                $respresentante="N/A";
+            if(count($PasajeroAsignado)>0){
+                $info="PassengerAsigned";
+                $pass=[];
             }else{
-                $respresentante=$_REQUEST['representante'];
+
+                        if($_REQUEST['representante']==''){
+                            $respresentante="N/A";
+                        }else{
+                            $respresentante=$_REQUEST['representante'];
+                        }
+            
+                        if($_REQUEST['tipodoc']=="NC"){
+                            $nrodoc=$_REQUEST['nrodoc']."-".$HijoNumero;
+                        }else{
+                            $nrodoc=$_REQUEST['nrodoc'];
+                        }
+            
+            
+                        $fechaNac=explode('-',$_REQUEST['fechanac']);
+                        $fechaNac2=$fechaNac[2].'-'.$fechaNac[1].'-'.$fechaNac[0];
+            
+                    $pass = [
+                        "nombres" => $_REQUEST['nombres'],
+                        "apellidos" => $_REQUEST['apellidos'],
+                        "tipo_doc" => $_REQUEST['tipodoc'],
+                        "nro_doc" => $nrodoc,
+                        "sexo" =>$_REQUEST['sexo'],
+                        "fecha_nacimiento" =>$fechaNac2,
+                        "menor_edad" =>$menor,
+                        "representante" =>$respresentante,
+                        "permiso_zarpe_id" => '',
+                        "partida_nacimiento"=> $_REQUEST['partida_nacimiento'],
+                        "autorizacion"=> $_REQUEST['autorizacion'],
+                        "pasaporte_menor"=> $_REQUEST['pasaporte_menor'],
+                        "pasaporte_mayor"=> $_REQUEST['pasaporte_mayor']
+                    ];
+            
+            
+            
+                    if($indice==false ){
+                        if($validation['pasajerosRestantes']>0){
+                            array_push($pasajeros, $pass);
+                            $request->session()->put('pasajeros', $pasajeros);
+                            $info="OK";
+                        // $cantPasajeros=$cantPasajeros-count($pasajeros);
+                        // $validation['cantPassAbordo']=count($pasajeros);
+                            $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
+                            $request->session()->put('validacion', json_encode($validation));
+                        }else{
+                            $info = "MaxPassengerLimit";
+                        }
+            
+                    }else{
+                        $info="ExistInPassengerList";
+            
+                    }
+                
             }
 
-            if($_REQUEST['tipodoc']=="NC"){
-                $nrodoc=$_REQUEST['nrodoc']."-".$HijoNumero;
-            }else{
-                $nrodoc=$_REQUEST['nrodoc'];
-            }
 
-
-            $fechaNac=explode('-',$_REQUEST['fechanac']);
-            $fechaNac2=$fechaNac[2].'-'.$fechaNac[1].'-'.$fechaNac[0];
-
-        $pass = [
-            "nombres" => $_REQUEST['nombres'],
-            "apellidos" => $_REQUEST['apellidos'],
-            "tipo_doc" => $_REQUEST['tipodoc'],
-            "nro_doc" => $nrodoc,
-            "sexo" =>$_REQUEST['sexo'],
-            "fecha_nacimiento" =>$fechaNac2,
-            "menor_edad" =>$menor,
-            "representante" =>$respresentante,
-            "permiso_zarpe_id" => '',
-            "partida_nacimiento"=> $_REQUEST['partida_nacimiento'],
-            "autorizacion"=> $_REQUEST['autorizacion'],
-            "pasaporte_menor"=> $_REQUEST['pasaporte_menor'],
-            "pasaporte_mayor"=> $_REQUEST['pasaporte_mayor']
-        ];
-
-
-
-        if($indice==false ){
-            if($validation['pasajerosRestantes']>0){
-                array_push($pasajeros, $pass);
-                $request->session()->put('pasajeros', $pasajeros);
-                $info="OK";
-               // $cantPasajeros=$cantPasajeros-count($pasajeros);
-               // $validation['cantPassAbordo']=count($pasajeros);
-                $validation['pasajerosRestantes']=$validation['cant_pasajeros']-abs(count($tripulantes)+count($pasajeros));
-                $request->session()->put('validacion', json_encode($validation));
-            }else{
-                $info = "MaxPassengerLimit";
-            }
-
-        }else{
-            $info="ExistInPassengerList";
-
-        }
 
         $resp=[$info,$pass,count($pasajeros), $validation['pasajerosRestantes'],$validation['pasajerosRestantes'] ];
         echo json_encode($resp);

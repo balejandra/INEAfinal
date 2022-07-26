@@ -35,7 +35,8 @@ use App\Models\Publico\Paise;
 use Flash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\Zarpes\NotificacionesController;
+use Carbon\Carbon;
 
 class ZarpeInternacionalController extends Controller
 {
@@ -627,7 +628,7 @@ class ZarpeInternacionalController extends Controller
                 $solicitud = json_decode($request->session()->get('solicitud'), true);
                 $codigo = $this->codigo($solicitud);
                 $solicitud['nro_solicitud'] = $codigo;
-                $saveSolicitud = PermisoZarpe::create($solicitud);
+                 $saveSolicitud = PermisoZarpe::create($solicitud);
 
                 if($saveSolicitud==""){
                     $bandera=false;
@@ -636,12 +637,18 @@ class ZarpeInternacionalController extends Controller
 
                 //Tripulantes
                 $tripulantes = $request->session()->get('tripulantes');
+                
                 for ($i = 0; $i < count($tripulantes); $i++) {
                     $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
+                    
+                    /*if (strpos($tripulantes[$i]["fecha_nacimiento"], "/") !== false) {
+                        list($dia, $mes, $ano) = explode("/", $tripulantes[$i]["fecha_nacimiento"]);
+                        $tripulantes[$i]["fecha_nacimiento"]=$ano.'-'.$mes.'-'.$dia;
+                    }*/
                     $trip = TripulanteInternacional::create($tripulantes[$i]);
 
                 }
-
+                
                 //Pasajeros
                 $pasajeros = $request->session()->get('pasajeros');
 
@@ -716,8 +723,8 @@ class ZarpeInternacionalController extends Controller
             }    
 
 
-            $capOrigin = $this->SendMail($saveSolicitud->id, 1);
-            $caopDestino = $this->SendMail($saveSolicitud->id, 0);
+            $capOrigin = $this->SendMail($saveSolicitud->id, 1, true);
+            $caopDestino = $this->SendMail($saveSolicitud->id, 0, false);
 
             if ($capOrigin == true || $caopDestino == true) {
                 Flash::success('Se ha generado la solicitud <b>
@@ -859,12 +866,23 @@ class ZarpeInternacionalController extends Controller
             $validation = json_decode($request->session()->get('validacion'), true);
         $fechav = LicenciasTitulosGmar::select(DB::raw('MAX(fecha_vencimiento) as fechav'))->where('ci', $cedula)->get();
          $InfoMarino = LicenciasTitulosGmar::where('fecha_vencimiento', $fechav[0]->fechav)->where('ci', $cedula)->get();
-
+         $infoSaime = Saime_cedula::where('cedula', $cedula)->get();
        //  $request->session()->put('tripulantes', '');
         if (is_null($InfoMarino->first())) {
             $InfoMarino = "gmarNotFound"; // no encontrado en Gmar
+            $marinoAsignado2="";
+            $marinoAsignado="";
         } else {
             $emision=explode(' ',$InfoMarino[0]->fecha_emision);
+            list($ano, $mes, $dia) = explode("-", $emision[0]);
+            $emision[0]=$dia.'/'.$mes.'/'.$ano;
+            if(!is_null($infoSaime->first())){
+                $fechaNacV=$infoSaime[0]->fecha_nacimiento;
+                $sexoV=$infoSaime[0]->sexo ;
+            }else{
+                $fechaNacV='';
+                $sexoV="";
+            }
             /*$trip = [
             "permiso_zarpe_id" => '',
             "ctrl_documento_id" => $InfoMarino[0]->id,
@@ -887,8 +905,11 @@ class ZarpeInternacionalController extends Controller
                 "funcion" => $funcion,
                 "rango" =>$InfoMarino[0]->documento,
                 "doc" => $doc,
-                "documento_acreditacion"=>$docAcreditacion
-
+                "documento_acreditacion"=>$docAcreditacion,
+                "fecha_emision" =>$emision[0],
+                "solicitud"=>$InfoMarino[0]->solicitud,
+                "fecha_nacimiento"=> $fechaNacV,
+                "sexo"=> $sexoV,
             ];
 
             if(is_array($tripulantes)){
@@ -1013,6 +1034,9 @@ class ZarpeInternacionalController extends Controller
             $rango=$_REQUEST['rango'];
             $doc=$_REQUEST['doc'];
             $docAcreditacion=$_REQUEST['docAcreditacion'];
+            $sexo=$_REQUEST['sexo'];
+            $fecha_nacimiento=$_REQUEST['fecha_nacimiento'];
+
 
                 $trip=[
                 "permiso_zarpe_id" => '',
@@ -1024,7 +1048,10 @@ class ZarpeInternacionalController extends Controller
                 "rango" =>$rango,
                 "doc" => $doc,
                 "documento_acreditacion" => $docAcreditacion,
-
+                "fecha_emision" => "",
+                "solicitud"=> "",
+                "fecha_nacimiento"=> $fecha_nacimiento,
+                "sexo"=> $sexo,
                 ];
 
 
@@ -1172,6 +1199,8 @@ class ZarpeInternacionalController extends Controller
         $capitania= Capitania::where('id',$transaccion->establecimiento_nautico->capitania_id)->first();
         //$estnauticoDestino=EstablecimientoNautico::find($transaccion->establecimiento_nautico_destino_id);
         $pais=Paise::find($transaccion->paises_id);
+        $notificacion = new NotificacioneController();
+
         if ($status === 'aprobado') {
             if ($transaccion->bandera=='extranjera') {
                 $buqueconsex=PermisoEstadia::where('id',$transaccion->permiso_estadia_id)->first();
@@ -1211,6 +1240,7 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de permiso de Zarpe ' . $transaccion->nro_solicitud;
             $email->mailZarpePDFZI($solicitante->email, $subject, $data, $view);
+            $notificacion->storeNotificaciones($transaccion->user_id, $subject,  $mensaje, "Zarpe Internacional");
 
             Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
@@ -1251,6 +1281,7 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.revision';
             $subject = 'Solicitud de Zarpe Internacional ' . $transaccion->nro_solicitud;
             $email->mailZarpe($solicitante->email, $subject, $data, $view);
+            $notificacion->storeNotificaciones($transaccion->user_id, $subject,  $mensaje, "Zarpe Internacional");
 
             Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
             return redirect(route('zarpeInternacional.index'));
@@ -1327,7 +1358,9 @@ class ZarpeInternacionalController extends Controller
             $buque=Renave_data::where('matricula_actual',$permisoZarpe->matricula)->first();
         }
         $tripulantes2 = TripulanteInternacional::select('*')->where('permiso_zarpe_id', $id)->get();
-        foreach ($tripulantes2 as $value) {
+        $trp=$tripulantes2;
+        
+        foreach ($trp as $value) {
                 
             if($value->tipo_doc=='V'){
                 $tripV=Saime_cedula::select('saime_cedula.fecha_nacimiento','saime_cedula.sexo','licencias_titulos_gmar.nombre','licencias_titulos_gmar.apellido','licencias_titulos_gmar.solicitud','licencias_titulos_gmar.documento','licencias_titulos_gmar.fecha_emision')
@@ -1338,7 +1371,9 @@ class ZarpeInternacionalController extends Controller
                $value->nombres=$tripV[0]->nombre;
                $value->apellidos=$tripV[0]->apellido;
                $value->sexo=$tripV[0]->sexo;
-               $value->fecha_nacimiento=$tripV[0]->fecha_nacimiento;
+               
+                   
+                $value->fecha_nacimiento=  $tripV[0]->fecha_nacimiento;
                $value->rango=$tripV[0]->documento;
                $emision=explode(' ',$tripV[0]->fecha_emision);
                 list($ano, $mes, $dia) = explode("-", $emision[0]);
@@ -1346,11 +1381,17 @@ class ZarpeInternacionalController extends Controller
                $value->fecha_emision=$emision[0];
                $value->solicitud=$tripV[0]->solicitud;
 
+               
+
             }else{
                 $value->fecha_emision='';
                 $value->solicitud='';
+               
             }
         }
+        
+       
+         
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
         //$tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
         $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
@@ -1375,7 +1416,7 @@ class ZarpeInternacionalController extends Controller
             ->with('permisoZarpe', $permisoZarpe)
             ->with('buque',$buque)
             ->with('certificados', $validacionSgm)
-            ->with('tripulantes', $tripulantes2)
+            ->with('tripulantes', $trp)
             ->with('pasajeros', $pasajeros)
             ->with('equipos', $equipos)
             ->with('revisiones', $revisiones)
@@ -1387,23 +1428,30 @@ class ZarpeInternacionalController extends Controller
             ->with('pais',$paises)->with('titulo', $this->titulo);
     }
 
-    public function SendMail($idsolicitud, $tipo)
+    public function SendMail($idsolicitud, $tipo, $mailUser)
     {
         $solicitud = PermisoZarpe::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
 
-        $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
+        $capitanDestino = CapitaniaUser::select('capitania_id', 'email', 'user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->destino_capitania_id)
+            ->where('cargo', '=', 4)
+            ->where('habilitado', '=', true)
             ->get();
 
         $estNautico = EstablecimientoNautico::find($solicitud->establecimiento_nautico_id);
 
 
-        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email')
+        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $estNautico->capitania_id)
+            ->where('cargo', '=', 4)
+            ->where('habilitado', '=', true)
             ->get();
+        
+            $notificacion = new NotificacioneController();
+
 
         if ($tipo == 1 && count($capitanOrigen) > 0) {
             //mensaje para caitania origen
@@ -1426,6 +1474,9 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo, $subject, $data, $view);
+
+            $notificacion->storeNotificaciones($capitanOrigen[0]->user_id, $subject,  $mensaje, "Zarpe Internacional");
+
             $return = true;
 
         } else if (count($capitanDestino) > 0) {
@@ -1449,10 +1500,31 @@ class ZarpeInternacionalController extends Controller
             $view = 'emails.zarpes.solicitudPermisoZarpe';
 
             $email->mailZarpe($mailTo, $subject, $data, $view);
+            $notificacion->storeNotificaciones($capitanDestino[0]->user_id, $subject,  $mensaje, "Zarpe Internacional");
+
             $return = true;
         } else {
             $return = false;
 
+        }
+
+        if( $mailUser==true){
+        $emailUser = new MailController();
+        $mensajeUser = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha generado una
+        nueva solicitud de permiso de zarpe Internacional con su usuario y se encuentra en espera de aprobación.";
+        $dataUser = [
+                'solicitud' => $solicitud->nro_solicitud,
+                'matricula' => $solicitud->matricula,
+                'nombres_solic' => $solicitante->nombres,
+                'apellidos_solic' => $solicitante->apellidos,
+                'fecha_salida' => $solicitud->fecha_hora_salida,
+                'fecha_regreso' => $solicitud->fecha_hora_regreso,
+                'mensaje' => $mensajeUser,
+        ];
+        $view = 'emails.zarpes.solicitudPermisoZarpe';
+        $subject = 'Nueva solicitud de permiso de Zarpe Internacional ' . $solicitud->nro_solicitud;
+        $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
+        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Internacional");
         }
         return $return;
     }

@@ -190,14 +190,16 @@
     @endif
 
     <strong>Tripulantes</strong>
-
+ 
     <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
-        <th>Cargo que Desempeña</th>
+        <th>Función</th>
         <th>Nombres y Apellidos</th>
-        <th>Cédula/Pasaporte</th>
-        <th>Fecha de nacimiento</th>
+        <th>C.I. / Pasaporte</th>
+        <th>Fecha de Nacimiento</th>
         <th>Sexo</th>
+        <th>Tipo Doc.</th>
+        <th>Rango</th>
         <th>Fecha de Emisión</th>
         <th>Documentos</th>
         
@@ -210,31 +212,42 @@
                 <td>{{$tripulante->tipo_doc}} {{$tripulante->nro_doc}}</td>
                 <td>{{$tripulante->fecha_nacimiento}}</td>
                 <td>{{$tripulante->sexo}} </td>
-                <td>{{$tripulante->fecha_emision}}</td>
-
                 <td>
-                @if ($tripulante->tipo_doc=='V')
-                    {{$tripulante->rango}}
-                @else
-                    @if($tripulante->doc!="")
-                    <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->doc)}}" target="_blank"> Pasaporte </a>
-                     
+                    @if($tripulante->tipo_doc=='V')
+                        {{$tripulante->solicitud}}
+                    @else
+                        N/A
                     @endif
-                    @if($tripulante->documento_acreditacion!="")
-                    <br>
-                    <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->documento_acreditacion)}}" target="_blank"> Documento de acreditación </a>
- 
+                </td>
+                <td>{{$tripulante->rango}}</td>
+                <td>
+                    @if($tripulante->fecha_emision=="")
+                        N/A
+                    @else
+                        {{$tripulante->fecha_emision}}
                     @endif
-                @endif
-                   
                 </td>
                 
+                <td>
+                    @if($tripulante->tipo_doc=='V')
+                        N/A
+                    @else
+                        @if($tripulante->doc!="")
+                        <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->doc)}}" target="_blank"> Pasaporte </a>
+                        
+                        @endif
+                        @if($tripulante->documento_acreditacion!="")
+                        <br>
+                        <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->documento_acreditacion)}}" target="_blank"> Documento de acreditación </a>
+    
+                        @endif
 
+                    @endif
+                </td>
             </tr>
-        @endforeach
+             @endforeach
         </tbody>
     </table>
-
     <br>
 
     <strong>Pasajeros</strong>
@@ -245,6 +258,7 @@
         <th>Documentación</th>
         <th>Sexo</th>
         <th>Menor</th>
+        <th>Representante</th>
         <th>Documentos</th>
 
         </thead>
@@ -256,6 +270,8 @@
                 <td>{{$pasajero->sexo}} </td>
                 @if($pasajero->menor_edad==true)
                     <td>SI</td>
+                    <td>{{$pasajero->representante}} </td>
+
                     <td>
                         @if ($pasajero->pasaporte_menor)
                             <a class="document-link"
@@ -277,6 +293,7 @@
                     </td>
                 @else
                     <td>NO</td>
+                    <td>{{$pasajero->representante}} </td>
                     <td> @if ($pasajero->pasaporte_mayor)
                             <a class="document-link"
                                href="{{asset('documentos/permisozarpe/'.$pasajero->pasaporte_mayor)}}" target="_blank">

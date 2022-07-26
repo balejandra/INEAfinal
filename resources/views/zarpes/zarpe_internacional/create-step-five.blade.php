@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-3  px-1">
+                                            <div class="col-sm-2  px-1">
                                                 <div class="form-group">
                                                     <label for="title">Cédula/Pasaporte:</label>
                                                     <input type="text" class="form-control" id="nrodoc" name="nrodoc" maxlength="15">
@@ -104,8 +104,27 @@
                                                 </div>
                                             </div>
 
+                                            
 
-                                            <div class="col-sm-3  px-1 DatosRestantes">
+                                            <div class="col-sm-2  px-1 DatosRestantes ">
+                                                <div class="form-group">
+                                                    <label for="title">Fecha de Nacimiento:</label>
+                                                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2  px-1 DatosRestantes ">
+                                                <div class="form-group">
+                                                    <label for="title">Sexo:</label>
+                                                    <select name="sexo" id="sexo" class="form-control custom-select">
+                                                        <option value="">Seleccione</option>
+                                                        <option value="M">M</option>
+                                                        <option value="F">F</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2  px-1 DatosRestantes">
                                                 <div class="form-group">
                                                     <label for="title">Rango:</label>
                                                     <input type="text" class="form-control" id="rango" name="rango" maxlength="35">
@@ -125,7 +144,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-1 my-2 text-center">
+                                            <div class="col-sm-12 my-2 text-center">
                                                 <br>
                                                 <button type="button" class="btn btn-primary"
                                                         onclick="AddPasportsMarinos()">
@@ -157,6 +176,7 @@
                                                         <th>Cédula / Pasaporte</th>
                                                         <th>Nombres y Apellidos</th>
                                                         <th>Rango</th>
+                                                        <th>Fecha de Emisión</th>
                                                         <th>Documentos</th>
                                                         <th>Acciones</th>
 
@@ -194,6 +214,13 @@
                                                                     <td>{{$trip["tipo_doc"]}} {{$trip["nro_doc"]}}</td>
                                                                     <td>{{$trip["nombres"]}} {{$trip["apellidos"]}}</td>
                                                                     <td>{{$trip["rango"]}}</td>
+                                                                    <td>
+                                                                        @if($trip["fecha_emision"]=="")
+                                                                            N/A
+                                                                        @else
+                                                                            {{$trip["fecha_emision"]}}
+                                                                        @endif
+                                                                    </td>
                                                                     <td>  
                                                                         <a class="document-link" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$trip['doc'])}}" target="_blank"> Pasaporte </a>
 
@@ -202,6 +229,7 @@
                                                                             <a class="document-link" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$trip['documento_acreditacion'])}}" target="_blank"> Doc. Acreditación. </a>
                                                                         @endif
                                                                     </td>
+                                                                    
                                                                     <td>
                                                                         <a href="#"
                                                                            onclick="openModalZI('{{$trip["nro_doc"]}}')">
