@@ -4,18 +4,13 @@ namespace App\Models\Sgm;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TiposCertificado extends Model
 {
-    use SoftDeletes;
     use HasFactory;
 
     protected $connection = 'pgsql_seguridad_maritima';
     public $table = 'sgm.tipos_certificados';
-
-    protected $dates = ['deleted_at'];
-
 
      public $fillable = [
         'responsable',
@@ -36,7 +31,7 @@ class TiposCertificado extends Model
         'capacidad_personas'
     ];
 
-     
+
     protected $casts = [
         'id' => 'integer',
         'responsable'=> 'string',
@@ -58,5 +53,5 @@ class TiposCertificado extends Model
     ];
 
 
-    
+
 }
