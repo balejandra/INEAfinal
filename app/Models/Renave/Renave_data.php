@@ -30,15 +30,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Renave_data extends Model
 {
-    use SoftDeletes;
 
     use HasFactory;
 
     protected $connection = 'pgsql_renave_schema';
     public $table = 'renave_data';
 
-
-    protected $dates = ['deleted_at'];
 
 
 
