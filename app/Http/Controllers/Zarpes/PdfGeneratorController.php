@@ -34,7 +34,29 @@ class PdfGeneratorController extends Controller
         $cantTrip=Tripulante::where('permiso_zarpe_id',$id)->get()->count();
         $cantPas=Pasajero::where('permiso_zarpe_id',$id)->get()->count();
         $tripulantes=Tripulante::select('ctrl_documento_id')->where('permiso_zarpe_id',$id)->where('capitan',true)->get();
-        $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
+        
+        if($tripulantes[0]->ctrl_documento_id==0 || $tripulantes[0]->ctrl_documento_id=="0"){
+            $tripulanteCap=Tripulante::select('*')->where('permiso_zarpe_id',$id)->where('capitan',true)->get();
+             $trip = [
+            'id' => $tripulanteCap[0]->id,
+            'permiso_zarpe_id' => $tripulanteCap[0]->permiso_zarpe_id,
+            'ctrl_documento_id' => $tripulanteCap[0]->ctrl_documento_id,
+            'capitan' => $tripulanteCap[0]->capitan,
+            'funcion' => $tripulanteCap[0]->funcion,
+            'nombre' => $tripulanteCap[0]->nombres,
+            'apellido' => $tripulanteCap[0]->apellidos,
+            'tipo_doc' => $tripulanteCap[0]->tipo_doc,
+            'nro_doc'  => $tripulanteCap[0]->nro_doc,
+            'doc'  => $tripulanteCap[0]->doc,
+            'rango'  => $tripulanteCap[0]->rango,
+            'documento_acreditacion'  => $tripulanteCap[0]->documento_acreditacion,
+            'fecha_nacimiento'  => $tripulanteCap[0]->fecha_nacimiento,
+            'sexo'  => $tripulanteCap[0]->sexo,
+            ];
+            $trip=(object)$trip;
+        }else{
+            $trip= LicenciasTitulosGmar::whereIn('id',$tripulantes)->first();
+        }
         $estnauticoDestino=EstablecimientoNautico::find($zarpe->establecimiento_nautico_destino_id);
         $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
 
