@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\Zarpes\MailController;
+use App\Http\Controllers\Zarpes\NotificacioneController;
 use App\Models\Publico\CapitaniaUser;
 use App\Models\User;
 use App\Models\Zarpes\PermisoZarpe;
@@ -45,8 +46,9 @@ class VerificationZarpeRescate extends Command
         $zarpeVencido=PermisoZarpe::whereRaw('fecha_hora_regreso::TIMESTAMP + \'2 hr\'::INTERVAL <= now() and
                                                   fecha_hora_regreso::TIMESTAMP + \'3 hr\'::INTERVAL >= now()')
             ->where('status_id',5)
+            ->where('bandera','nacional')
             ->get();
-
+        $notificacion = new NotificacioneController();
         foreach($zarpeVencido as $record){
             $userc=CapitaniaUser::where('capitania_id',$record->destino_capitania_id)->get();
 
@@ -59,7 +61,10 @@ class VerificationZarpeRescate extends Command
                     'hora_llegada'=>$record->fecha_hora_regreso,
                 ];
                 $view = 'emails.zarpes.rescate';
-                $subject = 'Notificacion de Rescate ' . $record->nro_solicitud;
+                $subject = 'Notificacion de Rescate Nacional ' . $record->nro_solicitud;
+                $mensaje="Saludos, Notificacion URGENTE, la siguiente embarcación presenta 2 horas de retraso de su arribo a destino programado.
+                Nro. de Solicitud: {$record->nro_solicitud}, Buque Matrícula Nro: {$record->matricula}, Fecha Llegada: {$record->fecha_hora_regreso}";
+                $notificacion->storeNotificaciones($record2->user_id, $subject,  $mensaje, "Zarpe Nacional");
                 $email->mailZarpe($userEmail->email, $subject, $data, $view);
             }
 
@@ -67,8 +72,42 @@ class VerificationZarpeRescate extends Command
                     'user_id' => 1,
                     'permiso_zarpe_id' => $record->id,
                     'accion'=>'Informado Rescate',
-                    'motivo'=>'Pasada 2 de navegacion sin informar arribo'
+                    'motivo'=>'Pasada 2 horas de navegacion sin informar arribo'
                 ]);
+        }
+
+        //INTERNACIONAL////
+        $zarpeIVencido=PermisoZarpe::whereRaw('fecha_hora_regreso::TIMESTAMP + \'2 hr\'::INTERVAL <= now() and
+                                                  fecha_hora_regreso::TIMESTAMP + \'3 hr\'::INTERVAL >= now()')
+            ->where('status_id',5)
+            ->where('bandera','extranjera')
+            ->get();
+        $notificacionI = new NotificacioneController();
+        foreach($zarpeIVencido as $recordI){
+            $usercI=CapitaniaUser::where('capitania_id',$recordI->destino_capitania_id)->get();
+
+            foreach($usercI as $record2I) {
+                $userEmailI = User::find($record2I->user_id);
+                $emailI = new MailController();
+                $dataI = [
+                    'codigo'=>$recordI->nro_solicitud,
+                    'buque'=>$recordI->matricula,
+                    'hora_llegada'=>$recordI->fecha_hora_regreso,
+                ];
+                $viewI = 'emails.zarpes.rescate';
+                $subjectI = 'Notificacion de Rescate Internacional ' . $recordI->nro_solicitud;
+                $mensajeI="Saludos, Notificacion URGENTE, la siguiente embarcación presenta 2 horas de retraso de su arribo a destino programado.
+                Nro. de Solicitud: {$recordI->nro_solicitud}, Buque Matrícula Nro: {$recordI->matricula}, Fecha Llegada: {$recordI->fecha_hora_regreso}";
+                $notificacionI->storeNotificaciones($record2I->user_id, $subjectI,  $mensajeI, "Zarpe Internacional");
+                $emailI->mailZarpe($userEmailI->email, $subjectI, $dataI, $viewI);
+            }
+
+            ZarpeRevision::insert([
+                'user_id' => 1,
+                'permiso_zarpe_id' => $recordI->id,
+                'accion'=>'Informado Rescate',
+                'motivo'=>'Pasada 2 horas de navegacion sin informar arribo'
+            ]);
         }
     }
 }
