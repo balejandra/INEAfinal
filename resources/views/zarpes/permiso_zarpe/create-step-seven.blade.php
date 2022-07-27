@@ -132,8 +132,8 @@
                                                                     <div class=" form-inline">
                                                                         <label for="inputEmail4" class="col-sm-12"
                                                                                style="text-transform: uppercase;">
-                                                                            @if($equipo->otros=="fecha_ultima_inspeccion")
-                                                                                Fecha de última inspección:
+                                                                            @if($equipo->otros=="fecha_caducidad")
+                                                                                Fecha de Caducidad:
 
                                                                                 @php
                                                                                     $type="date";
