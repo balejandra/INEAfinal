@@ -7,6 +7,7 @@ use App\Http\Controllers\Zarpes\NotificacioneController;
 use App\Models\Publico\CapitaniaUser;
 use App\Models\User;
 use App\Models\Zarpes\PermisoZarpe;
+use App\Models\Zarpes\Status;
 use App\Models\Zarpes\ZarpeRevision;
 use Illuminate\Console\Command;
 
@@ -46,7 +47,7 @@ class VerificationZarpeRescate extends Command
         $zarpeVencido=PermisoZarpe::whereRaw('fecha_hora_regreso::TIMESTAMP + \'2 hr\'::INTERVAL <= now() and
                                                   fecha_hora_regreso::TIMESTAMP + \'3 hr\'::INTERVAL >= now()')
             ->where('status_id',5)
-            ->where('bandera','nacional')
+            ->where('descripcion_navegacion_id','<>','4')
             ->get();
         $notificacion = new NotificacioneController();
         foreach($zarpeVencido as $record){
@@ -74,13 +75,17 @@ class VerificationZarpeRescate extends Command
                     'accion'=>'Informado Rescate',
                     'motivo'=>'Pasada 2 horas de navegacion sin informar arribo'
                 ]);
+            $transaccion = PermisoZarpe::find($record->id);
+            $idstatus = Status::find(1);
+            $transaccion->status_id = $idstatus->id;
+            $transaccion->update();
         }
 
         //INTERNACIONAL////
         $zarpeIVencido=PermisoZarpe::whereRaw('fecha_hora_regreso::TIMESTAMP + \'2 hr\'::INTERVAL <= now() and
                                                   fecha_hora_regreso::TIMESTAMP + \'3 hr\'::INTERVAL >= now()')
             ->where('status_id',5)
-            ->where('bandera','extranjera')
+            ->where('descripcion_navegacion_id','4')
             ->get();
         $notificacionI = new NotificacioneController();
         foreach($zarpeIVencido as $recordI){

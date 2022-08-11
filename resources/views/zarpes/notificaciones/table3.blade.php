@@ -3,7 +3,7 @@
         margin: 0 auto;
     }
 </style>
-<table class="table table-striped table-bordered table-grow" id="generic-table3" style="width:90%">
+<table class="table table-hover table-bordered table-grow" id="generic-table3" style="width:90%">
     <thead>
     <th>Título</th>
     <th>Tipo</th>
