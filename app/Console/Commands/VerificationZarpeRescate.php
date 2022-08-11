@@ -75,10 +75,6 @@ class VerificationZarpeRescate extends Command
                     'accion'=>'Informado Rescate',
                     'motivo'=>'Pasada 2 horas de navegacion sin informar arribo'
                 ]);
-            $transaccion = PermisoZarpe::find($record->id);
-            $idstatus = Status::find(1);
-            $transaccion->status_id = $idstatus->id;
-            $transaccion->update();
         }
 
         //INTERNACIONAL////
