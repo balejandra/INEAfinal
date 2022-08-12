@@ -182,6 +182,9 @@ function datosbasicos(response) {
         if (response[0].nombre2==null){
             response[0].nombre2=''
         }
+        if (response[0].apellido1==null){
+            response[0].apellido1=''
+        }
         if (response[0].apellido2==null){
             response[0].apellido2=''
         }

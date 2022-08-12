@@ -43,7 +43,7 @@
                                         @foreach($permisoOrigenZarpes as $permisoOrigenZarpe)
                                             <tr>
                                                 <td>{{ $permisoOrigenZarpe->nro_solicitud }}</td>
-                                                <td>{{date_format($permisoOrigenZarpe->created_at,'d-m-Y')}}</td>
+                                                <td>{{$permisoOrigenZarpe->created_at}}</td>
                                                 <td>{{ $permisoOrigenZarpe->user->nombres }} {{ $permisoOrigenZarpe->user->apellidos }}</td>
                                                 <td>{{ $permisoOrigenZarpe->bandera }}</td>
                                                 <td>{{ $permisoOrigenZarpe->matricula }}</td>

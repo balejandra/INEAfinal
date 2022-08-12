@@ -3,7 +3,7 @@
         margin: 0 auto;
     }
 </style>
-<table class="table table-striped table-bordered table-grow" id="generic-table2" style="width:90%">
+<table class="table table-hover table-bordered table-grow" id="generic-table2" style="width:90%">
     <thead>
     <th>Título</th>
     <th>Tipo</th>
@@ -17,7 +17,11 @@
         @else
         <tr>
         @endif
-            <td>{{ $notificacion->titulo }}</td>
+            @if (strpos($notificacion->titulo, 'Rescate') !== false)
+                <td class="text-danger">{{ $notificacion->titulo }}</td>
+            @else
+                <td>{{ $notificacion->titulo }}</td>
+            @endif
             <td>
                 {{$notificacion->tipo}}
             </td>

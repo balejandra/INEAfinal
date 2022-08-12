@@ -21,8 +21,13 @@ $(document).ready(function() {
         fixedHeader: true,
         "order": [[ 1, "desc" ]],
         columnDefs: [
+            {
+                targets: 1,
+                render: $.fn.dataTable.render.moment( 'YYYY-MM-DD H:mm:ss', 'DD-MM-YYYY' )
+            },
             { responsivePriority: 1, targets: 0 },
-            { responsivePriority: 2, targets: -1 }
+            { responsivePriority: 2, targets: -1 },
+
         ],
         language: {
             "url": "../assets/DataTables/es_es.json"
@@ -39,6 +44,10 @@ $(document).ready(function() {
         fixedHeader: true,
         "order": [[ 1, "desc" ]],
         columnDefs: [
+            {
+                targets: 1,
+                render: $.fn.dataTable.render.moment( 'YYYY-MM-DD H:mm:ss', 'DD-MM-YYYY' )
+            },
             { responsivePriority: 1, targets: 0 },
             { responsivePriority: 2, targets: -1 }
         ],

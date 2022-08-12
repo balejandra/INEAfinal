@@ -18,7 +18,7 @@
 
         <tr>
             <td>{{ $permisoEstadia->nro_solicitud }}</td>
-            <td>{{ date_format($permisoEstadia->created_at,'d-m-Y') }}</td>
+            <td>{{ $permisoEstadia->created_at }}</td>
             <td>{{ $permisoEstadia->user->nombres }} {{ $permisoEstadia->user->apellidos }}</td>
             <td>{{ $permisoEstadia->nombre_buque }}</td>
             <td>{{ $permisoEstadia->nro_registro }}</td>
