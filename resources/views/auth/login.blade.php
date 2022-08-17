@@ -8,7 +8,7 @@
             <span>
                 <img src="{{asset('images/inea.png')}}" alt="inea" class="nav-avatar">
             </span>
-            <div class="text-center">  <h2>SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</h2></div>
+            <div class="text-center">  <h4>Sistema de Gestión de Zarpes para Buques Deportivos y de Recreo</h4></div>
 
             <div class="card-group">
                 <div class="card p-4">
