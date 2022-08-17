@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('verification:zarpevencido')->everyMinute();
-        $schedule->command('verification:zarperescate')->everyFiveMinutes();
+        $schedule->command('verification:zarperescate')->everyMinute();
         $schedule->call(function (){
             logger("Tareas ejecutando");
         })->everyTwoMinutes();

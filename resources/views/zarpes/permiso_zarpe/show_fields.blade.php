@@ -32,7 +32,7 @@
                     Fecha de Solicitud
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    @php 
+                    @php
                         $fecha=explode(' ',$permisoZarpe->created_at);
                         $f=explode('-',$fecha[0]);
                         $createdAt=$f[2].'/'.$f[1].'/'.$f[0]." ".$fecha[1];
@@ -133,7 +133,7 @@
                     Fecha y Hora Salida
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                @php 
+                @php
                         $fechaS=explode(' ',$permisoZarpe->fecha_hora_salida);
                         $fS=explode('-',$fechaS[0]);
                         $fecha_hora_salida=$fS[2].'/'.$fS[1].'/'.$fS[0]." ".$fechaS[1];
@@ -150,7 +150,7 @@
                     Fecha y Hora Regreso
                 </div>
                 <div class="col-md-3 col-sm-3 p-2">
-                    @php 
+                    @php
                         $fechaR=explode(' ',$permisoZarpe->fecha_hora_regreso);
                         $fR=explode('-',$fechaR[0]);
                         $fecha_hora_regreso=$fR[2].'/'.$fR[1].'/'.$fR[0]." ".$fechaR[1];
@@ -190,7 +190,7 @@
     @endif
 
     <strong>Tripulantes</strong>
- 
+
     <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
         <th>Función</th>
@@ -202,7 +202,7 @@
         <th>Rango</th>
         <th>Fecha de Emisión</th>
         <th>Documentos</th>
-        
+
         </thead>
         <tbody>
         @foreach($tripulantes as $tripulante)
@@ -227,19 +227,19 @@
                         {{$tripulante->fecha_emision}}
                     @endif
                 </td>
-                
+
                 <td>
                     @if($tripulante->tipo_doc=='V')
                         N/A
                     @else
                         @if($tripulante->doc!="")
                         <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->doc)}}" target="_blank"> Pasaporte </a>
-                        
+
                         @endif
                         @if($tripulante->documento_acreditacion!="")
                         <br>
                         <a class="document-link" title="Pasaporte" href="{{asset('documentos/permisozarpe/'.$tripulante->documento_acreditacion)}}" target="_blank"> Documento de acreditación </a>
-    
+
                         @endif
 
                     @endif
@@ -456,7 +456,7 @@
             </a>
         @endif
     @endcan
-    @if(($permisoZarpe->status->id==5))
+    @if(($permisoZarpe->status->id==5)||($permisoZarpe->status->id==14))
         @can('anular-sar')
             <a class="btn btn-outline-danger confirmation"
                data-route=" {{route('status',[$permisoZarpe->id,'anulado_sar',$permisoZarpe->establecimiento_nautico_id])}}"

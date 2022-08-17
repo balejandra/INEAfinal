@@ -905,7 +905,7 @@ class PermisoZarpeController extends Controller
                 Flash::error('Ha ocurrido un error al guardar la solicitud, los datos no se guardaron.');
 
             }
- 
+
             $capOrigin = $this->SendMail($saveSolicitud->id, 1, true);
             $caopDestino = $this->SendMail($saveSolicitud->id, 0, false);
             if ($capOrigin == true || $caopDestino == true) {
@@ -1006,7 +1006,7 @@ class PermisoZarpeController extends Controller
                 $pass=[];
                 $elim=[];
                 for ($i=0; $i < count($pasajeros); $i++) {
-                    
+
                     if($cedula!=$pasajeros[$i]['nro_doc'] && $cedula!=$pasajeros[$i]['representante'] ){
                         array_push($pass, $pasajeros[$i]);
                     }else{
@@ -1014,7 +1014,7 @@ class PermisoZarpeController extends Controller
                         array_push($elim, $pasajeros[$i]['nro_doc']);
 
                     }
-                   
+
                 }
                 $pasajeros=$pass;
                 $request->session()->put('pasajeros', $pasajeros);
@@ -1665,7 +1665,7 @@ class PermisoZarpeController extends Controller
             //mensaje para caitania origen
             $mensaje = "El Sistema de control y Gestión de Zarpes del INEA le notifica que ha recibido una
     nueva solicitud de permiso de zarpe en su jurisdicción que espera por su aprobación.";
-    
+
             $mailTo = $capitanOrigen[0]->email;
             $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
 
@@ -1691,7 +1691,7 @@ class PermisoZarpeController extends Controller
             //mensaje para capitania destino
             $mensaje = "El Sistema de Control y Gestión de Zarpes del INEA le notifica que
     la siguiente embarcación está próxima a arribar a su jurisdicción.";
-    
+
             $mailTo = $capitanDestino[0]->email;
             $subject = 'Notificación de arribo de embarcación ' . $solicitud->matricula;
 
@@ -1734,7 +1734,7 @@ class PermisoZarpeController extends Controller
             $subject = 'Nueva solicitud de permiso de Zarpe ' . $solicitud->nro_solicitud;
             $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
             $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Zarpe Nacional");
-            
+
         }
 
         return $return;
@@ -2020,8 +2020,9 @@ public function AddDocumentos(Request $request){
 
                 $partida = $request->file('partida_nacimiento');
                 $filename = date('dmYGi') . $partida->getClientOriginalName();
-                $avatar1 = $partida->move(public_path() . '/documentos/permisozarpe', $filename);
-                 $partida_nacimiento=$filename;
+                $filenamenew = str_replace(' ','',$filename);
+                $avatar1 = $partida->move(public_path() . '/documentos/permisozarpe', $filenamenew);
+                 $partida_nacimiento=$filenamenew;
 
 
         }
@@ -2031,8 +2032,9 @@ public function AddDocumentos(Request $request){
 
                 $autorizacion = $request->file('autorizacion');
                 $filenameaut= date('dmYGi') . $autorizacion->getClientOriginalName();
-                $avatar1 = $autorizacion->move(public_path() . '/documentos/permisozarpe', $filenameaut);
-                $autorizacion=$filenameaut;
+                $filenameautnew = str_replace(' ','',$filenameaut);
+                $avatar1 = $autorizacion->move(public_path() . '/documentos/permisozarpe', $filenameautnew);
+                $autorizacion=$filenameautnew;
         }
 
     $pasaporte_menor='';
@@ -2040,8 +2042,9 @@ public function AddDocumentos(Request $request){
 
         $pasaporte_menor = $request->file('pasaporte_menor');
         $filenamepasp= date('dmYGi') . $pasaporte_menor->getClientOriginalName();
-        $avatar1 = $pasaporte_menor->move(public_path() . '/documentos/permisozarpe', $filenamepasp);
-        $pasaporte_menor=$filenamepasp;
+        $filenamepaspnew = str_replace(' ','',$filenamepasp);
+        $avatar1 = $pasaporte_menor->move(public_path() . '/documentos/permisozarpe', $filenamepaspnew);
+        $pasaporte_menor=$filenamepaspnew;
     }
 
     $pasaporte_mayor='';
@@ -2049,8 +2052,9 @@ public function AddDocumentos(Request $request){
 
         $pasaporte_mayor = $request->file('pasaporte_mayor');
         $filenamepaspmay= date('dmYGi') . $pasaporte_mayor->getClientOriginalName();
-        $avatar1 = $pasaporte_mayor->move(public_path() . '/documentos/permisozarpe', $filenamepaspmay);
-        $pasaporte_mayor=$filenamepaspmay;
+        $filenamepaspmaynew = str_replace(' ','',$filenamepaspmay);
+        $avatar1 = $pasaporte_mayor->move(public_path() . '/documentos/permisozarpe', $filenamepaspmaynew);
+        $pasaporte_mayor=$filenamepaspmaynew;
     }
 
          echo json_encode(['OK',$partida_nacimiento,$autorizacion,$pasaporte_menor,$pasaporte_mayor]);
@@ -2107,17 +2111,17 @@ public function AddDocumentos(Request $request){
                         }else{
                             $respresentante=$_REQUEST['representante'];
                         }
-            
+
                         if($_REQUEST['tipodoc']=="NC"){
                             $nrodoc=$_REQUEST['nrodoc']."-".$HijoNumero;
                         }else{
                             $nrodoc=$_REQUEST['nrodoc'];
                         }
-            
-            
+
+
                         $fechaNac=explode('-',$_REQUEST['fechanac']);
                         $fechaNac2=$fechaNac[2].'-'.$fechaNac[1].'-'.$fechaNac[0];
-            
+
                     $pass = [
                         "nombres" => $_REQUEST['nombres'],
                         "apellidos" => $_REQUEST['apellidos'],
@@ -2133,9 +2137,9 @@ public function AddDocumentos(Request $request){
                         "pasaporte_menor"=> $_REQUEST['pasaporte_menor'],
                         "pasaporte_mayor"=> $_REQUEST['pasaporte_mayor']
                     ];
-            
-            
-            
+
+
+
                     if($indice==false ){
                         if($validation['pasajerosRestantes']>0){
                             array_push($pasajeros, $pass);
@@ -2148,12 +2152,12 @@ public function AddDocumentos(Request $request){
                         }else{
                             $info = "MaxPassengerLimit";
                         }
-            
+
                     }else{
                         $info="ExistInPassengerList";
-            
+
                     }
-                
+
             }
 
 
@@ -2171,9 +2175,10 @@ public function AddDocumentos(Request $request){
 
             $pasaporte = $request->file('doc');
             $fileNamePass= date('dmYGi') . $pasaporte->getClientOriginalName();
-            $avatar1 = $pasaporte->move(public_path() . '/documentos/permisozarpe', $fileNamePass);
-            $pasaporte=$fileNamePass;
-            $resp1= ['OK',$fileNamePass];
+            $filenamepaspnew = str_replace(' ','',$fileNamePass);
+            $avatar1 = $pasaporte->move(public_path() . '/documentos/permisozarpe', $filenamepaspnew);
+            $pasaporte=$filenamepaspnew;
+            $resp1= ['OK',$filenamepaspnew];
         }else{
             $resp1= ['errorFile',''];
         }
@@ -2183,9 +2188,10 @@ public function AddDocumentos(Request $request){
 
             $docAcreditacion = $request->file('documentoAcreditacion');
             $fileNameDocAc= date('dmYGi') . $docAcreditacion->getClientOriginalName();
-            $avatar2 = $docAcreditacion->move(public_path() . '/documentos/permisozarpe', $fileNameDocAc);
-            $docAcreditacion=$fileNameDocAc;
-            $resp2= ['OK',$fileNameDocAc];
+            $fileNameDocAcNew = str_replace(' ','',$fileNameDocAc);
+            $avatar2 = $docAcreditacion->move(public_path() . '/documentos/permisozarpe', $fileNameDocAcNew);
+            $docAcreditacion=$fileNameDocAcNew;
+            $resp2= ['OK',$fileNameDocAcNew];
         }else{
             $resp2= ['errorFile',''];
         }

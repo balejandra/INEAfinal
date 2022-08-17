@@ -64,6 +64,8 @@
                                                     </td>
                                                 @elseif($permisoOrigenZarpe->status->id==6)
                                                     <td style="color: #fd7e14">{{$permisoOrigenZarpe->status->nombre}}</td>
+                                                @elseif($permisoOrigenZarpe->status->id==14)
+                                                    <td style="color: green">{{$permisoOrigenZarpe->status->nombre}}</td>
                                                 @else
                                                     <td>{{ $permisoOrigenZarpe->status->nombre}} </td>
                                                 @endif
@@ -108,7 +110,7 @@
                                                             </a>
                                                         @endif
                                                     @endcan
-                                                    @if(($permisoOrigenZarpe->status->id=='5'))
+                                                    @if(($permisoOrigenZarpe->status->id=='5')||($permisoOrigenZarpe->status->id=='14'))
                                                         @can('anular-sar')
                                                             <a class="btn btn-sm btn-outline-danger confirmation"
                                                                data-route=" {{route('statusInt',[$permisoOrigenZarpe->id,'anulado_sar',$permisoOrigenZarpe->establecimiento_nautico_id])}}"
