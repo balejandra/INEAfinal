@@ -157,7 +157,7 @@
 
     <br>
     <strong>Tripulantes</strong>
-     
+
     <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
         <th>Función</th>
@@ -186,12 +186,12 @@
                             $fechaNac[0]=$dia.'/'.$mes.'/'.$ano;
                             echo $fechaNac[0];
                         @endphp
-                    
+
                     @endif
                 </td>
                 <td>{{$tripulante->sexo}}</td>
                 <td>{{$tripulante->rango}}</td>
-                <td> 
+                <td>
                     @if($tripulante->fecha_emision=="")
                         N/A
                     @else
@@ -206,7 +206,7 @@
                     @endif
                 </td>
                 <td>
-                 
+
                     @if ($tripulante->doc)
                         <a class="document-link" title="Pasaporte"
                            href="{{asset('documentos/zarpeinternacional/'.$tripulante->doc)}}" target="_blank">
@@ -218,8 +218,8 @@
                                href="{{asset('documentos/zarpeinternacional/'.$tripulante->documento_acreditacion)}}" target="_blank">
                                 Documento de Acreditación</a>
                     @endif
-                
-                   
+
+
                 </td>
             </tr>
             @endforeach
@@ -380,7 +380,7 @@
             </a>
         @endif
     @endcan
-    @if(($permisoZarpe->status->id=='5'))
+    @if(($permisoZarpe->status->id=='5')||($permisoZarpe->status->id=='14'))
         @can('anular-sar')
             <a class="btn btn-outline-danger confirmation"
                data-route=" {{route('statusInt',[$permisoZarpe->id,'anulado_sar',$permisoZarpe->establecimiento_nautico_id])}}"

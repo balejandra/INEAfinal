@@ -34,6 +34,8 @@
                 <td><span class="text-danger bg-dark">{{$permisoZarpe->status->nombre}}</span></td>
             @elseif($permisoZarpe->status->id==6)
                 <td style="color: #fd7e14">{{$permisoZarpe->status->nombre}}</td>
+            @elseif($permisoZarpe->status->id==14)
+                <td style="color: green">{{$permisoZarpe->status->nombre}}</td>
             @else
                 <td>{{ $permisoZarpe->status->nombre}} </td>
             @endif

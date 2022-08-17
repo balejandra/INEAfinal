@@ -51,7 +51,13 @@ class VerificationZarpeRescate extends Command
             ->get();
         $notificacion = new NotificacioneController();
         foreach($zarpeVencido as $record){
-            $userc=CapitaniaUser::where('capitania_id',$record->destino_capitania_id)->get();
+
+            $zarpeRescate=PermisoZarpe::where('id',$record->id)
+                ->update(['status_id'=>14]);
+
+            $userc=CapitaniaUser::where('capitania_id',$record->destino_capitania_id)
+                ->where('habilitado',true)
+                ->get();
 
             foreach($userc as $record2) {
                 $userEmail = User::find($record2->user_id);
@@ -62,8 +68,8 @@ class VerificationZarpeRescate extends Command
                     'hora_llegada'=>$record->fecha_hora_regreso,
                 ];
                 $view = 'emails.zarpes.rescate';
-                $subject = 'Notificacion de Rescate Nacional ' . $record->nro_solicitud;
-                $mensaje="Saludos, Notificacion URGENTE, la siguiente embarcación presenta 2 horas de retraso de su arribo a destino programado.
+                $subject = 'Notificación de Rescate Nacional ' . $record->nro_solicitud;
+                $mensaje="Saludos, Notificación URGENTE, la siguiente embarcación presenta 2 horas de retraso de su arribo a destino programado.
                 Nro. de Solicitud: {$record->nro_solicitud}, Buque Matrícula Nro: {$record->matricula}, Fecha Llegada: {$record->fecha_hora_regreso}";
                 $notificacion->storeNotificaciones($record2->user_id, $subject,  $mensaje, "Zarpe Nacional");
                 $email->mailZarpe($userEmail->email, $subject, $data, $view);
@@ -85,7 +91,11 @@ class VerificationZarpeRescate extends Command
             ->get();
         $notificacionI = new NotificacioneController();
         foreach($zarpeIVencido as $recordI){
-            $usercI=CapitaniaUser::where('capitania_id',$recordI->destino_capitania_id)->get();
+            $zarpeRescateI=PermisoZarpe::where('id',$recordI->id)
+                ->update(['status_id'=>14]);
+            $usercI=CapitaniaUser::where('capitania_id',$recordI->destino_capitania_id)
+                ->where('habilitado',true)
+                ->get();
 
             foreach($usercI as $record2I) {
                 $userEmailI = User::find($record2I->user_id);
@@ -102,7 +112,6 @@ class VerificationZarpeRescate extends Command
                 $notificacionI->storeNotificaciones($record2I->user_id, $subjectI,  $mensajeI, "Zarpe Internacional");
                 $emailI->mailZarpe($userEmailI->email, $subjectI, $dataI, $viewI);
             }
-
             ZarpeRevision::insert([
                 'user_id' => 1,
                 'permiso_zarpe_id' => $recordI->id,
