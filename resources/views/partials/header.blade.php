@@ -8,7 +8,7 @@
          <img width="118" height="46" src="{{asset('images/logo-inea.svg')}}" alt="">
      </a>
             <ul class="header-nav d-none d-md-flex">
-                <strong class="titulo-princ">SISTEMA DE CONTROL Y GESTIÓN DE ZARPES</strong>
+                <strong class="titulo-princ">Sistema de Gestión de Zarpes para Buques Deportivos y de Recreo</strong>
             </ul>
 
             <ul class="header-nav ms-3">
@@ -20,7 +20,7 @@
                             {{session('notificaciones')}}
                                 <span class="visually-hidden">Nueva Notificación</span>
                             </span>
-                        @elseif(session('notificaciones')!=0) 
+                        @elseif(session('notificaciones')!=0)
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 +3
                                 <span class="visually-hidden">Nueva Notificación</span>
