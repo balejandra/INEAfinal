@@ -784,22 +784,23 @@ class PermisoZarpeController extends Controller
                     }
 
                     if($tripulantes[$i]["tipo_doc"]=='V'){
+                        //dd($tripulantes[$i]);
                         $trp=[
                             "permiso_zarpe_id" => $saveSolicitud->id,
                             "ctrl_documento_id" =>$tripulantes[$i]["ctrl_documento_id"],
                             "capitan" => $tripulantes[$i]["capitan"],
-                            "nombres" => '',
-                            "apellidos" =>'',
+                            "nombres" => $tripulantes[$i]["nombres"],
+                            "apellidos" =>$tripulantes[$i]["apellidos"],
                             "nro_doc" => $tripulantes[$i]["nro_doc"],
                             "tipo_doc" => $tripulantes[$i]["tipo_doc"],
 
                             "funcion"  => $tripulantes[$i]["funcion"],
-                            "sexo"  => '',
-                            "fecha_nacimiento"  => '',
+                            "sexo"  => $tripulantes[$i]["sexo"],
+                            "fecha_nacimiento"  => $tripulantes[$i]["fecha_nacimiento"],
+                            "rango"=>$tripulantes[$i]["documento_acreditacion"],
                             "doc"  => '',
-                            "documento_acreditacion"  => '',
-
-
+                            "fecha_emision"=>$tripulantes[$i]["fecha_emision"],
+                            "documento_acreditacion"=>$tripulantes[$i]["solicitud"],
                         ];
                     }else{
                         $trp=[
@@ -1581,23 +1582,8 @@ class PermisoZarpeController extends Controller
 
 
             foreach ($tripulantes2 as $value) {
-
                     if($value->tipo_doc=='V'){
-                        $tripV=Saime_cedula::select('saime_cedula.fecha_nacimiento','saime_cedula.sexo','licencias_titulos_gmar.nombre','licencias_titulos_gmar.apellido','licencias_titulos_gmar.solicitud','licencias_titulos_gmar.documento','licencias_titulos_gmar.fecha_emision')
-                        ->rightJoin('gmar.licencias_titulos_gmar','saime_cedula.cedula','=','licencias_titulos_gmar.ci')
-                        ->where('licencias_titulos_gmar.ci',$value->nro_doc)
-                       ->get();
 
-                       $value->nombres=$tripV[0]->nombre;
-                       $value->apellidos=$tripV[0]->apellido;
-                       $value->sexo=$tripV[0]->sexo;
-                       $value->fecha_nacimiento=$tripV[0]->fecha_nacimiento;
-                       $value->rango=$tripV[0]->documento;
-                       $emision=explode(' ',$tripV[0]->fecha_emision);
-                        list($ano, $mes, $dia) = explode("-", $emision[0]);
-                        $emision[0]=$dia.'/'.$mes.'/'.$ano;
-                       $value->fecha_emision=$emision[0];
-                       $value->solicitud=$tripV[0]->solicitud;
 
                     }else{
                         $value->fecha_emision='';

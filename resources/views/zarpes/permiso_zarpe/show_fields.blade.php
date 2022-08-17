@@ -214,7 +214,7 @@
                 <td>{{$tripulante->sexo}} </td>
                 <td>
                     @if($tripulante->tipo_doc=='V')
-                        {{$tripulante->solicitud}}
+                        {{$tripulante->documento_acreditacion}}
                     @else
                         N/A
                     @endif
