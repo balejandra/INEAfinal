@@ -1578,12 +1578,9 @@ class PermisoZarpeController extends Controller
             ->where('permiso_zarpe_id', $id)
             ->select( 'tripulantes.*')
             ->get();
-
-
-
+        
             foreach ($tripulantes2 as $value) {
                     if($value->tipo_doc=='V'){
-
 
                     }else{
                         $value->fecha_emision='';
