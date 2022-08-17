@@ -637,10 +637,10 @@ class ZarpeInternacionalController extends Controller
 
                 //Tripulantes
                 $tripulantes = $request->session()->get('tripulantes');
-                
+
                 for ($i = 0; $i < count($tripulantes); $i++) {
                     $tripulantes[$i]["permiso_zarpe_id"] = $saveSolicitud->id;
-                    
+
                     /*if (strpos($tripulantes[$i]["fecha_nacimiento"], "/") !== false) {
                         list($dia, $mes, $ano) = explode("/", $tripulantes[$i]["fecha_nacimiento"]);
                         $tripulantes[$i]["fecha_nacimiento"]=$ano.'-'.$mes.'-'.$dia;
@@ -648,7 +648,7 @@ class ZarpeInternacionalController extends Controller
                     $trip = TripulanteInternacional::create($tripulantes[$i]);
 
                 }
-                
+
                 //Pasajeros
                 $pasajeros = $request->session()->get('pasajeros');
 
@@ -662,7 +662,7 @@ class ZarpeInternacionalController extends Controller
 
 
                 //Equipos
-                    
+
                 $listadoEquipos = ["permiso_zarpe_id" => '', "equipo_id" => '', "cantidad" => '', "otros" => '', "valores_otros" => ''];
 
                 $otros = [];
@@ -713,14 +713,14 @@ class ZarpeInternacionalController extends Controller
                     DB::rollback();
                     Flash::error('Ha ocurrido un error al guardar la solicitud, algunos datos no se guardaron.');
                 }
-                
+
 
             } catch (\Exception $e) {
                 DB::rollback();
                 throw $e;
                 Flash::error('Ha ocurrido un error al guardar la solicitud, los datos no se guardaron.');
 
-            }    
+            }
 
 
             $capOrigin = $this->SendMail($saveSolicitud->id, 1, true);
@@ -940,7 +940,7 @@ class ZarpeInternacionalController extends Controller
                         ->where('tripulantes.nro_doc', $cedula)
                         ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
                         ->get();
-                    
+
                     $marinoAsignado2 = PermisoZarpe::select('permiso_zarpes.status_id')
                         ->Join('tripulante_internacionals', 'permiso_zarpes.id', '=','tripulante_internacionals.permiso_zarpe_id')
                         ->where('tripulante_internacionals.nro_doc', $cedula)
@@ -979,7 +979,7 @@ class ZarpeInternacionalController extends Controller
                     }
                 }
         }
-                    
+
         $return = [$tripulantes, $vj, $indice,$InfoMarino,$validation['cant_pasajeros'],$validation['pasajerosRestantes'],$validation['cantPassAbordo'],$marinoAsignado2,$marinoAsignado];
         echo json_encode($return);
         }
@@ -1060,7 +1060,7 @@ class ZarpeInternacionalController extends Controller
                 ->where('tripulantes.nro_doc', $cedula)
                 ->whereIn('permiso_zarpes.status_id', [1, 3, 5])
                 ->get();
-            
+
             $marinoAsignado2 = PermisoZarpe::select('permiso_zarpes.status_id')
                 ->Join('tripulante_internacionals', 'permiso_zarpes.id', '=','tripulante_internacionals.permiso_zarpe_id')
                 ->where('tripulante_internacionals.nro_doc', $cedula)
@@ -1069,9 +1069,9 @@ class ZarpeInternacionalController extends Controller
 
             if (count($marinoAsignado) > 0 || count($marinoAsignado2)>0 ) {
                 $InfoMarino="FoundButAssigned";
-            }else{ 
-                
-                
+            }else{
+
+
             $tripExiste=false;
             $vj=[false];
             if(is_array($tripulantes)){
@@ -1359,20 +1359,20 @@ class ZarpeInternacionalController extends Controller
         }
         $tripulantes2 = TripulanteInternacional::select('*')->where('permiso_zarpe_id', $id)->get();
         $trp=$tripulantes2;
-        
+
         foreach ($trp as $value) {
-                
+
             if($value->tipo_doc=='V'){
                 $tripV=Saime_cedula::select('saime_cedula.fecha_nacimiento','saime_cedula.sexo','licencias_titulos_gmar.nombre','licencias_titulos_gmar.apellido','licencias_titulos_gmar.solicitud','licencias_titulos_gmar.documento','licencias_titulos_gmar.fecha_emision')
                 ->rightJoin('gmar.licencias_titulos_gmar','saime_cedula.cedula','=','licencias_titulos_gmar.ci')
                 ->where('licencias_titulos_gmar.ci',$value->nro_doc)
                ->get();
-            
+
                $value->nombres=$tripV[0]->nombre;
                $value->apellidos=$tripV[0]->apellido;
                $value->sexo=$tripV[0]->sexo;
-               
-                   
+
+
                 $value->fecha_nacimiento=  $tripV[0]->fecha_nacimiento;
                $value->rango=$tripV[0]->documento;
                $emision=explode(' ',$tripV[0]->fecha_emision);
@@ -1381,17 +1381,17 @@ class ZarpeInternacionalController extends Controller
                $value->fecha_emision=$emision[0];
                $value->solicitud=$tripV[0]->solicitud;
 
-               
+
 
             }else{
                 $value->fecha_emision='';
                 $value->solicitud='';
-               
+
             }
         }
-        
-       
-         
+
+
+
         $pasajeros = $permisoZarpe->pasajeros()->where('permiso_zarpe_id', $id)->get();
         //$tripulantes2 = LicenciasTitulosGmar::whereIn('id', $tripulantes)->get();
         $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
@@ -1449,7 +1449,7 @@ class ZarpeInternacionalController extends Controller
             ->where('cargo', '=', 4)
             ->where('habilitado', '=', true)
             ->get();
-        
+
             $notificacion = new NotificacioneController();
 
 
@@ -1808,9 +1808,10 @@ class ZarpeInternacionalController extends Controller
 
             $pasaporte = $request->file('doc');
             $fileNamePass= date('dmYGi') . $pasaporte->getClientOriginalName();
-            $avatar1 = $pasaporte->move(public_path() . '/documentos/zarpeinternacional', $fileNamePass);
-            $pasaporte=$fileNamePass;
-            $resp1= ['OK',$fileNamePass];
+            $filenamepaspnew = str_replace(' ','',$fileNamePass);
+            $avatar1 = $pasaporte->move(public_path() . '/documentos/zarpeinternacional', $filenamepaspnew);
+            $pasaporte=$filenamepaspnew;
+            $resp1= ['OK',$filenamepaspnew];
         }else{
             $resp1= ['errorFile',''];
         }
@@ -1820,9 +1821,10 @@ class ZarpeInternacionalController extends Controller
 
             $docAcreditacion = $request->file('documentoAcreditacion');
             $fileNameDocAc= date('dmYGi') . $docAcreditacion->getClientOriginalName();
-            $avatar2 = $docAcreditacion->move(public_path() . '/documentos/zarpeinternacional', $fileNameDocAc);
-            $docAcreditacion=$fileNameDocAc;
-            $resp2= ['OK',$fileNameDocAc];
+            $filenameDocAcnew = str_replace(' ','',$fileNameDocAc);
+            $avatar2 = $docAcreditacion->move(public_path() . '/documentos/zarpeinternacional', $filenameDocAcnew);
+            $docAcreditacion=$filenameDocAcnew;
+            $resp2= ['OK',$filenameDocAcnew];
         }else{
             $resp2= ['errorFile',''];
         }

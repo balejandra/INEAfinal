@@ -45,6 +45,7 @@ class Tripulante extends Model implements Auditable
         'fecha_nacimiento',
         'sexo',
         'documento_acreditacion',
+        'fecha_emision'
     ];
 
     /**
@@ -67,6 +68,7 @@ class Tripulante extends Model implements Auditable
         'fecha_nacimiento'=> 'string',
         'sexo'=> 'string',
         'documento_acreditacion'=> 'string',
+        'fecha_emision'=>'string'
 
     ];
 
