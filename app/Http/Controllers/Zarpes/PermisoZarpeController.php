@@ -1579,12 +1579,9 @@ class PermisoZarpeController extends Controller
             ->select( 'tripulantes.*')
             ->get();
 
-
-
             foreach ($tripulantes2 as $value) {
                     if($value->tipo_doc=='V'){
-
-
+                        //Consulta Base de Datos
                     }else{
                         $value->fecha_emision='';
                         $value->solicitud='';
