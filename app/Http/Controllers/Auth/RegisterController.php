@@ -66,7 +66,7 @@ class RegisterController extends Controller
                 'numero_identificacion' => ['required','string', 'max:20','unique:users'],
                 'fecha_nacimiento' => ['date', 'max:50'],
                 'telefono' => ['required', 'string', 'max:20'],
-                'direccion' => ['required', 'string', 'max:20'],
+                'direccion' => ['required', 'string', 'max:255'],
                 'password' => [
                     'required',
                     'max:50',
