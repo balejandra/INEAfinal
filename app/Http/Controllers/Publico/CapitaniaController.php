@@ -189,7 +189,6 @@ class CapitaniaController extends AppBaseController
         $validated = $request->validate([
             'nombre' => 'required|string',
             'sigla' => 'required|string',
-            'capitanes'=>'required',
             "latitud"    => "required|array|min:1",
             "latitud.*"  => "required",
             "longitud"    => "required|array|min:1",
@@ -199,7 +198,6 @@ class CapitaniaController extends AppBaseController
             [
                 'nombre.required' => 'El campo Nombre es obligatorio',
                 'sigla.required' => 'El campo Sigla es obligatorio',
-                'capitanes.required' => 'El campo Capitán es obligatorio',
                 'latitud.*.required'=>'El campo latitud es obligatorio',
                 'longitud.*.required'=>'El campo Longitud es obligatorio',
 
