@@ -40,7 +40,7 @@ class CapitaniaUserController extends AppBaseController
     public function index(Request $request)
     {
         $capitaniaUsers = $this->capitaniaUserRepository->all();
- 
+
         return view('publico.capitania_users.index')
             ->with('capitaniaUsers', $capitaniaUsers);
     }
@@ -119,12 +119,23 @@ class CapitaniaUserController extends AppBaseController
                     return redirect(route('capitaniaUsers.index'));
                 }
             }
+            if ($request->cargo==='4') {
+                $verification = CapitaniaUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
+                if (isset($verification[0])) {
+                    Flash::error('La Capitanía ya tiene asignado este Rol.');
+                    return redirect()->back();
+                } else {
 
-            $verification = CapitaniaUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
-            if (isset($verification[0])) {
-                Flash::error('La Capitanía ya tiene asignado este Rol.');
-                return redirect()->back();
-            } else {
+                    $input = $request->all();
+
+                    $capitaniaUser = $this->capitaniaUserRepository->create($input);
+
+                    Flash::success('Usuario de Capitanía guardado satisfactoriamente.');
+
+                    return redirect(route('capitaniaUsers.index'));
+                }
+            }else{
+
 
                 $input = $request->all();
 
@@ -241,14 +252,21 @@ class CapitaniaUserController extends AppBaseController
                     return redirect(route('capitaniaUsers.index'));
                 }
             }
+            if ($request->cargo==='4') {
+                $verification = CapitaniaUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
+                //   dd($verification);
+                $ver = $verification->except([$id]);
+                if (isset($ver[0])) {
+                    Flash::error('La Capitanía ya tiene asignado este Rol.');
+                    return redirect()->back();
+                } else {
+                    $capitaniaUser = $this->capitaniaUserRepository->update($request->all(), $id);
+                    Flash::success('Usuario de Capitanía guardado satisfactoriamente.');
+                    return redirect(route('capitaniaUsers.index'));
 
-            $verification = CapitaniaUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
-         //   dd($verification);
-            $ver = $verification->except([$id]);
-            if (isset($ver[0])) {
-                Flash::error('La Capitanía ya tiene asignado este Rol.');
-                return redirect()->back();
-            } else {
+                }
+            }else{
+
                 $capitaniaUser = $this->capitaniaUserRepository->update($request->all(), $id);
                 Flash::success('Usuario de Capitanía guardado satisfactoriamente.');
                 return redirect(route('capitaniaUsers.index'));
