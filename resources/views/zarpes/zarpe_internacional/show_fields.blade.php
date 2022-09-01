@@ -167,6 +167,7 @@
         <th>Sexo</th>
         <th>Rango</th>
         <th>Fecha de Emisión</th>
+        <th>Nro. de Documento</th>
         <th>Tipo Doc.</th>
         <th>Documentos</th>
         </thead>
@@ -196,6 +197,13 @@
                         N/A
                     @else
                         {{$tripulante->fecha_emision}}
+                    @endif
+                </td>
+                <td>
+                    @if($tripulante->nro_ctrl=="")
+                        N/A
+                    @else
+                        {{$tripulante->nro_ctrl}}
                     @endif
                 </td>
                 <td>

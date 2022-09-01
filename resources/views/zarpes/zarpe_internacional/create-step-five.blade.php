@@ -104,7 +104,7 @@
                                                 </div>
                                             </div>
 
-                                            
+
 
                                             <div class="col-sm-2  px-1 DatosRestantes ">
                                                 <div class="form-group">
@@ -177,6 +177,7 @@
                                                         <th>Nombres y Apellidos</th>
                                                         <th>Rango</th>
                                                         <th>Fecha de Emisión</th>
+                                                        <th>Nro. de Documento</th>
                                                         <th>Documentos</th>
                                                         <th>Acciones</th>
 
@@ -221,15 +222,16 @@
                                                                             {{$trip["fecha_emision"]}}
                                                                         @endif
                                                                     </td>
-                                                                    <td>  
+                                                                    <td>  {{$trip["nro_ctrl"]}}</td>
+                                                                    <td>
                                                                         <a class="document-link" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$trip['doc'])}}" target="_blank"> Pasaporte </a>
 
                                                                         @if($trip["documento_acreditacion"]!="")
-                                                                            <br>                                                                           
+                                                                            <br>
                                                                             <a class="document-link" title="Pasaporte" href="{{asset('documentos/zarpeinternacional/'.$trip['documento_acreditacion'])}}" target="_blank"> Doc. Acreditación. </a>
                                                                         @endif
                                                                     </td>
-                                                                    
+
                                                                     <td>
                                                                         <a href="#"
                                                                            onclick="openModalZI('{{$trip["nro_doc"]}}')">

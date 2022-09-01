@@ -910,6 +910,7 @@ class ZarpeInternacionalController extends Controller
                 "solicitud"=>$InfoMarino[0]->solicitud,
                 "fecha_nacimiento"=> $fechaNacV,
                 "sexo"=> $sexoV,
+                "nro_ctrl"=>$InfoMarino[0]->nro_ctrl,
             ];
 
             if(is_array($tripulantes)){
@@ -1052,6 +1053,7 @@ class ZarpeInternacionalController extends Controller
                 "solicitud"=> "",
                 "fecha_nacimiento"=> $fecha_nacimiento,
                 "sexo"=> $sexo,
+                    "nro_ctrl"=>""
                 ];
 
 
@@ -1363,7 +1365,7 @@ class ZarpeInternacionalController extends Controller
         foreach ($trp as $value) {
 
             if($value->tipo_doc=='V'){
-                $tripV=Saime_cedula::select('saime_cedula.fecha_nacimiento','saime_cedula.sexo','licencias_titulos_gmar.nombre','licencias_titulos_gmar.apellido','licencias_titulos_gmar.solicitud','licencias_titulos_gmar.documento','licencias_titulos_gmar.fecha_emision')
+                $tripV=Saime_cedula::select('saime_cedula.fecha_nacimiento','saime_cedula.sexo','licencias_titulos_gmar.nombre','licencias_titulos_gmar.apellido','licencias_titulos_gmar.solicitud','licencias_titulos_gmar.documento','licencias_titulos_gmar.fecha_emision', 'licencias_titulos_gmar.nro_ctrl')
                 ->rightJoin('gmar.licencias_titulos_gmar','saime_cedula.cedula','=','licencias_titulos_gmar.ci')
                 ->where('licencias_titulos_gmar.ci',$value->nro_doc)
                ->get();
@@ -1380,6 +1382,7 @@ class ZarpeInternacionalController extends Controller
                 $emision[0]=$dia.'/'.$mes.'/'.$ano;
                $value->fecha_emision=$emision[0];
                $value->solicitud=$tripV[0]->solicitud;
+                $value->nro_ctrl=$tripV[0]->nro_ctrl;
 
 
 
