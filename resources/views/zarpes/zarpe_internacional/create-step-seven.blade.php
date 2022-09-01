@@ -137,9 +137,10 @@
 
                                                                                         @php
                                                                                             $type="date";
-                                                                                            $max="max=".date('Y-m-d').""
+                                                                                            $max="min=".date('Y-m-d').""
                                                                                         @endphp
 
+                                                                                        
                                                                                     @else
                                                                                         {{$equipo->otros}}:
                                                                                         @php
