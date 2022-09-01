@@ -564,7 +564,7 @@ function blurSaime(){
         let tipodoc= document.getElementById('tipodocmenor').value;
 
     const asset=msj.getAttribute('data-asset');
-    msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con resgitros existentes en SAIME, por favor espere...</div>";
+    msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con registros existentes en SAIME, por favor espere...</div>";
     if(cedula!='' && fechanac!='' && tipodoc=='V'){
         $.ajax({
             url: route('consultasaime2'),
@@ -621,7 +621,7 @@ function blurSaime(){
     var pass=document.getElementById('pasajeros');
     const asset=msj.getAttribute('data-asset');
 
-    msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con resgitros existentes en SAIME, por favor espere...</div>";
+    msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif' width='30px'> &nbsp; Comparando datos con registros existentes en SAIME, por favor espere...</div>";
 
     var div=document.getElementById("dataPassengers");
     cantAct=parseInt(div.getAttribute("data-cant"));
@@ -1619,7 +1619,7 @@ function getMarinos(pass) {
                         }
                 break;
                 case 'gmarNotFound':
-                    msj.innerHTML="<div class='alert alert-danger'>La cédula suministrada no pertenecea a un marino venezolano.</div>";
+                    msj.innerHTML="<div class='alert alert-danger'>La cédula suministrada no pertenece a un marino venezolano.</div>";
 
                 break;
                 case 'FoundButAssigned':
@@ -1686,6 +1686,16 @@ function getMarinos(pass) {
 
                                  {"data":'sexo'},
                                  {"data":'fecha_emision'},
+                                 {"data":'nro_ctrl',
+                                     render: function ( data, type, row ) {
+                                         // esto es lo que se va a renderizar como html
+                                         let fm="N/A";
+                                         if(row.tipo_doc=='V'){
+                                             fm=row.nro_ctrl;
+                                         }
+                                         return `${fm}`;
+                                     }
+                                     },
 
                                  {
                                     "data":"doc",

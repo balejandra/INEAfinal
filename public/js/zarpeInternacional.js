@@ -489,9 +489,9 @@ function addPassengersZI(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
 function AddPasportsMarinos(){
     let doc=document.getElementById('doc').files[0];
     let docAcreditacion=document.getElementById('documentoAcreditacion').files[0];
- 
+
     let tipodoc=document.getElementById('tipodocZI').value;
-   
+
      switch(tipodoc){
         case 'P':
 
@@ -675,7 +675,7 @@ function getMarinosZI(pass) {
                          pass1=respuesta[0];
                          console.log(pass1);
                          pass1=pass1[pass1.length-1];
-                         let ruta=tabla.getAttribute('data-rimg');  
+                         let ruta=tabla.getAttribute('data-rimg');
                          $('#example2').DataTable({
                              responsive: true,
                              autoWidth: true,
@@ -693,17 +693,17 @@ function getMarinosZI(pass) {
                                     "data":"tipo_doc",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `${row.tipo_doc} ${row.nro_doc}`; 
+                                        return `${row.tipo_doc} ${row.nro_doc}`;
                                     }
                                  },
                                   {
                                     "data":"nombres",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `${row.nombres}  ${row.apellidos}`; 
+                                        return `${row.nombres}  ${row.apellidos}`;
                                     }
                                  },
-                                
+
                                  {"data":'rango'},
                                  {"data":'fecha_emision',
                                  render: function ( data, type, row ) {
@@ -712,10 +712,19 @@ function getMarinosZI(pass) {
                                     if(row.fecha_emision!=''){
                                         fm=row.fecha_emision;
                                     }
-                                    return `${fm}`; 
+                                    return `${fm}`;
                                 }
                                 },
-                                 
+                                 {"data":'nro_ctrl',
+                                     render: function ( data, type, row ) {
+                                         // esto es lo que se va a renderizar como html
+                                         let fm="N/A";
+                                         if(row.tipo_doc=='V'){
+                                             fm=row.nro_ctrl;
+                                         }
+                                         return `${fm}`;
+                                     }
+                                 },
                                  {
                                     "data":"doc",
                                         render: function ( data, type, row ) {
@@ -724,18 +733,18 @@ function getMarinosZI(pass) {
                                             if(row.documento_acreditacion!=''){
                                                 links+=`<br><a href='${ruta+"/"+row.documento_acreditacion}' class='document-link' title='Documento de Acreditación' target='_blank'>Doc. de Acreditación</a>`;
                                             }
-                                            return links; 
+                                            return links;
                                         }
                                     },
-                                 
+
                                 {
                                 "data":"nro_doc",
                                     render: function ( data, type, row ) {
                                         // esto es lo que se va a renderizar como html
-                                        return `<a href='#' onclick=\"openModalZI('${row.nro_doc}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`; 
+                                        return `<a href='#' onclick=\"openModalZI('${row.nro_doc}')\"><i class='fa fa-trash text-center' title='Eliminar'></i></a>`;
                                     }
                                 }
-                                 
+
                              ],
 
                          });
@@ -845,14 +854,14 @@ function closeModalZI() {
 
 
 $( "#tipodocZI" ).change(function () {
-    var str = ""; 
+    var str = "";
     str =$( "#tipodocZI" ).val();
     $( "#nrodoc").val('');
     let date = new Date();
     fechamax=date.getFullYear()-18;
     fechamax+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
     fechamax+="-"+String(date.getDate()).padStart(2, '0');
-    
+
     if(str=="P"){
       $('.DatosRestantes').attr('style', 'display:block');
       $( "#nrodoc").attr('onKeyDown','');

@@ -801,6 +801,7 @@ class PermisoZarpeController extends Controller
                             "doc"  => '',
                             "fecha_emision"=>$tripulantes[$i]["fecha_emision"],
                             "documento_acreditacion"=>$tripulantes[$i]["solicitud"],
+                            "nro_ctrl"=>$tripulantes[$i]["nro_ctrl"],
                         ];
                     }else{
                         $trp=[
@@ -1104,6 +1105,7 @@ class PermisoZarpeController extends Controller
             "capitan"=>$cap,
             "fecha_emision"=>$emision[0],
             "solicitud"=>$InfoMarino[0]->solicitud,
+                "nro_ctrl"=>$InfoMarino[0]->nro_ctrl,
             ];
 
             if(is_array($tripulantes)){
@@ -1245,6 +1247,7 @@ class PermisoZarpeController extends Controller
                 "fecha_emision"=>'N/A',
                 "solicitud"=>'',
                 "rango"=>$rango,
+                    "nro_ctrl"=>'N/A'
                 ];
 
                 $marinoAsignado = PermisoZarpe::select('permiso_zarpes.status_id', 'ctrl_documento_id')
