@@ -201,6 +201,7 @@
         <th>Tipo Doc.</th>
         <th>Rango</th>
         <th>Fecha de Emisión</th>
+        <th>Nro. de Documento</th>
         <th>Documentos</th>
 
         </thead>
@@ -227,7 +228,13 @@
                         {{$tripulante->fecha_emision}}
                     @endif
                 </td>
-
+                <td>
+                    @if($tripulante->tipo_doc=='V')
+                        {{$tripulante->nro_ctrl}}
+                    @else
+                        N/A
+                    @endif
+                </td>
                 <td>
                     @if($tripulante->tipo_doc=='V')
                         N/A
