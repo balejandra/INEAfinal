@@ -127,10 +127,18 @@ class seederPermissions extends Seeder
             'listar-establecimientoNautico',
             'crear-establecimientoNautico',
 
-            
+
             //permisos para Notificaciones
             'consultar-notificaciones',
             'listar-notificaciones',
+
+            //permisos para Establecimientos
+            'consultar-certificado',
+            'editar-certificado',
+            'eliminar-certificado',
+            'listar-certificado',
+            'crear-certificado',
+
 
 
         ];
