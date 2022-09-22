@@ -234,8 +234,8 @@
                                                                         <input type="text" name="ismm" id="ismm" readonly class="w-100 input-transparente">
                                                                         <br><br>
                                                                         Fecha de Vencimiento:<br>
-                                                                        <input type="text" class="w-50 input-transparente" name="fechacertificado"
-                                                                               id="fechacertificado" readonly>
+                                                                        <input type="text" class="w-50 input-transparente" name="fechaIsmm"
+                                                                               id="fechaIsmm" readonly>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -247,8 +247,8 @@
                                                                                readonly class="w-100 input-transparente">
                                                                         <br><br>
                                                                         Fecha de Vencimiento:<br>
-                                                                        <input type="text" class="w-50 input-transparente" name="fechaIsmm"
-                                                                               id="fechaIsmm" readonly>
+                                                                        <input type="text" class="w-50 input-transparente" name="fechacertificado"
+                                                                               id="fechacertificado" readonly>
                                                                     </div>
                                                                 </div>
                                                             </div>
