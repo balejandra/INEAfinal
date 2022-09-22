@@ -79,6 +79,3 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('establecimientosNauticos', \App\Http\Controllers\Publico\EstablecimientosNauticosController::class);
 });
-
-
-
