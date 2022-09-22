@@ -17,7 +17,6 @@ class CreateCertificadosObligatoriosTable extends Migration
         Schema::connection('pgsql_zarpes_schema')->create('certificados_obligatorios', function (Blueprint $table) {
             $table->id();
             $table->string('parametro_embarcacion');
-            $table->string('operador_logico');
             $table->string('cantidad_comparacion');
             $table->string('nombre_certificado');
             $table->timestamps();

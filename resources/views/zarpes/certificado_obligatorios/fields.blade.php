@@ -10,12 +10,6 @@
     {!! Form::text('parametro_embarcacion', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Operador Logico Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('operador_logico', 'Operador Lógico:') !!}
-    {!! Form::text('operador_logico', null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Parametro Comparacion Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('parametro_comparacion', 'Cantidad Comparación:') !!}

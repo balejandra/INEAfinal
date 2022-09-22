@@ -19,7 +19,6 @@ class CertificadoObligatorioRepository extends BaseRepository
     protected $fieldSearchable = [
         'id',
         'parametro_embarcacion',
-        'operador_logico',
         'cantidad_comparacion',
         'nombre_certificado'
     ];
