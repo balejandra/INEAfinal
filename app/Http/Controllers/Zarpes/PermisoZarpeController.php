@@ -297,8 +297,8 @@ class PermisoZarpeController extends Controller
                                     break;
                                 case "ASIGNACIÓN DE NÚMERO ISMM":
                                     $val3 = true;
-                                    $nroCorrelativos["numeroIsmm"] = $validacionSgm[$i]->nro_correlativo;
-
+                                    $nroCorrelativos["numeroIsmm"]=$validacionSgm[$i]->nro_correlativo;
+                                    $fechavenc["fecha_vencimientoismm"]=$validacionSgm[$i]->fecha_vencimiento;
                                     break;
                             }
                         }
