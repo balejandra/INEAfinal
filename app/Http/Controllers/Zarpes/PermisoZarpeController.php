@@ -216,7 +216,6 @@ class PermisoZarpeController extends Controller
                 if (count($permisoZ) > 0) {
                     echo 'permisoPorCerrar';
                 } else {
-
                     $validacionSgm = TiposCertificado::where('matricula', $matricula)->get();
                     $val1 = "Licencia de Navegación no encontrada";
                     $val2 = "Certificado Nacional De Seguridad Radiotelefónica no encontrado";
@@ -246,23 +245,19 @@ class PermisoZarpeController extends Controller
                             }
                         }
                     }
-
                     $data2 = [
                         "data" => $data,
                         "validacionSgm" => [$val1, $val2, $val3],
                     ];
 
                     if (count($validacionSgm) > 0) {
-
                         for ($i = 0; $i < count($validacionSgm); $i++) {
-
                             switch ($validacionSgm[$i]->nombre_certificado) {
                                 case "LICENCIA DE NAVEGACIÓN":
                                     $fecha = $validacionSgm[$i]->fecha_vencimiento;
                                     list($dia, $mes, $ano) = explode("/", $fecha);
                                     $fecha_vence = $ano . "-" . $mes . "-" . $dia . " 00:00:00";
                                     $fecha_vence1 = strtotime($fecha_vence);
-
                                     $fecha_actual = strtotime(date("d-m-Y H:i:00", time()));
                                     if (($fecha_actual > $fecha_vence1)) {
                                         $val1 = "Licencia de Navegación vencida"; //encontrado pero vencido
@@ -293,7 +288,6 @@ class PermisoZarpeController extends Controller
                                         $nroCorrelativos["certificadoRadio"] = $validacionSgm[$i]->nro_correlativo;
                                         $fechavenc["fecha_vencimientocert"] = $validacionSgm[$i]->fecha_vencimiento;
                                     }
-
                                     break;
                                 case "ASIGNACIÓN DE NÚMERO ISMM":
                                     $val3 = true;
