@@ -319,7 +319,7 @@
         <p class="mbr-text text-center mbr-fonts-style display-7">{{$aprobador->user->nombres}} {{$aprobador->user->apellidos}}<br>
             @if($cargo->cargo=='4')
                 Capitán de Puerto de {{$capitania->nombre}}
-            @elseif ($cargo->cargo=='5')
+            @elseif (($cargo->cargo=='5') or ($cargo->cargo=='6'))
                 Comodoro - Marina {{$capitania->nombre}}
             @else
                 Capitán de Puerto/Comodoro
