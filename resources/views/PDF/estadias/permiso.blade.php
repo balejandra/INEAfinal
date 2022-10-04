@@ -202,7 +202,7 @@
 </header>
 
 <main>
-    <div style="clear:both; position:relative; padding-top: 120px;" class="content-paragraph">
+    <div style="clear:both; position:relative; padding-top: 115px;" class="content-paragraph">
 
         <h4 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5 content-paragraph">N° de Permiso: {{$estadia->nro_solicitud}}</h4>
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
@@ -302,8 +302,8 @@
                 PLACE AND DATE <u>  {{date_format($estadia->updated_at,'d-m-Y')}} </u>
         </p>
         <br>
-        <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto<br>
-                HARBOUR MASTE
+        <p class="mbr-text text-center mbr-fonts-style display-7">{{$aprobador->user->nombres}} {{$aprobador->user->apellidos}}<br>
+            Capitán de Puerto (HARBOUR MASTE)
         </p>
     </div>
 </main>

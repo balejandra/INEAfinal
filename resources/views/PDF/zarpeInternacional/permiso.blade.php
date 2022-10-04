@@ -265,7 +265,7 @@
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">
             <b>
         El suscrito Capitán de Puerto autoriza el zarpe
-        desde el lugar de procedencia, a partir del <u>{{$zarpe->fecha_hora_salida}}</u>, 
+        desde el lugar de procedencia, a partir del <u>{{$zarpe->fecha_hora_salida}}</u>,
         con destino a <u>{{$zarpe->establecimiento_nautico_destino_zi}}, {{$pais->name}}</u>,
         con el propósito de efectuar navegación <u>{{ $DescripcionNavegacion->descripcion }}</u>,
         estimando arribar el <u>{{$zarpe->fecha_hora_regreso}}</u>
@@ -315,8 +315,16 @@
         </p>
 
         <br>
-        <br>
-        <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto/Comodoro<br>
+        <br><br>
+        <p class="mbr-text text-center mbr-fonts-style display-7">{{$aprobador->user->nombres}} {{$aprobador->user->apellidos}}<br>
+            @if($cargo->cargo=='4')
+                Capitán de Puerto de {{$capitania->nombre}}
+            @elseif ($cargo->cargo=='5')
+                Comodoro - Marina {{$capitania->nombre}}
+            @else
+                Capitán de Puerto/Comodoro
+            @endif
+            <br>
             <span class="content">
                 ( Signature and stamp Harbor Master)
             </span>
@@ -328,7 +336,7 @@
             <i>Remember to notify the departure and arrival in the system.</i>
         </p>
 
-       
+
     </div>
 </main>
 </body>
