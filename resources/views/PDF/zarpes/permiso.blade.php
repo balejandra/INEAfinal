@@ -147,9 +147,9 @@
     @php
         function coordenadasGrad($coordenada){
             $gcoordenada=intval($coordenada);
-            $mcoordenada1=number_format(($coordenada-$gcoordenada)*60, 4, '.', '');  
+            $mcoordenada1=number_format(($coordenada-$gcoordenada)*60, 4, '.', '');
             $mcoordenada2=intval($mcoordenada1);
-            $scoordenada1=number_format(($mcoordenada1-$mcoordenada2)*60, 4, '.', ''); 
+            $scoordenada1=number_format(($mcoordenada1-$mcoordenada2)*60, 4, '.', '');
             $scoordenada2=number_format($scoordenada1,1,'.','');
             $scoordenada2= abs($scoordenada2);
             if($scoordenada2 < 10 ){
@@ -333,8 +333,16 @@
         </p>
 
         <br>
-        <br>
-        <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto/Comodoro<br>
+        <br><br>
+        <p class="mbr-text text-center mbr-fonts-style display-7">{{$aprobador->user->nombres}} {{$aprobador->user->apellidos}}<br>
+            @if($cargo->cargo=='4')
+                Capitán de Puerto de {{$capitania->nombre}}
+            @elseif ($cargo->cargo=='5')
+                Comodoro - Marina {{$capitania->nombre}}
+            @else
+                Capitán de Puerto/Comodoro
+            @endif
+            <br>
             <span class="content">
                 ( Signature and stamp Harbor Master)
             </span>
@@ -346,7 +354,7 @@
             <i>Remember to notify the departure and arrival in the system.</i>
         </p>
 
-       
+
     </div>
 </main>
 </body>
