@@ -242,7 +242,7 @@ class UserController extends Controller
            // dd('error');
             $data=response()->json([
                 'status'=>3,
-                'msg' => 'error',
+                'msg' => $exception->getMessage(),
                 'errors'=>[],
             ], 200);
         }
