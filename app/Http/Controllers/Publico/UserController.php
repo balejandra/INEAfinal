@@ -240,10 +240,9 @@ class UserController extends Controller
             ->get();
         if (is_null($data->first())) {
            // dd('error');
-            $exception =0;
             $data=response()->json([
                 'status'=>3,
-                'msg' => $exception->getMessage(),
+                'msg' => 'error',
                 'errors'=>[],
             ], 200);
         }
