@@ -25,7 +25,7 @@ class AddFechaArriboToPermisoEstadiasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('pgsql_zarpes_schema')-> table('permiso_estadia', function (Blueprint $table) {
+        Schema::connection('pgsql_zarpes_schema')-> table('permiso_estadias', function (Blueprint $table) {
             $table->dropColumn('fecha_arribo');
         });
     }

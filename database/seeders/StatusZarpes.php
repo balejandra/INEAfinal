@@ -75,6 +75,16 @@ class StatusZarpes extends Seeder
                 'nombre'=>'Renovacion',
                 'created_at'=>now()
             ],
+            [
+                'id'=>13,
+                'nombre'=>'Aprobado',
+                'created_at'=>now()
+            ],
+            [
+                'id'=>14,
+                'nombre'=>'Navegando/Demorada',
+                'created_at'=>now()
+            ],
         ]);
     }
 }

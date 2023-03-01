@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class RoleHasPermissionSeeder extends Seeder
+class ModelHasRoles extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +16,7 @@ class RoleHasPermissionSeeder extends Seeder
     public function run()
     {
         //Super Admin
+
         $superadmin_permissions=Permission::all();
         Role::findOrFail(1)->permissions()->sync($superadmin_permissions->pluck('id'));
 
@@ -26,7 +27,7 @@ class RoleHasPermissionSeeder extends Seeder
             'informar-arribo',
             'informar-navegacion',
             'anular-zarpeUsuario',
-            'listar-zarpes-generados',
+            'listar-zarpesgenerados',
             'listar-notificaciones',
             'consultar-notificaciones',
             ])->get();

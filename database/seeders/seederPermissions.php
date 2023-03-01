@@ -108,6 +108,7 @@ class seederPermissions extends Seeder
             'listar-estadia-coordinador',
             'listar-estadia-capitania-destino',
             'renovar-estadia',
+            'consultar-estadia',
 
               //permisos para usuarios de capitanias
             'listar-usuarios-capitanias',

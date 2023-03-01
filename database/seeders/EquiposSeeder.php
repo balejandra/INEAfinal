@@ -127,6 +127,20 @@ class EquiposSeeder extends Seeder
                 'cantidad'=>false,
                 'otros'=>'tipo',
                 'created_at'=>now()
+            ],
+            [
+                'id'=>17,
+                'equipo'=>'AGUA POTABLE (LITROS)',
+                'cantidad'=>true,
+                'otros'=>'ninguno',
+                'created_at'=>now()
+            ],
+            [
+                'id'=>18,
+                'equipo'=>'COMBUSTIBLE (LITROS)',
+                'cantidad'=>true,
+                'otros'=>'ninguno',
+                'created_at'=>now()
             ]
 
         ]);

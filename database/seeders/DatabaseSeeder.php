@@ -21,6 +21,12 @@ class DatabaseSeeder extends Seeder
             UserExtSeeder::class,
             MenuUserSeeder::class,
             EquiposSeeder::class,
+            StatusZarpes::class,
+            TablaMandoSeeder::class,
+            DescripcionNavegacionSeeder::class,
+            PaisesSeeder::class,
+            CertificadoSeeder::class,
+            TipoZarpesSeeder::class
         ]);
     }
 }
