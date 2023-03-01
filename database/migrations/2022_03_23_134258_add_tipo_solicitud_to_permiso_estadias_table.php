@@ -27,7 +27,7 @@ class AddTipoSolicitudToPermisoEstadiasTable extends Migration
     public function down()
     {
         Schema::connection('pgsql_zarpes_schema')->table('permiso_estadias', function (Blueprint $table) {
-            $table->dropColumn('tipo_solicitud');
+            $table->dropColumn('cantidad_solicitud');
             $table->dropColumn('vencimiento');
         });
     }

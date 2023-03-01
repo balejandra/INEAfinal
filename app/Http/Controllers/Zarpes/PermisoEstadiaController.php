@@ -551,7 +551,7 @@ class PermisoEstadiaController extends AppBaseController
 
         }else {
             $subject = 'Solicitud de Estadía ' . $estadia->nro_solicitud;
-            $mensaje = "Su solicitud de Permiso de Estadía N°: " . $estadia->nro_solicitud . " registrada ha sido" . $idstatus->nombre . ". Puede verificar
+            $mensaje = "Su solicitud de Permiso de Estadía N°: " . $estadia->nro_solicitud . " registrada ha sido " . $idstatus->nombre . ". Puede verificar
     su documento de autorización de estadía en el archivo adjunto a este correo.";
         }
 

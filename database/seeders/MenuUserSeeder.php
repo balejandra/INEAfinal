@@ -21,54 +21,36 @@ class MenuUserSeeder extends Seeder
             'url' => 'home',
             'order' => '0',
             'parent' => '0',
-            'icono'=>'icon-settings',
+            'icono'=>'fas fa-cog',
         ]);
-
-        $menuRols = [
-            array('role_id' => '1', 'menu_id' => $menuConfig['id']),
-        ];
-        DB::table('menus_roles')->insert($menuRols);
 
 
         $menu2 = Menu::create([
             'name' => 'Menus',
             'url' => 'menus',
-            'order' => '0',
+            'order' => '2',
             'parent' => $menuConfig['id'],
-            'icono'=>'icon-menu',
+            'icono'=>'fas fa-bars',
         ]);
-
-        $menuRols3 = [
-            array('role_id' => '1', 'menu_id' => $menu2['id']),
-        ];
-        DB::table('menus_roles')->insert($menuRols3);
 
 
         $permiso = Menu::create([
             'name' => 'Permisos',
             'url' => 'permissions',
-            'order' => '1',
+            'order' => '0',
             'parent' => $menuConfig['id'],
-            'icono'=>'icon-lock',
+            'icono'=>'fa fa-address-card',
         ]);
 
-        $menuRols4 = [
-            array('role_id' => '1', 'menu_id' => $permiso['id']),
-        ];
-        DB::table('menus_roles')->insert($menuRols4);
 
         $roles = Menu::create([
             'name' => 'Roles',
             'url' => 'roles',
-            'order' => '2',
+            'order' => '1',
             'parent' => $menuConfig['id'],
-            'icono'=>'icon-list',
+            'icono'=>'fa fa-id-badge',
         ]);
 
-        $menuRols5 = [
-            array('role_id' => '1', 'menu_id' => $roles['id']),
-        ];
-        DB::table('menus_roles')->insert($menuRols5);
 
         $auditoria = Menu::create([
             'name' => 'Auditorias',
@@ -78,50 +60,206 @@ class MenuUserSeeder extends Seeder
             'icono'=>'fas fa-history',
         ]);
 
-        $menuRols6 = [
+
+        //Equipos
+        $equipo = Menu::create([
+            'name' => 'Equipos',
+            'url' => 'equipos',
+            'order' => '4',
+            'parent' => $menuConfig['id'],
+            'icono'=>'fas fa-shield-alt',
+            'enabled'=>true
+        ]);
+
+
+        //Estatus
+        $estatus = Menu::create([
+            'name' => 'Estatus',
+            'url' => 'status',
+            'order' => '5',
+            'parent' => $menuConfig['id'],
+            'icono'=>'fa fa-clipboard-check fa-lg',
+            'enabled'=>true
+        ]);
+
+
+        //Tabla de Mandos
+        $tabla_mando = Menu::create([
+            'name' => 'Tabla de Mandos',
+            'url' => 'tablaMandos',
+            'order' => '6',
+            'parent' => $menuConfig['id'],
+            'icono'=>'fas fa-table',
+            'enabled'=>true
+        ]);
+
+
+        //Certificados Obligatorios
+        $certificadoObligatorios = Menu::create([
+            'name' => 'Certificados Obligatorios',
+            'url' => 'certificadoObligatorios',
+            'order' => '7',
+            'parent' => $menuConfig['id'],
+            'icono'=>'fas fa-certificate',
+            'enabled'=>true
+        ]);
+
+
+        $menuRols = [
+            array('role_id' => '1', 'menu_id' => $menuConfig['id']),
+            array('role_id' => '1', 'menu_id' => $permiso['id']),
+            array('role_id' => '1', 'menu_id' => $roles['id']),
+            array('role_id' => '1', 'menu_id' => $menu2['id']),
             array('role_id' => '1', 'menu_id' => $auditoria['id']),
+            array('role_id' => '1', 'menu_id' => $equipo['id']),
+            array('role_id' => '1', 'menu_id' => $estatus['id']),
+            array('role_id' => '1', 'menu_id' => $tabla_mando['id']),
+            array('role_id' => '1', 'menu_id' => $certificadoObligatorios['id']),
         ];
-        DB::table('menus_roles')->insert($menuRols6);
+        DB::table('menus_roles')->insert($menuRols);
 
 
 /////PUBLICO///////
         $menuPublico = Menu::create([
             'name' => 'Publico',
-            'url' => 'home',
+            'url' => '/',
             'order' => '1',
             'parent' => '0',
-            'icono'=>'icon-globe',
+            'icono'=>'fas fa-globe',
         ]);
 
-        $menuRols1 = [
-            array('role_id' => '1', 'menu_id' => $menuPublico['id']),
-        ];
-        DB::table('menus_roles')->insert($menuRols1);
-
+        //Usuarios
         $user = Menu::create([
             'name' => 'Usuarios',
             'url' => 'users',
             'order' => '0',
             'parent' => $menuPublico['id'],
-            'icono'=>'icon-user',
+            'icono'=>'fa fa-user',
         ]);
 
-        $menupubli = [
-            array('role_id' => '1', 'menu_id' => $user['id']),
-        ];
-        DB::table('menus_roles')->insert($menupubli);
-
+        //Capitanías
         $capitania = Menu::create([
             'name' => 'Capitanias',
             'url' => 'capitanias',
             'order' => '1',
             'parent' => $menuPublico['id'],
-            'icono'=>'icon-organization',
+            'icono'=>'fa fa-building',
         ]);
 
-        $menupubli1 = [
+        //Establecimientos Náuticos
+        $establecimientosNauticos = Menu::create([
+            'name' => 'Establecimientos Náuticos',
+            'url' => '/establecimientosNauticos',
+            'order' => '2',
+            'parent' => $menuPublico['id'],
+            'icono'=>'fa fa-building',
+        ]);
+
+        //Dependencias Federales
+        $dependenciasfederales = Menu::create([
+            'name' => 'Dependencias Federales',
+            'url' => 'dependenciasfederales',
+            'order' => '3',
+            'parent' => $menuPublico['id'],
+            'icono'=>'fa fa-map',
+        ]);
+
+        $menuRols1 = [
+            array('role_id' => '1', 'menu_id' => $menuPublico['id']),
+            array('role_id' => '3', 'menu_id' => $menuPublico['id']),
+            array('role_id' => '4', 'menu_id' => $menuPublico['id']),
+            array('role_id' => '1', 'menu_id' => $user['id']),
+            array('role_id' => '3', 'menu_id' => $user['id']),
             array('role_id' => '1', 'menu_id' => $capitania['id']),
+            array('role_id' => '3', 'menu_id' => $capitania['id']),
+            array('role_id' => '4', 'menu_id' => $capitania['id']),
+            array('role_id' => '1', 'menu_id' => $establecimientosNauticos['id']),
+            array('role_id' => '1', 'menu_id' => $dependenciasfederales['id']),
         ];
-        DB::table('menus_roles')->insert($menupubli1);
+        DB::table('menus_roles')->insert($menuRols1);
+
+
+        /////Permisos de Zarpes y Estadía///////
+        $menuZarpes = Menu::create([
+            'name' => 'Permisos de Zarpes y Estadía',
+            'url' => '/',
+            'order' => '2',
+            'parent' => '0',
+            'icono'=>'far fa-compass',
+        ]);
+
+        //Zarpe Nacional
+        $permisoszarpes = Menu::create([
+            'name' => 'Zarpe Nacional',
+            'url' => '/zarpes/permisoszarpes',
+            'order' => '0',
+            'parent' => $menuZarpes['id'],
+            'icono'=>'fas fa-ship',
+        ]);
+
+        //Permiso de Estadía
+        $permisosestadia = Menu::create([
+            'name' => 'Permiso de Estadía',
+            'url' => 'permisosestadia',
+            'order' => '1',
+            'parent' => $menuZarpes['id'],
+            'icono'=>'fas fa-anchor',
+        ]);
+
+        //Zarpe Internacional
+        $zarpeInternacional = Menu::create([
+            'name' => 'Zarpe Internacional',
+            'url' => '/zarpes/zarpeInternacional',
+            'order' => '2',
+            'parent' => $menuZarpes['id'],
+            'icono'=>'fas fa-ship',
+        ]);
+
+        $menuRols2 = [
+            array('role_id' => '1', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '2', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '3', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '4', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '5', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '6', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '7', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '8', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '9', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '10', 'menu_id' => $menuZarpes['id']),
+            array('role_id' => '11', 'menu_id' => $menuZarpes['id']),
+
+            array('role_id' => '1', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '2', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '3', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '4', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '5', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '6', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '7', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '8', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '9', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '10', 'menu_id' => $permisoszarpes['id']),
+            array('role_id' => '11', 'menu_id' => $permisoszarpes['id']),
+
+            array('role_id' => '1', 'menu_id' => $permisosestadia['id']),
+            array('role_id' => '3', 'menu_id' => $permisosestadia['id']),
+            array('role_id' => '4', 'menu_id' => $permisosestadia['id']),
+            array('role_id' => '7', 'menu_id' => $permisosestadia['id']),
+            array('role_id' => '8', 'menu_id' => $permisosestadia['id']),
+            array('role_id' => '10', 'menu_id' => $permisosestadia['id']),
+            array('role_id' => '11', 'menu_id' => $permisosestadia['id']),
+
+            array('role_id' => '1', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '2', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '3', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '4', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '5', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '6', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '7', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '8', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '9', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '10', 'menu_id' => $zarpeInternacional['id']),
+            array('role_id' => '11', 'menu_id' => $zarpeInternacional['id']),
+        ];
+        DB::table('menus_roles')->insert($menuRols2);
     }
 }
