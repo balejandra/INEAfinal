@@ -555,6 +555,188 @@ console.log(respuesta);
 
      }
 
+function AddPassengerMenorTrip(tipozarpe){
+
+    let cedula= document.getElementById('numero_identificacionMenorTrip').value;
+    let fechanac= document.getElementById('fecha_nacimientoMenorTrip').value;
+    let nuevafechanac;
+    let date1 = new Date(fechanac);
+    let day1 = `0${date1.getDate()+1}`.slice(-2); //("0"+date.getDate()).slice(-2);
+    let month1 = `0${date1.getMonth() + 1}`.slice(-2);
+    let year1 = date1.getFullYear();
+    nuevafechanac=`${day1}-${month1}-${year1}`
+    console.log(`${day1}-${month1}-${year1}`);
+    let sexo= document.getElementById('sexoMenorTrip').value;
+    let tipodoc= document.getElementById('tipodocmenorTrip').value;
+    let representante=document.getElementById('representanteMenorTrip').value;
+    var msj= document.getElementById('errorModalPassTrip');
+    var msjMayor= document.getElementById('msj');
+    let partidaNacimiento=document.getElementById('partida_nacimientoTrip').value;
+    let autorizacion=document.getElementById('autorizacionTrip').value;
+    let pasaporteMenor=document.getElementById('pasaporte_menorTrip').value;
+    msjMayor.innerHTML="";
+    if(tipozarpe==='ZI'){
+
+        console.log('ZI pasaporte');
+        if(pasaporteMenor===''){
+            msj.innerHTML='<div class="alert alert-danger">El documento Pasaporte es requerido para el menor</div>' ;
+            return false;
+        }
+
+        if(partidaNacimiento==''){
+            msj.innerHTML='<div class="alert alert-danger">El documento Partida de Nacimiento es requerido para el menor</div>' ;
+            return false;
+        }
+
+
+    }else if(tipozarpe==='ZN'){
+        if(pasaporteMenor=='' && tipodoc=="P"){
+            msj.innerHTML='<div class="alert alert-danger">El documento Pasaporte es requerido para el menor</div>' ;
+            return false;
+        }
+        if(partidaNacimiento==''){
+            msj.innerHTML='<div class="alert alert-danger">El documento Partida de Nacimiento es requerido para el menor</div>' ;
+            return false;
+        }
+    }
+
+    if(calcularEdad(fechanac)>=18){
+
+        msj.innerHTML='<div class="alert alert-danger">Debe agregar un pasajero menor de edad en este formulario, por favor verifique.</div>' ;
+        return false;
+    }
+
+    if (cedula!="" && fechanac!="" && sexo!="" && tipodoc!="" &&  partidaNacimiento!="") {
+
+        if(tipodoc=="P"){
+            //menor extranjero
+            if( $('#nombresMenorTrip').val()=="" ||  $('#apellidosMenorTrip').val()==""){
+                //si no han llenado los nombres y apellidos
+                msj.innerHTML='<div class="alert alert-danger">Los campos nombres y apellidos son requeridos</div>' ;
+            }else{
+                //si llenaron los nombres y apellidos
+                let  pasajeroExiste=document.getElementById(cedula);
+                if(pasajeroExiste==null){
+                    //var html="<tr id='"+cedula+"' data-menor='SI'> <td>"+tipodoc+"-"+cedula+"</td> <td>"+$('#nombresMenor').val()+"</td> <td>"+$('#apellidosMenor').val()+"</td> <td>"+sexo+"</td>  <td>"+fechanac+"</td> <td>SI</td> <td class='text-center'> N/A </td> <td>  <a href='#' onclick='openModalPassengers("+tipodoc+","+cedula+", 1)' ><i class='fa fa-trash' title='Eliminar'></i></a> </td>  </tr>";
+
+                    subirDocumentosPassengerTrip('SI', tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenorTrip').val(), $('#apellidosMenorTrip').val(), '', representante);
+
+                    msj.innerHTML="";
+                    $('#numero_identificacionMenorTrip').val("");
+                    $('#fecha_nacimientoMenorTrip').val("");
+                    $('#sexoMenorTrip').val("");
+                    $('#tipodocmenorTrip').val("");
+                    $('#nombresMenorTrip').val("");
+                    $('#apellidosMenorTrip').val("");
+                    $('#representanteMenorTrip').val("");
+                    $('#partida_nacimientoTrip').val("");
+                    $('#autorizacionTrip').val("");
+                    $('#pasaporte_menorTrip').val("");
+                    $('#pasaporte_mayorTrip').val("");
+                    closeModalPassengers(3);
+
+                }else{
+                    msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
+                }
+
+            }
+        }else{
+            //menor venezolano
+
+            if(tipodoc=="NC"){
+                if( $('#nombresMenorTrip').val()=="" ||  $('#apellidosMenorTrip').val()==""){
+                    //si no han llenado los nombres y apellidos
+                    msj.innerHTML='<div class="alert alert-danger">Los campos nombres y apellidos son requeridos</div>' ;
+                }else{
+                    subirDocumentosPassengerTrip('SI', tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenorTrip').val(), $('#apellidosMenorTrip').val(), '', representante);
+                    msj.innerHTML="";
+                    $('#numero_identificacionMenorTrip').val("");
+                    $('#fecha_nacimientoMenorTrip').val("");
+                    $('#sexoMenorTrip').val("");
+                    $('#tipodocmenorTrip').val("");
+                    $('#nombresMenorTrip').val("");
+                    $('#apellidosMenorTrip').val("");
+                    $('#representanteMenorTrip').val("");
+                    $('#partida_nacimientoTrip').val("");
+                    $('#autorizacionTrip').val("");
+                    $('#pasaporte_menorTrip').val("");
+                    $('#pasaporte_mayorTrip').val("");
+                    $("#sexoMenorTrip > option[value='']").removeAttr("selected");
+                    $("#sexoMenorTrip > option[value='F']").removeAttr("selected");
+                    $("#sexoMenorTrip > option[value='M']").removeAttr("selected");
+                    closeModalPassengers(3);
+
+                }
+            }else{
+
+                $.ajax({
+                    url: route('consultasaime2'),
+                    data: {cedula: cedula, fecha:fechanac, sexo:sexo }
+
+                })// This will be called on success
+                    .done(function (response) {
+
+                        var respuesta = JSON.parse(response);
+                        let tamano = respuesta.length;
+                        if (tamano == 0) {
+                            console.log(respuesta);
+                        } else {
+                            respuesta=respuesta[0];
+                            let sex='';
+                            respuesta.sexo=='F'? sex="Femenino":sex="Masculino";
+                            let  pasajeroExiste=document.getElementById(respuesta.cedula);
+                            console.log(respuesta);
+                            if(pasajeroExiste==null){
+                                let nombres, apellidos;
+                                if (respuesta.nombre2==null) {nombres=respuesta.nombre1; }else{ nombres=respuesta.nombre1+" "+respuesta.nombre2;}
+                                if (respuesta.apellido2==null){apellidos=respuesta.apellido1; }else {apellidos=respuesta.apellido1+" "+respuesta.apellido2;}
+                                $('#nombresMenorTrip').val(nombres);
+                                $('#apellidosMenorTrip').val(apellidos);
+                                // $('#sexoMenor').val(apellidos);
+
+
+                                subirDocumentosPassengerTrip("SI", tipodoc, cedula, nuevafechanac, sexo, $('#nombresMenorTrip').val(), $('#apellidosMenorTrip').val(),'',representante);
+                                msj.innerHTML="";
+
+                                $('#numero_identificacionMenorTrip').val("");
+                                $('#fecha_nacimientoMenorTrip').val("");
+                                $('#sexoMenorTrip').val("");
+                                $('#tipodocmenorTrip').val("");
+                                $('#nombresMenorTrip').val("");
+                                $('#apellidosMenorTrip').val("");
+                                $('#representanteMenorTrip').val("");
+                                $('#autorizacionTrip').val("");
+                                $('#pasaporte_menorTrip').val("");
+                                $('#partida_nacimientoTrip').val("");
+                                $("#sexoMenorTrip > option[value='']").removeAttr("selected");
+                                $("#sexoMenorTrip > option[value='F']").removeAttr("selected");
+                                $("#sexoMenorTrip > option[value='M']").removeAttr("selected");
+                                closeModalPassengers(3);
+
+                            }else{
+                                msj.innerHTML='<div class="alert alert-danger">El pasajero ya se encuentra asignado a la lista, por favor verifique</div>' ;
+
+                            }
+
+
+                        }
+                        //alert(response);
+                    })
+                    .fail(function (response) {
+                        msj.innerHTML='<div class="alert alert-danger">No se encontraron coincidencias con los datos suministrados.</div>' ;
+
+                    });
+
+            }
+
+        }
+
+    }else{
+        msj.innerHTML='<div class="alert alert-danger">Existen campos vacios en el formulario, por favor verifique...</div>' ;
+    }
+
+}
+
 function blurSaime(){
 
     let cedula= document.getElementById('numero_identificacionMenor').value;
@@ -844,12 +1026,6 @@ $('#menor').click(function() {
 });
 
 
-
-
-
-
-
-
 $( "#tipodoc" )
   .change(function () {
     var str = "";
@@ -908,6 +1084,75 @@ function subirDocumentos(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apelli
         formData.append('autorizacion', autorizacion);
         formData.append('pasaporte_menor', pasaporte);
 
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route('AddDocumentos'),
+            type: "POST",
+            dataType: "html",
+            data:formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (response){
+            var resps=JSON.parse(response);
+            if(resps[0] =='OK'){
+                partida=resps[1];
+                auth=resps[2];
+                pasaporte_menor=resps[3];
+
+                console.log("MENOR:",resps);
+                console.log("pasaporte_menor",pasaporte_menor);
+                addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante, resps);
+
+
+            }
+
+        });
+    }else{
+        let pasaportemayor=document.getElementById('pasaporte_mayor').files[0];
+
+        var formData = new FormData();
+        formData.append('pasaporte_mayor', pasaportemayor);
+        console.log(formData);
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route('AddDocumentos'),
+            type: "POST",
+            dataType: "html",
+            data:formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (response){
+            var resps=JSON.parse(response);
+            if(resps[0] =='OK'){
+                partida=resps[1];
+                auth=resps[2];
+                //pasaporte_menor=resps[3];
+                pasaporte_mayor=resps[4];
+                console.log("MAYOR:",resps);
+                addPassengers2(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante, resps);
+
+            }
+
+        });
+    }
+
+}
+
+function subirDocumentosPassengerTrip(menor, tipodoc, nrodoc, fechanac, sexo, nombres, apellidos, html, representante){
+
+    if(menor=='SI'){
+        let partidaNacimientoTrip=document.getElementById('partida_nacimientoTrip').files[0];
+        let autorizacionTrip=document.getElementById('autorizacionTrip').files[0];
+        let pasaporteTrip=document.getElementById('pasaporte_menorTrip').files[0];
+
+        var formData = new FormData();
+
+        formData.append('partida_nacimiento', partidaNacimientoTrip);
+        formData.append('autorizacion', autorizacionTrip);
+        formData.append('pasaporte_menor', pasaporteTrip);
+        console.log(formData)
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: route('AddDocumentos'),
@@ -1300,146 +1545,6 @@ function validacionMarino(){
         });
     }
 }
-
-/*
-function getMarinos() {
-    let cedula= document.getElementById('cedula').value;
-   // let fechanac= document.getElementById('fecha_nacimiento').value;
-    let msj=document.getElementById('msjMarino');
-    msj.innerHTML="";
-    const asset=msj.getAttribute('data-asset');
-    msj.innerHTML="<div class='alert alert-info'><img src='"+asset+"/load.gif'   width='35px'> &nbsp; Comparando datos con registros existentes en gente de mar, por favor espere...</div>";
-    let flashMsj=document.getElementById('flashMsj');
-    if(flashMsj != null){
-        flashMsj.setAttribute('class','');
-        flashMsj.innerHTML="";
-    }
-
-    let ErrorsFlash=document.getElementById('ErrorsFlash');
-    if(ErrorsFlash != null){
-        ErrorsFlash.setAttribute('class','');
-        ErrorsFlash.innerHTML="";
-    }
-    let tabla=document.getElementById('marinos');
-    let divMarinos=document.getElementById('dataMarinos');
-    let cantMax=divMarinos.getAttribute('data-cantmaxima');
-    let cantMin=divMarinos.getAttribute('data-cantMinima');
-
-    let cantMar=divMarinos.getAttribute('data-cantMar');
-    let cap="";
-    if($("#cap").is(':checked')){
-        cap="SI";
-    }else{
-        cap="NO";
-    }
-
-
-        if(parseInt(cantMar) >= parseInt(cantMax)){
-            msj.innerHTML='<div class="alert alert-danger">Ha alcanzado la capacidad máxima de la embarcación.</div>' ;
-
-        }else if(cantMar < cantMin){
-            msj.innerHTML='<div class="alert alert-danger">No ha alcanzado la cantidad mínima de tripulantes para esta embarcación, por favor verifique.</div>' ;
-        }else{
-
-        if(cedula=="" ){
-
-            msj.innerHTML='<div class="alert alert-danger">El campo cédula es requerido, por favor verifique</div>' ;
-
-        }else{
-        $.ajax({
-            url: route('validarMarino'),
-            data: {cedula: cedula, cap:cap }
-
-        })// This will be called on success
-            .done(function (response) {
-                console.log(response);
-                resp = JSON.parse(response);
-                respuesta=resp[0];
-                validacion=resp[1];
-                let tamano = respuesta.length;
-                console.log(validacion);
-
-
-                if(typeof respuesta=='string'){
-                     switch(respuesta){
-                        case 'saimeNotFound':
-                            msj.innerHTML='<div class="alert alert-danger">No se han encontrado coincidencias con los datos suministrados, por favor verifique</div>' ;
-
-                        break;
-                        case 'gmarNotFound':
-                            msj.innerHTML='<div class="alert alert-danger">La cédula suministrada no pertenece a ningún marino, por favor verifique</div>' ;
-
-                        break;
-                        case 'FoundButDefeated':
-                            msj.innerHTML='<div class="alert alert-danger">La vigencia de la licencia del tripulante C.I. '+cedula+' se encuentra vencida, por este motivo no puede tripular ninguna embarcación por el momento.</div>' ;
-                        break;
-                        case 'FoundButAssigned':
-                            msj.innerHTML='<div class="alert alert-danger">El tripulante C.I. '+cedula+' se encuentra asignado a una embarcación que tiene un zarpe programado o en curso actualmente</div>' ;
-                        break;
-
-                        default:
-                        console.log(respuesta);  msj.innerHTML="";
-                        break;
-                    }
-
-                }else{
-                    let  marinoExiste=document.getElementById('trip'+respuesta[0].ci);
-
-                    if(marinoExiste==null){
-
-
-
-                        let fecha=respuesta[0].fecha_vencimiento.substr(0, 10);
-                        let fechaemision=respuesta[0].fecha_emision.substr(0, 10);
-                        //let vt=validarTripulante(respuesta[0].documento, cap);
-                        if(validacion[0]){
-                            validarCapitan("");
-                            console.log(respuesta);
-                            msj.innerHTML="";
-                            var html="<tr id='trip"+respuesta[0].ci+"'> <td>"+cap+"</td><td>"+respuesta[0].ci+"</td> <td>"+respuesta[0].nombre+" "+respuesta[0].apellido+"</td>   <td>"+fechaemision.substr(0, 10)+"</td> <td>"+respuesta[0].documento+"</td><td> </td> </tr>";
-                            cantAct=parseInt(document.getElementById("dataMarinos").getAttribute("data-cantMar"));
-                            if(cantAct==0){
-                                tabla.innerHTML="";
-                            }
-                            tabla.innerHTML+=html;
-                            document.getElementById('cedula').value="";
-                           // document.getElementById('fecha_nacimiento').value="";
-                            addMarino(respuesta[0].id, cap, respuesta[0].ci,respuesta[0].nombre+" "+respuesta[0].apellido, fecha, respuesta[0].documento, fechaemision);
-                            msj.innerHTML="";
-                        }else{
-
-
-                            if($("#cap").is(':checked')){
-
-                                msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para ser capitán esta embarcación.</div>' ;
-                                validarCapitan('X');
-                            }else{
-                                msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+respuesta[0].ci+' no esta permisado para tripular esta embarcación.</div>' ;
-
-                            }
-
-                        }
-
-                    }else{
-                        msj.innerHTML='<div class="alert alert-danger">El tripulante ya se encuentra asignado a la lista, por favor verifique</div>' ;
-
-                    }
-
-                }
-            })
-
-            // This will be called on error
-            .fail(function (response) {
-                msj.innerHTML='<div class="alert alert-danger">No se ha encontrado la cedula o la fecha de nacimiento</div>' ;
-                        console.log(response);
-
-            });
-    }
-
-
-}
-
-}*/
 
 
 function AddPasportsMarinosZN(){
@@ -1882,11 +1987,85 @@ function openModalPassengers(tipodoc,cedula, modal){
 
 }
 
+
+function openModalPassengersTripulantes(){
+    document.getElementById('errorModalPassTrip').innerHTML="";
+    document.getElementById("backdrop").style.display = "block";
+    document.getElementById("AddPassengerTripulanteModal").style.display = "block";
+    document.getElementById("AddPassengerTripulanteModal").classList.add("show");
+
+}
+
+$("#identificacionTrip").change(function () {
+  let cedulaRepresentante= $('#identificacionTrip').val();
+    let ci=document.getElementById('ciTrip');
+    ci.innerHTML=cedulaRepresentante;
+})
+
+
+$("#tipodocmenorTrip").change(function(){
+    let nrodoc=document.getElementById('numero_identificacionMenorTrip');
+    let cedRepresentante=$('#identificacionTrip').val();
+    let representante=document.getElementById('representanteMenorTrip');
+    representante.value=cedRepresentante;
+
+    let date = new Date();
+    let fechamin=date.getFullYear()-18;
+    fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+    fechamin+="-"+String(date.getDate()).padStart(2, '0');
+    let str=$(this).val();
+    if($(this).val()=='NC'){
+        $('.FilePassportTrip').attr('style', 'display:none');
+
+        nrodoc.setAttribute("readOnly", 'readonly');
+        nrodoc.value=cedRepresentante;
+
+        fechamin=date.getFullYear()-10;
+        fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+        fechamin+="-"+String(date.getDate()).padStart(2, '0');
+
+    }else{
+        nrodoc.removeAttribute("readOnly");
+        nrodoc.value='';
+
+        let fechamin="";
+
+        if((str=="V")){
+            $( "#numero_identificacionMenorTrip").attr('onKeyDown','return soloNumeros(event)');
+            $('.FilePassportTrip').attr('style', 'display:none');
+
+            fechamin=date.getFullYear()-18;
+            fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+            fechamin+="-"+String(date.getDate()).padStart(2, '0');
+
+        }else if(str=="P"){
+            $('.FilePassportTrip').attr('style', 'display:block');
+            $('#fecha_nacimientoMenorTrip').attr('min',"" );
+            $( "#numero_identificacionMenorTrip").attr('onKeyDown','');
+            fechamin=date.getFullYear()-18;
+            fechamin+="-"+(String(date.getMonth() + 1).padStart(2, '0'));
+            fechamin+="-"+String(date.getDate()).padStart(2, '0');
+        }else{
+            $('.FilePassportTrip').attr('style', 'display:none');
+
+        }
+    }
+
+    $('#fecha_nacimientoMenorTrip').attr('min',fechamin );
+
+});
+
+
+
 function closeModalPassengers(modal){
-    if(modal==1){
-         document.getElementById("backdrop").style.display = "none";
+    if(modal==1) {
+        document.getElementById("backdrop").style.display = "none";
         document.getElementById("deletePassengerModal").style.display = "none";
         document.getElementById("deletePassengerModal").classList.remove("show");
+    }if(modal==3){
+        document.getElementById("backdrop").style.display = "none";
+        document.getElementById("AddPassengerTripulanteModal").style.display = "none";
+        document.getElementById("AddPassengerTripulanteModal").classList.remove("show");
     }else{
         document.getElementById("backdrop").style.display = "none";
         document.getElementById("AddPassengerModal").style.display = "none";
@@ -1902,27 +2081,6 @@ window.onclick = function(event) {
     closeModal();
   }
 }
-
-
-function validarCapitan(param){
-    if(param==""){
-        if($("#cap").is(':checked')){
-            var cap="SI";
-            $("#cap").prop("checked", false);
-            $("#textoCap").text('NO');
-        }else{
-            var cap="NO";
-        }
-    }else{
-
-        $("#cap").prop("checked", true);
-        $("#textoCap").text('SI');
-        var cap="SI";
-    }
-
-    return cap;
-}
-
 
 
 

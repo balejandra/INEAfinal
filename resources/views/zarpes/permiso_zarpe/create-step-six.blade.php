@@ -113,6 +113,10 @@
                                                         onclick="getDataPassengers()">
                                                     Agregar
                                                 </button>
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="openModalPassengersTripulantes()"> <i class="fas fa-water"></i>
+                                                    Agregar
+                                                </button>
                                             </div>
                                         </div>
                                             <br>
@@ -374,6 +378,130 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeModalPassengers(2)">Cerrar</button>
                     <button type="button" id="btnAdd" class="btn btn-primary" data-ced='' onclick="AddPassengerMenor('ZN')">
+                        Agregar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddPassengerTripulanteModal" tabindex="-1" aria-labelledby="AddPassengerModalLabel"
+         aria-modal="true"
+         role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddPassengerModalLabel">Agregar menor representado por: <span
+                            id='ciTrip'></span></h5>
+                    <button type="button" class="close" aria-label="Close" onclick="closeModalPassengers(3)">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="errorModalPassTrip" data-asset="{{asset('images')}}"></div>
+                    {!! Form::open(['files' => true,'id'=>'FormPassengersMenorTrip']) !!}
+                    @csrf
+
+                    <div class="row px-0 mx-0">
+                        <div class="col-md-2 my-1 px-1">
+                            <div class="form-group">
+                                <label for="title">Tripulante:</label>
+                                <select name="identificacionTrip" id="identificacionTrip" class="form-control custom-select">
+                                    <option  selected value="">Seleccione</option>
+                                @foreach($tripulantes as $tripulante)
+                                    <option value="{{ $tripulante['nro_doc'] }}">{{ $tripulante['nombres'] }} {{ $tripulante['apellidos'] }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2 my-1 px-1">
+                            <div class="form-group">
+                                <label for="title">Tipo doc.:</label>
+                                {!! Form::select('tipodocmenorTrip', ['V'=>'Cédula', 'P'=>'Pasaporte', 'NC'=>'No cedulado'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'tipodocmenorTrip']) !!}
+                            </div>
+
+                        </div>
+
+                        <div class="col  my-1">
+                            <label for="numero_identificacion">Cédula / Pasaporte</label>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" id="numero_identificacionMenorTrip"
+                                       placeholder="Cédula / Pasaporte" maxlength="10" onblur="blurSaime()">
+                            </div>
+                        </div>
+
+                        <div class="col my-1">
+                            <label for="fecha_nacimientoMenor">Fecha de nacimiento</label>
+                            <div class="input-group">
+
+                                <input type="date" class="form-control" id="fecha_nacimientoMenorTrip"
+                                       placeholder="Fecha de nacimiento" maxlength="10"
+                                       value="{{ old('fecha_nacimientoMenor') }}" max='{{date("Y-m-d")}}' required
+                                       onblur="blurSaime()">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row px-0 mx-0">
+
+                        <div class="col-md-2 my-1 px-1">
+                            <div class="form-group">
+                                <label for="title">Sexo:</label>
+                                {!! Form::select('sexoMenorTrip', ['F'=>'F', 'M'=>'M'], null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione', 'id'=>'sexoMenorTrip']) !!}
+                            </div>
+                        </div>
+
+
+                        <div class="col  my-1 DatosRestantes2">
+                            <label for="nombres">Nombres</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="nombresMenorTrip" placeholder="Nombres"
+                                       name="nombresMenorTrip" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
+                            </div>
+                        </div>
+
+                        <div class="col  my-1 DatosRestantes2">
+                            <label for="nombres">Apellidos</label>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" id="apellidosMenorTrip" placeholder="Apellidos"
+                                       name="apellidosMenorTrip" onkeydown="return /[a-z, ]/i.test(event.key)" maxlength="35">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            {!! Form::label('documento_1', 'Partida de nacimiento (Obligatorio):') !!}
+                            <input type="file" class="form-control" name="partida_nacimientoTrip" id="partida_nacimientoTrip"
+                                   accept="application/pdf, image/*" required  onchange="validarExtension('partida_nacimiento','errorModalPass')">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            {!! Form::label('documento_1', 'Autorización (Si amerita):') !!}
+                            <input type="file" class="form-control" name="autorizacionTrip" id="autorizacionTrip"
+                                   accept="application/pdf, image/*"  onchange="validarExtension('autorizacion','errorModalPass')">
+                        </div>
+                    </div>
+                    <div class="row FilePassportTrip" style="display:none">
+                        <div class="form-group col-sm-6">
+                            {!! Form::label('documento_1', 'Pasaporte (Obligatorio):') !!}
+                            <input type="file" class="form-control" name="pasaporte_menorTrip" id="pasaporte_menorTrip"
+                                   accept="application/pdf, image/*" required  onchange="validarExtension('pasaporte_menor','errorModalPass')">
+                        </div>
+                    </div>
+
+                    <input type="hidden" class="form-control" id="representanteMenorTrip" placeholder="Nombres"
+                           name="representanteMenorTrip" maxlength="40">
+                    {!! Form::close() !!}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModalPassengers(3)">Cerrar</button>
+                    <button type="button" id="btnAdd" class="btn btn-primary" data-ced='' onclick="AddPassengerMenorTrip('ZN')">
                         Agregar
                     </button>
                 </div>
