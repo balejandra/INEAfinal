@@ -114,8 +114,8 @@
                                                     Agregar
                                                 </button>
                                                 <button type="button" class="btn btn-primary"
-                                                        onclick="openModalPassengersTripulantes()"> <i class="fas fa-water"></i>
-                                                    Agregar
+                                                        onclick="openModalPassengersTripulantes()"> <i class="fas fa-baby"></i>
+                                                    Menor de Tripulante
                                                 </button>
                                             </div>
                                         </div>
