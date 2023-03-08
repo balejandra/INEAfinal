@@ -718,7 +718,6 @@ function AddPassengerMenorTrip(tipozarpe){
 
                             }
 
-
                         }
                         //alert(response);
                     })
