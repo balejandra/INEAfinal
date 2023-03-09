@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Menus y Roles
+    Menús y Roles
 @endsection
 @section('content')
     <div class="header-divider"></div>

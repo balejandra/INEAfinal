@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Tabla de mandos
+    Tabla de Mandos
 @endsection
 @section('content')
     <div class="header-divider"></div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Estadias
+    Permisos de Estadias
 @endsection
 @section('content')
     @push('scripts')
@@ -11,7 +11,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('permisosestadia.index') !!}">Permiso Estadía</a>
+                    <a href="{!! route('permisosestadia.index') !!}">Permisos de Estadías</a>
                 </li>
                 <li class="breadcrumb-item ">Editar</li>
             </ol>
@@ -20,7 +20,7 @@
     </header>
     <div class="container-fluid">
         <div class="animated fadeIn">
-            @include('coreui-templates::common.errors')
+            @include('errors.messages')
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">

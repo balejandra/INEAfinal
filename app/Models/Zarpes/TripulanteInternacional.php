@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
- 
-class tripulanteInternacional extends Model implements Auditable
+
+class TripulanteInternacional extends Model implements Auditable
 {
    use SoftDeletes;
     use HasFactory;
@@ -55,7 +55,7 @@ class tripulanteInternacional extends Model implements Auditable
         'sexo'=> 'string',
         'fecha_nacimiento'=> 'string'
 
-        
+
     ];
 
     /**
@@ -83,5 +83,5 @@ class tripulanteInternacional extends Model implements Auditable
         return $this->belongsTo(PermisoZarpe::class);
     }
 
-  
+
 }

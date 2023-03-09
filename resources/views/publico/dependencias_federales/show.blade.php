@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('dependenciasfederales.index') }}">Dependencia Federal</a>
+                    <a href="{{ route('dependenciasfederales.index') }}">Dependencias Federales</a>
                 </li>
                 <li class="breadcrumb-item active">Consulta</li>
             </ol>
@@ -17,7 +17,7 @@
     </header>
      <div class="container-fluid">
           <div class="animated fadeIn">
-                 @include('coreui-templates::common.errors')
+              @include('errors.messages')
                  <div class="row">
                      <div class="col-lg-12">
                          <div class="card">

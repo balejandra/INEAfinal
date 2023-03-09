@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Capitania
+    Capitanías
 @endsection
 @section('content')
     <div class="header-divider"></div>

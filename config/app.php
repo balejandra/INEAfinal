@@ -161,7 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        InfyOm\GeneratorBuilder\GeneratorBuilderServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Laraveles\Spanish\SpanishServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{asset('assets/fontawesome/css/all.css')}}">
     <link rel="stylesheet" href="{{asset('css/zarpesStyle.css')}}">
     <link rel="stylesheet" href="{{asset('assets/custom.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/bootstrap/dist/css/bootstrap.css')}}">
+    <link href="{{asset('assets/bootstrap-5.3.0/css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/@coreui/@coreui.css')}}">
     @routes
 </head>
@@ -29,7 +29,7 @@
 
 <!-- CoreUI and necessary plugins-->
 <script src="{{asset('assets/jquery/jquery-3.6.0.min.js')}}"></script>
-<script src="{{asset('assets/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/fontawesome/js/all.js')}}"></script>
 
 <script src="{{asset('assets/@coreui/coreui/js/coreui.bundle.min.js')}}"></script>

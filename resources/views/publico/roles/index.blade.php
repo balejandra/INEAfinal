@@ -16,7 +16,6 @@
         <div class="animated fadeIn">
              @include('flash::message')
 
-
               @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" id="msj" role="success">
                 <button type="button" class="close success-op" data-dismiss="alert" aria-label="close">

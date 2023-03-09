@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="stylesheet" href="{{asset('assets/bootstrap/dist/css/bootstrap.min.css')}}">
+    <link href="{{asset('assets/bootstrap-5.3.0/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <link href="{{asset('assets/vendors/style.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/simplebar/css/simplebar.css')}}">
@@ -54,9 +54,8 @@
 </footer>
 </body>
 @stack('scripts')
-<script src="{{asset('assets/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/jquery/moment.min.js')}}"></script>
-<script src="{{asset('assets/bootstrap/js/dist/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset('assets/DataTables/datatables.js')}}"></script>
 <script src="{{asset('js/functions.js')}}"></script>
 <script src="{{asset('js/zarpeInternacional.js')}}"></script>

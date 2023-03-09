@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Auditoria
+    Auditoría
 @endsection
 @section('content')
     <div class="header-divider"></div>
