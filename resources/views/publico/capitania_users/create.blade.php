@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Usuarios de Capitanias
+    Usuarios de Capitanías
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('capitaniaUsers.index') !!}">Usuarios de Capitanía</a>
+                    <a href="{!! route('capitaniaUsers.index') !!}">Usuarios de Capitanías</a>
                 </li>
                 <li class="breadcrumb-item active">Crear</li>
             </ol>
@@ -19,7 +19,7 @@
      <div class="container-fluid">
           <div class="animated fadeIn">
               @include('flash::message')
-              @include('coreui-templates::common.errors')
+              @include('errors.messages')
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">

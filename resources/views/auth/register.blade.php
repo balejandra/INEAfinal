@@ -10,7 +10,7 @@
                     <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">
                 </span>
                 @include('flash::message')
-                @include('coreui-templates::common.errors')
+                @include('errors.messages')
                 <div id="errorRegister" data-asset="{{asset('images/')}}">
 
                 </div>

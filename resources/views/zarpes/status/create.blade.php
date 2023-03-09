@@ -17,7 +17,7 @@
     </header>
      <div class="container-fluid">
           <div class="animated fadeIn">
-                @include('coreui-templates::common.errors')
+              @include('errors.messages')
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
@@ -25,7 +25,7 @@
                                 <i class="fa fa-clipboard-check fa-lg"></i>
                                 <strong>Crear Estatus</strong>
                                 <div class="card-header-actions">
-                                    
+
                                 </div>
                             </div>
                             <div class="card-body">

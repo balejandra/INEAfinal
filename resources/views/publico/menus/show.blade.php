@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Menus
+    Menús
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -17,7 +17,7 @@
     </header>
      <div class="container-fluid">
           <div class="animated fadeIn">
-                 @include('coreui-templates::common.errors')
+              @include('errors.messages')
                  <div class="row">
                      <div class="col-lg-12">
                          <div class="card">

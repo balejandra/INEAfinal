@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Zarpes\CreatePermisoEstadiaRequest;
 use App\Models\Publico\Capitania;
 use App\Models\Publico\CapitaniaUser;
-use App\Models\Publico\Paise;
+use App\Models\Publico\Paises;
 use App\Models\User;
 use App\Models\Zarpes\DocumentoPermisoEstadia;
 use App\Models\Zarpes\EstablecimientoNautico;
@@ -87,7 +87,7 @@ class PermisoEstadiaController extends AppBaseController
     {
         $Establecimientos = EstablecimientoNautico::all();
         $capitanias = Capitania::all();
-        $paises = Paise::all();
+        $paises = Paises::all();
         return view('zarpes.permiso_estadias.create')
             ->with('establecimientos', $Establecimientos)
             ->with('capitanias', $capitanias)

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section("titulo")
-    Estadias
+    Permisos de Estadías
 @endsection
 @section('content')
     <div class="header-divider"></div>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">Permisos de Estadía</li>
+                <li class="breadcrumb-item">Permisos de Estadías</li>
             </ol>
         </nav>
     </div>

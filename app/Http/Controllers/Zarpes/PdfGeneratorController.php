@@ -15,7 +15,7 @@ use App\Models\Zarpes\PermisoZarpe;
 use App\Models\Zarpes\Tripulante;
 use App\Models\Zarpes\EstablecimientoNautico;
 use App\Models\Zarpes\DescripcionNavegacion;
-use App\Models\Publico\Paise;
+use App\Models\Publico\Paises;
 use App\Models\Zarpes\TripulanteInternacional;
 
 use App\Models\Zarpes\ZarpeRevision;
@@ -156,7 +156,7 @@ class PdfGeneratorController extends Controller
        }
 
        $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
-        $pais= Paise::find($zarpe->paises_id);
+        $pais= Paises::find($zarpe->paises_id);
         $aprobador= ZarpeRevision::where('permiso_zarpe_id',$id)->first();
         $cargo= CapitaniaUser::where('user_id',$aprobador->user_id)->first();
         $pdf=PDF::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania',
@@ -187,7 +187,7 @@ class PdfGeneratorController extends Controller
         }
 
         $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
-        $pais= Paise::find($zarpe->paises_id);
+        $pais= Paises::find($zarpe->paises_id);
         $aprobador= ZarpeRevision::where('permiso_zarpe_id',$id)->first();
         $cargo= CapitaniaUser::where('user_id',$aprobador->user_id)->first();
         $pdf=PDF::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania',

@@ -22,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     use HasFactory, Notifiable;
     use HasRoles;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     protected $connection = 'pgsql_public_schema';
     public $table = 'users';

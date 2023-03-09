@@ -2,7 +2,7 @@
 
 namespace App\Models\Zarpes;
 
-use App\Models\Publico\Paise;
+use App\Models\Publico\Paises;
 use App\Models\Publico\Capitania;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -155,7 +155,7 @@ class PermisoZarpe extends Model implements Auditable
 
     public function paises()
     {
-        return $this->belongsTo(Paise::class);
+        return $this->belongsTo(Paises::class);
     }
 
 }

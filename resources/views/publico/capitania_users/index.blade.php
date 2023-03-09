@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Usuarios de Capitanias
+    Usuarios de Capitanías
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -12,7 +12,7 @@
         </nav>
     </div>
     </header>
-    
+
     <div class="container-fluid">
         <div class="animated fadeIn">
              @include('flash::message')

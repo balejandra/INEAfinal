@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Publico;
 use App\Http\Controllers\Controller;
+use App\Models\Publico\PermissionOwn;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Permission;
 use Flash;
 
 
@@ -28,7 +28,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::orderBy('id', 'DESC')->get();
+        $permissions = PermissionOwn::orderBy('id', 'DESC')->get();
 
         return view('publico.permissions.index', compact('permissions'));
     }
@@ -60,7 +60,7 @@ class PermissionController extends Controller
             ]
         );
 
-        ($permission=new Permission($request->input()))->saveOrFail();
+        ($permission=new PermissionOwn($request->input()))->saveOrFail();
 
          return redirect()->route('permissions')->with('success','Permiso creado con exito.');
 
@@ -84,7 +84,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permission $permission)
+    public function edit(PermissionOwn $permission)
     {
         return view('publico.permissions.edit',compact('permission'));
     }
@@ -106,7 +106,7 @@ class PermissionController extends Controller
         ]
     );
 
-        $permission=Permission::findOrFail($id);
+        $permission=PermissionOwn::findOrFail($id);
         $permission->name=$request->input('name');
         $permission->save();
         return redirect()->route('permissions')->with('success','Información actualizada con exito.');
@@ -121,13 +121,13 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        $permission=Permission::findOrFail($id);
+        $permission=PermissionOwn::findOrFail($id);
         $permission->delete();
         return back()->with('success','El registro se ha eliminado con éxito.');
     }
 
     public function indexPermissionDeleted(){
-        $permission =Permission::onlyTrashed()->get();
+        $permission =PermissionOwn::onlyTrashed()->get();
         //dd($users);
 
         return view('publico.permissions.permission_delete')
@@ -135,7 +135,7 @@ class PermissionController extends Controller
     }
 
     public function restorePermissionDeleted($id){
-        $permission_deleted=Permission::where('id',$id);
+        $permission_deleted=PermissionOwn::where('id',$id);
         $permission_deleted->restore();
         Flash::success('Permiso restaurado exitosamente.');
 

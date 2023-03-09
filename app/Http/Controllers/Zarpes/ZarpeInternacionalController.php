@@ -30,7 +30,7 @@ use App\Models\Zarpes\PermisoEstadia;
 use App\Models\Zarpes\CoordenadasDependenciasFederales;
 use App\Models\Publico\DependenciaFederal;
 use App\Models\Zarpes\DescripcionNavegacion;
-use App\Models\Publico\Paise;
+use App\Models\Publico\Paises;
 
 
 use Flash;
@@ -486,7 +486,7 @@ class ZarpeInternacionalController extends Controller
     {
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $EstNauticos = EstablecimientoNautico::where('capitania_id', $solicitud['origen_capitania_id'])->get();
-        $paises = Paise::all();
+        $paises = Paises::all();
 
         $this->step = 4;
         return view('zarpes.zarpe_internacional.create-step-four')->with('paso', $this->step)->with('EstNauticos', $EstNauticos)->with('paises', $paises)->with('titulo', $this->titulo);
@@ -1225,7 +1225,7 @@ class ZarpeInternacionalController extends Controller
         $transaccion = PermisoZarpe::find($id);
         $capitania = Capitania::where('id', $transaccion->establecimiento_nautico->capitania_id)->first();
         //$estnauticoDestino=EstablecimientoNautico::find($transaccion->establecimiento_nautico_destino_id);
-        $pais = Paise::find($transaccion->paises_id);
+        $pais = Paises::find($transaccion->paises_id);
         $notificacion = new NotificacioneController();
 
         if ($status === 'aprobado') {
@@ -1423,7 +1423,7 @@ class ZarpeInternacionalController extends Controller
         $validacionSgm = TiposCertificado::where('matricula', $permisoZarpe->matricula)->get();
         $equipos = EquipoPermisoZarpe::where('permiso_zarpe_id', $id)->get();
         $revisiones = ZarpeRevision::where('permiso_zarpe_id', $id)->get();
-        $paises = Paise::where('id', $permisoZarpe->paises_id)->get();
+        $paises = Paises::where('id', $permisoZarpe->paises_id)->get();
 
         $establecimiento = EstablecimientoNautico::select('capitania_id')->where('id', $permisoZarpe->establecimiento_nautico_id)->get();
         $establecimiento_user = CapitaniaUser::select('user_id')
