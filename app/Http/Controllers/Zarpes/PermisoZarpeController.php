@@ -1752,99 +1752,128 @@ class PermisoZarpeController extends Controller
 
                 break;
             case 'Primer Oficial de Navegación':
-                if ($validacion['UAB'] <= 3000) {
-                    $return = [true];
-                } else {
-                    $return = [false];
+                if ($capitan=='SI') {
+                    if ($validacion['UAB'] <= 3000) {
+                        $return = [true];
+                    } else {
+                        $return = [false];
+                    }
+                }else{
+                    $return =[true];
                 }
+
 
                 break;
             case 'Segundo Oficial de Navegación':
-                if ($validacion['UAB'] <= 500) {
-                    $return = [true];
-                } else {
-                    $return = [false];
+                if ($capitan=='SI') {
+                    if ($validacion['UAB'] <= 500) {
+                        $return = [true];
+                    } else {
+                        $return = [false];
+                    }
+                }else{
+                    $return =[true];
                 }
                 break;
             case 'Capitán de Yate':
-                if ($validacion['UAB'] <= 300) {
-                    $return = [true];
-                } else {
-                    $return = [false];
+                if ($capitan=='SI') {
+                    if ($validacion['UAB'] <= 300) {
+                        $return = [true];
+                    } else {
+                        $return = [false];
+                    }
+                }else {
+                    $return =[true];
                 }
+
                 break;
             case 'Capitán Costanero':
                 $coordenadas = [];
-                if ($validacion['UAB'] <= 3000) {
-                    $return = [true, $coordenadas];
-                } else {
-                    $return = [false, $coordenadas];
+                if ($capitan=='SI') {
+                    if ($validacion['UAB'] <= 3000) {
+                        $return = [true, $coordenadas];
+                    } else {
+                        $return = [false, $coordenadas];
+                    }
+                }else{
+                    $return =[true];
                 }
+
                 break;
             case 'Patrón de Primera':
                 $coordenadas = [];
-                if ($validacion['UAB'] <= 500) {
-                    $return = [true, $coordenadas];
-                } else {
-                    $return = [false, $coordenadas];
+                if ($capitan === 'SI') {
+                    if ($validacion['UAB'] <= 500) {
+                        $return = [true, $coordenadas];
+                    } else {
+                        $return = [false, $coordenadas];
+                    }
+                }else {
+                    $return =[true];
                 }
+
                 break;
             case 'Patrón Deportivo de Primera':
                 $coordenadas = [];
-                if ($validacion['UAB'] <= 150) {
-                    $return = [true, $coordenadas];
-                } else {
-                    $return = [false, $coordenadas];
+                if ($capitan === 'SI') {
+                    if ($validacion['UAB'] <= 150) {
+                        $return = [true, $coordenadas];
+                    } else {
+                        $return = [false, $coordenadas];
+                    }
+                }else{
+                    $return =[true];
                 }
+
                 break;
             case 'Patrón de Segunda':
                 $coordenadas = [];
-                if ($validacion['UAB'] <= 500 && $validacion['eslora'] < 24) {
-                    $return = [true, $coordenadas, 1];//validacion, coordenadas, cantidad de jurisdicciones que puede visitar
-                } else {
-                    $return = [false, $coordenadas, 1];
+                if ($capitan === 'SI') {
+                    if ($validacion['UAB'] <= 500 && $validacion['eslora'] < 24) {
+                        $return = [true, $coordenadas, 1];//validacion, coordenadas, cantidad de jurisdicciones que puede visitar
+                    } else {
+                        $return = [false, $coordenadas, 1];
+                    }
+                }else{
+                    $return =[true];
                 }
+
                 break;
             case 'Patrón Deportivo de Segunda':
-                if ($validacion['UAB'] <= 40) {
+                if ($capitan === 'SI') {
+                    if ($validacion['UAB'] <= 40) {
+                        $return = [true];
+                    } else {
+                        $return = [false];
+                    }
+                }else{
                     $return = [true];
-                } else {
-                    $return = [false];
                 }
+
                 break;
             case 'Patrón Deportivo de Tercera':
-                if ($validacion['UAB'] <= 10) {
+                if ($capitan === 'SI') {
+                    if ($validacion['UAB'] <= 10) {
+                        $return = [true];
+                    } else {
+                        $return = [false];
+                    }
+                }else {
                     $return = [true];
-                } else {
-                    $return = [false];
                 }
+
                 break;
+            case 'Capitán de Pesca':
+            case 'Oficial de Pesca':
+            case 'Jefe de Máquinas':
             case 'Tercer Oficial de Navegación':
 
                 if ($capitan == "SI") {
                     $return = [false];
                 } else {
-
-                    $return = [true];
-
-                }
-
-                break;
-            case 'Capitán de Pesca':
-                if ($capitan == "SI") {
-                    $return = [false];
-                } else {
-
-                    $return = [true];
-
-                }
-                break;
-            case 'Oficial de Pesca':
-                if ($capitan == "SI") {
-                    $return = [false];
-                } else {
                     $return = [true];
                 }
+
                 break;
             case 'Patrón Artesanal':
                 if ($capitan == "NO") {
@@ -1859,29 +1888,8 @@ class PermisoZarpeController extends Controller
 
 
                 break;
-            case 'Jefe de Máquinas':
-                if ($capitan == "SI") {
-                    $return = [false];
-                } else {
-                    $return = [true];
-                }
-
-                break;
-            case 'Primer Oficial de Máquinas':
-                if ($capitan == "SI") {
-                    $return = [false];
-                } else {
-                    if ($validacion['potencia_kw'] <= 3000) {
-                        $return = [true];
-                    } else {
-                        $return = [false];
-                    }
-                    $return = [true];
-
-                }
-
-                break;
             case 'Segundo Oficial de Máquinas':
+            case 'Primer Oficial de Máquinas':
                 if ($capitan == "SI") {
                     $return = [false];
                 } else {
@@ -1925,6 +1933,7 @@ class PermisoZarpeController extends Controller
                 }
 
                 break;
+            case 'Oficial de Máquinas de Pesca':
             case 'Jefe de Máquinas de Pesca':
                 if ($capitan == "SI") {
                     $return = [false];
@@ -1944,20 +1953,6 @@ class PermisoZarpeController extends Controller
                     $return = [false];
                 } else {
                     if ($validacion['potencia_kw'] <= 350) {
-                        $return = [true];
-                    } else {
-                        $return = [false];
-                    }
-                    $return = [true];
-
-                }
-
-                break;
-            case 'Oficial de Máquinas de Pesca':
-                if ($capitan == "SI") {
-                    $return = [false];
-                } else {
-                    if ($validacion['potencia_kw'] <= 560) {
                         $return = [true];
                     } else {
                         $return = [false];
