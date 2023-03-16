@@ -1699,7 +1699,7 @@ function getMarinos(pass) {
 
             respuesta = JSON.parse(response);
                 console.log("RESPUESTA::",respuesta);
-
+console.log(respuesta[7][0]['cedula'])
             var validacion=respuesta[1];
             switch(respuesta[3]){
                 case 'TripulanteExiste':
@@ -1734,9 +1734,9 @@ function getMarinos(pass) {
                 break;
                 case 'FoundButNotPerrmision':
                     if(funcion=="Capitán"){
-                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para ser capitán esta embarcación.</div>' ;
+                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+nrodoc+' no esta permisado para ser capitán esta embarcación.</div>' ;
                     }else{
-                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+pass['nro_doc']+' no esta permisado para tripular esta embarcación.</div>' ;
+                        msj.innerHTML='<div class="alert alert-danger">El marino de C.I.'+nrodoc+' no esta permisado para tripular esta embarcación.</div>' ;
                     }
 
                 break;
