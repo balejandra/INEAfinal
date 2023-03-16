@@ -1181,7 +1181,7 @@ class PermisoZarpeController extends Controller
                     }
                 }
             }
-            $return = [$tripulantes, $vj, $indice, $InfoMarino, $validation['pasajerosRestantes'], $validation['cant_pasajeros'], $validation['cantPassAbordo'], $infoSaime];
+            $return = [$tripulantes, $vj, $indice, $InfoMarino, $validation['pasajerosRestantes'], $validation['cant_pasajeros'], $validation['cantPassAbordo'], $infoSaime,$trip];
             echo json_encode($return);
         }
 
