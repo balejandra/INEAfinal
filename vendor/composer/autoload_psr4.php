@@ -61,6 +61,7 @@ return array(
     'OwenIt\\Auditing\\' => array($vendorDir . '/owen-it/laravel-auditing/src'),
     'NunoMaduro\\Collision\\' => array($vendorDir . '/nunomaduro/collision/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'League\\MimeTypeDetection\\' => array($vendorDir . '/league/mime-type-detection/src'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'League\\Config\\' => array($vendorDir . '/league/config/src'),
