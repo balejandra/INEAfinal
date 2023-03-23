@@ -1699,7 +1699,7 @@ function getMarinos(pass) {
 
             respuesta = JSON.parse(response);
                 console.log("RESPUESTA::",respuesta);
-console.log(respuesta[7][0]['cedula'])
+            //console.log(respuesta[7][0]['cedula'])
             var validacion=respuesta[1];
             switch(respuesta[3]){
                 case 'TripulanteExiste':

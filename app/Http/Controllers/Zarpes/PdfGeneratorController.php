@@ -7,7 +7,6 @@ use App\Models\Gmar\LicenciasTitulosGmar;
 use App\Models\Publico\Capitania;
 use App\Models\Publico\CapitaniaUser;
 use App\Models\Renave\Renave_data;
-use App\Models\Transaccion;
 use App\Models\Zarpes\EstadiaRevision;
 use App\Models\Zarpes\Pasajero;
 use App\Models\Zarpes\PermisoEstadia;
@@ -19,8 +18,7 @@ use App\Models\Publico\Paises;
 use App\Models\Zarpes\TripulanteInternacional;
 
 use App\Models\Zarpes\ZarpeRevision;
-use Barryvdh\DomPDF\Facade as PDF;
-use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PdfGeneratorController extends Controller
 {
@@ -65,7 +63,7 @@ class PdfGeneratorController extends Controller
         $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
         $aprobador= ZarpeRevision::where('permiso_zarpe_id',$id)->first();
         $cargo= CapitaniaUser::where('user_id',$aprobador->user_id)->first();
-        $pdf=PDF::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas',
+        $pdf= Pdf::loadView('PDF.zarpes.permiso',compact('zarpe','buque','trip','capitania','cantPas',
             'cantTrip','estnauticoDestino','DescripcionNavegacion','aprobador','cargo'));
         return $pdf->stream('zarpes.pdf');
     }
@@ -73,7 +71,7 @@ class PdfGeneratorController extends Controller
         $estadia=PermisoEstadia::find($id);
         $capitania= Capitania::where('id',$estadia->capitania_id)->first();
         $aprobador= EstadiaRevision::where('permiso_estadia_id',$id)->first();
-        $pdf=PDF::loadView('PDF.estadias.permiso',compact('estadia','capitania','aprobador'));
+        $pdf= Pdf::loadView('PDF.estadias.permiso',compact('estadia','capitania','aprobador'));
         return $pdf->stream('estadia.pdf');
     }
 
@@ -118,9 +116,9 @@ class PdfGeneratorController extends Controller
         $DescripcionNavegacion=DescripcionNavegacion::find($zarpe->descripcion_navegacion_id);
         $aprobador= ZarpeRevision::where('permiso_zarpe_id',$id)->first();
         $cargo= CapitaniaUser::where('user_id',$aprobador->user_id)->first();
-        $pdf=PDF::loadView('PDF.zarpes.permiso', compact('zarpe','buque','trip','capitania','cantPas',
-            'cantTrip','estnauticoDestino','DescripcionNavegacion','aprobador','cargo'))->stream();
-        return $pdf;
+        $pdf1= Pdf::loadView('PDF.zarpes.permiso', compact('zarpe','buque','trip','capitania','cantPas',
+            'cantTrip','estnauticoDestino','DescripcionNavegacion','aprobador','cargo'));
+        return $pdf1->output();
 
     }
 
@@ -128,8 +126,8 @@ class PdfGeneratorController extends Controller
        $estadia=PermisoEstadia::find($id);
         $capitania= Capitania::where('id',$estadia->capitania_id)->first();
         $aprobador= EstadiaRevision::where('permiso_estadia_id',$id)->first();
-        $pdf=PDF::loadView('PDF.estadias.permiso', compact('estadia','capitania','aprobador'))->stream();
-        return $pdf;
+        $pdf= Pdf::loadView('PDF.estadias.permiso', compact('estadia','capitania','aprobador'));
+        return $pdf->output();
 
     }
 
@@ -159,7 +157,7 @@ class PdfGeneratorController extends Controller
         $pais= Paises::find($zarpe->paises_id);
         $aprobador= ZarpeRevision::where('permiso_zarpe_id',$id)->first();
         $cargo= CapitaniaUser::where('user_id',$aprobador->user_id)->first();
-        $pdf=PDF::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania',
+        $pdf= PDFAlias::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania',
             'cantPas','cantTrip','DescripcionNavegacion','pais','aprobador','cargo'));
         return $pdf->stream('zarpes.pdf');
     }
@@ -190,9 +188,9 @@ class PdfGeneratorController extends Controller
         $pais= Paises::find($zarpe->paises_id);
         $aprobador= ZarpeRevision::where('permiso_zarpe_id',$id)->first();
         $cargo= CapitaniaUser::where('user_id',$aprobador->user_id)->first();
-        $pdf=PDF::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania',
-            'cantPas','cantTrip','DescripcionNavegacion','pais','aprobador','cargo'))->stream();
-        return $pdf;
+        $pdf= Pdf::loadView('PDF.zarpeInternacional.permiso',compact('zarpe','buque','trip','capitania',
+            'cantPas','cantTrip','DescripcionNavegacion','pais','aprobador','cargo'));
+        return $pdf->output();
 
     }
 }

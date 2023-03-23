@@ -41,8 +41,8 @@ class ZarpesPDFMail extends Mailable
             ->with($this->data)
             ->with(['from'=>env('MAIL_FROM_ADDRESS')])
             ->markdown($this->view)
-        ->attachData($this->pdf, 'solicitud.pdf', [
-        'mime' => 'application/pdf',
+            ->attachData($this->pdf, 'solicitud.pdf', [
+            'mime' => 'application/pdf',
     ]);
     }
 }
